@@ -185,7 +185,7 @@ export class UserComponent implements OnInit {
     this.userPrivs = this.sessionService.getUsersPrivs();
     this.loadAllUsers();
     //console.log(this.route.snapshot.params.name);
-    //dtOptions: DataTables.Settings = {};
+   
   };
 
   fillLarge() {

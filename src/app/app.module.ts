@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './Login/login.component';
 import { UserComponent } from './User/user.component';
 import { MenuComponent } from './Menu/menu.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './Home/home.component';
 import { mainWS } from './ws/mainWS';
 import {sessionService} from './ws/sessionWS';
 import {AgGridModule} from "@ag-grid-community/angular";
