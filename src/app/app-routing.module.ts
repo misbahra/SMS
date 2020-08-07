@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 // import { WsrLoginComponent } from './wsr-login/wsr-login.component';
  import { LoginComponent } from './Login/login.component';
- import { HomeComponent } from './home/home.component';
+ import { HomeComponent } from './Home/home.component';
  import { MenuComponent } from './Menu/menu.component';
 // import { UserHomeComponent } from './user-home/user-home.component';
  import {UserComponent} from './User/user.component';

@@ -10,7 +10,6 @@ import { HomeComponent } from './home/home.component';
 import { mainWS } from './ws/mainWS';
 import {sessionService} from './ws/sessionWS';
 import {AgGridModule} from "@ag-grid-community/angular";
-import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -27,7 +26,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     AppRoutingModule,
     AgGridModule.withComponents([]),
-    DataTablesModule,
     FormsModule, 
     ReactiveFormsModule
   ],

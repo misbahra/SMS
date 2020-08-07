@@ -269,8 +269,8 @@
     margin: 24px 0 12px 0;
   }
   
-  img.avatar {
-    width: 40%;
+  .avatar {
+    width: 35px;
     border-radius: 50%;
   }
   
