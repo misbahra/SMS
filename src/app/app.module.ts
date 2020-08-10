@@ -11,6 +11,13 @@ import { mainWS } from './ws/mainWS';
 import {sessionService} from './ws/sessionWS';
 import {AgGridModule} from "@ag-grid-community/angular";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LuComponent } from './lu/lu.component';
+import { LuhNewComponent } from './lu/luh-new/luh-new.component';
+import { LudNewComponent } from './lu/lud-new/lud-new.component';
+import {luWS} from './ws/luWS';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [
@@ -19,6 +26,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     UserComponent,
     MenuComponent,
     HomeComponent,
+    LuComponent,
+    LuhNewComponent,
+    LudNewComponent,
     
   ],
   imports: [
@@ -27,12 +37,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     AgGridModule.withComponents([]),
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   providers: [
     mainWS,
-    sessionService
+    sessionService,
+    luWS
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [LuhNewComponent]
 })
 export class AppModule { }

@@ -5,7 +5,7 @@
 @import "~ag-grid-community/dist/styles/ag-theme-alpine.css";
 @import "~ag-grid-community/dist/styles/ag-theme-material.css";
 @import "~ag-grid-community/dist/styles/ag-theme-blue.css";
-
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

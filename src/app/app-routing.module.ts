@@ -8,9 +8,10 @@ import { Routes, RouterModule } from '@angular/router';
 // import { UserHomeComponent } from './user-home/user-home.component';
  import {UserComponent} from './User/user.component';
 // import {WsrNewUserComponent} from './wsr-users/wsr-new-user/wsr-new-user.component';
-// import{LUComponent} from './lu/lu.component';
-// import{LuhNewComponent} from './lu/new/luh-new/luh-new.component';
-// import{WsrMainComponent} from './wsr-main/wsr-main.component';
+ import{LuComponent} from './lu/lu.component';
+ import{LuhNewComponent} from './lu/luh-new/luh-new.component';
+ import{LudNewComponent} from './lu/lud-new/lud-new.component';
+ // import{WsrMainComponent} from './wsr-main/wsr-main.component';
 // import{WsrMainNewComponent} from './wsr-main/wsr-main-new/wsr-main-new.component';
 // import { FeedbackComponent } from './feedback/feedback.component';
 // import { FeedbackNewComponent } from './feedback/feedback-new/feedback-new.component';
@@ -46,6 +47,7 @@ const routes: Routes = [
   { path: 'home',    component: HomeComponent},
   { path: 'user',   component: UserComponent },
   { path: 'login-new',   component: LoginComponent},
+  { path: 'lu',   component: LuComponent },
   ];
 
 @NgModule({
