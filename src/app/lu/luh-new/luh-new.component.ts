@@ -43,7 +43,7 @@ export class LuhNewComponent implements OnInit {
       this.dataForm = this.fb.group({
         id: ['', []],
         luh_desc: ['', [Validators.required]],
-        luh_code: ['', [Validators.required , Validators.minLength(3), Validators.maxLength(4),  this.checkDuplicate.bind(this)]],
+        luh_code: ['', [Validators.required , Validators.minLength(1), Validators.maxLength(4),  this.checkDuplicate.bind(this)]],
         created_by: ['', []],
         created_on: ['', []],
         modified_by: ['', []],

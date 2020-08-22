@@ -1,22 +1,23 @@
 import { Component, OnInit , Inject} from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as luWS from '../../ws/luWS';
+import * as stockWS from '../../ws/stockWS';
 import { Router } from "@angular/router";
 import * as wsrSessionService from '../../ws/sessionWS';
 import { MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
-import { AbstractControl } from '@angular/forms';
+import { utilWS } from '../../ws/utilWS';
 
 interface DialogData {
   data: string;
 }
 
-
 @Component({
-  selector: 'app-lud-new',
-  templateUrl: './lud-new.component.html',
-  styleUrls: ['./lud-new.component.css']
+  selector: 'app-stock-new',
+  templateUrl: './stock-new.component.html',
+  styleUrls: ['./stock-new.component.css']
 })
-export class LudNewComponent implements OnInit {
+export class StockNewComponent implements OnInit {
+
   dataForm: FormGroup;
   model: any = {};
   resp: any = [];
@@ -28,34 +29,39 @@ export class LudNewComponent implements OnInit {
   invalid: any = [];
   dataId: any = "";
   isDup = false;
-  LUDdataList: any = [];
-  luhCode = "";
-  ludCode = "";
-
-
-  selectedID: any = "No Selected";
-  selectedCode: any = [];
-  isluhCodeSelected: boolean = false;
+  stockdataList: any = [];
+  stockUID = "";
+  itemUID = "";
 
   messagetext = '';
-  constructor(private webService: luWS.luWS,
+  constructor(private webService: stockWS.stockWS,
     private sessionService: wsrSessionService.sessionService,
     private router: Router,
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<LudNewComponent>,
+    public dialogRef: MatDialogRef<StockNewComponent>,
+    private utilService : utilWS,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) { this.OnStart() }
 
   ngOnInit() {
     this.dataForm = this.fb.group({
       id: ['', []],
-      luh_code: ['', [Validators.required]],
-      lud_desc: ['', [Validators.required]],
-      lud_code: ['', [Validators.required , Validators.minLength(1), Validators.maxLength(4) ,this.checkDuplicate.bind(this)]],
-      value: ['', []],
-      display_order: ['', [Validators.required]],
-      active: ['Y', []],
-      freezed: ['N', []],
+      stock_uid: ['', []],
+      item_uid: ['', [Validators.required]],
+      items_count: ['', []],
+      vender_uid: ['', []],
+      total_bill_amount: ['', []],
+      items_cost: ['', []],
+      shipping_charges: ['', []],
+      delivery_charges: ['', []],
+      sales_price: ['', []],
+      request_placed_on: ['', []],
+      stock_received_on: ['', []],
+      stock_bar_code: ['', []],
+      vat: ['', []],
+      stock_sold: ['', []],
+      stock_code: ['', []],
+      stock_desc: ['', []],
       created_by: ['', []],
       created_on: ['', []],
       modified_by: ['', []],
@@ -63,89 +69,41 @@ export class LudNewComponent implements OnInit {
     }
       // , { validator: this.CheckUserName('UserName') }
     );
-
+    
     this.queryParams = this.sessionService.getParameters();
     // alert('point 1 - ' + this.queryParams[0].name);
-
-    if (this.queryParams.length > 0 )
-    {
-    if (this.queryParams[0].name == "lud_id") {
+    if (this.queryParams.length > 0 ) {
+    if (this.queryParams[0].name == "stock_id") {
       // alert('point 2');
       this.isDisabled = true;
-      this.loadData(this.queryParams);
+       this.loadData(this.queryParams);
     }
-    if (this.queryParams[0].name == "luh_code") {
-     // alert("test 2-" + this.queryParams[0].value);
-     this.luhCode = this.queryParams[0].value;
-      this.dataForm.controls.luh_code.setValue(this.luhCode);
-      this.loadLUDData(this.luhCode);
+    else if (this.queryParams[0].name == "item_uid")
+    {
+      this.isDisabled = true;
+      this.itemUID = this.queryParams[0].value;
     }
+    else {this.isDisabled = true;};
+  }
    
   }
-
-  }
  
+
   // single getter for all form controls to access them from the html
   get fc() { return this.dataForm.controls; }
 
-  async loadLUDData(code: any) {
-    let data = [{value: code}];
-    let response = await this.webService.getLUDFromDB(data);
-   this.LUDdataList = response;
-   
-  }
-
-  checkDuplicate(control: AbstractControl): { [key: string]: boolean } | null {
-    //alert("dup 1");
-    if (control.value.length >= 3   )
-    {
-     
-     // alert("dup 2 " + this.LUDdataList.length );
-      if ( this.LUDdataList.some(function(el){return (el.lud_code == control.value )}))
-      {
-        if(this.ludCode != null && this.ludCode == control.value   ) {
-          return null;
-        }
-          else
-          {
-          //alert("dup 3");
-            return { 'duplicate': true };
-        }
-      }
-
-    }
-    else {return null;}
- 
- };
-
-  async loadAllLUD(id: any) {
-    //alert("loading lud comp");  
+  async loadData(id: any) {
     this.isBusy = true;
-    this.response = await this.webService.getThisLUD(id);
-    //alert('data - ' + this.response._id);
-     this.dataId = this.response._id;
-     this.dataForm.patchValue(this.response);
-     //alert("header code 1 - " + this.dataForm.value.luh_code)
-     this.luhCode = this.dataForm.value.luh_code;
-     this.ludCode = this.dataForm.value.lud_code;
-     this.loadLUDData(this.luhCode);
-     this.dataForm.enable();
-     this.dataForm.controls.luh_code.disable();
-     
+    this.dataForm.disable();
+    //alert('loading data - ' + userid[0].value);
+    this.response = await this.webService.getThisStock(id);
+    //alert('data - ' + this.response.name);
+    this.dataId = this.response._id;
+    this.dataForm.patchValue(this.response);
+    this.stockUID = this.dataForm.value.stock_uid;
+    this.dataForm.enable();
    
     this.isBusy = false;
-  };
-
-  LoadLUD(code: any) {
-    this.selectedID = code[0].value;
-    //this.isludCodeSelected = true;
-    this.selectedCode = [];
-    this.selectedCode.push({ "name": "lud_id", "value": this.selectedID });
-    this.loadAllLUD(this.selectedCode);
-  }
- 
-  async loadData(id: any) {
-    this.LoadLUD(id);
   };
 
   OnStart() {
@@ -171,7 +129,6 @@ export class LudNewComponent implements OnInit {
  
   onSubmit() {
     this.messagetext = '';
-    this.submitted = true;
     this.submitted = true;
     this.isBusy = true;
     this.findInvalidControls();
@@ -208,9 +165,10 @@ export class LudNewComponent implements OnInit {
   addData() {
     console.log('data: ' + this.dataForm.value.name);
     this.dataForm.controls.created_on.setValue(Date.now());
-
+    this.dataForm.controls.stock_uid.setValue(this.utilService.getUID('stock_uid'));
+    this.dataForm.controls.iteam_uid.setValue(this.itemUID);
     //this.userForm.controls.user_name.setValue(upper(this.user_name));
-    this.webService.addLUD(this.dataForm.value).subscribe(
+    this.webService.addStock(this.dataForm.value).subscribe(
       (response) => {
         //this.resp = response;
         console.log('Data added' + response);
@@ -238,7 +196,7 @@ export class LudNewComponent implements OnInit {
     //alert("Value is set to - " + this.userForm.controls._id.value);
 
     //this.userForm.controls.user_name.setValue(upper(this.user_name));
-    this.webService.updateLUD(this.dataForm.value).subscribe(
+    this.webService.updateStock(this.dataForm.value).subscribe(
       (response) => {
         //this.resp = response;
         console.log('Data updated' + response);

@@ -8,15 +8,29 @@ import { UserComponent } from './User/user.component';
 import { MenuComponent } from './Menu/menu.component';
 import { HomeComponent } from './Home/home.component';
 import { mainWS } from './ws/mainWS';
-import {sessionService} from './ws/sessionWS';
-import {AgGridModule} from "@ag-grid-community/angular";
+import { sessionService } from './ws/sessionWS';
+import { AgGridModule } from "@ag-grid-community/angular";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LuComponent } from './lu/lu.component';
 import { LuhNewComponent } from './lu/luh-new/luh-new.component';
 import { LudNewComponent } from './lu/lud-new/lud-new.component';
-import {luWS} from './ws/luWS';
+import { luWS } from './ws/luWS';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
+import { OrdersComponent } from './orders/orders.component';
+import { ordersWS } from './ws/ordersWS';
+import { stockWS } from './ws/stockWS';
+import { customersWS } from './ws/customersWS';
+import { ItemCategoriesComponent } from './item-categories/item-categories.component';
+import { ItemsComponent } from './items/items.component';
+import { CustomersComponent } from './customers/customers.component';
+import { StockComponent } from './stock/stock.component';
+import { VendersComponent } from './venders/venders.component';
+import { NewOrderComponent } from './orders/new-order/new-order.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { StockNewComponent } from './stock/stock-new/stock-new.component';
+import { utilWS } from './ws/utilWS';
+
 
 
 @NgModule({
@@ -29,6 +43,14 @@ import { MatDialogModule } from '@angular/material/dialog';
     LuComponent,
     LuhNewComponent,
     LudNewComponent,
+    OrdersComponent,
+    ItemCategoriesComponent,
+    ItemsComponent,
+    CustomersComponent,
+    StockComponent,
+    VendersComponent,
+    NewOrderComponent,
+    StockNewComponent,
     
   ],
   imports: [
@@ -39,12 +61,18 @@ import { MatDialogModule } from '@angular/material/dialog';
     FormsModule, 
     ReactiveFormsModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    Ng2SearchPipeModule,
+    
   ],
   providers: [
     mainWS,
     sessionService,
-    luWS
+    luWS,
+    ordersWS,
+    stockWS,
+    customersWS,
+    utilWS
   ],
   bootstrap: [AppComponent],
   entryComponents: [LuhNewComponent]

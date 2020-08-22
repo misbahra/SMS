@@ -11,6 +11,9 @@ import { Routes, RouterModule } from '@angular/router';
  import{LuComponent} from './lu/lu.component';
  import{LuhNewComponent} from './lu/luh-new/luh-new.component';
  import{LudNewComponent} from './lu/lud-new/lud-new.component';
+ import{OrdersComponent} from './orders/orders.component';
+ import{NewOrderComponent} from './orders/new-order/new-order.component';
+ import{StockComponent} from './stock/stock.component';
  // import{WsrMainComponent} from './wsr-main/wsr-main.component';
 // import{WsrMainNewComponent} from './wsr-main/wsr-main-new/wsr-main-new.component';
 // import { FeedbackComponent } from './feedback/feedback.component';
@@ -48,7 +51,10 @@ const routes: Routes = [
   { path: 'user',   component: UserComponent },
   { path: 'login-new',   component: LoginComponent},
   { path: 'lu',   component: LuComponent },
-  ];
+  { path: 'order',   component: OrdersComponent },
+  { path: 'neworder',   component: NewOrderComponent },
+  { path: 'stock',   component: StockComponent },
+ ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

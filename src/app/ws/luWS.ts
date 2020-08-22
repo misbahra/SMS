@@ -8,8 +8,8 @@ import { retry, catchError } from 'rxjs/operators';
 export class luWS {
     constructor(private http: HttpClient) { }
 
-      //BASE_URL = 'http://localhost:4201';
-  BASE_URL = 'https://mraapp-api.herokuapp.com';
+      BASE_URL = 'http://localhost:4201';
+  //BASE_URL = 'https://mraapp-api.herokuapp.com';
 
     getLUH() {
         return this.http.get(this.BASE_URL + '/allLUH').toPromise();

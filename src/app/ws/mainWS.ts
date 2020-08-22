@@ -9,8 +9,8 @@ export class mainWS {
     private http: HttpClient
     ) { }
 
-  //BASE_URL = 'http://localhost:4201';
-  BASE_URL = 'https://mraapp-api.herokuapp.com';
+  BASE_URL = 'http://localhost:4201';
+ // BASE_URL = 'https://mraapp-api.herokuapp.com';
 
   getMessage() {
     return this.http.get(this.BASE_URL).toPromise();
