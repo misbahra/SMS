@@ -46,10 +46,21 @@
         margin: 0 0 0 0;
         padding: 0 0 0 0;
       }
+
+      .row1 {
+       height:300;
+       
+      }
+     
+
+      .row {
+        height: 600;
+      }
+     
      
       /* Create two equal columns that sits next to each other */
       .column1 {
-        width: 35%;
+        width: 100%;
         padding: 5px;
        
       }

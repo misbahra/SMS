@@ -13,6 +13,9 @@ export class sessionService {
  
   redirectUrl = "";
 
+  BASE_URL = 'http://localhost:4201';
+  //BASE_URL = 'https://mraapp-api.herokuapp.com';
+
   conUser = JSON.parse(localStorage.getItem('conUser')) || [];
 
   // to communicate parent and child
@@ -43,6 +46,10 @@ export class sessionService {
   getMessage(progName: string): Observable<any> {
     if (progName == "wsr") { return this.wsr.asObservable(); }
     else if (progName == "phase") { return this.phase.asObservable(); }
+  }
+
+  getBaseUrl() {
+     return this.BASE_URL; 
   }
 
   logout() {

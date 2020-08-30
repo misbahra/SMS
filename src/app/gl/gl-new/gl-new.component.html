@@ -1,0 +1,617 @@
+<div class="h5 header-bar1">
+    Create / Modify GL - Vender: {{VenderUID}} - {{VenderName}}
+</div>
+<p>{{this.messagetext}}</p>
+
+<!--Card content-->
+<div class="card-body  px-lg-5 pt-0">
+
+    <!-- Form -->
+    <form [formGroup]="dataForm" class="text-center" style="color: #757575;" action="#!">
+        <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
+            <span class="sr-only">Loading...</span>
+        </div>
+
+         <!-- row started -->
+         <div class="form-row">
+
+          <!--cloumn started -->
+          <div class="col">
+            <!-- gl_uid -->
+            <div class="md-form ">
+                <label class="font-weight form-row " for="gl_uid">GL UID</label>
+                <input readonly type="text" id="gl_uid" name="gl_uid" class="form-row " placeholder="UID"
+                    formControlName="gl_uid" [ngClass]="{ 'is-invalid':   submitted && fc.gl_uid.errors }">
+                <div *ngIf=" fc.gl_uid.invalid " class="invalid-feedback">
+                    <div *ngIf="fc.vender_uid.errors.required">
+                        GL UID is required
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--cloumn colosed -->
+<!--cloumn started -->
+<div class="col">
+    <!-- gl_date -->
+    <div class="md-form ">
+        <label class="font-weight form-row " for="gl_date">GL Date</label>
+        <input type="date" id="gl_date" name="gl_date" class="form-control form-control-sm"
+            placeholder="GL Date" formControlName="gl_date"
+            [ngClass]="{ 'is-invalid':   submitted && fc.gl_date.errors }">
+        <div *ngIf=" fc.gl_date.invalid " class="invalid-feedback">
+            <div *ngIf="fc.gl_date.errors.required">
+                GL date is required
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--cloumn colosed -->
+
+ <!--cloumn started -->
+ <div class="col">
+    <!-- ref_number -->
+    <div class="md-form ">
+        <label class="font-weight form-row " for="ref_number">Ref#</label>
+        <input type="text" id="ref_number" name="ref_number" class="form-control form-control-sm" placeholder="Reference #"
+            formControlName="ref_number" [ngClass]="{ 'is-invalid':   submitted && fc.ref_number.errors }">
+        <div *ngIf=" fc.ref_number.invalid " class="invalid-feedback">
+            <div *ngIf="fc.ref_number.errors.required">
+                Ref# is required
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--cloumn colosed -->
+
+    </div>
+    <!------------------- row closed ------------------>
+
+        <!-- row started -->
+        <div class="form-row">
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- account_head_code -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="account_head_code">Account Head</label>
+                    
+                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="account_head_code"
+                        name="account_head_code" formControlName="account_head_code"
+                        [ngClass]="{ 'is-invalid': submitted && fc.account_head_code.errors }"
+                        (change)= "selectAccountHead()">
+                        <!-- <option Selected value="">Select User Role</option> -->
+                        <option *ngFor="let data of glAccountHeadsDataList; index as i;" [value]=data.lud_code>
+                            {{data.lud_desc}}
+                        </option>
+                        <!-- <option value=data.lud_code>data.lud_desc</option> -->
+                    </select>                    
+                    
+                    <div *ngIf=" fc.account_head_code.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.account_head_code.errors.required">
+                            Account Head is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+             <!--cloumn started -->
+             <div class="col">
+                <!-- total_amount -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="total_amount">Total Amount</label>
+                    <input type="Number" id="total_amount" name="total_amount" class="form-control form-control-sm" 
+                    placeholder="Total Amount"
+                        formControlName="total_amount"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.total_amount.errors }">
+                    <div *ngIf=" fc.total_amount.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.total_amount.errors.required">
+                            Total Amount on is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+             <!--cloumn started -->
+             <div class="col">
+                <!-- currency -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="currency">Currency</label>
+                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="account_head_code"
+                        name="currency" formControlName="currency"
+                        [ngClass]="{ 'is-invalid': submitted && fc.currency.errors }">
+                        <!-- <option Selected value="">Select User Role</option> -->
+                        <option *ngFor="let data of currencyDataList; index as i;" [value]=data.lud_code>
+                            {{data.lud_desc}}
+                        </option>
+                        <!-- <option value=data.lud_code>data.lud_desc</option> -->
+                    </select> 
+                    <div *ngIf=" fc.currency.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.currency.errors.required">
+                            Currency is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+           
+        </div>
+        <!------------------- row closed ------------------>
+
+        <!-- row started -->
+        <div class="form-row" *ngIf="fc.account_head_code.value == 'FND'">
+
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- vender_account_uid -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="vender_account_uid">Vender Account</label>
+                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="vender_account_uid"
+                        name="vender_account_uid" formControlName="vender_account_uid"
+                        [ngClass]="{ 'is-invalid': submitted && fc.vender_account_uid.errors }">
+                        <!-- <option Selected value="">Select User Role</option> -->
+                        <option *ngFor="let data of venderAccountsDataList; index as i;" [value]=data.vender_account_uid>
+                            {{data.account_no}} - {{data.account_title}} - {{data.bank_name}}
+                        </option>
+                        <!-- <option value=data.lud_code>data.lud_desc</option> -->
+                    </select> 
+                    <div *ngIf=" fc.vender_account_uid.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.vender_account_uid.errors.required">
+                            Vender Account is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+           
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- funds_sent_on -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="funds_sent_on">Funds Sent On</label>
+                    <input type="date" id="funds_sent_on" name="funds_sent_on" class="form-control form-control-sm"
+                        placeholder="Funds Sent Date" formControlName="funds_sent_on"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.funds_sent_on.errors }">
+                    <div *ngIf=" fc.funds_sent_on.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.vender_uid.errors.required">
+                            Funds Sent on is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- funds_received_on -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="funds_received_on">Funds Received On</label>
+                    <input type="date" id="funds_received_on" name="funds_received_on" class="form-control form-control-sm"
+                        placeholder="Funds Received Date" formControlName="funds_received_on"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.funds_received_on.errors }">
+                    <div *ngIf=" fc.funds_received_on.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.funds_received_on.errors.required">
+                            Funds received is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+            
+        </div>
+        <!------------------- row closed ------------------>
+
+        <!-- row started -->
+        <div class="form-row" *ngIf="fc.account_head_code.value == 'FND'">
+
+
+              <!--cloumn started -->
+              <div class="col">
+                <!-- through_vender_uid -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="through_vender_uid">Through Vender</label>
+                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="through_vender_uid"
+                    name="through_vender_uid" formControlName="through_vender_uid"
+                    [ngClass]="{ 'is-invalid': submitted && fc.through_vender_uid.errors }">
+                    <!-- <option Selected value="">Select User Role</option> -->
+                    <option *ngFor="let data of vendersDataList; index as i;" [value]=data.vender_uid>
+                        {{data.vender_name}}
+                    </option>
+                    <!-- <option value=data.lud_code>data.lud_desc</option> -->
+                </select>
+                <div *ngIf=" fc.through_vender_uid.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.through_vender_uid.errors.required">
+                            Through Vender is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+           <!--cloumn started -->
+           <div class="col">
+            <!-- exchange -->
+            <div class="md-form ">
+                <label class="font-weight form-row " for="exchange">Exchange</label>
+                <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="exchange"
+                        name="exchange" formControlName="exchange"
+                        [ngClass]="{ 'is-invalid': submitted && fc.exchange.errors }">
+                        <!-- <option Selected value="">Select User Role</option> -->
+                        <option *ngFor="let data of courierDataList; index as i;" [value]=data.lud_code>
+                            {{data.lud_desc}}
+                        </option>
+                        <!-- <option value=data.lud_code>data.lud_desc</option> -->
+                    </select> 
+                    <div *ngIf=" fc.exchange.invalid " class="invalid-feedback">
+                    <div *ngIf="fc.exchange.errors.required">
+                        Exchange is required
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--cloumn colosed -->
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- other_charges -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="other_charges">Other Charges</label>
+                    <input type="Number" id="other_charges" name="other_charges" class="form-control form-control-sm"
+                        placeholder="Other Charges" formControlName="other_charges"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.other_charges.errors }">
+                    <div *ngIf=" fc.other_charges.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.other_charges.errors.required">
+                            Other Charges is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+            
+        </div>
+        <!------------------- row closed ------------------>
+
+
+        <!-- row started -->
+        <div class="form-row" *ngIf="fc.account_head_code.value == 'CAR'">
+
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- cargo_bill_amount -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="cargo_bill_amount">Cargo Bill Amount</label>
+                    <input type="Number" id="cargo_bill_amount" name="cargo_bill_amount" class="form-control form-control-sm"
+                        placeholder="Cargo Bill Amount #" formControlName="cargo_bill_amount"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.cargo_bill_amount.errors }">
+                    <div *ngIf=" fc.cargo_bill_amount.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.cargo_bill_amount.errors.required">
+                            Cargo bill is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- cargo_charges -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="cargo_charges">Cargo Charges</label>
+                    <input type="Number" id="cargo_charges" name="cargo_charges" class="form-control form-control-sm" 
+                    placeholder="Cargo Charges"
+                        formControlName="cargo_charges"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.cargo_charges.errors }">
+                    <div *ngIf=" fc.cargo_charges.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.cargo_charges.errors.required">
+                            Cargo Charges on is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- cargo_vat -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="cargo_vat">Vat</label>
+                    <input type="Number" id="cargo_vat" name="cargo_vat" class="form-control form-control-sm" placeholder="Vat"
+                        formControlName="cargo_vat" [ngClass]="{ 'is-invalid':   submitted && fc.cargo_vat.errors }">
+                    <div *ngIf=" fc.cargo_vat.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.cargo_vat.errors.required">
+                            Vat is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- cargo_commission -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="cargo_commission">Comission</label>
+                    <input type="text" id="cargo_commission" name="cargo_commission" class="form-control form-control-sm"
+                        placeholder="Comission" formControlName="cargo_commission"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.cargo_commission.errors }">
+                    <div *ngIf=" fc.cargo_commission.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.cargo_commission.errors.required">
+                            Comission is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+        </div>
+        <!------------------- row closed ------------------>
+
+
+        <!-- row started -->
+        <div class="form-row" *ngIf="fc.account_head_code.value == 'CAR'">
+
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- customs_charges -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="customs_charges">Customs</label>
+                    <input type="Number" id="customs_charges" name="customs_charges" class="form-control form-control-sm"
+                        placeholder="Customs Charges" formControlName="customs_charges"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.customs_charges.errors }">
+                    <div *ngIf=" fc.customs_charges.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.customs_charges.errors.required">
+                            Customs is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- cargo_weight -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="cargo_weight">Cargo Weight</label>
+                    <input type="Number" id="cargo_weight" name="cargo_weight" class="form-control form-control-sm"
+                        placeholder="Cargo Weight" formControlName="cargo_weight"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.cargo_weight.errors }">
+                    <div *ngIf=" fc.cargo_weight.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.cargo_weight.errors.required">
+                            Cargo weight on is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- cargo_items_count -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="cargo_items_count">Item Count</label>
+                    <input type="Number" id="cargo_items_count" name="cargo_items_count" class="form-control form-control-sm"
+                        placeholder="Item Count" formControlName="cargo_items_count"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.cargo_items_count.errors }">
+                    <div *ngIf=" fc.cargo_items_count.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.cargo_items_count.errors.required">
+                            Item Count is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+        </div>
+        <!------------------- row closed ------------------>
+
+
+        <!-- row started -->
+        <div class="form-row" *ngIf="fc.account_head_code.value == 'CAR'">
+
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- cargo_requested_on -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="cargo_requested_on">Requested on</label>
+                    <input type="date" id="cargo_requested_on" name="cargo_requested_on" class="form-control form-control-sm"
+                        placeholder="Cargo Requested on" formControlName="cargo_requested_on"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.cargo_requested_on.errors }">
+                    <div *ngIf=" fc.cargo_requested_on.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.cargo_requested_on.errors.required">
+                            Cargo Requested on is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- cargo_shipped_on -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="cargo_shipped_on">Shipped on</label>
+                    <input type="date" id="cargo_shipped_on" name="cargo_shipped_on" class="form-control form-control-sm"
+                        placeholder="Cargo Shipped on" formControlName="cargo_shipped_on"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.cargo_shipped_on.errors }">
+                    <div *ngIf=" fc.cargo_shipped_on.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.cargo_shipped_on.errors.required">
+                            Cargo Shipped on is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- cargo_received_on -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="cargo_received_on">Received on</label>
+                    <input type="date" id="cargo_received_on" name="cargo_received_on" class="form-control form-control-sm"
+                        placeholder="Cargo Received on" formControlName="cargo_received_on"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.cargo_received_on.errors }">
+                    <div *ngIf=" fc.cargo_received_on.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.cargo_received_on.errors.required">
+                            Cargo Received on is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+        </div>
+        <!------------------- row closed ------------------>
+<!-- row started -->
+<div class="form-row" *ngIf="fc.account_head_code.value == 'LFR'">
+
+
+      <!--cloumn started -->
+      <div class="col">
+        <!-- sent_to_vender_uid -->
+        <div class="md-form ">
+            <label class="font-weight form-row " for="sent_to_vender_uid">Vender Account</label>
+            <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="sent_to_vender_uid"
+                name="sent_to_vender_uid" formControlName="sent_to_vender_uid"
+                [ngClass]="{ 'is-invalid': submitted && fc.sent_to_vender_uid.errors }"
+                (change)= "selectSentToVender()">
+                <!-- <option Selected value="">Select User Role</option> -->
+                <option *ngFor="let data of vendersDataList; index as i;" [value]=data.vender_uid>
+                    {{data.vender_name}}
+                </option>
+                <!-- <option value=data.lud_code>data.lud_desc</option> -->
+            </select> 
+            <div *ngIf=" fc.sent_to_vender_uid.invalid " class="invalid-feedback">
+                <div *ngIf="fc.sent_to_vender_uid.errors.required">
+                    Vender Account is required
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--cloumn colosed -->
+
+      <!--cloumn started -->
+      <div class="col">
+        <!-- sent_to_vender_account_uid -->
+        <div class="md-form ">
+            <label class="font-weight form-row " for="sent_to_vender_account_uid">Vender Account</label>
+            <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="sent_to_vender_account_uid"
+                name="sent_to_vender_account_uid" formControlName="sent_to_vender_account_uid"
+                [ngClass]="{ 'is-invalid': submitted && fc.sent_to_vender_account_uid.errors }">
+                <!-- <option Selected value="">Select User Role</option> -->
+                <option *ngFor="let data of venderAccountsDataList; index as i;" [value]=data.sent_to_vender_account_uid>
+                    {{data.account_no}} - {{data.account_title}} - {{data.bank_name}}
+                </option>
+                <!-- <option value=data.lud_code>data.lud_desc</option> -->
+            </select> 
+            <div *ngIf=" fc.sent_to_vender_account_uid.invalid " class="invalid-feedback">
+                <div *ngIf="fc.sent_to_vender_account_uid.errors.required">
+                    Vender Account is required
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--cloumn colosed -->
+
+   
+</div>
+<!------------------- row closed ------------------>
+        <!-- row started -->
+        <div class="form-row">
+
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- remarks -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="remarks">Remarks</label>
+                    <input type="text" id="remarks" name="remarks" class="form-control form-control-sm" placeholder="Remarks"
+                        formControlName="remarks" [ngClass]="{ 'is-invalid':   submitted && fc.remarks.errors }">
+                    <div *ngIf=" fc.remarks.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.remarks.errors.required">
+                            Remarks is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+        </div>
+        <!------------------- row closed ------------------>
+
+        <!-- row started -->
+        <div class="form-row">
+
+
+            <!--cloumn started -->
+            <div class="col">
+                <!-- additional_details -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="additional_details">Additial Details</label>
+                    <input type="text" id="additional_details" name="additional_details" class="form-control form-control-sm"
+                        placeholder="Addional Details" formControlName="additional_details"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.additional_details.errors }">
+                    <div *ngIf=" fc.additional_details.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.additional_details.errors.required">
+                            Additional Details is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--cloumn colosed -->
+        </div>
+        <!------------------- row closed ------------------>
+
+        <!-- Form buttons -->
+        <div class=" mt-3 text-center">
+
+            <button [disabled]="isBusy" (click)="onSubmit()" class="btn  btn-info pl-5 pr-5">
+                <i class="fa fa-save pr-2"> </i> Save
+                <!-- {{ isBusy == false ? 'Login' : 'Logging in, please wait' }}  -->
+            </button>
+            <button (click)="onCancel()" class="btn  btn-success ml-5 pl-5 pr-5">
+                <i class="fa fa-close pr-2"> </i> Cancel
+                <!-- {{ isBusy == false ? 'Login' : 'Logging in, please wait' }}  -->
+            </button>
+
+        </div>
+
+
+        <hr>
+
+    </form>
+    <!-- Form -->
+
+</div>
+<!-- main div -->

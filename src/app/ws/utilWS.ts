@@ -12,6 +12,11 @@ export class utilWS {
     var prefix = "";
     if (type == "order_item_uid") {prefix = "OI"}
     else if(type == "order_uid") {prefix = "O"}
+    else if(type == "stock_uid") {prefix = "ST"}
+    else if(type == "item_uid") {prefix = "IT"}
+    else if(type == "item_categories_uid") {prefix = "IC"}
+    else if(type == "venders_uid") {prefix = "VN"}
+    else if(type == "gl_uid") {prefix = "GL"}
     else {prefix = ""} ;
 
     var d = new Date();
@@ -26,6 +31,13 @@ export class utilWS {
     return( d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+"  "+ 
             d.getHours() +":"+ d.getMinutes() +":"+ d.getSeconds()
                );
+  }
+
+  formatNumber(num) {
+   
+    return Math.floor(num)
+      .toString()
+      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
   }
 
 }

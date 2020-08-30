@@ -7,7 +7,7 @@
                 <!-- p-2 mb-2 -->
                 <!-- <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span> -->
                 <div class=" h5 float-left">
-                Stock Summary
+                GL Summary
                 </div>
                 
             </div>
@@ -24,22 +24,22 @@
             <table class="table table-striped" style="height:600px">
                 <thead>
                     <tr class="tb-header">
-                        <th>Item</th>
-                        <th>Total</th>
-                        <th>Sold</th>
-                        <th>Remaining</th>
+                        <th>Vender</th>
+                        <th>Sent</th>
+                        <th>Received </th>
+                        <th>Balance</th>
                         <th></th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let stock of stockDataListDisplay |filter:term ; let i=index">
-                        <td class="pt-0 pb-0 mt-0 mb-0">{{stock.item_name}}</td>
-                        <td class="pt-0 pb-0 mt-0 mb-0 align-right">{{stock.items_count}}</td>
-                        <td class="pt-0 pb-0 mt-0 mb-0">{{stock.stock_sold}}</td>
-                        <td class="pt-0 pb-0 mt-0 mb-0">{{stock.available_stock}}</td>
+                    <tr *ngFor="let gl of glDataListDisplay |filter:term ; let i=index">
+                        <td class="pt-0 pb-0 mt-0 mb-0">{{gl.vender_name}}</td>
+                        <td class="pt-0 pb-0 mt-0 mb-0 align-right">{{gl.fund_amount}}</td>
+                        <td class="pt-0 pb-0 mt-0 mb-0">{{gl.cargo_amount}}</td>
+                        <td class="pt-0 pb-0 mt-0 mb-0">{{gl.balance}}</td>
                         <td class="pt-0 pb-0 mt-0 mb-0">
-                            <button type="button" class="btn pt-0 pb-0 mt-0 mb-0" (click)="selectStock(stock.item_uid, stock.item_name)">
+                            <button type="button" class="btn pt-0 pb-0 mt-0 mb-0" (click)="selectGL(gl.vender_uid, gl.vender_name)">
                                 <i class="fa fa-arrow-right"></i></button>
                         </td>
                     </tr>
@@ -50,21 +50,21 @@
     <div class="column2 ml-1 mt-2  table-responsive  border border-primary">
         <div class="headerBar p-2 mb-2">   
             <div class=" h5 float-left">
-                Stock Details &nbsp; <b>Item:</b> {{itemUID}} ({{item_name}})
+                GL Details &nbsp; <b>Vender:</b> {{venderUID}} ({{venderName}})
             </div>
             <div class=" float-right">
                 <!-- parameter 1 to openStockDialog 
                     means its and new record and 2 mean its an update operation -->
                   <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-                    type="button" (click)="openStockDialog(2)">
+                    type="button" (click)="openGLDialog(2)">
                     <span class="fa fa-pencil p-2 text-warning"></span>
                   </a>
                 <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-                    type="button" (click)="openStockDialog(1)">
+                    type="button" (click)="openGLDialog(1)">
                   <span class="fa fa-plus text-white p-2"></span>
                 </a>
                 <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-                    type="button" (click)="deleteStock()">
+                    type="button" (click)="deleteGL()">
                     <span class="fa fa-trash text-danger p-2"></span>
                   </a>
                 
@@ -78,8 +78,8 @@
                 style="width:100%; height:600px;"
                 class="ag-theme-alpine" 
                 [rowData]="rowData" 
-                [columnDefs]="columnDefs"
-                [defaultColDef]="defaultColDef" 
+                [columnDefs]="columnDefs" 
+                [defaultColDef]="defaultColDef"
                 (rowSelected)="onRowSelected($event)">
             </ag-grid-angular> 
         </div>

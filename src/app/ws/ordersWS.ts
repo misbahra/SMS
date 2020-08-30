@@ -11,8 +11,17 @@ export class ordersWS {
       BASE_URL = 'http://localhost:4201';
   //BASE_URL = 'https://mraapp-api.herokuapp.com';
 
-    getOrders() {
-        return this.http.get(this.BASE_URL + '/allOrders').toPromise();
+    getOrders(params: any) {
+        
+        const searchParams = {
+            params: {
+                param1: params[0].order_date,
+                param2: params[0].customer_uid,
+                param3: params[0].invoice_number
+            }
+        }
+        
+        return this.http.get(this.BASE_URL + '/allOrders', searchParams).toPromise();
     }
 
    

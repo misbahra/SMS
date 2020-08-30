@@ -30,6 +30,11 @@ import { NewOrderComponent } from './orders/new-order/new-order.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { StockNewComponent } from './stock/stock-new/stock-new.component';
 import { utilWS } from './ws/utilWS';
+import { vendersWS } from './ws/vendersWS';
+import { GlComponent } from './gl/gl.component';
+import { GlNewComponent } from './gl/gl-new/gl-new.component';
+import {glWS} from './ws/glWS';
+import {venderAccountsWS} from './ws/venderAccountsWS';
 
 
 
@@ -51,6 +56,8 @@ import { utilWS } from './ws/utilWS';
     VendersComponent,
     NewOrderComponent,
     StockNewComponent,
+    GlComponent,
+    GlNewComponent,
     
   ],
   imports: [
@@ -72,7 +79,10 @@ import { utilWS } from './ws/utilWS';
     ordersWS,
     stockWS,
     customersWS,
-    utilWS
+    utilWS,
+    vendersWS,
+    glWS,
+    venderAccountsWS
   ],
   bootstrap: [AppComponent],
   entryComponents: [LuhNewComponent]

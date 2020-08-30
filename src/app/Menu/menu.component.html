@@ -1,5 +1,5 @@
 <!--Navbar-->
-<nav  class="navbar navbar-expand-lg navbar-dark primary-color menu toolbar">
+<nav  class=" navbar navbar-expand-lg navbar-dark primary-color menu toolbar">
 
     <!-- Navbar brand -->
     <a  class="navbar-brand " href="#"> 
@@ -35,7 +35,10 @@
               <i class="fa fa-th-list  pr-2">  </i>Look Up
             </a>
             <a class="dropdown-item " href="#"    routerLink="/stock">
-              <i class="fa fa-calendar-alt  pr-2">  </i>Stock
+              <i class="fa fa-calendar  pr-2">  </i>Stock
+            </a>
+            <a class="dropdown-item " href="#"    routerLink="/gl">
+              <i class="fa fa-calendar  pr-2">  </i>Ledger
             </a>
               <!-- <a class="dropdown-item" href="#">Something else here</a>
               <div class="dropdown-divider"></div>
@@ -60,7 +63,7 @@
         </li>
         <li class="nav-item active">
           <a class="nav-link" href="#"   *ngIf = "(connectedUser.length != 0)" routerLink="/neworder">
-            <i class="fa fa-window-maximize p-1 greenHover">  </i>New Order
+            <i class="fa fa-map p-1 greenHover">  </i>New Order
           </a>
         </li>
         

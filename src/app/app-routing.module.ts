@@ -14,6 +14,7 @@ import { Routes, RouterModule } from '@angular/router';
  import{OrdersComponent} from './orders/orders.component';
  import{NewOrderComponent} from './orders/new-order/new-order.component';
  import{StockComponent} from './stock/stock.component';
+ import{GlComponent} from './gl/gl.component';
  // import{WsrMainComponent} from './wsr-main/wsr-main.component';
 // import{WsrMainNewComponent} from './wsr-main/wsr-main-new/wsr-main-new.component';
 // import { FeedbackComponent } from './feedback/feedback.component';
@@ -54,6 +55,7 @@ const routes: Routes = [
   { path: 'order',   component: OrdersComponent },
   { path: 'neworder',   component: NewOrderComponent },
   { path: 'stock',   component: StockComponent },
+  { path: 'gl',   component: GlComponent },
  ];
 
 @NgModule({

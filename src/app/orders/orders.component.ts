@@ -9,6 +9,8 @@ import { LudNewComponent } from '../lu/lud-new/lud-new.component';
 import * as momentNs from 'moment';
 const moment = momentNs;
 import { stockWS } from '../ws/stockWS';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { customersWS } from '../ws/customersWS';
 
 @Component({
   selector: 'app-orders',
@@ -22,7 +24,9 @@ export class OrdersComponent implements OnInit {
     private router: Router,
     private sessionService: sessionService,
     public dialog: MatDialog,
-    public stockService: stockWS
+    public stockService: stockWS,
+    private fb: FormBuilder,
+    private CustomersService: customersWS,
   ) {
 
   }
@@ -38,6 +42,8 @@ export class OrdersComponent implements OnInit {
   isluhCodeSelected: boolean = false;
   columnDefs = [];
   rowData:any = [];
+  customerList: any = [];
+  orderForm: FormGroup;
    rowDataClicked:any = {};
     userPrivs = {"viewAllowed":"N",
                 "editAllowed":"N",
@@ -63,27 +69,87 @@ rowData2:any = [];
   flex: '1 1 auto'
 };
 
+ngOnInit() {
+
+  this.loadAllCustomers();
+    //this.loadAllOrders();
+    this.userPrivs = this.sessionService.getUsersPrivs();
+    if (this.selectedCode.length > 0){this.loadAllOrderItems(this.selectedCode);}
+    //this.orderForm = new this.fb.group();
+     this.orderForm = this.fb.group({
+      order_uid: ['', []],
+      customer_uid: ['', []],
+      order_date: ['', []],
+      invoice_number: ['',[]],
+    }
+      // , { validator: this.CheckUserName('UserName') }
+    );
+  };
+
+  clearFilters()
+  {
+    this.orderForm.reset();
+  }
+
+  async loadAllCustomers() {
+    //alert("loading lud comp");  
+    
+    let response = await this.CustomersService.getCustomers();
+    this.customerList = response;
+
+    
+     //console.log("Data in LUD list " + this.LUDdataList.length );
+  };
+
+
   async loadAllOrders() {
+    //alert("loading orederes");
     this.isBusy = true;
-    let response = await this.webService.getOrders();
+    //alert("Selected Date is - " + this.orderForm.value.order_date);
+    
+    var orderDate;
+    var customerUID;
+    var invoiceNumber;
+    
+    if (    this.orderForm.value.order_date == "" 
+        ||  this.orderForm.value.order_date == null)
+     { orderDate = "1"} 
+      else {orderDate = this.orderForm.value.order_date;};
+
+      if (    this.orderForm.value.customer_uid == "" 
+      ||  this.orderForm.value.customer_uid == null)
+   { customerUID = "1"} 
+    else {customerUID = this.orderForm.value.customer_uid;};
+
+    if (    this.orderForm.value.invoice_number == "" 
+        ||  this.orderForm.value.invoice_number == null)
+     { invoiceNumber = "1"} 
+      else {invoiceNumber = this.orderForm.value.invoice_number;};
+    
+
+    var parameters = [{"order_date":orderDate ,
+                       "customer_uid" : customerUID,
+                      "invoice_number" : invoiceNumber }];
+    let response = await this.webService.getOrders(parameters);
     this.ordersdataList = response;
 
     this.columnDefs = [
       {
         headerName: '',
-         width: 25,
+         width: 35,
          sortable: false,
          filter: false,
         checkboxSelection: true
         },
-      {headerName: '#', field: 'order_uid' , width: 75, sortable: true, filter:true  },
+      {headerName: '#', field: 'order_uid' , width: 200, sortable: true, filter:true  },
+      {headerName: 'Invoice#', field: 'invoice_number', width: 150, sortable: true, filter:true },
       {headerName: 'customer#', field: 'customer_name', width: 300, sortable: true, filter:true },
       {headerName: 'Date', field: 'order_date', width: 200, sortable: true, filter:true },
       {headerName: 'Status', field: 'status', width: 100, sortable: true, filter:true },
       {headerName: 'HD', field: 'home_delivery', width: 100, sortable: true, filter:true },
       {headerName: 'PM', field: 'payment_mode', width: 100, sortable: true, filter:true },
-      {headerName: 'order_desc', field: 'order_desc', width: 300, sortable: true, filter:true },
-
+      {headerName: 'Desc', field: 'order_desc', width: 300, sortable: true, filter:true },
+      
       
       
     ];
@@ -220,63 +286,10 @@ postAllOrders()
     else { alert('Please select a record to delete.');}
 }
 
+  // single getter for all form controls to access them from the html
+  get fc() { return this.orderForm.controls; }
 
-  ngOnInit() {
-
-
-    this.loadAllOrders();
-    this.userPrivs = this.sessionService.getUsersPrivs();
-    if (this.selectedCode.length > 0){this.loadAllOrderItems(this.selectedCode);}
-   
-  };
-
-  // openDialog() {
-  //   const dialogRef = this.dialog.open(dgcomponent);
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log(`Dialog result: ${result}`);
-  //   });
-  // }
-
-
-  // open the new / update form
-  openLuhDialog(id: any) {
-
-    this.isEdit = true;
-    /*
-    if (this.rowDataClicked._id || id == null ) {
-    // delete the parameters array
-    this.sessionService.deleteParameters();
-    // check if any parameter is sent or not
-    //if sent then this will be opened for update
-    //alert("test 1")
-    if (id != null) {
-//alert("test 2")
-      this.sessionService.setParameters([{ name: "luh_id", value: this.rowDataClicked._id }]);
-
-    }
-
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '600px';
-   
-    const dialogRef = this.dialog.open(LuhNewComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      if (result == "save") {
-        this.loadAllOrders();
-        this.rowDataClicked = {};
-        this.rowDataClicked2 = {};
-      }
-      return (result);
-    });
-  }
-  else
- { alert('Please select a record to update.');}
- */
-  }
-
-
+ 
 
 // // open the new / update form
 openLudDialog(id: any) {
@@ -377,10 +390,5 @@ onRowSelected2(e)
  
 }
 
-cancel()
-{
-this.isEdit = false;
-
-}
 }
 
