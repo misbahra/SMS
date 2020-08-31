@@ -43,6 +43,7 @@ export class NewOrderComponent implements OnInit {
   orderNumber : any = this.utilService.getUID("order_uid");
   orderDate = new Date().toISOString().slice(0, 16);
   vat =0;
+  
 
   orderForm: FormGroup;
   resp: any = [];
@@ -58,6 +59,8 @@ export class NewOrderComponent implements OnInit {
   yesNoList: any = [];
   OrderId : any = "";
   dt = new Date();
+  orderItems: any = [];
+  operation = 1; // 1 for insert , 2 for update
   
   
 
@@ -74,9 +77,6 @@ export class NewOrderComponent implements OnInit {
     height: '100%',
     flex: '1 1 auto'
 };
-
-  
-
 
   async loadStock() {
     this.isBusy = true;
@@ -218,13 +218,22 @@ export class NewOrderComponent implements OnInit {
      
     this.queryParams = this.sessionService.getParameters();
     // alert('point 1 - ' + this.queryParams[0].name);
-    if (this.queryParams.length > 0) {
-    if (this.queryParams[0].name == "Userid") {
-      // alert('point 2');
-      this.isDisabled = true;
-      //this.loadUser(this.queryParams);
+    if (this.queryParams[0].operation == 1) {
+       alert('New record.');
+       this.operation = 1;
+      
     }
-  }
+     // if operation = 2- update record   
+    else if (this.queryParams[0].operation == 2)
+    {
+      this.operation = 2;
+      var id = this.queryParams[0].order_id;
+      alert('Update record.' + id);
+      this.loadOrders(id);
+      
+    }
+    else {this.isDisabled = true;};
+  
     this.loadAllLUD('1');
     this.loadAllLUD('2');
     this.loadAllLUD('5');
@@ -236,12 +245,54 @@ export class NewOrderComponent implements OnInit {
   async loadOrders(orderid: any) {
     //this.isBusy = true;
     //alert('loading data - ' + userid[0].value);
-    this.response = await this.orderService.getThisOrder(orderid);
+    this.response = await this.orderService.getThisOrder([{value : orderid}]);
     //alert('data - ' + this.response.name);
     this.OrderId = this.response._id;
+    this.orderNumber = this.response.order_uid;
+    this.response.order_date = this.response.order_date.slice(0, 16);; 
     this.orderForm.patchValue(this.response);
     //this.userForm.disable();
+    this.loadOrderItems(this.orderNumber);
   };
+
+  async loadOrderItems(order_uid : any)
+  {
+
+    var resp = await this.orderService.getAllItemsForOrder([{value : order_uid}]);
+    this.orderItems = resp;
+    this.selectedDataList = [];
+
+    this.orderItems.forEach(found => {
+      
+    
+    this.selectedDataList.push(
+      {
+      "order_item_uid" : found.order_item_uid,
+      "order_uid" : found.order_uid,
+      "item_uid" :  found.item_uid,
+      "item_name" : found.item_name,
+      "unit_cost_price" : found.items_cost ,
+      "unit_tag_price" :  found.unit_tag_price,
+      "quantity" :  found.quantity,
+      "unit_sale_price" :found.unit_sale_price ,
+      "vat" :  found.vat,
+      "sales_tax" :  found.sales_tax,
+      "withholding_tax" :  found.withholding_tax,
+      "total_price" :  found.total_price ,
+      "total_price_with_taxes" :  found.total_price_with_taxes,
+      "discount_rate" : found.discount_rate,
+      "discount" :  found.discount ,
+      "order_refund_uid" :  found.order_refund_uid,
+      "stock_uid" : found.stock_uid,
+      "posted_to_stock" : found.posted_to_stock,
+      "created_by" :  found.created_by,
+      "created_on" : found.created_on,
+      "modified_by" :  found.modified_by,
+      "modified_on" :  found.modified_on
+    });
+  });
+
+  }
 
   async loadAllLUD(id: any) {
     //alert("loading lud comp");  
@@ -265,18 +316,14 @@ export class NewOrderComponent implements OnInit {
      //console.log("Data in LUD list " + this.LUDdataList.length );
   };
 
-  // getter for individual form controls to access them from the htm tags
-  get home_delivery() {
-    return this.orderForm.get('home_delivery'); //notice this
-  }
-  
+    
   // single getter for all form controls to access them from the html
   get fc() { return this.orderForm.controls; }
 
    
   onCancel() {
-    //this.router.navigate(['user']);
-    window.location.href = './order';
+    this.router.navigate(['order']);
+    //window.location.href = './order';
   }
 
   onSubmit() {

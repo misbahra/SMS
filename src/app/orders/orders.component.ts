@@ -11,6 +11,7 @@ const moment = momentNs;
 import { stockWS } from '../ws/stockWS';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { customersWS } from '../ws/customersWS';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-orders',
@@ -176,14 +177,14 @@ ngOnInit() {
        filter: false,
       checkboxSelection: true
       },
-    {headerName: 'order#', field: 'order_uid' , width: 100, sortable: true, filter:true },
-    {headerName: 'item', field: 'item_name', width: 350, sortable: true, filter:true },
-    {headerName: 'quantity', field: 'quantity', width: 100, sortable: true, filter:true },
-    {headerName: 'rate', field: 'unit_sale_price', width: 100, sortable: true, filter:true },
-    {headerName: 'total price', field: 'total_price', width: 100, sortable: true, filter:true },
-    {headerName: 'net price', field: 'total_price_with_taxes', width: 140, sortable: true, filter:true },
-    {headerName: 'stock uid', field: 'stock_uid', width: 75, sortable: true, filter:true },
-    {headerName: 'Posted', field: 'posted_to_stock ', width: 75, sortable: true, filter:true }
+    {headerName: 'order#', field: 'order_uid' , width: 200, sortable: true, filter:true },
+    {headerName: 'item', field: 'item_name', width: 300, sortable: true, filter:true },
+    {headerName: 'quantity', field: 'quantity', width: 150, sortable: true, filter:true },
+    {headerName: 'rate', field: 'unit_sale_price', width: 150, sortable: true, filter:true },
+    {headerName: 'total price', field: 'total_price', width: 200, sortable: true, filter:true },
+    {headerName: 'net price', field: 'total_price_with_taxes', width: 200, sortable: true, filter:true },
+    {headerName: 'stock uid', field: 'stock_uid', width: 200, sortable: true, filter:true },
+    {headerName: 'Posted', field: 'posted_to_stock ', width: 130, sortable: true, filter:true }
    
     
   ];
@@ -261,29 +262,19 @@ postAllOrders()
 
 
 
-  DeleteLUD(id: any) {
-    this.selectedID = id;
+  createOrder(id: any) {
+    this.sessionService.setParameters([{ operation: 1 }]);
+    this.router.navigate(['neworder'], {});
+}
 
-    //alert( 'data: ' + this.selectedID );
-    //this.webService.deleteLUD(this.LUDdataList[id]).subscribe(
-      if (this.rowDataClicked2._id) {
-        if (confirm('Are you sure to delete record?')) {
-           this.webService.deleteOrderItem(this.rowDataClicked2).subscribe(
-      (response) => {
-        this.LoadOrderItems(this.rowDataClicked.luh_code);
 
-      },
-      (error) => {
-        //Handle the error here
-        //If not handled, then throw it
-        console.error(error);
-        alert(this.rowDataClicked2.lud_code + " cannot be deleted.");
-
-     }
-   )
-    }
+editOrder() {
+  if (this.rowDataClicked._id == "" || this.rowDataClicked._id == null ) {alert("Please select an order first.");}
+  else
+  {
+  this.sessionService.setParameters([{ operation: 2, order_id: this.rowDataClicked._id }]);
+  this.router.navigate(['neworder'], {});
   }
-    else { alert('Please select a record to delete.');}
 }
 
   // single getter for all form controls to access them from the html

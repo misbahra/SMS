@@ -28,15 +28,21 @@
   }
 
   .toolbar {
-    height: 60px;
+    height: 70px;
     align-items: center;
     background-color: #310555;
     color: white;
     font-weight: 600;
     text-align:center;
     /*display: flex;*/
-    padding: 15px 0px 10px 0px;
-    margin-bottom: 0px;
+    
+  }
+
+  .brand_logo {
+    height: 49%;
+    width: 50px;
+    margin-bottom: 4px;
+    border-radius: 5px;
   }
 
   #grad1 {

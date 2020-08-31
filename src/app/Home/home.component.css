@@ -1,0 +1,7 @@
+.bg
+{
+    background-image:url('../../assets/Home_BG.jpg'); 
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+    height: 100%;
+}

@@ -1,6 +1,7 @@
-<div class="ml-0 mr-0  border-1" style="width:100%; ">
+<div class="m-1 bg">
+<div class="ml-0 mr-0" >
  
-  <form [formGroup]="orderForm" class="text-center" style="color: #757575;" action="#!">
+  <form [formGroup]="orderForm" class="text-center mt-2 mb-2" style="color: #757575;" action="#!">
    
   <div class="form-row">
 
@@ -71,13 +72,13 @@
           <button [disabled]="isBusy" (click)= "loadAllOrders()" class="btn  btn-info pl-5 pr-5" data-toggle="tooltip"
             data-placement="top" title="Save Order">
             <i class="fa fa-filter"> </i> Refresh
-            <!-- {{ isBusy == false ? 'Login' : 'Logging in, please wait' }}  -->
+           
           </button>
          </div>
 
          <div class=" float-right">
 
-          <button [disabled]="isBusy" (click)= "clearFilters()" class="btn  btn-success pl-5 pr-5" data-toggle="tooltip"
+          <button [disabled]="isBusy" (click)= "clearFilters()" class="btn  btn-success mr-2 pl-5 pr-5" data-toggle="tooltip"
             data-placement="top" title="Save Order">
             <i class="fa fa-refresh"> </i> Clear Filters
             <!-- {{ isBusy == false ? 'Login' : 'Logging in, please wait' }}  -->
@@ -99,29 +100,39 @@
   <div class="row row1">
     <div class="column1">
   
-      <div class="pt-2 pl-2 pb-4" style="color:white; background-color:rgb(30, 133, 146);">
-        <span class="h3">Orders</span>
-        <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
+      <div class="pt-2 pl-2 pb-2" style="color:white; background-color:rgb(81, 23, 120);">
         
-        <div class=" h5 float-right">
-          <button *ngIf="(userPrivs.editAllowed == 'Y')" type="button" class="btn" (click)="edit">
-            <i class="fa fa-pencil"></i>
-          </button>
-  
-          <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="new">
-            <span class="fa fa-plus"></span>
+          <span class="h3">Orders</span>
+        
+        <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
+        <div class=" float-left">
+          <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
+        </div>
+        <div class=" float-right">
+          <!-- parameter 1 to openStockDialog 
+              means its and new record and 2 mean its an update operation -->
+            <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+              type="button" (click)="editOrder()">
+              <span class="fa fa-pencil p-2 text-warning"></span>
+            </a>
+          <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+              type="button" (click)="createOrder()">
+            <span class="fa fa-plus text-white p-2"></span>
           </a>
-          <button *ngIf="(userPrivs.deleteAllowed == 'Y')" type="button" class="btn" (click)="deleteOrder()">
-            <i class="fa fa-trash error"></i>
-          </button>
-         </div>
+          <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+              type="button" (click)="deleteStock()">
+              <span class="fa fa-trash text-danger p-2"></span>
+            </a>
+          
+      </div>
+
       </div>
       <!-- [enableSorting]="true" [enableFilter]="true"
       [modules]="modules"
           [frameworkComponents]="frameworkComponents"
       -->
-      <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
-      <div [ngStyle]="style" *ngIf="(isBusy == false)">
+     
+      <div [ngStyle]="style" >
         <ag-grid-angular  
           [pagination]="true"
           [paginationPageSize]="15"
@@ -140,7 +151,7 @@
     <!-- 2nd column -->
     <div class="row row2">
     <div class="column1">
-      <div class="pt-2 pl-2 pb-4" style="color:white; background-color:rgba(110, 31, 141, 0.863);">
+      <div class="pt-2 pl-2 pb-2" style="color:white; background-color:rgb(80, 36, 113);">
        
         <span class="h3">Items</span>
   
@@ -166,7 +177,7 @@
   
     </div>
   </div>
-  
+</div>
   
   
   
