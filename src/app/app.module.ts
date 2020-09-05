@@ -35,6 +35,7 @@ import { GlComponent } from './gl/gl.component';
 import { GlNewComponent } from './gl/gl-new/gl-new.component';
 import {glWS} from './ws/glWS';
 import {venderAccountsWS} from './ws/venderAccountsWS';
+import { SalesComponent } from './Reports/sales/sales.component';
 
 
 
@@ -58,6 +59,7 @@ import {venderAccountsWS} from './ws/venderAccountsWS';
     StockNewComponent,
     GlComponent,
     GlNewComponent,
+    SalesComponent,
     
   ],
   imports: [

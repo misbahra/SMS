@@ -17,7 +17,7 @@ const moment = momentNs;
   templateUrl: './new-order.component.html',
   styleUrls: ['./new-order.component.css']
 })
-export class NewOrderComponent implements OnInit {
+export class NewOrderComponent implements OnInit{
   
   constructor(
     private orderService: ordersWS,
@@ -61,7 +61,9 @@ export class NewOrderComponent implements OnInit {
   dt = new Date();
   orderItems: any = [];
   operation = 1; // 1 for insert , 2 for update
-  
+  orderItemsToUodate: any = [];
+  dataId = "";
+  isItemAddedRemoved = false;
   
 
    rowDataClicked:any = {};
@@ -130,6 +132,7 @@ export class NewOrderComponent implements OnInit {
       else
       { this.stockDataList[selectedIndex].stock_sold += this.quantity;
        //alert(this.stockDataList[selectedIndex].quantity);
+       this.isItemAddedRemoved = true;
       this.selectedDataList.push(
       {
       "order_item_uid" : this.utilService.getUID("order_item_uid"),
@@ -182,7 +185,7 @@ export class NewOrderComponent implements OnInit {
       this.stockDataList[selectedIndex].stock_sold -= deletedOrderItem.quantity; 
       this.loadAvailableStock(this.stockDataList); 
       this.selectedDataList.splice(index , 1);
-  
+      this.isItemAddedRemoved = true;
   };
   
   ngOnInit() {
@@ -227,9 +230,9 @@ export class NewOrderComponent implements OnInit {
     else if (this.queryParams[0].operation == 2)
     {
       this.operation = 2;
-      var id = this.queryParams[0].order_id;
-      alert('Update record.' + id);
-      this.loadOrders(id);
+      this.dataId = this.queryParams[0].order_id;
+      alert('Update record.' + this.dataId);
+      this.loadOrders(this.dataId);
       
     }
     else {this.isDisabled = true;};
@@ -260,10 +263,13 @@ export class NewOrderComponent implements OnInit {
 
     var resp = await this.orderService.getAllItemsForOrder([{value : order_uid}]);
     this.orderItems = resp;
+    // save this list for processing the update operation
+    this.orderItemsToUodate = resp;
     this.selectedDataList = [];
-
+    this.totalAmount = 0;
     this.orderItems.forEach(found => {
-      
+    
+    this.totalAmount += found.total_price; 
     
     this.selectedDataList.push(
       {
@@ -336,17 +342,19 @@ export class NewOrderComponent implements OnInit {
     //console.log('Data: ' +  this.angForm.value  );
     //alert('user  -  ' + this.UserId);
     if (this.orderForm.valid) {
-      if (this.OrderId == "") {
+      if (this.operation == 1) {
         alert('add Order');
         this.addOrder();
       }
       else {
         alert('update Order');
-        //this.updateUser();
+        this.updateOrder();
       }
+
       alert('all is ok');
       this.submitted = false;
       this.isBusy = false;
+      
       //this.userForm.reset();
       this.router.navigate(['order']);
       //window.location.href = './order';
@@ -399,5 +407,84 @@ export class NewOrderComponent implements OnInit {
       })
 
   }
+
+
+    
+  updateOrder() {
+    //console.log('data: ' + this.orderForm.value.name);
+    this.orderForm.controls.modified_on.setValue(Date.now());
+    //this.orderForm.controls.modified_by.setValue(this.user);
+    //this.userForm.controls.user_name.setValue(upper(this.user_name));
+    this.orderForm.removeControl('id');
+    this.orderForm.addControl('_id', new FormControl(['', []]));
+    this.orderForm.controls._id.setValue(this.dataId);
+
+    this.orderService.updateOrder(this.orderForm.value).subscribe(
+      (response) => {
+        //this.resp = response;
+        console.log('Order updated' + response);
+
+        // this.loadAllUsers();
+        // first delete all order items
+        if (this.isItemAddedRemoved){
+        this.orderService.deleteOrderItemsForOrder({order_uid : this.orderForm.value.order_uid}).subscribe(
+          (response) => {
+            //this.resp = response;
+            console.log('Order items added' + response);
+            //decrease the stock for item being deleted
+            this.decreaseSoldStock(this.orderItemsToUodate);
+            // this.loadAllUsers();
+    
+    
+        // add all orderitems and in this procedure automaticall stock sold will be increased in the back end
+        this.orderService.addOrderItem(this.selectedDataList).subscribe(
+          (response) => {
+            //this.resp = response;
+            console.log('Order items added' + response);
+    
+            // this.loadAllUsers();
+    
+    
+          },
+          (error) => {
+            //Handle the error here
+            //If not handled, then throw it
+            console.error(error);
+    
+          });
+        
+        },
+        (error) => {
+          //Handle the error here
+          //If not handled, then throw it
+          console.error(error);
+  
+        });
+      }
+      },
+      (error) => {
+        //Handle the error here
+        //If not handled, then throw it
+        console.error(error);
+
+      })
+
+  }
+
+  decreaseSoldStock(data : any)
+{
+
+  this.stockService.decreaseSoldStock(data).subscribe(
+    (response) => {
+      },
+    (error) => {
+      //Handle the error here
+      //If not handled, then throw it
+      console.error(error);
+      
+   });
+
+}
+ 
 
 }

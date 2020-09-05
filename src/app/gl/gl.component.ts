@@ -106,18 +106,35 @@ export class GlComponent implements OnInit {
         },
         //{ headerName: 'Vender', field: 'vender_name', width: 150, sortable: true, filter: true },
         { headerName: 'Date', field: 'gl_date', width: 130, sortable: true, filter: true 
-        ,cellRenderer: (data) => {
-          return moment(data.createdAt).format('DD-MMM-YYYY')
-      }
-      },
+        , valueFormatter: function (params) {
+          return moment(params.value).format('DD-MMM-YYYY');}},
         { headerName: 'Head', field: 'account_head_name', width: 200, sortable: true, filter: true },
         { headerName: 'Curr', field: 'currency_desc', width: 130, sortable: true, filter: true },
         { headerName: 'Sent', field: 'fund_amount', width: 150, sortable: true, filter: true 
         ,cellClass: 'number-cell', resizable: true, cellStyle: {textAlign: "right",color:"green"}
-        , valueFormator: this.formatNumber,},
+        , valueFormatter: function(params) {
+          var num =   Math.floor(params.value)
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          if (num == "0" ){return null;}
+          else {return num;}
+          
+        },
+      },
         { headerName: 'Received', field: 'cargo_amount', width: 150, sortable: true, filter: true 
-        , cellStyle: {textAlign: "right", color:"red"}},
-        { headerName: 'Through', field: 'through_vender_name', width: 150, sortable: true, filter: true },
+        , cellStyle: {textAlign: "right", color:"red"}
+        , valueFormatter: function(params) {
+          var num =   Math.floor(params.value)
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          if (num == "0" ){return null;}
+          else {return num;}
+          
+        },
+      },
+      { headerName: 'Sent To', field: 'sent_to_vender_name', width: 150, sortable: true, filter: true },
+      { headerName: 'Sent to Account', field: 'sent_to_vender_account_uid', width: 150, sortable: true, filter: true },
+      { headerName: 'Through', field: 'through_vender_name', width: 150, sortable: true, filter: true },
         { headerName: 'Account', field: 'vender_account_uid', width: 150, sortable: true, filter: true },
         { headerName: 'Payment Sent On', field: 'funds_sent_on', width: 150, sortable: true, filter: true },
         { headerName: 'Payment Received On', field: 'funds_received_on', width: 150, sortable: true, filter: true },
@@ -134,8 +151,6 @@ export class GlComponent implements OnInit {
         { headerName: 'Courier', field: 'courier_code', width: 150, sortable: true, filter: true },
         { headerName: 'Cargo weight', field: 'cargo_weight', width: 150, sortable: true, filter: true },
         { headerName: 'Cargo Items', field: 'cargo_items_count', width: 150, sortable: true, filter: true },
-        { headerName: 'Sent To', field: 'sent_to_vender_name', width: 150, sortable: true, filter: true },
-        { headerName: 'Sent to Account', field: 'sent_to_vender_account_uid', width: 150, sortable: true, filter: true },
         { headerName: 'Ref#', field: 'ref_number', width: 130, sortable: true, filter: true },
         { headerName: 'Status', field: 'gl_status', width: 130, sortable: true, filter: true },
         { headerName: 'Additional Details', field: 'additional_details', width: 150, sortable: true, filter: true },
@@ -187,6 +202,10 @@ export class GlComponent implements OnInit {
       return Math.floor(number)
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    }
+
+    formatDate(params) {
+      return moment(params.value).format('yyyy-MM-dd');
     }
   
     onRowSelected(e) {

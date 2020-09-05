@@ -120,7 +120,7 @@
             <span class="fa fa-plus text-white p-2"></span>
           </a>
           <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-              type="button" (click)="deleteStock()">
+              type="button" (click)="deleteOrder()">
               <span class="fa fa-trash text-danger p-2"></span>
             </a>
           
@@ -148,7 +148,10 @@
   
     </div>
   </div>
+
     <!-- 2nd column -->
+
+    
     <div class="row row2">
     <div class="column1">
       <div class="pt-2 pl-2 pb-2" style="color:white; background-color:rgb(80, 36, 113);">

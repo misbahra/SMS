@@ -60,10 +60,20 @@ export class stockWS {
     }
 
 
-     // delete stock
+     // delcrease stock
      decreaseSoldStock(data: any): Observable<any> {
         //alert("inside service;" + data._id);
         return this.http.post(this.BASE_URL + '/decreaseStockSold', data)
+            .pipe(
+                retry(1),
+                catchError(this.errorHandl)
+            )
+    }
+
+    // increase stock
+    increaseSoldStock(data: any): Observable<any> {
+        //alert("inside service;" + data._id);
+        return this.http.post(this.BASE_URL + '/increaseStockSold', data)
             .pipe(
                 retry(1),
                 catchError(this.errorHandl)

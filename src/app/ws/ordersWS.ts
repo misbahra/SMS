@@ -24,6 +24,23 @@ export class ordersWS {
         return this.http.get(this.BASE_URL + '/allOrders', searchParams).toPromise();
     }
 
+
+    //------------------------------
+
+    getSummarySales(params: any) {
+        
+        const searchParams = {
+            params: {
+                param1: params[0].year,
+                param2: params[0].month,
+                param3: params[0].customer_uid
+            }
+        }
+        alert("Step 20");
+        return this.http.get(this.BASE_URL + '/summarySales', searchParams).toPromise();
+    }
+
+
    
     getOrderItems(OrderUID: any) {
         //alert('loading data in service - ' + userid[0].value);
@@ -127,6 +144,16 @@ export class ordersWS {
                 catchError(this.errorHandl)
             )
     }
+
+        // delete Order Item for an order
+        deleteOrderItemsForOrder(data: any): Observable<any> {
+            //alert("inside service;" + data._id);
+            return this.http.post(this.BASE_URL + '/deleteOrderItemsForOrder', data)
+                .pipe(
+                    retry(1),
+                    catchError(this.errorHandl)
+                )
+        }
 
        // delete Order Item
        postAllOrderItemsToStock(data: any): Observable<any> {

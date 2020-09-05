@@ -114,17 +114,17 @@ ngOnInit() {
     
     if (    this.orderForm.value.order_date == "" 
         ||  this.orderForm.value.order_date == null)
-     { orderDate = "1"} 
+     { orderDate = "-1"} 
       else {orderDate = this.orderForm.value.order_date;};
 
       if (    this.orderForm.value.customer_uid == "" 
       ||  this.orderForm.value.customer_uid == null)
-   { customerUID = "1"} 
-    else {customerUID = this.orderForm.value.customer_uid;};
+   { customerUID = "-1"} 
+    else {alert("customerUID = " + this.orderForm.value.customer_uid ); customerUID = this.orderForm.value.customer_uid;};
 
     if (    this.orderForm.value.invoice_number == "" 
         ||  this.orderForm.value.invoice_number == null)
-     { invoiceNumber = "1"} 
+     { invoiceNumber = "-1"} 
       else {invoiceNumber = this.orderForm.value.invoice_number;};
     
 
@@ -210,11 +210,12 @@ ngOnInit() {
    //alert( 'data: ' + this.selectedID );
     //this.webService.deleteLUH(this.LUHdataList[id]).subscribe(
       if (this.rowDataClicked._id) {
-        if (confirm('Are you sure to delete record?')) {
+        if (confirm('Are you sure to delete record? All its items will also be deleted. ')) {
            this.webService.deleteOrder(this.rowDataClicked).subscribe(
       (response) => {
         this.decreaseStockSold(this.orderItemsdataList);
         this.loadAllOrders();
+        this.rowData2 = [];
 
       },
       (error) => {
@@ -263,8 +264,9 @@ postAllOrders()
 
 
   createOrder(id: any) {
+    this.sessionService.deleteParameters();
     this.sessionService.setParameters([{ operation: 1 }]);
-    this.router.navigate(['neworder'], {});
+    this.router.navigate(['/neworder'], {skipLocationChange: true});
 }
 
 
@@ -272,8 +274,9 @@ editOrder() {
   if (this.rowDataClicked._id == "" || this.rowDataClicked._id == null ) {alert("Please select an order first.");}
   else
   {
+    this.sessionService.deleteParameters();
   this.sessionService.setParameters([{ operation: 2, order_id: this.rowDataClicked._id }]);
-  this.router.navigate(['neworder'], {});
+  this.router.navigate(['/neworder'], {skipLocationChange: true});
   }
 }
 
