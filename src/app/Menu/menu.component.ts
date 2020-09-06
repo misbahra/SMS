@@ -17,7 +17,7 @@ export class MenuComponent implements OnInit {
       //this.loadConnectedUser();
      }
 
-  title = 'WSR';
+  title = 'SMS';
   connectedUser: any = [];
 
   // async loadConnectedUser() {

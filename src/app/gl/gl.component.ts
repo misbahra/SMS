@@ -83,7 +83,7 @@ export class GlComponent implements OnInit {
   
     // select the stock based on 
     async selectGL(vender_uid: any , vender_name:any ) {
-      //alert("item_uid - " + item_uid);
+      
       this.venderName = vender_name;
       this.venderUID = vender_uid;
       let response = await this.glService.getVenderGL([{"value":vender_uid}]);
@@ -167,7 +167,7 @@ export class GlComponent implements OnInit {
       deleteGL() {
         
     
-        //alert( 'data: ' + this.selectedID );
+        
         //this.webService.deleteLUD(this.LUDdataList[id]).subscribe(
           if (this.rowDataClicked._id) {
             if (confirm('Are you sure to delete record?')) {
@@ -232,7 +232,7 @@ export class GlComponent implements OnInit {
       openGLDialog(id: any) {
         // create new record is clicked
         var operationOK = false;
-        //alert("operation - " + id);
+       
         // operation is new record
         if (id == 1 ){
           if (this.venderUID == "" || this.venderUID == null) 

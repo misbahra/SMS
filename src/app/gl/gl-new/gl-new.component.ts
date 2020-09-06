@@ -104,13 +104,13 @@ export class GlNewComponent implements OnInit {
     this.loadAllLUD('GAH');
   
       this.queryParams = this.sessionService.getParameters();
-      // alert('point 1 - ' + this.queryParams[0].name);
+      
       if (this.queryParams.length > 0 ) {
         
       // if operation = 1- new record  
       this.isDisabled = true; 
       if (this.queryParams[0].operation == 1) {
-        // alert('point 2');
+        
         
         this.venderUID = this.queryParams[0].vender_uid;
         this.venderName = this.queryParams[0].vender_name;
@@ -132,7 +132,7 @@ export class GlNewComponent implements OnInit {
     }
    
     async loadAllLUD(id: any) {
-      //alert("loading lud comp");  
+      
       var luhData = [{value:id}]
       let response = await this.luService.getLUD(luhData);
       if (id=='13'){this.currencyDataList = response;}
@@ -149,10 +149,10 @@ export class GlNewComponent implements OnInit {
     async loadData(id: any) {
       this.isBusy = true;
       this.dataForm.disable();
-      //alert('loading data - ' + id);
+     
       var gl_id = [{name: "gl_id" , value: id}];
       this.response = await this.webService.getThisGL(gl_id);
-      //alert('data - ' + this.response.name);
+     
       this.dataId = this.response._id;
       this.response.gl_date = new Date(this.response.gl_date).toISOString().slice(0, 10);
       this.response.funds_sent_on = new Date(this.response.funds_sent_on).toISOString().slice(0, 10);
@@ -180,7 +180,7 @@ export class GlNewComponent implements OnInit {
       for (const name in controls) {
         if (controls[name].invalid) {
           invalid.push(name);
-          // alert("Invalid control - " + name )
+          
         }
       }
   
@@ -197,22 +197,22 @@ export class GlNewComponent implements OnInit {
       this.submitted = true;
       this.isBusy = true;
       this.findInvalidControls();
-      //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.model, null, 4));
+     
       console.log('On submit');
       //console.log('Data: ' +  this.angForm.value  );
-      //alert('user  -  ' + this.UserId);
+     
       if (this.dataForm.valid) {
         // operation = 1 - new record
         if (this.queryParams[0].operation == 1) {
-          //alert('add record');
+         
           this.addData();
         }
         // operation = 2 - update record
         else {
-          //alert('update record');
+         
           this.updateData();
         }
-        //alert('all is ok');
+       
         this.submitted = false;
         this.isBusy = false;
         //this.userForm.reset();
@@ -221,10 +221,10 @@ export class GlNewComponent implements OnInit {
        this.dialogRef.close('save');
       }
       else {
-        //alert('Remove Errors first ')
+        
         this.messagetext = 'Please provide valid values';
         this.isBusy = false;
-        // alert('clear errors');
+       
       }
   
     }
@@ -259,7 +259,7 @@ export class GlNewComponent implements OnInit {
       this.dataForm.removeControl('id');
       this.dataForm.addControl('_id', new FormControl(['', []]));
       this.dataForm.controls._id.setValue(this.dataId);
-      //alert("Value is set to - " + this.userForm.controls._id.value);
+     
   
       //this.userForm.controls.user_name.setValue(upper(this.user_name));
       this.webService.updateGL(this.dataForm.value).subscribe(
@@ -284,16 +284,16 @@ export class GlNewComponent implements OnInit {
       var response;
     response = await this.vendersService.getVenders();
     this.vendersDataList = response;
-    //alert("Venders loaded - " + this.vendersDataList.length);
+    
     }
   
     async loadVenderAccounts(venderUID: any)
     {
-    //alert(venderUID);
+   
     var response;
     response = await this.venderAccountsService.getOneVenderAccounts([{"value":venderUID}]);
     this.venderAccountsDataList = response;
-    //alert("Venders loaded - " + this.venderAccountsDataList.length);
+    
     }
 
     selectAccountHead(){

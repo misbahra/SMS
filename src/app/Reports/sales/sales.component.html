@@ -10,13 +10,16 @@
         <div class="col">
             <!-- request_placed_on -->
             <div class="md-form ">
-                <!-- <label class="font-weight form-row " for="order_date">Order Date</label> -->
-                <input type="date" id="order_date" name="order_date" class="form-control"
-                    placeholder="Order Date" formControlName="order_date"
-                    [ngClass]="{ 'is-invalid':    fc.order_date.errors }"
-                    >
-                <div *ngIf=" fc.order_date.invalid " class="invalid-feedback">
-                    <div *ngIf="fc.order_date.errors.required">
+                <!-- <label class="font-weight form-row " for="year">Order Date</label> -->
+                <select class="form-control  form-control mr-sm-2 js-example-basic-single" id="year" name="year"
+                  formControlName="year" [ngClass]="{ 'is-invalid': fc.year.errors }">
+                  <!-- <option Selected value="">Select User Role</option> -->
+                  <option *ngFor="let data of yearList; index as i;" [value]=data.lud_code>{{data.lud_desc}}
+                  </option>
+                  <!-- <option value=data.lud_code>data.lud_desc</option> -->
+                </select>
+                <div *ngIf=" fc.year.invalid " class="invalid-feedback">
+                    <div *ngIf="fc.year.errors.required">
                         Order date is required
                     </div>
     
@@ -24,6 +27,28 @@
             </div>
           </div>
           <!--cloumn colosed -->
+
+           <!--cloumn started -->
+        <div class="col">
+          <!-- request_placed_on -->
+          <div class="md-form ">
+              <!-- <label class="font-weight form-row " for="invoice_number">Order Date</label> -->
+              <select class="form-control  form-control mr-sm-2 js-example-basic-single" id="month" name="month"
+                  formControlName="month" [ngClass]="{ 'is-invalid': fc.month.errors }">
+                  <!-- <option Selected value="">Select User Role</option> -->
+                  <option *ngFor="let data of monthList; index as i;" [value]=data.lud_code>{{data.lud_desc}}
+                  </option>
+                  <!-- <option value=data.lud_code>data.lud_desc</option> -->
+                </select>
+              <div *ngIf=" fc.month.invalid " class="invalid-feedback">
+                  <div *ngIf="fc.month.errors.required">
+                      Invoice # is required
+                  </div>
+    
+              </div>
+          </div>
+        </div>
+        <!--cloumn colosed -->
     
           <!--cloumn started -->
         <div class="col">
@@ -47,24 +72,7 @@
         </div>
         <!--cloumn colosed -->
     
-        <!--cloumn started -->
-        <div class="col">
-          <!-- request_placed_on -->
-          <div class="md-form ">
-              <!-- <label class="font-weight form-row " for="invoice_number">Order Date</label> -->
-              <input type="text" id="invoice_number" name="invoice_number" class="form-control"
-                  placeholder="Invoice#" formControlName="invoice_number"
-                  [ngClass]="{ 'is-invalid':   fc.invoice_number.errors }"
-                  >
-              <div *ngIf=" fc.invoice_number.invalid " class="invalid-feedback">
-                  <div *ngIf="fc.invoice_number.errors.required">
-                      Invoice # is required
-                  </div>
-    
-              </div>
-          </div>
-        </div>
-        <!--cloumn colosed -->
+       
      <!--cloumn started -->
      <div class="col">
             <div class=" float-right">
@@ -102,29 +110,13 @@
       
           <div class="pt-2 pl-2 pb-2" style="color:white; background-color:rgb(81, 23, 120);">
             
-              <span class="h3">Orders</span>
+              <span class="h3">Monthly Sales</span>
             
             <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
             <div class=" float-left">
               <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
             </div>
-            <div class=" float-right">
-              <!-- parameter 1 to openStockDialog 
-                  means its and new record and 2 mean its an update operation -->
-                <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-                  type="button" (click)="editOrder()">
-                  <span class="fa fa-pencil p-2 text-warning"></span>
-                </a>
-              <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-                  type="button" (click)="createOrder()">
-                <span class="fa fa-plus text-white p-2"></span>
-              </a>
-              <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-                  type="button" (click)="deleteOrder()">
-                  <span class="fa fa-trash text-danger p-2"></span>
-                </a>
-              
-          </div>
+           
     
           </div>
           <!-- [enableSorting]="true" [enableFilter]="true"
@@ -139,8 +131,8 @@
               [paginationPageSize]="15"
               [unSortIcon]="true"
               [animateRows]="true"
-              style="width: 100%; height:250px;"
-              class="ag-theme-blue"
+              style="width: 100%; height:600px;"
+              class="ag-theme-alpine" 
               [rowData]="rowData"
               [columnDefs]="columnDefs"
               >

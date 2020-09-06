@@ -36,7 +36,7 @@ export class ordersWS {
                 param3: params[0].customer_uid
             }
         }
-        alert("Step 20");
+        
         return this.http.get(this.BASE_URL + '/summarySales', searchParams).toPromise();
     }
 

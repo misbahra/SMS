@@ -8,6 +8,7 @@ const moment = momentNs;
 import { stockWS } from '../../ws/stockWS';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { customersWS } from '../../ws/customersWS';
+import {luWS} from '../../ws/luWS';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class SalesComponent implements OnInit {
       public stockService: stockWS,
       private fb: FormBuilder,
       private CustomersService: customersWS,
+      private luService : luWS,
     ) {
   
     }
@@ -38,6 +40,8 @@ export class SalesComponent implements OnInit {
     selectedID: any = "No Selected";
     selectedCode: any = [];
     isluhCodeSelected: boolean = false;
+    yearList: any = [];
+    monthList: any = [];
     columnDefs = [];
     rowData:any = [];
     customerList: any = [];
@@ -68,23 +72,40 @@ export class SalesComponent implements OnInit {
   };
   
   ngOnInit() {
-
-   
-  
     this.loadAllCustomers();
+    this.loadAllLUD(10);
+    this.loadAllLUD(11);
    
       //this.loadAllOrders();
       this.userPrivs = this.sessionService.getUsersPrivs();
      
       //this.orderForm = new this.fb.group();
        this.orderForm = this.fb.group({
-        order_uid: ['', []],
         customer_uid: ['', []],
-        order_date: ['', []],
-        invoice_number: ['',[]],
+        year: ['', []],
+        month: ['',[]],
       }
         // , { validator: this.CheckUserName('UserName') }
       );
+    };
+
+    async loadAllLUD(id: any) {
+      //alert("loading lud comp");  
+      var luhData = [{value:id}]
+      let response = await this.luService.getLUD(luhData);
+      if (id=='10'){this.yearList = response;}
+      if (id=='11'){
+        var months: any = response;
+        months.forEach(element => {
+          this.monthList.push({lud_code : element.lud_code.padStart(2, "0"),
+                                lud_desc : element.lud_desc});
+         
+        });
+      }
+     
+     
+      
+       //console.log("Data in LUD list " + this.LUDdataList.length );
     };
   
     clearFilters()
@@ -108,29 +129,31 @@ export class SalesComponent implements OnInit {
       this.isBusy = true;
       //alert("Selected Date is - " + this.orderForm.value.order_date);
      
-      var orderDate;
+      var year;
       var customerUID;
-      var invoiceNumber;
+      var month;
      
-      if (    this.orderForm.value.order_date == "" 
-          ||  this.orderForm.value.order_date == null)
-       { orderDate = "-1"} 
-        else {orderDate = this.orderForm.value.order_date;};
+      if (    this.orderForm.value.year == "" 
+          ||  this.orderForm.value.year == null)
+       { year = "-1"} 
+        else {year = this.orderForm.value.year;};
   
         if (    this.orderForm.value.customer_uid == "" 
         ||  this.orderForm.value.customer_uid == null)
      { customerUID = "-1"} 
-      else {alert("customerUID = " + this.orderForm.value.customer_uid ); customerUID = this.orderForm.value.customer_uid;};
+      else {
+        //alert("customerUID = " + this.orderForm.value.customer_uid ); 
+        customerUID = this.orderForm.value.customer_uid;};
   
-      if (    this.orderForm.value.invoice_number == "" 
-          ||  this.orderForm.value.invoice_number == null)
-       { invoiceNumber = "-1"} 
-        else {invoiceNumber = this.orderForm.value.invoice_number;};
+      if (    this.orderForm.value.month == "" 
+          ||  this.orderForm.value.month == null)
+       { month = "-1"} 
+        else {month = this.orderForm.value.month;};
       
 
        
-      var parameters = [{"year":2020 ,
-                        "month" : 7,
+      var parameters = [{"year":year ,
+                        "month" : month,
                          "customer_uid" : customerUID}];
                        
       let response = await this.webService.getSummarySales(parameters);
@@ -146,8 +169,40 @@ export class SalesComponent implements OnInit {
           },
         {headerName: 'Year', field: '_id.year', width: 150, sortable: true, filter:true },
         {headerName: 'Month', field: '_id.month', width: 300, sortable: true, filter:true },
-        {headerName: 'amount', field: 'order_amount', width: 300, sortable: true, filter:true },
-        
+        {headerName: 'Sales', field: 'order_amount', width: 300, sortable: true, filter:true ,
+        cellStyle: {textAlign: "right",color:"green"}
+        , valueFormatter: function(params) {
+          var num =   Math.floor(params.value)
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          if (num == "0" ){return null;}
+          else {return num;}
+          
+        },
+      },
+        {headerName: 'Quantity', field: 'order_quantity', width: 300, sortable: true, filter:true ,
+        cellStyle: {textAlign: "right",color:"red"},
+        valueFormatter: function(params) {
+          var num =   Math.floor(params.value)
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          if (num == "0" ){return null;}
+          else {return num;}
+          
+        },
+      },
+        {headerName: 'Commission', field: 'order_amount', width: 300, sortable: true, filter:true ,
+        cellStyle: {textAlign: "right",color:"blue"},
+        valueFormatter: function(params) {
+          var comm = params.value * .01;
+          var num =   Math.floor(comm)
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          if (num == "0" ){return null;}
+          else {return num;}
+          
+        },
+      },
       ];
       this.rowData = response;
      

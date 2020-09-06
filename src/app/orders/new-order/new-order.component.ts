@@ -116,7 +116,7 @@ export class NewOrderComponent implements OnInit{
       if(post.stock_uid == st_uid){
         
         selectedIndex = index;
-        alert("Index is " + selectedIndex);
+       
         return true;
       }
     });
@@ -178,7 +178,7 @@ export class NewOrderComponent implements OnInit{
         if(post.stock_uid == deletedOrderItem.stock_uid){
           
           selectedIndex = idx;
-          alert("Index is " + selectedIndex);
+         
           return true;
         }
       });
@@ -222,7 +222,7 @@ export class NewOrderComponent implements OnInit{
     this.queryParams = this.sessionService.getParameters();
     // alert('point 1 - ' + this.queryParams[0].name);
     if (this.queryParams[0].operation == 1) {
-       alert('New record.');
+      
        this.operation = 1;
       
     }
@@ -231,7 +231,7 @@ export class NewOrderComponent implements OnInit{
     {
       this.operation = 2;
       this.dataId = this.queryParams[0].order_id;
-      alert('Update record.' + this.dataId);
+     
       this.loadOrders(this.dataId);
       
     }
@@ -343,15 +343,15 @@ export class NewOrderComponent implements OnInit{
     //alert('user  -  ' + this.UserId);
     if (this.orderForm.valid) {
       if (this.operation == 1) {
-        alert('add Order');
+      
         this.addOrder();
       }
       else {
-        alert('update Order');
+       
         this.updateOrder();
       }
 
-      alert('all is ok');
+    
       this.submitted = false;
       this.isBusy = false;
       
