@@ -16,6 +16,7 @@ import { Routes, RouterModule } from '@angular/router';
  import{StockComponent} from './stock/stock.component';
  import{GlComponent} from './gl/gl.component';
  import{SalesComponent} from './Reports/sales/sales.component';
+ import{VendersComponent} from './venders/venders.component';
  // import{WsrMainComponent} from './wsr-main/wsr-main.component';
 // import{WsrMainNewComponent} from './wsr-main/wsr-main-new/wsr-main-new.component';
 // import { FeedbackComponent } from './feedback/feedback.component';
@@ -58,6 +59,8 @@ const routes: Routes = [
   { path: 'stock',   component: StockComponent },
   { path: 'gl',   component: GlComponent },
   { path: 'salesRep',   component: SalesComponent },
+  { path: 'vender',   component: VendersComponent },
+  
  ];
 
 @NgModule({

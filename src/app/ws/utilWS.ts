@@ -15,8 +15,9 @@ export class utilWS {
     else if(type == "stock_uid") {prefix = "ST"}
     else if(type == "item_uid") {prefix = "IT"}
     else if(type == "item_categories_uid") {prefix = "IC"}
-    else if(type == "venders_uid") {prefix = "VN"}
+    else if(type == "vender_uid") {prefix = "V"}
     else if(type == "gl_uid") {prefix = "GL"}
+    else if(type == "vender_accounts_uid") {prefix = "VA"}
     else {prefix = ""} ;
 
     var d = new Date();

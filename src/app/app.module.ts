@@ -36,7 +36,11 @@ import { GlNewComponent } from './gl/gl-new/gl-new.component';
 import {glWS} from './ws/glWS';
 import {venderAccountsWS} from './ws/venderAccountsWS';
 import { SalesComponent } from './Reports/sales/sales.component';
-
+import { VenderNewComponent } from './venders/vender-new/vender-new.component';
+import { VenderAccountsNewComponent } from './venders/vender-accounts-new/vender-accounts-new.component';
+import {countriesWS} from './ws/countriesWS';
+import {citiesWS} from './ws/citiesWS';
+import {statesWS} from './ws/statesWS';
 
 
 @NgModule({
@@ -60,6 +64,8 @@ import { SalesComponent } from './Reports/sales/sales.component';
     GlComponent,
     GlNewComponent,
     SalesComponent,
+    VenderNewComponent,
+    VenderAccountsNewComponent,
     
   ],
   imports: [
@@ -84,7 +90,10 @@ import { SalesComponent } from './Reports/sales/sales.component';
     utilWS,
     vendersWS,
     glWS,
-    venderAccountsWS
+    venderAccountsWS,
+    countriesWS,
+    citiesWS,
+    statesWS
   ],
   bootstrap: [AppComponent],
   entryComponents: [LuhNewComponent]
