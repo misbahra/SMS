@@ -1,6 +1,6 @@
 import { Component, OnInit , Inject} from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import {vendersWS} from '../../ws/vendersWS';
+import {venderAccountsWS} from '../../ws/venderAccountsWS';
 import { Router } from "@angular/router";
 import {sessionService} from '../../ws/sessionWS';
 import { MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
@@ -33,7 +33,8 @@ export class VenderAccountsNewComponent implements OnInit {
   dataId: any = "";
   isDup = false;
   venderDataList: any = [];
-  venderID = "";
+  venderUID = "";
+  venderAccountsID = "";
   todayDate = new Date().toISOString().slice(0, 16);
   countriesDataList : any = [];
   citiesDataList : any = [];
@@ -46,7 +47,7 @@ export class VenderAccountsNewComponent implements OnInit {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<VenderAccountsNewComponent>,
     private utilService : utilWS,
-    private vendersService : vendersWS,
+    private vendersAccountService : venderAccountsWS,
     private countriesService : countriesWS,
     private citiesService : citiesWS,
     private statesService : statesWS,
@@ -96,13 +97,13 @@ export class VenderAccountsNewComponent implements OnInit {
     this.isDisabled = true; 
     if (this.queryParams[0].operation == 1) {
       // alert('point 2');
-      
-      //this.venderUID = this.queryParams[0].vender_uid;
+      this.venderUID = this.queryParams[0].vender_uid;
+      this.dataForm.controls.vender_uid.setValue(this.venderUID);
     }
      // if operation = 2- update record   
     else if (this.queryParams[0].operation == 2)
     {
-      this.venderID = this.queryParams[0].vender_id;
+      this.venderAccountsID = this.queryParams[0].vender_accounts_id;
       
       this.loadData(this.queryParams);
       
@@ -120,8 +121,8 @@ export class VenderAccountsNewComponent implements OnInit {
     this.isBusy = true;
     this.dataForm.disable();
     //alert('loading data - ' + userid[0].value);
-    var venderToLoad = [{name: "vender_id" , value: id[0].vender_id}];
-    this.response = await this.vendersService.getThisVenders(venderToLoad);
+    var venderAccountToLoad = [{name: "vender_accounts_id" , value: id[0].vender_accounts_id}];
+    this.response = await this.vendersAccountService.getThisVenderAccounts(venderAccountToLoad);
     //alert('data - ' + this.response.name);
     this.dataId = this.response._id;
     this.dataForm.patchValue(this.response);
@@ -192,10 +193,10 @@ export class VenderAccountsNewComponent implements OnInit {
   addData() {
     //console.log('data: ' + this.dataForm.value.name);
     this.dataForm.controls.created_on.setValue(Date.now());
-    this.dataForm.controls.vender_uid.setValue(this.utilService.getUID('vender_uid'));
+    //this.dataForm.controls.vender_uid.setValue(this.utilService.getUID('vender_uid'));
     //this.dataForm.controls.item_uid.setValue(this.itemUID);
     //this.userForm.controls.user_name.setValue(upper(this.user_name));
-    this.vendersService.addVenders(this.dataForm.value).subscribe(
+    this.vendersAccountService.addVenderAccounts(this.dataForm.value).subscribe(
       (response) => {
         //this.resp = response;
         console.log('Data added' + response);
@@ -223,7 +224,7 @@ export class VenderAccountsNewComponent implements OnInit {
     //alert("Value is set to - " + this.userForm.controls._id.value);
 
     //this.userForm.controls.user_name.setValue(upper(this.user_name));
-    this.vendersService.updateVenders(this.dataForm.value).subscribe(
+    this.vendersAccountService.updateVenderAccounts(this.dataForm.value).subscribe(
       (response) => {
         //this.resp = response;
         console.log('Data updated' + response);

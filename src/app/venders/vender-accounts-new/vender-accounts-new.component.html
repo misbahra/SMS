@@ -6,7 +6,7 @@
 <!-- <div class="card border border-info  m-0"> -->
 
     <div class="h5 header-bar1">
-        Create / Modify Vender
+        Create / Modify Vender Account
     </div>
     <p>{{this.messagetext}}</p>
     
@@ -16,22 +16,66 @@
         <!-- Form -->
         <form [formGroup]="dataForm" class="text-center" style="color: #757575;" action="#!">
     
-            <div class="form-row">
-                <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
-                    <span class="sr-only">Loading...</span>
+<!-- ------------------------------------ -->
+<div class="form-row">
+    <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div class="col">
+        <!-- vender_account_uid -->
+        <div class="md-form ">
+            <label class="font-weight form-row " for="vender_account_uid">Vender Account UID</label>
+            <input readonly type="text" id="vender_account_uid" name="vender_account_uid" class="form-control" 
+            placeholder="Vender Account UID"
+                formControlName="vender_account_uid" [ngClass]="{ 'is-invalid':   submitted && fc.vender_account_uid.errors }">
+            
+            
+                <div *ngIf=" fc.vender_account_uid.invalid " class="invalid-feedback">
+                <div *ngIf="fc.vender_account_uid.errors.required">
+                    Vender Account UID is required
                 </div>
+
+            </div>
+        </div>
+    </div>
+    <!--close col -->
+
+    <div class="col">
+        <!-- vender_uid -->
+        <div class="md-form ">
+            <label class="font-weight form-row " for="vender_uid">Vender UID</label>
+            <input readonly type="text" id="vender_uid" name="vender_uid" class="form-control" 
+            placeholder="Vender UID"
+                formControlName="vender_uid" [ngClass]="{ 'is-invalid':   submitted && fc.vender_uid.errors }">
+            
+            
+                <div *ngIf=" fc.vender_uid.invalid " class="invalid-feedback">
+                <div *ngIf="fc.vender_uid.errors.required">
+                    Vender UID is required
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--close col -->
+
+    </div>
+<!-- ------------------------------------------- -->
+
+            <div class="form-row">
+               
                 <div class="col">
-                    <!-- Employee ID -->
+                    <!-- account_title -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="vender_uid">Vender UID</label>
-                        <input readonly type="text" id="vender_uid" name="vender_uid" class="form-control" 
-                        placeholder="Code"
-                            formControlName="vender_uid" [ngClass]="{ 'is-invalid':   submitted && fc.vender_uid.errors }">
+                        <label class="font-weight form-row " for="account_title">Account Title</label>
+                        <input  type="text" id="account_title" name="account_title" class="form-control" 
+                        placeholder="Account Title"
+                            formControlName="account_title" [ngClass]="{ 'is-invalid':   submitted && fc.account_title.errors }">
                         
                         
-                            <div *ngIf=" fc.vender_uid.invalid " class="invalid-feedback">
-                            <div *ngIf="fc.vender_uid.errors.required">
-                                Vender UID is required
+                            <div *ngIf=" fc.account_title.invalid " class="invalid-feedback">
+                            <div *ngIf="fc.account_title.errors.required">
+                                Account Title is required
                             </div>
     
                         </div>
@@ -39,15 +83,15 @@
                 </div>
                 <!--close col -->
                 <div class="col">
-                    <!-- Employee ID -->
+                    <!-- account_no -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="vender_name">Name</label>
-                        <input type="text" id="vender_name" name="vender_name" class="form-control" 
-                        placeholder="Code"
-                            formControlName="vender_name" [ngClass]="{ 'is-invalid':   submitted && fc.vender_name.errors }">
-                        <div *ngIf=" fc.vender_name.invalid " class="invalid-feedback">
-                            <div *ngIf="fc.vender_name.errors.required">
-                                Vender Name is required
+                        <label class="font-weight form-row " for="account_no">Account Number</label>
+                        <input type="text" id="account_no" name="account_no" class="form-control" 
+                        placeholder="Account #"
+                            formControlName="account_no" [ngClass]="{ 'is-invalid':   submitted && fc.account_no.errors }">
+                        <div *ngIf=" fc.account_no.invalid " class="invalid-feedback">
+                            <div *ngIf="fc.account_no.errors.required">
+                                Account Number is required
                             </div>
     
                         </div>
@@ -59,14 +103,15 @@
     
     
                 <div class="col">
-                    <!-- Employee ID -->
+                    <!-- iban -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="vender_desc">Description</label>
-                        <input type="text" id="vender_desc" name="vender_desc" class="form-control" placeholder="Description"
-                            formControlName="vender_desc" [ngClass]="{ 'is-invalid':   submitted && fc.vender_desc.errors }">
-                        <div *ngIf=" fc.vender_desc.invalid " class="invalid-feedback">
-                            <div *ngIf="fc.vender_desc.errors.required">
-                                Description is required
+                        <label class="font-weight form-row " for="iban">IBAN</label>
+                        <input type="text" id="iban" name="iban" class="form-control" 
+                        placeholder="IBAN"
+                            formControlName="iban" [ngClass]="{ 'is-invalid':   submitted && fc.iban.errors }">
+                        <div *ngIf=" fc.iban.invalid " class="invalid-feedback">
+                            <div *ngIf="fc.iban.errors.required">
+                                IBAN is required
                             </div>
     
                         </div>
@@ -74,7 +119,87 @@
                 </div>
                 <!--close col -->
             </div>
+
+<!-- --------------------------------------- -->
+
+<div class="form-row">
     
+    <div class="col">
+        <!-- bank_name -->
+        <div class="md-form ">
+            <label class="font-weight form-row " for="bank_name">Bank Name</label>
+            <input  type="text" id="bank_name" name="bank_name" class="form-control" 
+            placeholder="Bank Name"
+                formControlName="bank_name" [ngClass]="{ 'is-invalid':   submitted && fc.bank_name.errors }">
+            
+            
+                <div *ngIf=" fc.bank_name.invalid " class="invalid-feedback">
+                <div *ngIf="fc.bank_name.errors.required">
+                    Bank Name is required
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--close col -->
+    <div class="col">
+        <!-- branch_name -->
+        <div class="md-form ">
+            <label class="font-weight form-row " for="branch_name">Branch Name</label>
+            <input type="text" id="branch_name" name="branch_name" class="form-control" 
+            placeholder="Branch Name"
+                formControlName="branch_name" [ngClass]="{ 'is-invalid':   submitted && fc.branch_name.errors }">
+            <div *ngIf=" fc.branch_name.invalid " class="invalid-feedback">
+                <div *ngIf="fc.branch_name.errors.required">
+                    Branch Name is required
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--close col -->
+
+    
+
+
+    <div class="col">
+        <!-- branch_code -->
+        <div class="md-form ">
+            <label class="font-weight form-row " for="branch_code">Branch Code</label>
+            <input type="text" id="branch_code" name="branch_code" class="form-control" 
+            placeholder="Branch Code"
+                formControlName="branch_code" [ngClass]="{ 'is-invalid':   submitted && fc.branch_code.errors }">
+            <div *ngIf=" fc.branch_code.invalid " class="invalid-feedback">
+                <div *ngIf="fc.branch_code.errors.required">
+                    Branch Code is required
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--close col -->
+</div>
+<!-- // next form-row -->
+<div class="form-row mt-3">
+<div class="col">
+    <!-- branch_address -->
+    <div class="md-form ">
+        <label class="font-weight form-row " for="branch_address">Branch Address</label>
+        <input type="text" id="branch_address" name="branch_address" class="form-control" 
+        placeholder="Branch Address"
+            formControlName="branch_address" [ngClass]="{ 'is-invalid':   submitted && fc.branch_address.errors }">
+        <div *ngIf=" fc.branch_address.invalid " class="invalid-feedback">
+            <div *ngIf="fc.branch_address.errors.required">
+                Branch Address is required
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--close col -->
+</div>
+<!-- // next form-row -->
+    <!-- -------------------------------------------- -->
             <div class="form-row mt-3">
     
     

@@ -253,40 +253,58 @@ rowData2:any = [];
      //{ alert('Please select a record to update.');}
       }
 
-// // // open the new / update form
-// openLudDialog(id: any) {
-//   //alert("test 1")
-//   // delete the parameters array
-//   if (this.rowDataClicked2._id  || id == null) {
-//   this.sessionService.deleteParameters();
-//   // check if any parameter is sent or not
-//   //if sent then this will be opened for update
-//   if (id != null) {
-//     //alert("test 2")
-//     this.sessionService.setParameters([{ name: "lud_id", value: this.rowDataClicked2._id }]);
-//   }
-//   else
-//   {
-//  //alert("test 2-" + this.selectedID);  
-//   this.sessionService.setParameters([{ name: "luh_code", value: this.rowDataClicked.luh_code }]);
-//   }
-
-//   const dialogConfig = new MatDialogConfig();
-//   dialogConfig.width = '600px';
-//   const dialogRef = this.dialog.open(LudNewComponent, dialogConfig);
-
-//   dialogRef.afterClosed().subscribe(result => {
-//     console.log(result);
-//     if (result == "save") {
-//       this.LoadLUD(this.selectedID);
-//       this.rowDataClicked2 = {};
-//     }
-//     return (result);
-//   });
-// }
-// else
-// { alert('Please select a record to update.');}
-// }
+// open the new / update form
+openVenderAccountsDialog(operation: any) {
+  // operation = 1 for new , operation = 2 for update
+  
+  var operationOK = false;
+     
+      // operation is new record
+      if (operation == 1 ){
+       // if (this.venderUID == "" || this.venderUID == null) 
+        //  {alert("Please select an item first.");}
+       // else {
+         operationOK = true;
+        //};
+      }
+      // operation is update
+      else if (operation == 2){
+         if (!this.rowDataClicked2._id )
+         { alert('Please select a record to update.');}
+         else {operationOK = true};
+      }
+      
+      if (operationOK)
+      {
+    
+      this.sessionService.deleteParameters();
+      this.sessionService.setParameters([{  operation: operation, 
+                                            vender_uid: this.rowDataClicked.vender_uid,
+                                            vender_accounts_id: this.rowDataClicked2._id  }]);
+                                        
+      
+  
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.width = '1000px';
+      
+     
+      const dialogRef = this.dialog.open(VenderAccountsNewComponent, dialogConfig);
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        if (result == "save") {
+          
+          //this.selectGL(this.venderUID, this.venderName);
+          this.loadVenders();
+          this.rowDataClicked2 = {};
+        
+        }
+        return (result);
+      });
+    }
+   // else
+   //{ alert('Please select a record to update.');}
+    }
 
 // ScrolToTop() {
 //   let scrollToTop = window.setInterval(() => {
