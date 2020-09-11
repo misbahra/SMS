@@ -1,0 +1,298 @@
+<!-- <body> -->
+<!-- <div *ngFor="let params of queryParams; let i = index">
+     <p> "Name" {{params.name}} " and Value:"{{params.value}}</p>
+      </div> -->
+<!-- Material form register -->
+<!-- <div class="card border border-info  m-0"> -->
+
+<div class="h5 header-bar1">
+    Create / Modify Customer
+</div>
+<p>{{this.messagetext}}</p>
+
+<!--Card content-->
+<div class="card-body  px-lg-5 pt-0">
+
+    <!-- Form -->
+    <form [formGroup]="dataForm" class="text-center" style="color: #757575;" action="#!">
+        <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="form-row">
+           
+            <div class="col">
+                <!-- customer_uid -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="customer_uid">Customer #</label>
+                    <input readonly type="text" id="customer_uid" name="customer_uid" 
+                    class="form-control form-control-sm mr-sm-2 js-example-basic-single"
+                        placeholder="Code" formControlName="customer_uid"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.customer_uid.errors }">
+
+
+                    <div *ngIf=" fc.customer_uid.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.customer_uid.errors.required">
+                            Customer UID is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+            <div class="col">
+                <!-- name -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="name">Name</label>
+                    <input type="text" id="name" name="name" 
+                    class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="Name"
+                        formControlName="name" [ngClass]="{ 'is-invalid':   submitted && fc.name.errors }">
+                    <div *ngIf=" fc.name.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.name.errors.required">
+                            Name is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+            <div class="col">
+                <!-- gender -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="gender">Gender</label>
+                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="gender"
+                        name="gender" formControlName="gender"
+                        [ngClass]="{ 'is-invalid': submitted && fc.gender.errors }">
+                        <!-- <option Selected value="">Select User Role</option> -->
+                        <option *ngFor="let data of genderDataList; index as i;" [value]=data.lud_code>
+                            {{data.lud_desc}}
+                        </option>
+                    </select>
+                    <div *ngIf=" fc.gender.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.gender.errors.required">
+                            Country is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+
+        </div>
+
+        <div class="form-row mt-3">
+
+            
+            <div class="col">
+                <!-- mobile -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="mobile">Mobile </label>
+                    <input type="text" id="mobile" name="mobile" 
+                    class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="Mobile"
+                        formControlName="mobile" [ngClass]="{ 'is-invalid':   submitted && fc.mobile.errors }">
+                    <div *ngIf=" fc.mobile.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.mobile.errors.required">
+                            Mobile is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+
+            
+            <div class="col">
+                <!-- phone -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="phone">Phone</label>
+                    <input type="text" id="phone" name="phone" 
+                    class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="Phone"
+                        formControlName="phone" [ngClass]="{ 'is-invalid':   submitted && fc.phone.errors }">
+                    <div *ngIf=" fc.phone.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.phone.errors.required">
+                            Phone is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+
+
+
+            <div class="col">
+                <!-- email -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="email">eMail</label>
+                    <input type="text" id="email" name="email" 
+                    class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="email"
+                        formControlName="email" [ngClass]="{ 'is-invalid':   submitted && fc.email.errors }">
+                    <div *ngIf=" fc.email.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.email.errors.required">
+                            eMail is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+
+        </div>
+        <!--close row -->
+
+
+        <div class="form-row mt-3">
+
+
+            <div class="col">
+                <!-- Employee ID -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="country_uid">Country</label>
+                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="country_uid"
+                        name="country_uid" formControlName="country_uid"
+                        [ngClass]="{ 'is-invalid': submitted && fc.country_uid.errors }">
+                        <!-- <option Selected value="">Select User Role</option> -->
+                        <option *ngFor="let data of countriesDataList; index as i;" [value]=data.country_uid>
+                            {{data.country_name}}
+                        </option>
+                    </select>
+                    <div *ngIf=" fc.country_uid.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.country_uid.errors.required">
+                            Country is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+
+            <div class="col">
+                <!-- Employee ID -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="state_uid">State</label>
+
+                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="state_uid"
+                        name="state_uid" formControlName="state_uid"
+                        [ngClass]="{ 'is-invalid': submitted && fc.state_uid.errors }">
+                        <!-- <option Selected value="">Select User Role</option> -->
+                        <option *ngFor="let data of statesDataList; index as i;" [value]=data.state_uid>
+                            {{data.state_name}}
+                        </option>
+                    </select>
+
+
+                    <div *ngIf=" fc.state_uid.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.state_uid.errors.required">
+                            State is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+
+
+            <div class="col">
+                <!-- city_uid -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="city_uid">City</label>
+
+                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="city_uid"
+                        name="city_uid" formControlName="city_uid"
+                        [ngClass]="{ 'is-invalid': submitted && fc.city_uid.errors }">
+                        <!-- <option Selected value="">Select User Role</option> -->
+                        <option *ngFor="let data of citiesDataList; index as i;" [value]=data.city_uid>
+                            {{data.city_name}}
+                        </option>
+                    </select>
+
+                    <div *ngIf=" fc.city_uid.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.city_uid.errors.required">
+                            City is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+
+        </div>
+
+        <!-- // next form-row -->
+        <div class="form-row mt-3">
+
+
+            <div class="col-6">
+                <!-- address -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="address">Address</label>
+                    <input type="text" id="address" name="address" 
+                    class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="Address"
+                        formControlName="address" [ngClass]="{ 'is-invalid':   submitted && fc.address.errors }">
+                    <div *ngIf=" fc.address.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.address.errors.required">
+                            Address is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+
+            <div class="col-6">
+                <!-- card_no -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="card_no">Card Number</label>
+                    <input type="text" id="card_no" name="card_no" 
+                    class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="Card Number"
+                        formControlName="card_no" [ngClass]="{ 'is-invalid':   submitted && fc.card_no.errors }">
+                    <div *ngIf=" fc.card_no.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.card_no.errors.required">
+                            Card Number is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+
+
+
+
+        </div>
+
+
+        <!-- Submit button -->
+        <div class=" mt-3 text-center">
+
+            <button [disabled]="isBusy" (click)="onSubmit()" class="btn  btn-info pl-5 pr-5">
+                <i class="fa fa-save pr-2"> </i> Save
+                <!-- {{ isBusy == false ? 'Login' : 'Logging in, please wait' }}  -->
+            </button>
+            <button (click)="onCancel()" class="btn  btn-success ml-5 pl-5 pr-5">
+                <i class="fa fa-close pr-2"> </i> Cancel
+                <!-- {{ isBusy == false ? 'Login' : 'Logging in, please wait' }}  -->
+            </button>
+            <!-- <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
+                            <span class="sr-only">Loading...</span>
+                        </div> -->
+
+        </div>
+
+
+        <hr>
+
+        <!-- Terms of service -->
+        <!-- <p>By clicking
+                  <em>Sign up</em> you agree to our
+                  <a href="" target="_blank">terms of service</a> -->
+
+    </form>
+    <!-- Form -->
+
+</div>
+
+<!-- </div> -->
+
+
+
+<!-- </body> -->

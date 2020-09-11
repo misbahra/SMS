@@ -22,7 +22,6 @@ import { ordersWS } from './ws/ordersWS';
 import { stockWS } from './ws/stockWS';
 import { customersWS } from './ws/customersWS';
 import { ItemCategoriesComponent } from './item-categories/item-categories.component';
-import { ItemsComponent } from './items/items.component';
 import { CustomersComponent } from './customers/customers.component';
 import { StockComponent } from './stock/stock.component';
 import { VendersComponent } from './venders/venders.component';
@@ -41,6 +40,11 @@ import { VenderAccountsNewComponent } from './venders/vender-accounts-new/vender
 import {countriesWS} from './ws/countriesWS';
 import {citiesWS} from './ws/citiesWS';
 import {statesWS} from './ws/statesWS';
+import { CustomerNewComponent } from './customers/customer-new/customer-new.component';
+import { ItemNewComponent } from './item-categories/item-new/item-new.component';
+import { CategoryNewComponent } from './item-categories/category-new/category-new.component';
+import {ItemsWS} from './ws/itemsWS';
+import {ItemCategoriesWS} from './ws/itemCategoriesWS';
 
 
 @NgModule({
@@ -55,7 +59,6 @@ import {statesWS} from './ws/statesWS';
     LudNewComponent,
     OrdersComponent,
     ItemCategoriesComponent,
-    ItemsComponent,
     CustomersComponent,
     StockComponent,
     VendersComponent,
@@ -66,6 +69,9 @@ import {statesWS} from './ws/statesWS';
     SalesComponent,
     VenderNewComponent,
     VenderAccountsNewComponent,
+    CustomerNewComponent,
+    ItemNewComponent,
+    CategoryNewComponent,
     
   ],
   imports: [
@@ -93,7 +99,9 @@ import {statesWS} from './ws/statesWS';
     venderAccountsWS,
     countriesWS,
     citiesWS,
-    statesWS
+    statesWS,
+    ItemsWS,
+    ItemCategoriesWS
   ],
   bootstrap: [AppComponent],
   entryComponents: [LuhNewComponent]

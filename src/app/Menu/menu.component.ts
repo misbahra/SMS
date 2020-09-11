@@ -28,17 +28,17 @@ export class MenuComponent implements OnInit {
 
    ngOnInit() {
       //this.loadConnectedUser();
-      console.log('menu.ngOnInit: start ');
-      console.log(JSON.parse(localStorage.getItem('conUser')) || []);
+      //console.log('menu.ngOnInit: start ');
+     // console.log(JSON.parse(localStorage.getItem('conUser')) || []);
       this.connectedUser = JSON.parse(localStorage.getItem('conUser')) || [];
       //this.loadConnectedUser();
       //this.connectedUser = this.sessionService.getConnectedUsers();
       //this.connectedUser = this.sessionService.connectedUser;
-      console.log('menu.ngOnInit: connected user -' + this.connectedUser.name)
+      //console.log('menu.ngOnInit: connected user -' + this.connectedUser.name)
    }
 
   LogOut() {
-    console.log('menu.LogOut: start ');
+    //console.log('menu.LogOut: start ');
     this.webService.LogOut(this.connectedUser).subscribe(res => {
       this.sessionService.logout();
       this.ngOnInit();
