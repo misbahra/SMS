@@ -23,6 +23,32 @@
     border: 2px solid #382891;
   }
 
+  
+  .row {
+    display: flex;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+  }
+
+  .row1 {
+   height:300;
+   
+  }
+ 
+
+  .row {
+    height: 600;
+  }
+ 
+ 
+  /* Create two equal columns that sits next to each other */
+  .column-top {
+    width: 100%;
+    padding: 5px;
+   
+  }
+
+
   .column1
   {
     width: 30%
