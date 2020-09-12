@@ -64,6 +64,7 @@ export class NewOrderComponent implements OnInit{
   orderItemsToUodate: any = [];
   dataId = "";
   isItemAddedRemoved = false;
+  receivedDate: any;
   
 
    rowDataClicked:any = {};
@@ -221,8 +222,10 @@ export class NewOrderComponent implements OnInit{
      
     this.queryParams = this.sessionService.getParameters();
     // alert('point 1 - ' + this.queryParams[0].name);
+    // this is the date which was set in the order form  
+    this.receivedDate = this.queryParams[0].order_date; 
     if (this.queryParams[0].operation == 1) {
-      
+       
        this.operation = 1;
       
     }
@@ -356,6 +359,10 @@ export class NewOrderComponent implements OnInit{
       this.isBusy = false;
       
       //this.userForm.reset();
+      // set back the received date thriugh session service
+      this.sessionService.deleteParameters();
+      this.sessionService.setParameters([{ order_date : this.receivedDate }]);
+      // navigate to order form
       this.router.navigate(['order']);
       //window.location.href = './order';
 

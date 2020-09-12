@@ -103,9 +103,8 @@ export class StockComponent implements OnInit {
       { headerName: 'Code', field: 'stock_code', width: 150, sortable: true, filter: true },
       {
         headerName: 'Received On', field: 'stock_received_on', width: 200, sortable: true, filter: true
-        //,cellRenderer: (data) => {
-       //   return moment(data.stock_received_on).format('DD-MMM-YYYY')
-      //}
+        ,valueFormatter: function (params) {
+          return moment(params.value).format('DD-MMM-YYYY');}
       },
       { headerName: 'Vender', field: 'vender_name', width: 150, sortable: true, filter: true },
       // { headerName: 'Item Name', field: 'item_name', width: 300, sortable: true, filter: true },
@@ -121,9 +120,9 @@ export class StockComponent implements OnInit {
       { headerName: 'Sales Price', field: 'sales_price', width: 150, sortable: true, filter: true },
       
       { headerName: 'Requested On', field: 'request_placed_on', width: 200, sortable: true, filter: true 
-      ,cellRenderer: (data) => {
-        return moment(data.request_placed_on).format('DD-MMM-YYYY')
-    }},
+      ,valueFormatter: function (params) {
+        return moment(params.value).format('DD-MMM-YYYY');}
+    },
       
       {
         headerName: 'Bar Code', field: 'stock_bar_code', width: 250, sortable: true, filter: true,

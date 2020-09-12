@@ -87,7 +87,7 @@
                              <!-- Employee ID -->
                 <div class="md-form ">
                     <label class="font-weight form-row " for="request_placed_on">Request Date</label>
-                    <input type="datetime-local" id="request_placed_on" name="request_placed_on" class="form-control"
+                    <input type="date" id="request_placed_on" name="request_placed_on" class="form-control"
                         placeholder="Request Date" formControlName="request_placed_on"
                         [ngClass]="{ 'is-invalid':   submitted && fc.request_placed_on.errors }">
                     <div *ngIf=" fc.request_placed_on.invalid " class="invalid-feedback">
@@ -104,7 +104,7 @@
                 <!-- Employee ID -->
                 <div class="md-form ">
                     <label class="font-weight form-row " for="stock_received_on">Received Date</label>
-                    <input type="datetime-local" id="stock_received_on" name="stock_received_on" class="form-control"
+                    <input type="date" id="stock_received_on" name="stock_received_on" class="form-control"
                         placeholder="Received Date" formControlName="stock_received_on"
                         [ngClass]="{ 'is-invalid':   submitted && fc.stock_received_on.errors }">
                     <div *ngIf=" fc.stock_received_on.invalid " class="invalid-feedback">

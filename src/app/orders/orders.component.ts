@@ -44,6 +44,7 @@ export class OrdersComponent implements OnInit {
   columnDefs = [];
   rowData:any = [];
   customerList: any = [];
+  queryParams : any = [];
   orderForm: FormGroup;
    rowDataClicked:any = {};
     userPrivs = {"viewAllowed":"N",
@@ -80,11 +81,23 @@ ngOnInit() {
      this.orderForm = this.fb.group({
       order_uid: ['', []],
       customer_uid: ['', []],
-      order_date: ['', []],
+      order_date: [new Date().toISOString().slice(0, 10) , []],
       invoice_number: ['',[]],
     }
       // , { validator: this.CheckUserName('UserName') }
     );
+
+     // set ther order date if its called from new order
+
+     this.queryParams = this.sessionService.getParameters();
+     if (this.queryParams.length > 0)
+     {
+       this.orderForm.controls.order_date.setValue(new Date(this.queryParams[0].order_date).toISOString().slice(0, 10));
+       this.sessionService.deleteParameters();
+      };
+    
+
+    this.loadAllOrders();
   };
 
   clearFilters()
@@ -111,6 +124,9 @@ ngOnInit() {
     var orderDate;
     var customerUID;
     var invoiceNumber;
+
+     
+    
     
     if (    this.orderForm.value.order_date == "" 
         ||  this.orderForm.value.order_date == null)
@@ -265,7 +281,7 @@ postAllOrders()
 
   createOrder(id: any) {
     this.sessionService.deleteParameters();
-    this.sessionService.setParameters([{ operation: 1 }]);
+    this.sessionService.setParameters([{ operation: 1 , order_date : this.orderForm.value.order_date }]);
     this.router.navigate(['/neworder'], {skipLocationChange: true});
 }
 
