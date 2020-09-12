@@ -1,147 +1,154 @@
 <div class="m-1 bg">
-    <div class="ml-0 mr-0" >
-     
-      <form [formGroup]="orderForm" class="text-center mt-2 mb-2" style="color: #757575;" action="#!">
-       
+  <div class="ml-0 mr-0">
+
+    <form [formGroup]="orderForm" class="text-center mt-2 mb-2" style="color: #757575;" action="#!">
+
       <div class="form-row">
-    
-    
+
         <!--cloumn started -->
         <div class="col">
-            <!-- request_placed_on -->
-            <div class="md-form ">
-                <!-- <label class="font-weight form-row " for="year">Order Date</label> -->
-                <select class="form-control  form-control mr-sm-2 js-example-basic-single" id="year" name="year"
-                  formControlName="year" [ngClass]="{ 'is-invalid': fc.year.errors }">
-                  <!-- <option Selected value="">Select User Role</option> -->
-                  <option *ngFor="let data of yearList; index as i;" [value]=data.lud_code>{{data.lud_desc}}
-                  </option>
-                  <!-- <option value=data.lud_code>data.lud_desc</option> -->
-                </select>
-                <div *ngIf=" fc.year.invalid " class="invalid-feedback">
-                    <div *ngIf="fc.year.errors.required">
-                        Order date is required
-                    </div>
-    
-                </div>
+          <!-- request_placed_on -->
+          <div class="md-form ">
+            <!-- <label class="font-weight form-row " for="year">Order Date</label> -->
+            <select class="form-control  form-control mr-sm-2 js-example-basic-single" id="year" name="year"
+              formControlName="year" [ngClass]="{ 'is-invalid': fc.year.errors }">
+              <!-- <option Selected value="">Select User Role</option> -->
+              <option *ngFor="let data of yearList; index as i;" [value]=data.lud_code>{{data.lud_desc}}
+              </option>
+              <!-- <option value=data.lud_code>data.lud_desc</option> -->
+            </select>
+            <div *ngIf=" fc.year.invalid " class="invalid-feedback">
+              <div *ngIf="fc.year.errors.required">
+                Order date is required
+              </div>
+
             </div>
           </div>
-          <!--cloumn colosed -->
+        </div>
+        <!--cloumn colosed -->
 
-           <!--cloumn started -->
+        <!--cloumn started -->
         <div class="col">
           <!-- request_placed_on -->
           <div class="md-form ">
-              <!-- <label class="font-weight form-row " for="invoice_number">Order Date</label> -->
-              <select class="form-control  form-control mr-sm-2 js-example-basic-single" id="month" name="month"
-                  formControlName="month" [ngClass]="{ 'is-invalid': fc.month.errors }">
-                  <!-- <option Selected value="">Select User Role</option> -->
-                  <option *ngFor="let data of monthList; index as i;" [value]=data.lud_code>{{data.lud_desc}}
-                  </option>
-                  <!-- <option value=data.lud_code>data.lud_desc</option> -->
-                </select>
-              <div *ngIf=" fc.month.invalid " class="invalid-feedback">
-                  <div *ngIf="fc.month.errors.required">
-                      Invoice # is required
-                  </div>
-    
+            <!-- <label class="font-weight form-row " for="invoice_number">Order Date</label> -->
+            <select class="form-control  form-control mr-sm-2 js-example-basic-single" id="month" name="month"
+              formControlName="month" [ngClass]="{ 'is-invalid': fc.month.errors }">
+              <!-- <option Selected value="">Select User Role</option> -->
+              <option *ngFor="let data of monthList; index as i;" [value]=data.lud_code>{{data.lud_desc}}
+              </option>
+              <!-- <option value=data.lud_code>data.lud_desc</option> -->
+            </select>
+            <div *ngIf=" fc.month.invalid " class="invalid-feedback">
+              <div *ngIf="fc.month.errors.required">
+                Invoice # is required
               </div>
+
+            </div>
           </div>
         </div>
         <!--cloumn colosed -->
-    
-          <!--cloumn started -->
+
+        <!--cloumn started -->
         <div class="col">
           <!-- request_placed_on -->
           <div class="md-form ">
-              <!-- <label class="font-weight form-row " for="customer_uid">Order Date</label> -->
-              <select class="form-control  form-control mr-sm-2 js-example-basic-single" id="customer_uid" name="customer_uid"
-                  formControlName="customer_uid" [ngClass]="{ 'is-invalid': fc.customer_uid.errors }">
-                  <!-- <option Selected value="">Select User Role</option> -->
-                  <option *ngFor="let data of customerList; index as i;" [value]=data.customer_uid>{{data.name}} ({{data.mobile}})
-                  </option>
-                  <!-- <option value=data.lud_code>data.lud_desc</option> -->
-                </select>
-              <div *ngIf=" fc.customer_uid.invalid " class="invalid-feedback">
-                  <div *ngIf="fc.customer_uid.errors.required">
-                      Customer is required
-                  </div>
-    
+            <!-- <label class="font-weight form-row " for="customer_uid">Order Date</label> -->
+            <select class="form-control  form-control mr-sm-2 js-example-basic-single" id="customer_uid"
+              name="customer_uid" formControlName="customer_uid" [ngClass]="{ 'is-invalid': fc.customer_uid.errors }">
+              <!-- <option Selected value="">Select User Role</option> -->
+              <option *ngFor="let data of customerList; index as i;" [value]=data.customer_uid>{{data.name}}
+                ({{data.mobile}})
+              </option>
+              <!-- <option value=data.lud_code>data.lud_desc</option> -->
+            </select>
+            <div *ngIf=" fc.customer_uid.invalid " class="invalid-feedback">
+              <div *ngIf="fc.customer_uid.errors.required">
+                Customer is required
               </div>
+
+            </div>
           </div>
         </div>
         <!--cloumn colosed -->
-    
-       
-     <!--cloumn started -->
-     <div class="col">
-            <div class=" float-right">
-    
-              <button [disabled]="isBusy" (click)= "loadAllOrders()" class="btn  btn-info pl-5 pr-5" data-toggle="tooltip"
-                data-placement="top" title="Save Order">
-                <i class="fa fa-filter"> </i> Refresh
-               
-              </button>
-             </div>
-    
-             <div class=" float-right">
-    
-              <button [disabled]="isBusy" (click)= "clearFilters()" class="btn  btn-success mr-2 pl-5 pr-5" data-toggle="tooltip"
-                data-placement="top" title="Save Order">
-                <i class="fa fa-refresh"> </i> Clear Filters
-                <!-- {{ isBusy == false ? 'Login' : 'Logging in, please wait' }}  -->
-              </button>
-             </div>
-    
+
+
+        <!--cloumn started -->
+        <div class="col">
+          <div class=" float-right">
+
+            <button [disabled]="isBusy" (click)="loadAllOrders()" class="btn  btn-info pl-5 pr-5" data-toggle="tooltip"
+              data-placement="top" title="Save Order">
+              <i class="fa fa-filter"> </i> Refresh
+
+            </button>
+          </div>
+
+          <div class=" float-right">
+
+            <button [disabled]="isBusy" (click)="clearFilters()" class="btn  btn-success mr-2 pl-5 pr-5"
+              data-toggle="tooltip" data-placement="top" title="Save Order">
+              <i class="fa fa-refresh"> </i> Clear Filters
+              <!-- {{ isBusy == false ? 'Login' : 'Logging in, please wait' }}  -->
+            </button>
+          </div>
+
         </div>
         <!--cloumn colosed -->
       </div>
       <!------------------- row closed ------------------>
-      </form>
-    </div>
-    
-    <div class="ml-0 mr-0  border-1" style="width:100%;">
-        <!-- <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span> -->
-    </div>
-    
-      <!-- <div class="parent-div"> -->
-      <div class="row row1">
-        <div class="column1">
-      
-          <div class="pt-2 pl-2 pb-2" style="color:white; background-color:rgb(81, 23, 120);">
-            
-              <span class="h3">Monthly Sales</span>
-            
-            <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
-            <div class=" float-left">
-              <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
-            </div>
-           
-    
-          </div>
-          <!-- [enableSorting]="true" [enableFilter]="true"
+    </form>
+  </div>
+
+  
+
+  <!-- <div class="parent-div"> -->
+  <div class="row row1">
+    <div class="column1">
+
+      <div class="pt-2 pl-2 pb-2" style="color:white; background-color:rgb(81, 23, 120);">
+
+        <span class="h3">Monthly Sales</span>
+
+        <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
+        <div class=" float-left">
+          <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
+        </div>
+
+
+      </div>
+      <!-- [enableSorting]="true" [enableFilter]="true"
           [modules]="modules"
               [frameworkComponents]="frameworkComponents"
                (rowSelected)="onRowSelected($event)">
           -->
-         
-          <div [ngStyle]="style" >
-            <ag-grid-angular  
-              [pagination]="true"
-              [paginationPageSize]="15"
-              [unSortIcon]="true"
-              [animateRows]="true"
-              style="width: 100%; height:600px;"
-              class="ag-theme-alpine" 
-              [rowData]="rowData"
-              [columnDefs]="columnDefs"
-              >
-            </ag-grid-angular>
-          </div>
-      
-        </div>
+
+      <div [ngStyle]="style">
+        <ag-grid-angular [pagination]="true" [paginationPageSize]="15" [unSortIcon]="true" [animateRows]="true"
+          style="width: 100%; height:600px;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs"
+          (rowSelected)="onRowSelected($event)">
+        </ag-grid-angular>
       </div>
-    
-      
     </div>
-  
+
+    <div class="column2">
+      <div class="pt-2 pl-2 pb-2" style="color:white; background-color:rgb(81, 23, 120);">
+        <span class="h3">Date Wise Sales</span>
+        <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
+        <div class=" float-left">
+          <span class="spinner-bordesr text-warning" *ngIf="(isBusy == true)"></span>
+        </div>
+
+      </div>
+
+      <div [ngStyle]="style">
+        <ag-grid-angular [pagination]="true" [paginationPageSize]="15" [unSortIcon]="true" [animateRows]="true"
+          style="width: 100%; height:600px;" class="ag-theme-alpine" [rowData]="rowData2" [columnDefs]="columnDefs2">
+        </ag-grid-angular>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

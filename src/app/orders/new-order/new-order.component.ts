@@ -482,7 +482,7 @@ export class NewOrderComponent implements OnInit{
 
   }
 
-  decreaseSoldStock(data : any)
+decreaseSoldStock(data : any)
 {
 
   this.stockService.decreaseSoldStock(data).subscribe(

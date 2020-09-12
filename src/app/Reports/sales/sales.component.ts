@@ -217,16 +217,16 @@ export class SalesComponent implements OnInit {
     async loadDayWiseSales() {
       //alert("loading orederes");
       this.isBusy = true;
-      //alert("Selected Date is - " + this.orderForm.value.order_date);
+      alert("Selected year is - " + this.rowDataClicked._id.year);
      
       var year;
       var customerUID;
       var month;
      
-      if (    this.orderForm.value.year == "" 
-          ||  this.orderForm.value.year == null)
+      if (    this.rowDataClicked._id.year == "" 
+          ||  this.rowDataClicked._id.year == null)
        { year = "-1"} 
-        else {year = this.orderForm.value.year;};
+        else {year = this.rowDataClicked._id.year;};
   
         if (    this.orderForm.value.customer_uid == "" 
         ||  this.orderForm.value.customer_uid == null)
@@ -235,10 +235,10 @@ export class SalesComponent implements OnInit {
         //alert("customerUID = " + this.orderForm.value.customer_uid ); 
         customerUID = this.orderForm.value.customer_uid;};
   
-      if (    this.orderForm.value.month == "" 
-          ||  this.orderForm.value.month == null)
+      if (    this.rowDataClicked._id.month == "" 
+          ||  this.rowDataClicked._id.month == null)
        { month = "-1"} 
-        else {month = this.orderForm.value.month;};
+        else {month = this.rowDataClicked._id.month;};
       
 
        
@@ -246,10 +246,11 @@ export class SalesComponent implements OnInit {
                         "month" : month,
                          "customer_uid" : customerUID}];
                        
-      let response = await this.webService.getSummarySales(parameters);
-      this.ordersdataList = response;
+      let response = await this.webService.getSummarySalesByDay(parameters);
       
-      this.columnDefs = [
+      this.orderItemsdataList = response;
+      console.log("Data is : " + this.orderItemsdataList.length)
+      this.columnDefs2 = [
         {
           headerName: '',
            width: 35,
@@ -259,6 +260,7 @@ export class SalesComponent implements OnInit {
           },
         {headerName: 'Year', field: '_id.year', width: 100, sortable: true, filter:true },
         {headerName: 'Month', field: '_id.month', width: 120, sortable: true, filter:true },
+        {headerName: 'Day', field: '_id.day', width: 120, sortable: true, filter:true },
         {headerName: 'Sales', field: 'order_amount', width: 120, sortable: true, filter:true ,
         cellStyle: {textAlign: "right",color:"green"}
         , valueFormatter: function(params) {
@@ -281,20 +283,9 @@ export class SalesComponent implements OnInit {
           
         },
       },
-        {headerName: 'Commission', field: 'order_amount', width: 150, sortable: true, filter:true ,
-        cellStyle: {textAlign: "right",color:"blue"},
-        valueFormatter: function(params) {
-          var comm = params.value * .01;
-          var num =   Math.floor(comm)
-            .toString()
-            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-          if (num == "0" ){return null;}
-          else {return num;}
-          
-        },
-      },
+        
       ];
-      this.rowData = response;
+      this.rowData2 = response;
      
   
       //if (this.userList.active == "true") {this.userList.active = "Y";} else {this.userList.active="N;"}
@@ -306,6 +297,35 @@ export class SalesComponent implements OnInit {
   
     // single getter for all form controls to access them from the html
   get fc() { return this.orderForm.controls; }
+
+  onRowSelected(e)
+{
+ 
+  if(e.node.selected) {
+
+   // alert("Selected row is for  - " + e.node.data.name);
+    this.rowDataClicked = e.node.data;
+    this.orderItemsdataList = [];
+    //alert(JSON.stringify(e.node.data));
+    this.loadDayWiseSales();
+ }
+ else
+ {
+
+ // alert("De-Selected row  for - " + e.node.data.name );
+ // if deselected and already selected is deselected then wash the data
+  if (this.rowDataClicked){
+      if (this.rowDataClicked.year == e.node.data.year && this.rowDataClicked.month == e.node.data.month ){
+      this.rowDataClicked = {};
+      this.orderItemsdataList = [];
+      this.loadDayWiseSales();
+     
+  }
+ } 
+}
+ 
+}
+
   
   }
   
