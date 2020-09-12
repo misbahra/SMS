@@ -210,7 +210,7 @@ export class NewOrderComponent implements OnInit{
       card_number: ['', []],
       card_holder_name: ['', []],
       status: ['1',[]],
-      invoice_number: ['',[]],
+      invoice_number: ['',[Validators.required]],
       salesman_uid: ['',[]],
       created_by: ['', []],
       created_on: ['', []],
@@ -224,6 +224,8 @@ export class NewOrderComponent implements OnInit{
     // alert('point 1 - ' + this.queryParams[0].name);
     // this is the date which was set in the order form  
     this.receivedDate = this.queryParams[0].order_date; 
+    //alert(this.receivedDate);
+    this.orderForm.controls.order_date.setValue(new Date(this.receivedDate).toISOString().slice(0, 16)); 
     if (this.queryParams[0].operation == 1) {
        
        this.operation = 1;
@@ -331,6 +333,8 @@ export class NewOrderComponent implements OnInit{
 
    
   onCancel() {
+    this.sessionService.deleteParameters();
+    this.sessionService.setParameters([{ order_date : this.receivedDate }]);
     this.router.navigate(['order']);
     //window.location.href = './order';
   }

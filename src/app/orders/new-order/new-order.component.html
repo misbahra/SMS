@@ -1,42 +1,39 @@
+<div class="bg m-1">
 
- <div class="row row1">
-  <div class="column-top">
 
-    <div class="pt-2 pl-2 pb-2" style="color:white; background-color:rgb(81, 23, 120);">
-      
-        <span class="h3">Cutomer Information & Order Details</span>
-      
-      <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
-     
-      <div class=" float-right">
-   
-        <!-- parameter 1 to openStockDialog 
+  <div class="pt-2 pl-2 pb-2 hd1">
+
+    <span class="h3">Cutomer Information & Order Details</span>
+
+    <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
+
+    <div class=" float-right">
+
+      <!-- parameter 1 to openStockDialog 
             means its and new record and 2 mean its an update operation -->
-          <a  
-            type="button" (click)="onSubmit()">
-            <span class="fa fa-save p-3 text-warning"></span>
-          </a>
-        <a  
-            type="button" (click)="onCancel()">
-          <span class="fa fa-close text-white p-3"></span>
-        </a>
-       
-        
-    </div>
+      <a type="button" (click)="onSubmit()">
+        <span class="fa fa-save fa-2x mr-4 btn-blue"></span>
+      </a>
+      <a type="button" (click)="onCancel()">
+        <span class="fa fa-close fa-2x  mr-2 btn-red"></span>
+      </a>
+
 
     </div>
 
+  </div>
 
-<div >
-  
 
-<form [formGroup]="orderForm" class="form-sm" style="color: #757575;" action="#!">
+  <div>
+
+
+    <form [formGroup]="orderForm" class="form-sm m-2"  action="#!">
       <!-- row 1 -->
 
       <!-- order detail section -->
-  
 
-<!-- row 2 -->
+
+      <!-- row 2 -->
       <div class="form-row ">
 
         <div class="col col-3">
@@ -304,31 +301,18 @@
               <div *ngIf="fc.home_delivery_address.errors.required">
                 Address is required
               </div>
-
-
             </div>
           </div>
         </div>
-
-      </div>
-
-      <!-- Submit button -->
-      <div class=" mt-3 text-center">
-
-        <button [disabled]="isBusy" (click)="onSubmit()" class="btn  btn-info pl-5 pr-5" data-toggle="tooltip"
-          data-placement="top" title="Save Order">
-          <i class="fa fa-save pr-2"> </i> Save
-          <!-- {{ isBusy == false ? 'Login' : 'Logging in, please wait' }}  -->
-        </button>
-        <button (click)="onCancel()" class="btn  btn-success ml-5 pl-5 pr-5">Cancel</button>
       </div>
     </form>
-
-
   </div>
-  <!-- order detail finished -->
 
-  <div class="row">
+  <div class="pt-2 pl-2 pb-2 m-2 hd2">
+    <span class="h3">Items</span>
+  </div>
+
+  <div class="row bg2 m-1">
 
     <div class="column1 ml-3 table-responsive">
 
@@ -381,12 +365,12 @@
         <!-- <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span> -->
 
         <div class="float-left">
-          <h5>Order</h5>
+          <h5>Added Items</h5>
         </div>
 
-        <div class="float-right">&nbsp; <b>Total Amount:</b> {{totalAmount}}</div>
-        <div class="float-right">&nbsp; <b>Vat:</b> {{vat}}</div>
-        <div class="float-right">&nbsp;<b>Order Amount:</b> {{totalAmount}}</div>
+        <div class="float-right mr-2"> <b>Total Amount:</b> {{totalAmount}}</div>
+        <div class="float-right mr-2"> <b>Vat:</b> {{vat}}</div>
+        <div class="float-right mr-2"> <b>Order Amount:</b> {{totalAmount}}</div>
       </div>
       <div class="float-left pl-3"><b>Order#:</b>{{orderNumber}}</div>
       <div class="float-right pr-4"><b>Dated:</b>{{orderDate}}</div>
@@ -394,8 +378,8 @@
 
 
       <div class="container py-4">
-        <div class="row">
-          <div class="col-lg-12 mx-auto bg-white rounded shadow">
+        <div class="row p-0">
+          <div class="col-lg-12 mx-auto bg-white rounded shadow p-0">
 
             <!-- Fixed header table-->
             <div class="table-responsive">
@@ -430,11 +414,6 @@
           </div>
         </div>
       </div>
-
-
     </div>
-
-  
-
-
+  </div>
 </div>

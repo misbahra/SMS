@@ -167,9 +167,9 @@ export class SalesComponent implements OnInit {
            filter: false,
           checkboxSelection: true
           },
-        {headerName: 'Year', field: '_id.year', width: 150, sortable: true, filter:true },
-        {headerName: 'Month', field: '_id.month', width: 300, sortable: true, filter:true },
-        {headerName: 'Sales', field: 'order_amount', width: 300, sortable: true, filter:true ,
+        {headerName: 'Year', field: '_id.year', width: 100, sortable: true, filter:true },
+        {headerName: 'Month', field: '_id.month', width: 120, sortable: true, filter:true },
+        {headerName: 'Sales', field: 'order_amount', width: 120, sortable: true, filter:true ,
         cellStyle: {textAlign: "right",color:"green"}
         , valueFormatter: function(params) {
           var num =   Math.floor(params.value)
@@ -180,7 +180,7 @@ export class SalesComponent implements OnInit {
           
         },
       },
-        {headerName: 'Quantity', field: 'order_quantity', width: 300, sortable: true, filter:true ,
+        {headerName: 'Quantity', field: 'order_quantity', width: 150, sortable: true, filter:true ,
         cellStyle: {textAlign: "right",color:"red"},
         valueFormatter: function(params) {
           var num =   Math.floor(params.value)
@@ -191,7 +191,7 @@ export class SalesComponent implements OnInit {
           
         },
       },
-        {headerName: 'Commission', field: 'order_amount', width: 300, sortable: true, filter:true ,
+        {headerName: 'Commission', field: 'order_amount', width: 150, sortable: true, filter:true ,
         cellStyle: {textAlign: "right",color:"blue"},
         valueFormatter: function(params) {
           var comm = params.value * .01;
@@ -211,6 +211,98 @@ export class SalesComponent implements OnInit {
       //if (this.userList.locked == "true") {this.userList.locked = "Y";} else {this.userList.locked="N;"}
       this.isBusy = false;
     };
+
+    // load sales details
+
+    async loadDayWiseSales() {
+      //alert("loading orederes");
+      this.isBusy = true;
+      //alert("Selected Date is - " + this.orderForm.value.order_date);
+     
+      var year;
+      var customerUID;
+      var month;
+     
+      if (    this.orderForm.value.year == "" 
+          ||  this.orderForm.value.year == null)
+       { year = "-1"} 
+        else {year = this.orderForm.value.year;};
+  
+        if (    this.orderForm.value.customer_uid == "" 
+        ||  this.orderForm.value.customer_uid == null)
+     { customerUID = "-1"} 
+      else {
+        //alert("customerUID = " + this.orderForm.value.customer_uid ); 
+        customerUID = this.orderForm.value.customer_uid;};
+  
+      if (    this.orderForm.value.month == "" 
+          ||  this.orderForm.value.month == null)
+       { month = "-1"} 
+        else {month = this.orderForm.value.month;};
+      
+
+       
+      var parameters = [{"year":year ,
+                        "month" : month,
+                         "customer_uid" : customerUID}];
+                       
+      let response = await this.webService.getSummarySales(parameters);
+      this.ordersdataList = response;
+      
+      this.columnDefs = [
+        {
+          headerName: '',
+           width: 35,
+           sortable: false,
+           filter: false,
+          checkboxSelection: true
+          },
+        {headerName: 'Year', field: '_id.year', width: 100, sortable: true, filter:true },
+        {headerName: 'Month', field: '_id.month', width: 120, sortable: true, filter:true },
+        {headerName: 'Sales', field: 'order_amount', width: 120, sortable: true, filter:true ,
+        cellStyle: {textAlign: "right",color:"green"}
+        , valueFormatter: function(params) {
+          var num =   Math.floor(params.value)
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          if (num == "0" ){return null;}
+          else {return num;}
+          
+        },
+      },
+        {headerName: 'Quantity', field: 'order_quantity', width: 150, sortable: true, filter:true ,
+        cellStyle: {textAlign: "right",color:"red"},
+        valueFormatter: function(params) {
+          var num =   Math.floor(params.value)
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          if (num == "0" ){return null;}
+          else {return num;}
+          
+        },
+      },
+        {headerName: 'Commission', field: 'order_amount', width: 150, sortable: true, filter:true ,
+        cellStyle: {textAlign: "right",color:"blue"},
+        valueFormatter: function(params) {
+          var comm = params.value * .01;
+          var num =   Math.floor(comm)
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          if (num == "0" ){return null;}
+          else {return num;}
+          
+        },
+      },
+      ];
+      this.rowData = response;
+     
+  
+      //if (this.userList.active == "true") {this.userList.active = "Y";} else {this.userList.active="N;"}
+      //if (this.userList.locked == "true") {this.userList.locked = "Y";} else {this.userList.locked="N;"}
+      this.isBusy = false;
+    };
+
+
   
     // single getter for all form controls to access them from the html
   get fc() { return this.orderForm.controls; }
