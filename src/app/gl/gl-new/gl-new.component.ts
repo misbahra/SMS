@@ -37,6 +37,7 @@ export class GlNewComponent implements OnInit {
     venderName = "";
     venderUID = "";
     glID = "";
+    enableVenderList = false;
     todayDate = new Date().toISOString().slice(0, 16);
     vendersDataList : any = [];
     glAccountHeadsDataList : any = [];
@@ -63,7 +64,7 @@ export class GlNewComponent implements OnInit {
         gl_uid: ['' , [Validators.required]],
         gl_date: ['' , []],
         account_head_code: ['' , [Validators.required]],
-        vender_uid: ['' , []],
+        vender_uid: ['' , [Validators.required]],
         through_vender_uid: ['' , []],
         vender_account_uid: ['' , []],
         funds_sent_on: ['' , []],
@@ -111,9 +112,19 @@ export class GlNewComponent implements OnInit {
       this.isDisabled = true; 
       if (this.queryParams[0].operation == 1) {
         
-        
-        this.venderUID = this.queryParams[0].vender_uid;
+        if (this.queryParams[0].vender_uid == "-1") 
+        //-1 means no vender received, so we shall enable vender list in form
+        {
+          this.enableVenderList = true;
+        }
+        else
+        {
+          this.enableVenderList = false;
+          this.venderUID = this.queryParams[0].vender_uid;
         this.venderName = this.queryParams[0].vender_name;
+        this.dataForm.controls.vender_uid.setValue(this.venderUID);
+        
+        }
         this.dataForm.controls.gl_uid.setValue(this.utilService.getUID('gl_uid'));
       }
        // if operation = 2- update record   
@@ -130,6 +141,7 @@ export class GlNewComponent implements OnInit {
     this.loadVenderAccounts(this.venderUID);
 
     }
+
    
     async loadAllLUD(id: any) {
       
@@ -232,7 +244,7 @@ export class GlNewComponent implements OnInit {
     addData() {
       //console.log('data: ' + this.dataForm.value.name);
       this.dataForm.controls.created_on.setValue(Date.now());
-      this.dataForm.controls.vender_uid.setValue(this.venderUID);
+      
       //this.userForm.controls.user_name.setValue(upper(this.user_name));
       this.webService.addGL(this.dataForm.value).subscribe(
         (response) => {
@@ -289,11 +301,13 @@ export class GlNewComponent implements OnInit {
   
     async loadVenderAccounts(venderUID: any)
     {
-   
+    if (venderUID == "" || venderUID == null )
+    {this.venderAccountsDataList = []}
+    else{
     var response;
     response = await this.venderAccountsService.getOneVenderAccounts([{"value":venderUID}]);
     this.venderAccountsDataList = response;
-    
+    }
     }
 
     selectAccountHead(){
@@ -304,6 +318,12 @@ export class GlNewComponent implements OnInit {
     selectSentToVender(){
       this.loadVenderAccounts(this.dataForm.value.sent_to_vender_uid);
       
+    }
+
+    onVenderChange()
+    {
+      this.venderUID = this.dataForm.value.vender_uid;
+      this.loadVenderAccounts(this.venderUID );
     }
 
   }

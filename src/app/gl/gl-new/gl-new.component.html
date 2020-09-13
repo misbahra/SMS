@@ -12,6 +12,7 @@
             <span class="sr-only">Loading...</span>
         </div>
 
+
          <!-- row started -->
          <div class="form-row">
 
@@ -31,6 +32,37 @@
             </div>
         </div>
         <!--cloumn colosed -->
+
+
+
+    <!--cloumn started -->
+    <div class="col">
+        <!-- vender_uid -->
+        <div class="md-form ">
+            <label class="font-weight form-row " for="vender_uid">Vender</label>
+            <!-- [change]= "onVenderChange()" -->
+            <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="vender_uid"
+                name="vender_uid" formControlName="vender_uid"
+                [ngClass]="{ 'is-invalid': submitted && fc.vender_uid.errors }"
+                (change)= "onVenderChange()">
+                <!-- <option Selected value="">Select User Role</option> -->
+                <option *ngFor="let data of vendersDataList; index as i;" [value]=data.vender_uid>
+                    {{data.vender_name}}
+                </option>
+                <!-- <option value=data.lud_code>data.lud_desc</option> -->
+            </select>                    
+            
+            <div *ngIf=" fc.vender_uid.invalid " class="invalid-feedback">
+                <div *ngIf="fc.vender_uid.errors.required">
+                    Vender UID is required
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--cloumn colosed -->
+
+
 <!--cloumn started -->
 <div class="col">
     <!-- gl_date -->
@@ -123,7 +155,7 @@
                 <!-- currency -->
                 <div class="md-form ">
                     <label class="font-weight form-row " for="currency">Currency</label>
-                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="account_head_code"
+                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="currency"
                         name="currency" formControlName="currency"
                         [ngClass]="{ 'is-invalid': submitted && fc.currency.errors }">
                         <!-- <option Selected value="">Select User Role</option> -->
@@ -498,7 +530,7 @@
       <div class="col">
         <!-- sent_to_vender_uid -->
         <div class="md-form ">
-            <label class="font-weight form-row " for="sent_to_vender_uid">Vender Account</label>
+            <label class="font-weight form-row " for="sent_to_vender_uid">To Vender</label>
             <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="sent_to_vender_uid"
                 name="sent_to_vender_uid" formControlName="sent_to_vender_uid"
                 [ngClass]="{ 'is-invalid': submitted && fc.sent_to_vender_uid.errors }"
@@ -511,7 +543,7 @@
             </select> 
             <div *ngIf=" fc.sent_to_vender_uid.invalid " class="invalid-feedback">
                 <div *ngIf="fc.sent_to_vender_uid.errors.required">
-                    Vender Account is required
+                    To Vender is required
                 </div>
 
             </div>

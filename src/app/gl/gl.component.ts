@@ -232,12 +232,18 @@ export class GlComponent implements OnInit {
       openGLDialog(id: any) {
         // create new record is clicked
         var operationOK = false;
-       
+       var vender_uid;
         // operation is new record
         if (id == 1 ){
           if (this.venderUID == "" || this.venderUID == null) 
-            {alert("Please select an item first.");}
-          else {operationOK = true};
+            {       
+                  vender_uid = '-1'
+            }
+            else{
+                  vender_uid = this.venderUID;
+            };
+          
+          operationOK = true;
         }
         // operation is update
         else if (id == 2){
@@ -253,7 +259,7 @@ export class GlComponent implements OnInit {
         // delete the parameters array
         this.sessionService.deleteParameters();
         this.sessionService.setParameters([{ operation: id, 
-                                            vender_uid: this.venderUID, 
+                                            vender_uid: vender_uid, 
                                             vender_name: this.venderName, 
                                             gl_id: this.rowDataClicked._id }]);
                                           
@@ -268,11 +274,13 @@ export class GlComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
           console.log(result);
           if (result == "save") {
-            
+            if (this.venderUID != "-1"){
             this.selectGL(this.venderUID, this.venderName);
+          }
+          else{this.venderUID = null;}
             this.loadGL();
             this.rowDataClicked = {};
-          
+
           }
           return (result);
         });

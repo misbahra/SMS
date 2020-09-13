@@ -217,7 +217,7 @@ export class SalesComponent implements OnInit {
     async loadDayWiseSales() {
       //alert("loading orederes");
       this.isBusy = true;
-      alert("Selected year is - " + this.rowDataClicked._id.year);
+      this.rowData2 = [];
      
       var year;
       var customerUID;
@@ -251,13 +251,13 @@ export class SalesComponent implements OnInit {
       this.orderItemsdataList = response;
       console.log("Data is : " + this.orderItemsdataList.length)
       this.columnDefs2 = [
-        {
-          headerName: '',
-           width: 35,
-           sortable: false,
-           filter: false,
-          checkboxSelection: true
-          },
+        // {
+        //   headerName: '',
+        //    width: 35,
+        //    sortable: false,
+        //    filter: false,
+        //   checkboxSelection: true
+        //   },
         {headerName: 'Year', field: '_id.year', width: 100, sortable: true, filter:true },
         {headerName: 'Month', field: '_id.month', width: 120, sortable: true, filter:true },
         {headerName: 'Day', field: '_id.day', width: 120, sortable: true, filter:true },
