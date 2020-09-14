@@ -197,9 +197,11 @@ export class StockComponent implements OnInit {
       //alert("operation - " + id);
       // operation is new record
       if (id == 1 ){
-        if (this.itemUID == "" || this.itemUID == null) 
-          {alert("Please select an item first.");}
-        else {operationOK = true};
+        // if (this.itemUID == "" || this.itemUID == null) 
+        //   {alert("Please select an item first.");}
+       // else {
+          operationOK = true
+       // };
       }
       // operation is update
       else if (id == 2){

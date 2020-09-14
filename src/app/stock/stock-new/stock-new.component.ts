@@ -7,6 +7,7 @@ import * as wsrSessionService from '../../ws/sessionWS';
 import { MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
 import { utilWS } from '../../ws/utilWS';
 import { vendersWS } from '../../ws/vendersWS';
+import { ItemsWS } from '../../ws/itemsWS';
 
 interface DialogData {
   data: string;
@@ -35,6 +36,7 @@ export class StockNewComponent implements OnInit {
   itemUID = "";
   todayDate = new Date().toISOString().slice(0, 16);
   vendersDataList : any = [];
+  itemsDataList : any = [];
 
   messagetext = '';
   constructor(private webService: stockWS.stockWS,
@@ -44,7 +46,9 @@ export class StockNewComponent implements OnInit {
     public dialogRef: MatDialogRef<StockNewComponent>,
     private utilService : utilWS,
     private vendersService : vendersWS,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private itemsService : ItemsWS,
+    
   ) { this.OnStart() }
 
   ngOnInit() {
@@ -76,6 +80,7 @@ export class StockNewComponent implements OnInit {
     
     //load vender for list population
     this.loadVenders();
+    this.loadItems();
 
     this.queryParams = this.sessionService.getParameters();
     // alert('point 1 - ' + this.queryParams[0].name);
@@ -96,7 +101,9 @@ export class StockNewComponent implements OnInit {
       this.loadData(this.queryParams);
       
     }
+
     else {this.isDisabled = true;};
+    this.dataForm.controls.item_uid.setValue(this.itemUID);
   }
    
   }
@@ -216,7 +223,7 @@ try{
     //console.log('data: ' + this.dataForm.value.name);
     this.dataForm.controls.created_on.setValue(Date.now());
     this.dataForm.controls.stock_uid.setValue(this.utilService.getUID('stock_uid'));
-    this.dataForm.controls.item_uid.setValue(this.itemUID);
+    
     //this.userForm.controls.user_name.setValue(upper(this.user_name));
     this.webService.addStock(this.dataForm.value).subscribe(
       (response) => {
@@ -268,6 +275,14 @@ try{
     var response;
   response = await this.vendersService.getVenders();
   this.vendersDataList = response;
+  //alert("Venders loaded - " + this.vendersDataList.length);
+  }
+
+  async loadItems()
+  {
+    var response;
+  response = await this.itemsService.getItems();
+  this.itemsDataList = response;
   //alert("Venders loaded - " + this.vendersDataList.length);
   }
 

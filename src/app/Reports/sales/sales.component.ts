@@ -57,7 +57,7 @@ export class SalesComponent implements OnInit {
       padding:'0px',
       width: '100%',
       height: '100%',
-      flex: '1 1 auto'
+      //flex: '1 1 auto'
   };
   // for lud grid
   columnDefs2 = [];
