@@ -11,7 +11,7 @@
         <!-- request_placed_on -->
         <div class="md-form ">
             <!-- <label class="font-weight form-row " for="order_date">Order Date</label> -->
-            <input type="date" id="order_date" name="order_date" class="form-control"
+            <input type="date" id="order_date" name="order_date" class="form-control form-control-sm"
                 placeholder="Order Date" formControlName="order_date"
                 [ngClass]="{ 'is-invalid':    fc.order_date.errors }"
                 >
@@ -30,7 +30,7 @@
       <!-- request_placed_on -->
       <div class="md-form ">
           <!-- <label class="font-weight form-row " for="customer_uid">Order Date</label> -->
-          <select class="form-control  form-control mr-sm-2 js-example-basic-single" id="customer_uid" name="customer_uid"
+          <select class="form-control  form-control-sm" id="customer_uid" name="customer_uid"
               formControlName="customer_uid" [ngClass]="{ 'is-invalid': fc.customer_uid.errors }">
               <!-- <option Selected value="">Select User Role</option> -->
               <option *ngFor="let data of customerList; index as i;" [value]=data.customer_uid>{{data.name}} ({{data.mobile}})
@@ -52,7 +52,7 @@
       <!-- request_placed_on -->
       <div class="md-form ">
           <!-- <label class="font-weight form-row " for="invoice_number">Order Date</label> -->
-          <input type="text" id="invoice_number" name="invoice_number" class="form-control"
+          <input type="text" id="invoice_number" name="invoice_number" class="form-control form-control-sm"
               placeholder="Invoice#" formControlName="invoice_number"
               [ngClass]="{ 'is-invalid':   fc.invoice_number.errors }"
               >
@@ -69,7 +69,7 @@
  <div class="col">
         <div class=" float-right">
 
-          <button [disabled]="isBusy" (click)= "loadAllOrders()" class="btn  btn-info pl-5 pr-5" data-toggle="tooltip"
+          <button [disabled]="isBusy" (click)= "loadAllOrders()" class="btn  btn-info" data-toggle="tooltip"
             data-placement="top" title="Save Order">
             <i class="fa fa-filter"> </i> Refresh
            
@@ -78,7 +78,7 @@
 
          <div class=" float-right">
 
-          <button [disabled]="isBusy" (click)= "clearFilters()" class="btn  btn-success mr-2 pl-5 pr-5" data-toggle="tooltip"
+          <button [disabled]="isBusy" (click)= "clearFilters()" class="btn  btn-success" data-toggle="tooltip"
             data-placement="top" title="Save Order">
             <i class="fa fa-refresh"> </i> Clear Filters
             <!-- {{ isBusy == false ? 'Login' : 'Logging in, please wait' }}  -->
@@ -98,17 +98,17 @@
 
   <!-- <div class="parent-div"> -->
   <div class="row row1">
-    <div class="column1">
+    <div class="column">
   
-      <div class="pt-2 pl-2 pb-2" style="color:white; background-color:rgb(81, 23, 120);">
+      <div class="pt-2 pl-2 pb-2 section-header" style="color:white; background-color:rgb(81, 23, 120);">
         
-          <span class="h3">Orders</span>
+          <span >Orders</span>
         
         <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
         <div class=" float-left">
           <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
         </div>
-        <div class=" float-right">
+        <div class=" float-right section-detail">
           <!-- parameter 1 to openStockDialog 
               means its and new record and 2 mean its an update operation -->
             <a *ngIf="(userPrivs.createAllowed == 'Y')" 
@@ -153,12 +153,12 @@
 
     
     <div class="row row2">
-    <div class="column1">
-      <div class="pt-2 pl-2 pb-2" style="color:white; background-color:rgb(80, 36, 113);">
+    <div class="column">
+      <div class="pt-2 pl-2 pb-2 section-header" style="color:white; background-color:rgb(80, 36, 113);">
        
-        <span class="h3">Items</span>
+        <span >Items</span>
   
-        <span class="pl-5"><b>Selected Order / Item:</b> {{rowDataClicked.order_uid}} / {{rowDataClicked2.order_item_uid}}</span>
+        <span class="pl-5 section-detail"><b>Selected Order / Item:</b> {{rowDataClicked.order_uid}} / {{rowDataClicked2.order_item_uid}}</span>
         
       </div>
   

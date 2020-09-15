@@ -43,7 +43,12 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
 .row {
         height: 200;
       }
-     
+ 
+.column {
+        width: 100%;
+        padding: 5px;
+       
+      }
 .column1 {
         width: 35%;
         padding: 2px;
@@ -65,14 +70,19 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
 
 .btn
 {
-  min-width: 65px;
+  min-width: 60px;
   min-height: 30px;
-  font-size: 10px;
+  /* font-size: 12px; */
   margin-right: 2px;
 }
 
 .section-header
 {
   height: 40px;
+  font-size: 18px;
+}
+
+.section-detail
+{
   font-size: 14px;
 }
