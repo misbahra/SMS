@@ -225,8 +225,9 @@ export class NewOrderComponent implements OnInit{
     // this is the date which was set in the order form  
     this.receivedDate = this.queryParams[0].order_date; 
     //alert(this.receivedDate);
-    this.orderForm.controls.order_date.setValue(new Date(this.receivedDate).toISOString().slice(0, 16)); 
     if (this.queryParams[0].operation == 1) {
+     // in case of new order set the received date to the order date field
+      this.orderForm.controls.order_date.setValue(new Date(this.receivedDate).toISOString().slice(0, 16)); 
        
        this.operation = 1;
       

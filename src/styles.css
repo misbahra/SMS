@@ -10,7 +10,8 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, Sans-Serif; }
 
-.fa-trash {
+.fa-trash, .fa-close
+{
     color: red;
     }
 
@@ -21,6 +22,16 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
 .fa-pencil
     {
         color:rgb(255, 255, 255);
+    }
+
+  .fa-save , .fa-search
+    {
+        color:rgb(122, 236, 135);
+    }
+  
+    .fa-arrow-right
+    {
+      color:rgb(31, 39, 184);
     }
     
 .header
@@ -86,3 +97,76 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
 {
   font-size: 14px;
 }
+
+.hd-navy
+{
+  color:rgb(255, 253, 253); 
+  background-color:rgb(21, 5, 86);
+  
+}
+
+.hd-purple
+{
+  color:rgb(255, 255, 255); 
+  background-color:rgb(84, 51, 125);
+ 
+}
+
+ 
+/* .table-fixed tbody {
+  height: 300px;
+  overflow: auto;
+  width: 100%;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+  display: block;
+  
+}
+
+.table-fixed tbody td,
+.table-fixed tbody th,
+.table-fixed thead > tr > th {
+  float: left;
+  position: relative;
+}  */
+
+.table-fixed tbody, 
+.table-fixed thead,
+.trh,
+.table-fixed td,
+.table-fixed th 
+
+{
+    display: block;
+   
+}
+
+.table-fixed tbody td,
+.table-fixed tbody th,
+.table-fixed thead > tr > th 
+{
+  float: left;
+  position: relative;
+} 
+
+.table-fixed tbody 
+{
+   overflow: auto;
+   height: 200px;
+   width: 100%;
+}
+
+.tb-header
+{background-color: rgb(168, 185, 216);}
+
+/* to make labels bold*/
+.font-weight
+{
+  font-weight: bold;
+}
+
