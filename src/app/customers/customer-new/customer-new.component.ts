@@ -185,7 +185,7 @@ export class CustomerNewComponent implements OnInit {
         //this.userForm.reset();
         //this.router.navigate(['user']);
        // window.location.href = './lu';
-       this.dialogRef.close('save');
+       this.dialogRef.close({message:'save' , customer_uid: this.dataForm.value.customer_uid });
       }
       else {
         //alert('Remove Errors first ')

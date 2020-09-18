@@ -84,7 +84,7 @@ rowData2:any = [];
          filter: false,
         checkboxSelection: true
         },
-      {headerName: 'Code', field: 'cat_uid' , width: 150 },
+      {headerName: 'Code', field: 'cat_uid' , width: 125 },
       {headerName: 'Name', field: 'cat_name', width: 340 },
       {headerName: 'Desc', field: 'cat_desc', width: 340 },
       {headerName: 'Active', field: 'active', width: 340 },
@@ -116,10 +116,10 @@ rowData2:any = [];
        filter: false,
       checkboxSelection: true
       },
-    {headerName: 'Code', field: 'item_uid', width: 300 },
-    {headerName: 'Name', field: 'item_name', width: 200 },
+    {headerName: 'Code', field: 'item_uid', width: 150 },
+    {headerName: 'Name', field: 'item_name', width: 300 },
     {headerName: 'Bar Code', field: 'item_bar_code', width: 150 },
-    {headerName: 'Reorder Quantity', field: 'reorder_quantity' , width: 200 },
+    {headerName: 'Reorder Quantity', field: 'reorder_quantity' , width: 150 },
    ];
   
    this.rowData2 = resp;
@@ -129,12 +129,12 @@ rowData2:any = [];
    
   };
 
-  LoadItems(code: any) {
+  LoadItemsForOneCategory() {
     this.selectedID = this.rowDataClicked.cat_uid;
     this.isluhCodeSelected = true;
     this.selectedCode = [];
     this.selectedCode.push({ "name": "cat_uid", "value": this.rowDataClicked.cat_uid });
-   
+    
     this.loadItems(this.selectedCode);
   }
 
@@ -173,7 +173,7 @@ rowData2:any = [];
         if (confirm('Are you sure to delete record?')) {
            this.itemsSevice.deleteItems(this.rowDataClicked2).subscribe(
       (response) => {
-        this.loadItems(this.rowDataClicked.cat_uid);
+        this.LoadItemsForOneCategory();
 
       },
       (error) => {
@@ -195,7 +195,7 @@ rowData2:any = [];
 
     this.loadItemCategories();
     this.userPrivs = this.sessionService.getUsersPrivs();
-    if (this.selectedCode.length > 0){this.LoadItems(this.selectedCode);}
+    if (this.selectedCode.length > 0){this.LoadItemsForOneCategory();}
    
   };
 
@@ -257,6 +257,7 @@ openItemsDialog(operation: any) {
   // operation = 1 for new , operation = 2 for update
   
   var operationOK = false;
+  var cat_uid = this.rowDataClicked.cat_uid;
      
       // operation is new record
       if (operation == 1 ){
@@ -276,7 +277,7 @@ openItemsDialog(operation: any) {
     
       this.sessionService.deleteParameters();
       this.sessionService.setParameters([{  operation: operation, 
-                                            cat_uid: this.rowDataClicked.cat_uid,
+                                            cat_uid: cat_uid,
                                             item_id: this.rowDataClicked2._id  }]);
                                         
       
@@ -291,8 +292,8 @@ openItemsDialog(operation: any) {
         console.log(result);
         if (result == "save") {
           
-          
-          this.loadItemCategories();
+         
+          this.LoadItemsForOneCategory();
           this.rowDataClicked2 = {};
         
         }
@@ -324,7 +325,7 @@ onRowSelected(e)
    // alert("Selected row is for  - " + e.node.data.name);
     this.rowDataClicked = e.node.data;
     this.rowDataClicked2 = {};
-    this.LoadItems(1);
+    this.LoadItemsForOneCategory();
  }
  else
  {
@@ -335,7 +336,7 @@ onRowSelected(e)
       if (this.rowDataClicked._id == e.node.data._id ){
       this.rowDataClicked = {};
       this.rowDataClicked2 = {};
-      this.LoadItems(1);
+      this.LoadItemsForOneCategory();
      
   }
  }

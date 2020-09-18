@@ -12,10 +12,10 @@
       <!-- parameter 1 to openStockDialog 
             means its and new record and 2 mean its an update operation -->
       <a type="button" (click)="onSubmit()">
-        <span class="fa fa-save fa-2x mr-4"></span>
+        <span class="fa fa-save  mr-4"></span>
       </a>
       <a type="button" (click)="onCancel()">
-        <span class="fa fa-close fa-2x  mr-2"></span>
+        <span class="fa fa-close  mr-2"></span>
       </a>
 
 
@@ -36,15 +36,20 @@
       <!-- row 2 -->
       <div class="form-row ">
 
-        <div class="col col-3">
+        <div class="col">
           <div class="md-form">
-            <label class="font-weight text-dark" for="customer_uid">Customer</label>
-            <!-- <ng-select2 [data]="customerLOV"
-            class="form-control" id="customer_uid" name="customer_uid"
-              formControlName="customer_uid" [ngClass]="{ 'is-invalid': submitted && fc.customer_uid.errors }"
-            >
-            </ng-select2> -->
-
+            <label class="font-weight text-dark" for="customer_uid">Customer 
+              <a type="button" (click)="openCustomersDialog(1)">
+                <span >
+                  <i class="fa fa-user-plus pl-2" 
+                    aria-hidden="true">
+                    New</i>
+                   
+                  </span>
+                  
+                </a>
+            </label>
+               
             <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="customer_uid"
               name="customer_uid" formControlName="customer_uid"
               [ngClass]="{ 'is-invalid': submitted && fc.customer_uid.errors }">
@@ -61,10 +66,15 @@
               </div>
             </div>
           </div>
-
+                
         </div>
+        <!-- <div class="col m-0 p-0">
+        <div class="input-group-prepend">
+         
+        </div>
+      </div> -->
 
-        <div class="col col-3">
+        <div class="col">
           <!-- Order Date -->
           <div class="md-form ">
             <label class="font-weight text-dark" for="order_date">Order Date</label>

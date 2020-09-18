@@ -18,6 +18,11 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
 .fa-plus{
         color:yellow;
     }
+
+.fa-user-plus
+{
+  color: rgb(49, 77, 220);
+}
     
 .fa-pencil
     {
@@ -111,29 +116,6 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
   background-color:rgb(84, 51, 125);
  
 }
-
- 
-/* .table-fixed tbody {
-  height: 300px;
-  overflow: auto;
-  width: 100%;
-}
-
-.table-fixed thead,
-.table-fixed tbody,
-.table-fixed tr,
-.table-fixed td,
-.table-fixed th {
-  display: block;
-  
-}
-
-.table-fixed tbody td,
-.table-fixed tbody th,
-.table-fixed thead > tr > th {
-  float: left;
-  position: relative;
-}  */
 
 .table-fixed tbody, 
 .table-fixed thead,

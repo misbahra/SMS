@@ -8,6 +8,9 @@ import { stockWS } from '../../ws/stockWS';
 import * as momentNs from 'moment';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { utilWS } from '../../ws/utilWS';
+import { CustomerNewComponent } from '../../customers/customer-new/customer-new.component';
+import { MatDialogModule, MatDialog, MatDialogConfig } from '@angular/material/dialog';
+
 
 
 const moment = momentNs;
@@ -27,7 +30,8 @@ export class NewOrderComponent implements OnInit{
     private sessionService: sessionService,
     public stockService: stockWS,
     private fb: FormBuilder,
-    private utilService : utilWS
+    private utilService : utilWS,
+    public dialog: MatDialog
   ) {
     
   }
@@ -496,6 +500,61 @@ decreaseSoldStock(data : any)
       
    });
 
+}
+
+// open the new / update form
+openCustomersDialog(operation: any) {
+  // operation = 1 for new , operation = 2 for update
+
+  var operationOK = false;
+
+  // operation is new record
+  if (operation == 1) {
+    // if (this.venderUID == "" || this.venderUID == null) 
+    //  {alert("Please select an item first.");}
+    // else {
+    operationOK = true;
+    //};
+  }
+  // operation is update
+  else if (operation == 2) {
+    if (!this.rowDataClicked._id) { alert('Please select a record to update.'); }
+    else { operationOK = true };
+  }
+
+  if (operationOK) {
+    // update record is clicked
+    //if (this.rowDataClicked._id ) {
+    // delete the parameters array
+    this.sessionService.deleteParameters();
+    this.sessionService.setParameters([{
+      operation: operation,
+      customer_id: this.rowDataClicked._id
+    }]);
+
+
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '1000px';
+
+
+    const dialogRef = this.dialog.open(CustomerNewComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result.message == "save") {
+
+        //this.selectGL(this.venderUID, this.venderName);
+        this.loadAllCustomers();
+        this.orderForm.controls.customer_uid.setValue(result.customer_uid);
+        //this.rowDataClicked = {};
+
+      }
+      return (result);
+    });
+  }
+  // else
+  //{ alert('Please select a record to update.');}
 }
  
 

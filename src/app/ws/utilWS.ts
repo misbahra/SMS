@@ -19,6 +19,7 @@ export class utilWS {
     else if(type == "gl_uid") {prefix = "GL"}
     else if(type == "vender_accounts_uid") {prefix = "VA"}
     else if(type == "cat_uid") {prefix = "CT"}
+    else if(type == "customer_uid") {prefix = "CUS"}
     else {prefix = ""} ;
 
     var d = new Date();
