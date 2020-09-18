@@ -1,22 +1,22 @@
-<div class="ml-0 mr-0  border-1" style="width:100%;">
-    <div class="p-2" style="background-color:wheat; ">
-      <span class="h3">Manage Item / Categories</span>
+
+    <div class="header hd-navy" >
+      <span>Manage Item / Categories</span>
       <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
     </div>
-  </div>
+  
   
   <!-- <div class="parent-div"> -->
   <div class="row">
     <div class="column1">
   
-      <div class="pt-2 pl-2 pb-4" style="color:white; background-color:rgb(28, 78, 119);">
-        <span class="h3">Categories</span>
+      <div class="pt-2 pl-2 pb-4 section-header hd-purple">
+        <span >Categories</span>
         <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
        
         <div class=" float-left">
             <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
           </div>
-          <div class=" float-right">
+          <div class=" float-right section-detail">
             <!-- parameter 1 to openStockDialog 
                 means its and new record and 2 mean its an update operation -->
               <a *ngIf="(userPrivs.createAllowed == 'Y')" 
@@ -56,15 +56,15 @@
     </div>
     <!-- 2nd column -->
     <div class="column2">
-      <div class="pt-2 pl-2 pb-4" style="color:white; background-color:rgb(28, 78, 119);">
+      <div class="pt-2 pl-2 pb-4 section-header hd-purple">
        
-        <span class="h3">Items</span>
+        <span >Items</span>
   
-        <span class="pl-5"><b>Selected Category / Item:</b> {{rowDataClicked.cat_uid}} / {{rowDataClicked2.item_uid}}</span>
+        <span class="pl-5">Selected Category / Item: {{rowDataClicked.cat_uid}} / {{rowDataClicked2.item_uid}}</span>
         <div class=" float-left">
             <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
           </div>
-          <div class=" float-right">
+          <div class=" float-right section-detail">
             <!-- parameter 1 to openStockDialog 
                 means its and new record and 2 mean its an update operation -->
               <a *ngIf="(userPrivs.createAllowed == 'Y')" 

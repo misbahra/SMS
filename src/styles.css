@@ -41,10 +41,11 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
     
 .header
     {
-        color:white;
-        background-color: midnightblue;
-        height:30px;
-    }
+        
+        height:40px;
+        font-size: 18px;
+        padding: 0 0 2 2;
+            }
 
 .row {
         display: flex;
