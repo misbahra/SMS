@@ -1,18 +1,18 @@
 
     <div class="row bg">
 
-        <div class="column1 ml-3 mt-2 table-responsive  border border-primary">
-            <!-- ml-1 mt-2 table-responsive  border border-primary -->
-            <div class="headerBar p-2 mb-2">
-                <!-- p-2 mb-2 -->
-                <!-- <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span> -->
-                <div class=" h5 float-left">
+        <div class="column1">
+           
+            <div class="pt-2 pl-2 section-header hd-cyan">
+               
+                <span class="spinner-border" *ngIf="(isBusy == true)"></span>
+                <div class=" float-left">
                 GL Summary
                 </div>
                 
             </div>
             <!-- Search form -->
-            <div class="input-group md-form form-sm form-1 pl-2 pr-2 mb-2">
+            <div class="input-group md-form form-sm form-1 pl-1 pr-1 mb-1 mt-1">
                 <div class="input-group-prepend ">
                     <span class="input-group-text cyan lighten-2 bl" id="basic-text1"><i class="fa fa-search text-white"
                             aria-hidden="true"></i></span>
@@ -47,12 +47,15 @@
             </table>
         </div>
     
-    <div class="column2 ml-1 mt-2  table-responsive  border border-primary">
-        <div class="headerBar p-2 mb-2">   
-            <div class=" h5 float-left">
-                GL Details &nbsp; <b>Vender:</b> {{venderUID}} ({{venderName}})
+    <div class="column2">
+        <div class="pt-2 pl-2 section-header hd-cyan">   
+            <div class="float-left">
+                GL Details &nbsp; Vender: {{venderUID}} ({{venderName}})
             </div>
-            <div class=" float-right">
+            <div class=" float-left">
+                <span class="spinner-border" *ngIf="(isDetailBusy == true)"></span>
+            </div>
+            <div class=" float-right section-detail">
                 <!-- parameter 1 to openStockDialog 
                     means its and new record and 2 mean its an update operation -->
                   <a *ngIf="(userPrivs.createAllowed == 'Y')" 

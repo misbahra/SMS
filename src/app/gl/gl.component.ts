@@ -36,6 +36,7 @@ export class GlComponent implements OnInit {
     selectedDataList: any = [];
     term: string;
     isBusy = false;
+    isDetailBusy = false;
     totalAmount : any = 0;
     venderGlDataList : any = [];
     columnDefs = [];
@@ -83,7 +84,7 @@ export class GlComponent implements OnInit {
   
     // select the stock based on 
     async selectGL(vender_uid: any , vender_name:any ) {
-      
+      this.isDetailBusy = true;
       this.venderName = vender_name;
       this.venderUID = vender_uid;
       let response = await this.glService.getVenderGL([{"value":vender_uid}]);
@@ -158,7 +159,7 @@ export class GlComponent implements OnInit {
   
       ];
       this.rowData = response;
-      this.isBusy = false;
+      this.isDetailBusy = false;
   
       };
 

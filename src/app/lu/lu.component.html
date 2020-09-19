@@ -1,7 +1,7 @@
 <div class="ml-0 mr-0  border-1" style="width:100%;">
-    <div class="p-2" style="background-color:wheat; ">
-      <span class="h3">Manage Lookup Data</span>
-      <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
+    <div class="p-2 header hd-sky" >
+      <span>Manage Lookup Data</span>
+     
     </div>
   </div>
   
@@ -9,20 +9,27 @@
   <div class="row">
     <div class="column1">
   
-      <div class="pt-2 pl-2 pb-4" style="color:white; background-color:rgb(28, 78, 119);">
-        <span class="h3">Header</span>
-        <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
-       
-        <div class=" h5 float-right">
-          <button *ngIf="(userPrivs.editAllowed == 'Y')" type="button" class="btn" (click)="openLuhDialog(1)">
-            <i class="fa fa-pencil-alt "></i></button>
-  
-          <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="openLuhDialog(null)">
-            <span class="fa fa-plus"></span>
-          </a>
-          <button *ngIf="(userPrivs.deleteAllowed == 'Y')" type="button" class="btn" (click)="DeleteLUH(1)"><i class="fa fa-trash error"></i></button>
-  
-  
+      <div class="section-header hd-navy" >
+        <span >Header</span>
+        <div class=" float-left">
+          <span class="spinner-border" *ngIf="(isBusy)"></span>
+          </div>
+        
+        <div class="float-right section-detail">
+
+              <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+                type="button" (click)="openLuhDialog(1)">
+                <span class="fa fa-pencil p-2 text-warning"></span>
+              </a>
+            <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+                type="button" (click)="openLuhDialog(null)">
+              <span class="fa fa-plus text-white p-2"></span>
+            </a>
+            <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+                type="button" (click)="DeleteLUH(1)">
+                <span class="fa fa-trash text-danger p-2"></span>
+              </a>
+    
         </div>
       </div>
       <!-- [enableSorting]="true" [enableFilter]="true"
@@ -39,6 +46,7 @@
           class="ag-theme-blue"
           [rowData]="rowData"
           [columnDefs]="columnDefs"
+          [defaultColDef]="defaultColDef"
           (rowSelected)="onRowSelected($event)">
         </ag-grid-angular>
       </div>
@@ -46,22 +54,31 @@
     </div>
     <!-- 2nd column -->
     <div class="column2">
-      <div class="pt-2 pl-2 pb-4" style="color:white; background-color:rgb(28, 78, 119);">
-       
-        <span class="h3">Detail</span>
-  
-        <span class="pl-5"><b>Selected Header / Detail:</b> {{rowDataClicked.luh_code}} / {{rowDataClicked2.lud_code}}</span>
-        <div class=" h5 float-right">
-          <button *ngIf="(userPrivs.editAllowed == 'Y')" type="button" class="btn" (click)="openLudDialog(1)"><i
-              class="fa fa-pencil-alt "></i></button>
-  
-          <a *ngIf="(userPrivs.createAllowed == 'Y' && rowDataClicked.luh_code)" type="button" (click)="openLudDialog(null)">
-            <span class="fa fa-plus"></span>
-          </a>
-          <button *ngIf="(userPrivs.deleteAllowed == 'Y')" type="button" class="btn" (click)="DeleteLUD(1)"><i class="fa fa-trash error"></i></button>
-  
-  
+      <div class="section-header hd-navy" >
+        <div class=" float-left">
+        <span >Detail</span>
+        <span class="pl-5">Selected Header / Detail: {{rowDataClicked.luh_code}} / {{rowDataClicked2.lud_code}}</span>
         </div>
+        <div class=" float-left">
+        <span class="spinner-border" *ngIf="(isDetailBusy)"></span>
+        </div>
+        <div class="float-right section-detail">
+          <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+            type="button" (click)="openLudDialog(1)">
+            <span class="fa fa-pencil p-2 text-warning"></span>
+          </a>
+        <a *ngIf="(userPrivs.createAllowed == 'Y' && rowDataClicked.luh_code)" 
+            type="button" (click)="openLudDialog(null)">
+          <span class="fa fa-plus text-white p-2"></span>
+        </a>
+        <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+            type="button" (click)="DeleteLUD(1)">
+            <span class="fa fa-trash text-danger p-2"></span>
+          </a>
+
+    </div>
+        
+      
       </div>
   
       <!-- [enableSorting]="true"
@@ -79,6 +96,7 @@
            class="ag-theme-blue"
            [rowData]="rowData2"
            [columnDefs]="columnDefs2"
+           [defaultColDef]="defaultColDef"
            (rowSelected)="onRowSelected2($event)">
         </ag-grid-angular>
       </div>

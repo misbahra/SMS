@@ -100,7 +100,7 @@
   <div class="row row1">
     <div class="column">
   
-      <div class="pt-2 pl-2 pb-2 section-header" style="color:white; background-color:rgb(81, 23, 120);">
+      <div class="section-header hd-navy" >
         
           <span >Orders</span>
         
@@ -142,6 +142,7 @@
           class="ag-theme-blue"
           [rowData]="rowData"
           [columnDefs]="columnDefs"
+          [defaultColDef]="defaultColDef"
           (rowSelected)="onRowSelected($event)">
         </ag-grid-angular>
       </div>
@@ -154,11 +155,13 @@
     
     <div class="row row2">
     <div class="column">
-      <div class="pt-2 pl-2 pb-2 section-header" style="color:white; background-color:rgb(80, 36, 113);">
+      <div class="section-header hd-navy" >
        
         <span >Items</span>
-  
-        <span class="pl-5 section-detail"><b>Selected Order / Item:</b> {{rowDataClicked.order_uid}} / {{rowDataClicked2.order_item_uid}}</span>
+        <div class=" float-left">
+          <span class="spinner-border text-warning" *ngIf="(isDetailsBusy == true)"></span>
+        </div>
+        <span class="section-detail">Selected Order / Item: {{rowDataClicked.order_uid}} / {{rowDataClicked2.order_item_uid}}</span>
         
       </div>
   
@@ -171,6 +174,7 @@
            class="ag-theme-blue"
            [rowData]="rowData2"
            [columnDefs]="columnDefs2"
+           [defaultColDef]="defaultColDef"
            (rowSelected)="onRowSelected2($event)">
         </ag-grid-angular>
       </div>

@@ -1,15 +1,8 @@
-<!-- <div class="table-responsive"> -->
-<!-- <div class=" mb-0 p-3" style="background-color:wheat; width:100%; text-align: center; "> -->
-<!-- <h3>{{ this.isBusy == false ? 'WSR USERS' : 'WSR USERS (loading data)'}} </h3> -->
 
-
-
-
-
-<div class=" header-bar1" >
-    <span class="h5">Manage Resources</span>
+<div class=" header hd-gold" >
+    <span >Manage Resources</span>
     <span class="pl-1">Selected User: {{rowDataClicked.name}}</span>
-    <div class=" h5 float-right ">
+    <div class=" float-right section-detail ">
       <button *ngIf= "(userPrivs.editAllowed == 'Y')" type="button" class="btn" (click)="UpdateUser(1)"><i class="fa fa-pencil "></i></button>
   
       <a type="button" href="adduser">

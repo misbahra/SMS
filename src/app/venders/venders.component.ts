@@ -35,7 +35,7 @@ export class VendersComponent implements OnInit {
   venderDataList: any = [];
   venderAccountsList: any = [];
   isBusy = false;
-  isVaBusy = false;
+  isDetailBusy = false;
   resp: any[];
   selectedID: any = "No Selected";
   selectedCode: any = [];
@@ -92,7 +92,7 @@ rowData2:any = [];
 
   async loadVenderAccounts(id: any) {
     //alert("loading lud comp");  
-    this.isVaBusy = true;
+    this.isDetailBusy = true;
     //setTimeout(null,4000);
     //alert("luh value is " + id[0].value);
    let response = await this.venderAccountsSevice.getOneVenderAccounts(id);
@@ -125,7 +125,7 @@ rowData2:any = [];
     //if (this.userList.active == "true") {this.userList.active = "Y";} else {this.userList.active="N;"}
     //if (this.userList.locked == "true") {this.userList.locked = "Y";} else {this.userList.locked="N;"}
     //this.ScrolToTop();
-    this.isVaBusy = false;
+    this.isDetailBusy = false;
    
   };
 

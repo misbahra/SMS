@@ -33,7 +33,7 @@ export class ItemCategoriesComponent implements OnInit {
   itemCategoryDataList: any = [];
   itemDataList: any = [];
   isBusy = false;
-  isVaBusy = false;
+  isDetailBusy = false;
   resp: any[];
   selectedID: any = "No Selected";
   selectedCode: any = [];
@@ -102,7 +102,7 @@ rowData2:any = [];
 
   async loadItems(id: any) {
     //alert("loading lud comp");  
-    this.isVaBusy = true;
+    this.isDetailBusy = true;
   
    let resp = await this.itemsSevice.getOneCategoryItems(id);
 
@@ -125,7 +125,7 @@ rowData2:any = [];
    this.rowData2 = resp;
 
    
-    this.isVaBusy = false;
+    this.isDetailBusy = false;
    
   };
 

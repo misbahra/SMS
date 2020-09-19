@@ -38,14 +38,7 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
     {
       color:rgb(31, 39, 184);
     }
-    
-.header
-    {
-        
-        height:40px;
-        font-size: 18px;
-        padding: 0 0 2 2;
-            }
+
 
 .row {
         display: flex;
@@ -93,15 +86,32 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
   margin-right: 2px;
 }
 
+    
+.header
+    {
+        
+        height:40px;
+        font-size: 18px;
+        padding: 2px 0px 3px 2px;
+            }
+
 .section-header
 {
-  height: 40px;
+  height: 45px;
   font-size: 18px;
+  padding: 2px 0px 3px 2px;
 }
 
 .section-detail
 {
   font-size: 14px;
+}
+
+.spinner-border
+{
+  font-size: 5px;
+  display:block;
+  color: rgb(255, 0, 21);
 }
 
 .hd-navy
@@ -115,6 +125,27 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
 {
   color:rgb(255, 255, 255); 
   background-color:rgb(84, 51, 125);
+ 
+}
+
+.hd-gold
+{
+  color:rgb(12, 10, 79); 
+  background-color:rgb(181, 171, 103);
+ 
+}
+
+.hd-cyan
+{
+  color:rgb(55, 25, 118); 
+  background-color:rgb(76, 226, 216);
+ 
+}
+
+.hd-sky
+{
+  color:rgb(253, 253, 253); 
+  background-color:rgb(44, 100, 230);
  
 }
 

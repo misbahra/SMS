@@ -1,7 +1,7 @@
 
-    <div class="header hd-navy" >
+    <div class="header hd-gold" >
       <span>Manage Item / Categories</span>
-      <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
+      
     </div>
   
   
@@ -14,7 +14,7 @@
         <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
        
         <div class=" float-left">
-            <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
+            <span class="spinner-border" *ngIf="(isBusy == true)"></span>
           </div>
           <div class=" float-right section-detail">
             <!-- parameter 1 to openStockDialog 
@@ -62,7 +62,7 @@
   
         <span class="pl-5">Selected Category / Item: {{rowDataClicked.cat_uid}} / {{rowDataClicked2.item_uid}}</span>
         <div class=" float-left">
-            <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
+            <span class="spinner-border" *ngIf="(isDetailBusy == true)"></span>
           </div>
           <div class=" float-right section-detail">
             <!-- parameter 1 to openStockDialog 

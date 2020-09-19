@@ -35,7 +35,7 @@ export class OrdersComponent implements OnInit {
   ordersdataList: any = [];
   orderItemsdataList: any = [];
   isBusy = false;
-  isLUDBusy = false;
+  isDetailsBusy = false;
   isEdit = false;
   resp: any[];
   selectedID: any = "No Selected";
@@ -69,6 +69,13 @@ rowData2:any = [];
   width: '100%',
   height: '100%',
   flex: '1 1 auto'
+};
+defaultColDef = {
+  //flex: 1,
+  cellClass: 'number-cell',
+  resizable: true,
+  sortable: true, 
+  filter:true
 };
 
 ngOnInit() {
@@ -180,7 +187,7 @@ ngOnInit() {
 
   async loadAllOrderItems(id: any) {
     //alert("loading lud comp");  
-    this.isLUDBusy = true;
+    this.isDetailsBusy = true;
     //setTimeout(null,4000);
     //alert("luh value is " + id[0].value);
    let response = await this.webService.getAllItemsForOrder(id);
@@ -210,7 +217,7 @@ ngOnInit() {
     //if (this.userList.active == "true") {this.userList.active = "Y";} else {this.userList.active="N;"}
     //if (this.userList.locked == "true") {this.userList.locked = "Y";} else {this.userList.locked="N;"}
     //this.ScrolToTop();
-    this.isLUDBusy = false;
+    this.isDetailsBusy = false;
    
   };
 

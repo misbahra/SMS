@@ -34,6 +34,7 @@ export class StockComponent implements OnInit {
   selectedDataList: any = [];
   term: string;
   isBusy = false;
+  isDetailBusy = false;
   totalAmount : any = 0;
   itemStockDataList : any = [];
   columnDefs = [];
@@ -77,7 +78,7 @@ export class StockComponent implements OnInit {
 
   // select the stock based on 
   async selectStock(item_uid: any , item_name:any ) {
-    //alert("item_uid - " + item_uid);
+    this.isDetailBusy = true
     this.item_name = item_name;
     this.itemUID = item_uid;
     let response = await this.stockService.getItemStock([{"value":item_uid}]);
@@ -130,7 +131,7 @@ export class StockComponent implements OnInit {
   
     ];
     this.rowData = response;
-    this.isBusy = false;
+    this.isDetailBusy = false;
 
     };
  

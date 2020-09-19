@@ -31,7 +31,7 @@ export class LuComponent implements OnInit {
   LUHdataList: any = [];
   LUDdataList: any = [];
   isBusy = false;
-  isLUDBusy = false;
+  isDetailBusy = false;
   resp: any[];
   selectedID: any = "No Selected";
   selectedCode: any = [];
@@ -62,6 +62,15 @@ rowData2:any = [];
   height: '100%',
   flex: '1 1 auto'
 };
+
+defaultColDef = {
+  //flex: 1,
+  cellClass: 'number-cell',
+  resizable: true,
+  sortable: true, 
+  filter:true
+};
+
   async loadAllLUH() {
     this.isBusy = true;
     let response = await this.webService.getLUH();
@@ -75,8 +84,8 @@ rowData2:any = [];
          filter: false,
         checkboxSelection: true
         },
-      {headerName: 'Code', field: 'luh_code' , width: 100, sortable: true, filter:true  },
-      {headerName: 'Desc', field: 'luh_desc', width: 340, sortable: true, filter:true },
+      {headerName: 'Code', field: 'luh_code' , width: 100  },
+      {headerName: 'Desc', field: 'luh_desc', width: 340 },
      ];
     this.rowData = response;
 
@@ -87,10 +96,9 @@ rowData2:any = [];
   };
 
   async loadAllLUD(id: any) {
-    //alert("loading lud comp");  
-    this.isLUDBusy = true;
-    //setTimeout(null,4000);
-    //alert("luh value is " + id[0].value);
+  
+    this.isDetailBusy = true;
+   
    let response = await this.webService.getLUDFromDB(id);
    this.LUDdataList = response;
    this.columnDefs2 = [
@@ -101,12 +109,12 @@ rowData2:any = [];
        filter: false,
       checkboxSelection: true
       },
-    {headerName: 'Code', field: 'lud_code' , width: 100, sortable: true, filter:true },
-    {headerName: 'Desc', field: 'lud_desc', width: 350, sortable: true, filter:true },
-    {headerName: 'Value', field: 'value', width: 100, sortable: true, filter:true },
-    {headerName: 'Order', field: 'display_order', width: 100, sortable: true, filter:true },
-    {headerName: 'Active', field: 'active', width: 100, sortable: true, filter:true },
-    {headerName: 'Freezed', field: 'freezed', width: 140, sortable: true, filter:true },
+    {headerName: 'Code', field: 'lud_code' , width: 100  },
+    {headerName: 'Desc', field: 'lud_desc', width: 350  },
+    {headerName: 'Value', field: 'value', width: 100 },
+    {headerName: 'Order', field: 'display_order', width: 100 },
+    {headerName: 'Active', field: 'active', width: 100 },
+    {headerName: 'Freezed', field: 'freezed', width: 140 },
    ];
   this.rowData2 = response;
 
@@ -114,7 +122,7 @@ rowData2:any = [];
     //if (this.userList.active == "true") {this.userList.active = "Y";} else {this.userList.active="N;"}
     //if (this.userList.locked == "true") {this.userList.locked = "Y";} else {this.userList.locked="N;"}
     //this.ScrolToTop();
-    this.isLUDBusy = false;
+    this.isDetailBusy = false;
    
   };
 
