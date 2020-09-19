@@ -7,6 +7,7 @@ import {MatDialogModule, MatDialog, MatDialogConfig} from '@angular/material/dia
 import {StockNewComponent} from "./stock-new/stock-new.component";
 import * as momentNs from 'moment';
 const moment = momentNs;
+import {LovComponent} from '../lov/lov.component'
 
 @Component({
   selector: 'app-stock',
@@ -243,5 +244,27 @@ export class StockComponent implements OnInit {
    // else
    //{ alert('Please select a record to update.');}
     }
+
+
+    // open the new / update form
+    openLov(id: any) {
+      
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.width = '600px';
+      dialogConfig.data = { type : id , lovNature: 'M'};
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+     
+      const dialogRef = this.dialog.open(LovComponent, dialogConfig);
+  
+      dialogRef.afterClosed().subscribe(result => {
+        
+        if (result == "save") {
+          alert("Saved");
+        }
+        else{ alert("Cancelled");}
+     
+    });
+  }
 
 }
