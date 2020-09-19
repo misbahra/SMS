@@ -2,10 +2,16 @@
 <body>
     <div class="container">
       <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-          <div class="card card-signin my-5">
+       
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto ">
+          <div class="card card-signin my-5 border border-dark rounded-top">
+            <div class = "pt-5 pb-5 text-center header  hd-navy rounded-top" style="height:100px"> 
+              
+              <p class="h5">Sign In</p>
+              <p class="section-detail">Welcome to Sales Management System</p>
+          </div>
             <div class="card-body">
-              <h5 class="card-title">Sign In</h5>
+            
               <p style="color:red;"
                
               >{{this.messagetext}}</p>
@@ -45,7 +51,8 @@
                     </div>
                     <br/>
             <button [disabled] = "isBusy" (click)="onSubmit()"
-                    class="btn btn-lg btn-primary btn-block btn mr-1"> Login
+                    class="btn btn-lg btn-primary btn-block btn mr-1"> 
+                    <i class="fa fa-sign-in pr-3"></i>Login
                     <!-- {{ isBusy == false ? 'Login' : 'Logging in, please wait' }}  -->
                   </button>
                     <div  class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf = "(isBusy == true)">

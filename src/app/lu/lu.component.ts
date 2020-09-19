@@ -220,7 +220,9 @@ defaultColDef = {
 
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '600px';
-   
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    
     const dialogRef = this.dialog.open(LuhNewComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
@@ -259,6 +261,8 @@ openLudDialog(id: any) {
 
   const dialogConfig = new MatDialogConfig();
   dialogConfig.width = '600px';
+  dialogConfig.disableClose = true;
+  dialogConfig.autoFocus = true;
   const dialogRef = this.dialog.open(LudNewComponent, dialogConfig);
 
   dialogRef.afterClosed().subscribe(result => {
