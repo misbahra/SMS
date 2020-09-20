@@ -1,11 +1,16 @@
   import { Component, OnInit , Inject} from '@angular/core';
-  import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-  import * as luWS from '../ws/luWS';
-  import * as wsrSessionService from '../ws/sessionWS';
-  import { Router } from "@angular/router";
-  
+  import {luWS} from '../ws/luWS';
+  import {vendersWS} from '../ws/vendersWS';
+  import {venderAccountsWS} from '../ws/venderAccountsWS';
+  import {customersWS} from '../ws/customersWS';
+  import {citiesWS} from '../ws/citiesWS';
+  import {countriesWS} from '../ws/countriesWS';
+  import {statesWS} from '../ws/statesWS';
+  import {mainWS} from '../ws/mainWS';
+  import {ItemCategoriesWS} from '../ws/itemCategoriesWS';
+  import {ItemsWS} from '../ws/itemsWS';
+  import {utilWS} from '../ws/utilWS';
   import { MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
-  import { AbstractControl } from '@angular/forms';
   interface DialogData {
     data: string;
   }
@@ -36,7 +41,10 @@ export class LovComponent implements OnInit {
       //flex: 1,
       cellClass: 'number-cell',
       resizable: true,
+      sortable: true, 
+      filter: true
     };
+
     term: string;
     uidName: string;
     uidDescName: string;
@@ -45,26 +53,48 @@ export class LovComponent implements OnInit {
 
     rowData: any = [];
   
-      constructor(private webService: luWS.luWS,
-        private sessionService: wsrSessionService.sessionService,
-        private router: Router,
-        private fb: FormBuilder,
+      constructor(
+        private luService: luWS,
+        private venderService: vendersWS,
+        private vaService: venderAccountsWS,
+        private customerService: customersWS,
+        private countriesService: countriesWS,
+        private citiesService: citiesWS,
+        private statesService: statesWS,
+        private mainService: mainWS,
+       
+        private utilService: utilWS,
         public dialogRef: MatDialogRef<LovComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData
       ) {  }
     
       ngOnInit() {
         this.queryParams = this.data;
-        alert ("Parameter Received is -" + this.queryParams.type )
+
+        //alert ("Parameter Received is -" + this.queryParams.type )
+        // data will have two values lov_type and lov_nature
+        // values are described below
+          // parameters lov type can be LUH - LU Header, 
+          //                            LUD  - LU Details
+          //                            USR  - Users
+          //                            VEN  - Venders
+          //                             CAT  - Categories
+          //                             ITM  - Items
+          //                             CIT  - Cities
+          //                             CON  - Countries
+          //                             STA  - States
+          //                             VAC  - Vender Accounts
+          //                             CUS  - Customers                           
+          // Nature : S - single value selection , M - Multile value selection
+
         this.loadData();
           
         
       };
-    
-     
-    
+
       async loadData() {
         this.isBusy = true;
+        // lovNature handeling to enamble single select or multiselect
         if (this.queryParams.lovNature == 'M')
         {
           this.rowSelection = 'multiple';
@@ -73,14 +103,16 @@ export class LovComponent implements OnInit {
         {
           this.rowSelection = 'single';
         }
-
-        if (this.queryParams.type == "LUH"){
-        this.response = await this.webService.getLUH();
-        this.uidName = "luh_code";
-        this.uidDescName =  "luh_desc";
-        }
-        else if (this.queryParams.type == "LUH"){
-        }
+// lovtype handeling to load data
+        if (this.queryParams.type == "LUH"){this.response = await this.luService.getLUH();}
+        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
+        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
+        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
+        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
+        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
+        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
+        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
+        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
 
         else {}
         
@@ -96,8 +128,8 @@ export class LovComponent implements OnInit {
             checkboxSelection: true
           
           },
-          { headerName: 'ID', field: this.uidName, width: 150  },
-          { headerName: 'Desc', field: this.uidDescName, width: 250  },
+          { headerName: 'lov_uid', field: 'lov_uid', width: 150  },
+          { headerName: 'lov_desc', field: 'lov_desc', width: 250  },
           
         ];
         this.rowData = this.dataList;
@@ -107,12 +139,12 @@ export class LovComponent implements OnInit {
 
 onCancel() {
       
-        this.dialogRef.close('cancel');
+        this.dialogRef.close('C');
       }
      
 onSubmit() {
-       
-         this.dialogRef.close('save');
+       this.utilService.lov_selected_values = this.rowDataClicked;
+         this.dialogRef.close('S');
     
       }
     
@@ -124,10 +156,10 @@ onRowSelected(e) {
         else {
           var selectedIndex;
           var found = this.rowDataClicked.find(function(post, idx) {
-            if(post.luh_code == e.node.data.luh_code){
+            if(post.lov_uid == e.node.data.lov_uid){
               
               selectedIndex = idx
-              alert("found - " + e.node.data.luh_code + " - " + selectedIndex );
+              //alert("found - " + e.node.data.lov_uid + " - " + selectedIndex );
               return true;
             }
           });

@@ -1,11 +1,26 @@
 import { Component, Injectable } from '@angular/core';
-
+import {MatDialogModule, MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {LovComponent} from '../lov/lov.component'
 
 //https://alligator.io/js/introduction-localstorage-sessionstorage/
 
 @Injectable()
 export class utilWS {
-  constructor() { }
+  constructor(
+    public dialog: MatDialog
+  ) { }
+
+  lov_selected_values: any = []
+
+ setLovDate(data:any)
+ {
+   this.lov_selected_values = data;
+ } 
+
+ getLovDate()
+ {
+   return this.lov_selected_values;
+ }
 
  getUID(type:String)
   {
@@ -42,5 +57,35 @@ export class utilWS {
       .toString()
       .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
   }
+
+   // open the new / update form
+   // parameters lov type can be LUH - LU Header, 
+   //                            LUD  - LU Details
+   //                            USR  - Users
+   //                            VEN  - Venders
+  //                             CAT  - Categories
+  //                             ITM  - Items
+  //                             CIT  - Cities
+  //                             CON  - Countries
+  //                             STA  - States
+  //                             VAC  - Vender Accounts
+  //                             CUS  - Customers                           
+   // Nature : S - single value selection , M - Multile value selection
+   openLov  (lov_type: any , lov_nature: any, callback ) {
+    this.lov_selected_values = [];
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '600px';
+    dialogConfig.data = { type : lov_type , lovNature: lov_nature};
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+   
+    const dialogRef = this.dialog.open(LovComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+        if (result = 'S') {callback(this.lov_selected_values)}
+        else {callback([])}
+  });
+}
+
 
 }

@@ -7,7 +7,8 @@ import {MatDialogModule, MatDialog, MatDialogConfig} from '@angular/material/dia
 import {StockNewComponent} from "./stock-new/stock-new.component";
 import * as momentNs from 'moment';
 const moment = momentNs;
-import {LovComponent} from '../lov/lov.component'
+import {LovComponent} from '../lov/lov.component';
+import { utilWS } from '../ws/utilWS';
 
 @Component({
   selector: 'app-stock',
@@ -21,7 +22,8 @@ export class StockComponent implements OnInit {
     private router: Router,
     private sessionService: sessionService,
     public stockService: stockWS,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public utilService : utilWS,
   ) {
     this.gridOptions = <GridOptions>{
       onGridReady: () => {
@@ -89,6 +91,8 @@ export class StockComponent implements OnInit {
       //flex: 1,
       cellClass: 'number-cell',
       resizable: true,
+      sortable: true, 
+      filter: true
     };
     
     this.columnDefs = [
@@ -247,24 +251,13 @@ export class StockComponent implements OnInit {
 
 
     // open the new / update form
-    openLov(id: any) {
+     openLov() {
+     
+      this.utilService.openLov('LUH' , 'M', function(data){  
+        alert( data.length)
+      });
       
-      const dialogConfig = new MatDialogConfig();
-      dialogConfig.width = '600px';
-      dialogConfig.data = { type : id , lovNature: 'M'};
-      dialogConfig.disableClose = true;
-      dialogConfig.autoFocus = true;
-     
-      const dialogRef = this.dialog.open(LovComponent, dialogConfig);
-  
-      dialogRef.afterClosed().subscribe(result => {
-        
-        if (result == "save") {
-          alert("Saved");
-        }
-        else{ alert("Cancelled");}
-     
-    });
+      
   }
 
 }
