@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ordersWS } from '../../ws/ordersWS';
 import { luWS } from '../../ws/luWS';
 import { customersWS } from '../../ws/customersWS';
@@ -69,6 +69,7 @@ export class NewOrderComponent implements OnInit{
   dataId = "";
   isItemAddedRemoved = false;
   receivedDate: any;
+  @ViewChild("txtSearch") searchField: ElementRef;
   
 
    rowDataClicked:any = {};
@@ -169,6 +170,7 @@ export class NewOrderComponent implements OnInit{
       this.quantity = 1;
       this.price = null;
       this.loadAvailableStock(this.stockDataList); 
+      this.searchField.nativeElement.focus();
   }
 
     };
@@ -191,6 +193,7 @@ export class NewOrderComponent implements OnInit{
       this.loadAvailableStock(this.stockDataList); 
       this.selectedDataList.splice(index , 1);
       this.isItemAddedRemoved = true;
+      this.searchField.nativeElement.focus();
   };
   
   ngOnInit() {
