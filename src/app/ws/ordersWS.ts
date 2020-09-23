@@ -55,6 +55,22 @@ export class ordersWS {
     return this.http.get(this.BASE_URL + '/summarySalesByDay', searchParams).toPromise();
 }
    
+ //------------------------------
+
+ getSummaryByOrder(params: any) {
+        
+    const searchParams = {
+        params: {
+            param1: params[0].order_date,
+            param2: params[0].customer_uid,
+            param3: params[0].invoice_number
+        }
+    }
+    
+    return this.http.get(this.BASE_URL + '/summaryByOrders', searchParams).toPromise();
+}
+
+//----------------------------
     getOrderItems(OrderUID: any) {
         //alert('loading data in service - ' + userid[0].value);
         //alert("loading lud service");  

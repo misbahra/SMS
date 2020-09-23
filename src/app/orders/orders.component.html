@@ -103,12 +103,14 @@
       <div class="section-header hd-navy" >
         
           <span >Orders</span>
-        
+          
+      
         <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
         <div class=" float-left">
           <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
         </div>
         <div class=" float-right section-detail">
+          <span class = "pr-5"> Total Amount: {{sumAmount}}</span>
           <!-- parameter 1 to openStockDialog 
               means its and new record and 2 mean its an update operation -->
             <a *ngIf="(userPrivs.createAllowed == 'Y')" 
@@ -153,17 +155,20 @@
     <!-- 2nd column -->
 
     
-    <div class="row row2">
+    <div class="row row2" [(ngModel)] = "rowDataClicked">
     <div class="column">
       <div class="section-header hd-navy" >
        
-        <span >Items</span>
+        <span class=" pr-3" >Items</span>
         <div class=" float-left">
           <span class="spinner-border text-warning" *ngIf="(isDetailsBusy == true)"></span>
         </div>
-        <span class="section-detail">Selected Order / Item: {{rowDataClicked.order_uid}} / {{rowDataClicked2.order_item_uid}}</span>
-        
+        <span class="section-detail">Selected Order / Item: {{selectedID}} / {{rowDataClicked2.order_item_uid}}</span>
+     
+      <span class = "pr-2 section-detail float-right"> Order Amount: {{rowDataClicked.order_amount}}</span>
+      
       </div>
+
   
       <div [ngStyle]="style">
         <ag-grid-angular

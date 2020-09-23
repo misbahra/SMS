@@ -46,6 +46,7 @@ export class OrdersComponent implements OnInit {
   customerList: any = [];
   queryParams : any = [];
   orderForm: FormGroup;
+  sumAmount: any = 0;
    rowDataClicked:any = {};
     userPrivs = {"viewAllowed":"N",
                 "editAllowed":"N",
@@ -154,7 +155,9 @@ ngOnInit() {
     var parameters = [{"order_date":orderDate ,
                        "customer_uid" : customerUID,
                       "invoice_number" : invoiceNumber }];
-    let response = await this.webService.getOrders(parameters);
+    //let response = await this.webService.getOrders(parameters);
+    
+    let response = await this.webService.getSummaryByOrder(parameters);
     this.ordersdataList = response;
 
     this.columnDefs = [
@@ -165,20 +168,20 @@ ngOnInit() {
          filter: false,
         checkboxSelection: true
         },
-      {headerName: '#', field: 'order_uid' , width: 200, sortable: true, filter:true  },
-      {headerName: 'Invoice#', field: 'invoice_number', width: 150, sortable: true, filter:true },
-      {headerName: 'customer#', field: 'customer_name', width: 300, sortable: true, filter:true },
-      {headerName: 'Date', field: 'order_date', width: 200, sortable: true, filter:true },
-      {headerName: 'Status', field: 'status', width: 100, sortable: true, filter:true },
-      {headerName: 'HD', field: 'home_delivery', width: 100, sortable: true, filter:true },
-      {headerName: 'PM', field: 'payment_mode', width: 100, sortable: true, filter:true },
-      {headerName: 'Desc', field: 'order_desc', width: 300, sortable: true, filter:true },
-      
-      
-      
+      {headerName: '#', field: '_id.order_uid' , width: 200, sortable: true, filter:true  },
+      {headerName: 'Date', field: '_id.order_date', width: 200, sortable: true, filter:true },
+      {headerName: 'Invoice#', field: '_id.invoice_number', width: 150, sortable: true, filter:true },
+      {headerName: 'Customer', field: '_id.customer_name', width: 300, sortable: true, filter:true },
+      {headerName: 'Amount', field: 'order_amount', width: 300, sortable: true, filter:true },
+      {headerName: 'Status', field: '_id.status', width: 100, sortable: true, filter:true },
+      {headerName: 'HD', field: '_id.home_delivery', width: 100, sortable: true, filter:true },
+      {headerName: 'PM', field: '_id.payment_mode', width: 100, sortable: true, filter:true },
+          
     ];
     this.rowData = response;
-
+    this.ordersdataList.forEach(element => {
+      this.sumAmount +=element.order_amount;
+    });
 
     //if (this.userList.active == "true") {this.userList.active = "Y";} else {this.userList.active="N;"}
     //if (this.userList.locked == "true") {this.userList.locked = "Y";} else {this.userList.locked="N;"}
@@ -200,13 +203,13 @@ ngOnInit() {
        filter: false,
       checkboxSelection: true
       },
-    {headerName: 'order#', field: 'order_uid' , width: 200, sortable: true, filter:true },
-    {headerName: 'item', field: 'item_name', width: 300, sortable: true, filter:true },
-    {headerName: 'quantity', field: 'quantity', width: 150, sortable: true, filter:true },
-    {headerName: 'rate', field: 'unit_sale_price', width: 150, sortable: true, filter:true },
-    {headerName: 'total price', field: 'total_price', width: 200, sortable: true, filter:true },
-    {headerName: 'net price', field: 'total_price_with_taxes', width: 200, sortable: true, filter:true },
-    {headerName: 'stock uid', field: 'stock_uid', width: 200, sortable: true, filter:true },
+    //{headerName: 'order#', field: 'order_uid' , width: 200, sortable: true, filter:true },
+    {headerName: 'Item', field: 'item_name', width: 300, sortable: true, filter:true },
+    {headerName: 'Quantity', field: 'quantity', width: 150, sortable: true, filter:true },
+    {headerName: 'Rate', field: 'unit_sale_price', width: 150, sortable: true, filter:true },
+    {headerName: 'Total price', field: 'total_price', width: 200, sortable: true, filter:true },
+    {headerName: 'Net price', field: 'total_price_with_taxes', width: 200, sortable: true, filter:true },
+    {headerName: 'Stock uid', field: 'stock_uid', width: 200, sortable: true, filter:true },
     {headerName: 'Posted', field: 'posted_to_stock ', width: 130, sortable: true, filter:true }
    
     
@@ -222,10 +225,10 @@ ngOnInit() {
   };
 
   LoadOrderItems(code: any) {
-    this.selectedID = this.rowDataClicked.order_uid;
+    this.selectedID = this.rowDataClicked._id.order_uid;
     this.isluhCodeSelected = true;
     this.selectedCode = [];
-    this.selectedCode.push({ "name": "order_uid", "value": this.rowDataClicked.order_uid });
+    this.selectedCode.push({ "name": "order_uid", "value": this.rowDataClicked._id.order_uid });
     this.loadAllOrderItems(this.selectedCode);
   }
 
