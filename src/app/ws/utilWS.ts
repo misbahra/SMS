@@ -1,6 +1,9 @@
 import { Component, Injectable } from '@angular/core';
 import {MatDialogModule, MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {LovComponent} from '../lov/lov.component'
+import {LovComponent} from '../lov/lov.component';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 //https://alligator.io/js/introduction-localstorage-sessionstorage/
 
@@ -8,8 +11,11 @@ import {LovComponent} from '../lov/lov.component'
 export class utilWS {
   constructor(
     public dialog: MatDialog
-  ) { }
+  ) { 
+   
+  }
 
+ 
   lov_selected_values: any = []
 
  setLovDate(data:any)
@@ -35,6 +41,7 @@ export class utilWS {
     else if(type == "vender_accounts_uid") {prefix = "VA"}
     else if(type == "cat_uid") {prefix = "CT"}
     else if(type == "customer_uid") {prefix = "CUS"}
+    else if(type == "resource_uid") {prefix = "RES"}
     else {prefix = ""} ;
 
     var d = new Date();
@@ -87,5 +94,40 @@ export class utilWS {
   });
 }
 
+generatePdf(docDefinition : any , action:any){
+
+  (<any>pdfMake).tableLayouts = {
+    exampleLayout: {
+      hLineWidth: function (i, node) {
+        if (i === 0 || i === node.table.body.length) {
+          return 0;
+        }
+        return (i === node.table.headerRows) ? 2 : 1;
+      },
+      vLineWidth: function (i) {
+        return 0;
+      },
+      hLineColor: function (i) {
+        return i === 1 ? 'black' : '#aaa';
+      },
+      paddingLeft: function (i) {
+        return i === 0 ? 0 : 8;
+      },
+      paddingRight: function (i, node) {
+        return (i === node.table.widths.length - 1) ? 0 : 8;
+      }
+    }
+  };
+  
+
+  if(action==='download'){    
+    pdfMake.createPdf(docDefinition).download();    
+  }else if(action === 'print'){    
+    pdfMake.createPdf(docDefinition).print();          
+  }else{    
+    pdfMake.createPdf(docDefinition).open();          
+  }    
+ 
+ }
 
 }

@@ -70,6 +70,12 @@
                     type="button" (click)="deleteGL()">
                     <span class="fa fa-trash text-danger p-2"></span>
                   </a>
+
+
+                  <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+                  type="button" (click)="generatePDF()">
+                  <span class="fa fa-print text-danger p-2"></span>
+                </a>
                 
             </div>
     </div>

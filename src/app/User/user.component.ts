@@ -4,11 +4,12 @@ import { mainWS } from '../ws/mainWS';
 import { Router } from "@angular/router";
 import { sessionService } from '../ws/sessionWS';
 import {GridOptions} from "@ag-grid-community/all-modules";
-//import * as momentNs from 'moment';
-//const moment = momentNs;
+import { MatDialogModule, MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { UserNewComponent } from '../User/user-new/user-new.component';
 
-//import { ButtonRendererComponent } from '../renderer/button-renderer.component';
-
+interface DialogData {
+  data: string;
+}
 
 @Component({
   selector: 'app-user',
@@ -24,6 +25,7 @@ export class UserComponent implements OnInit {
     private webService: mainWS,
     private router: Router,
     private sessionService: sessionService,
+    public dialog: MatDialog
   ) {
     // this.frameworkComponents = {
     //   buttonRenderer: ButtonRendererComponent,
@@ -233,6 +235,62 @@ export class UserComponent implements OnInit {
     }
 
   }
+
+   // open the new / update form
+   openUserDialog(operation: any) {
+    // operation = 1 for new , operation = 2 for update
+
+    var operationOK = false;
+
+    // operation is new record
+    if (operation == 1) {
+      // if (this.venderUID == "" || this.venderUID == null) 
+      //  {alert("Please select an item first.");}
+      // else {
+      operationOK = true;
+      //};
+    }
+    // operation is update
+    else if (operation == 2) {
+      if (!this.rowDataClicked._id) { alert('Please select a record to update.'); }
+      else { operationOK = true };
+    }
+
+    if (operationOK) {
+      // update record is clicked
+      //if (this.rowDataClicked._id ) {
+      // delete the parameters array
+      this.sessionService.deleteParameters();
+      this.sessionService.setParameters([{
+        operation: operation,
+        resource_id: this.rowDataClicked._id
+      }]);
+
+
+
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.width = '1000px';
+
+
+      const dialogRef = this.dialog.open(UserNewComponent, dialogConfig);
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        if (result.message == "save") {
+
+          //this.selectGL(this.venderUID, this.venderName);
+          this.loadAllUsers();
+          this.rowDataClicked = {};
+
+        }
+        return (result);
+      });
+    }
+    // else
+    //{ alert('Please select a record to update.');}
+  }
+
+
 
 
 }

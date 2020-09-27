@@ -2,16 +2,23 @@
 <div class=" header hd-gold" >
     <span >Manage Resources</span>
     <span class="pl-1">Selected User: {{rowDataClicked.name}}</span>
-    <div class=" float-right section-detail ">
-      <button *ngIf= "(userPrivs.editAllowed == 'Y')" type="button" class="btn" (click)="UpdateUser(1)"><i class="fa fa-pencil "></i></button>
-  
-      <a type="button" href="adduser">
-        <span class="fa fa-plus"></span>
+    <div class=" float-right section-detail">
+      <!-- parameter 1 to openStockDialog 
+          means its and new record and 2 mean its an update operation -->
+        <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+          type="button" (click)="openUserDialog('2')">
+          <span class="fa fa-pencil p-2 text-warning"></span>
+        </a>
+      <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+          type="button" (click)="openUserDialog('1')">
+        <span class="fa fa-plus text-white p-2"></span>
       </a>
-      <button type="button" class="btn" (click)="DeleteUser(1)"><i class="fa fa-trash error"></i></button>
-  
-  
-    </div>
+      <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+          type="button" (click)="deleteCustomer()">
+          <span class="fa fa-trash text-danger p-2"></span>
+        </a>
+      
+  </div>
   </div>
       
 <!-- <div [ngStyle]="style"> -->

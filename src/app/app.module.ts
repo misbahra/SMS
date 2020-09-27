@@ -46,6 +46,7 @@ import { CategoryNewComponent } from './item-categories/category-new/category-ne
 import {ItemsWS} from './ws/itemsWS';
 import {ItemCategoriesWS} from './ws/itemCategoriesWS';
 import { LovComponent } from './lov/lov.component';
+import { UserNewComponent } from './User/user-new/user-new.component';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { LovComponent } from './lov/lov.component';
     ItemNewComponent,
     CategoryNewComponent,
     LovComponent,
+    UserNewComponent,
     
   ],
   imports: [

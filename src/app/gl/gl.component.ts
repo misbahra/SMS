@@ -163,7 +163,144 @@ export class GlComponent implements OnInit {
   
       };
 
+generatePDF()
+{
+  const documentDefinition = 
+  {
+    content: [
+              {  
+                text: this.venderName,  
+                style: 'reportTitle' 
+              } ,
+              {  
+                columns: [  
+                    [{ qr: `${this.venderName}`, fit: '50' }],  
+                   // [{ text: 'Signature', alignment: 'right', italics: true }],  
+                ] , style: 'qrStyle' 
+            },
+              {  
+                text: 'Balance Sheet',  
+                style: 'reportHeader' 
+              } ,
+              // {  
+              //   text: 'Customer Details',  
+              //   style: 'sectionHeader'  
+              //  } ,
+               {canvas: [{  type: 'line', 
+                            x1: 0, 
+                            y1: 5, 
+                            x2: 595-2*40, 
+                            y2: 5, 
+                            lineWidth: 3 
+                          }]
+                          ,
+                          style: 'separator'
+                },
+               {
+                columns: [  
+                            [  
+                                {  
+                                    text: '',  
+                                    bold: true  
+                                },  
+                               
+                            ],  
+                            [  
+                                {  
+                                    text: `Date: ${new Date().toLocaleString()}`,  
+                                    alignment: 'right'  
+                                },  
+                                // {  
+                                //     text: `Bill No : ${((Math.random() * 1000).toFixed(0))}`,  
+                                //     alignment: 'right'  
+                                // }  
+                            ]  
+                          ] , style:'sectionBar'
+               },
+              //  {  
+              //   text: 'Order Details',  
+              //   style: 'sectionHeader'  
+              //  },  
+            {  
+                table: {  
+                    headerRows: 1,
+                    widths: ['auto', '*', 'auto', 'auto'],  
+                    body: [   
+                        [ {text:'Date' ,style: 'tableHeader'}, 
+                          {text:'Account Head' ,style: 'tableHeader'}, 
+                          {text:'Sent',style: 'tableHeader'}, 
+                          {text:'Received' ,style: 'tableHeader'} ],  
+                        ...this.rowData.map(p => ([new Date(p.gl_date).toLocaleString().slice(0,10), p.account_head_name, p.fund_amount, p.cargo_amount])),  
+                        [ { text: 'Total Amount', colSpan: 2 }, 
+                          {}, 
+                          this.rowData.reduce((sum, p) => sum + (p.fund_amount), 0).toFixed(2), 
+                          this.rowData.reduce((sum, p) => sum + (p.cargo_amount), 0).toFixed(2)
+                        ],
+                        [ { text: 'Net Amount', colSpan: 2 },
+                          {},{},  
+                          (this.rowData.reduce((sum, p) => sum + (p.fund_amount), 0)- 
+                          this.rowData.reduce((sum, p) => sum + (p.cargo_amount), 0)).toFixed(2)
+                          
+                        ]  
+                    ]  
+                }  
+            }  
+             
+             
+             
+              ],
+  styles: { 
+            reportTitle:{
+                        fontSize: 20,  
+                        bold: true,  
+                        alignment: 'center',  
+                        width:'100%',
+                        height: '100px',
+                        padding: '5px', 
+                        color: 'Navy' ,
+                        //background:'black'
+                        }, 
+            reportHeader:{
+                          fontSize: 15,  
+                          bold: true,  
+                          alignment: 'center',  
+                          decoration: 'underline',  
+                          color: 'grey' 
+                          },
+            sectionHeader: {  
+                            bold: true,  
+                            decoration: 'underline',  
+                            fontSize: 14,  
+                            margin: [0, 15, 0, 15]  
+                          }  ,
+            separator: {  
+                           color:'grey',  
+                            margin: [0, 3, 0, 5]  
+                          },
+            qrStyle:    {
+                            alignment: 'center',
+                            margin: [5, 5, 5, 5]  
+                          
+                            },
+            sectionBar:    {
+                            color:'navy',                
+                            background:'white'
+                              },
+            tableHeader:    {
+                            color:'white',                
+                            fillColor: 'navy',
+                            bold: true,
+                              },
+           tableBody:    {
+                                color:'navy',    
+                                border: [false, false, false, false],             
+                         },
+          },
+  }; 
 
+
+  this.utilService.generatePdf(documentDefinition, 'open');
+}
    
       deleteGL() {
         

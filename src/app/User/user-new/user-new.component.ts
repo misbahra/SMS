@@ -1,6 +1,7 @@
-import { Component, OnInit , Inject} from '@angular/core';
+
+  import { Component, OnInit , Inject} from '@angular/core';
   import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-  import {customersWS} from '../../ws/customersWS';
+  import {mainWS} from '../../ws/mainWS';
   import { Router } from "@angular/router";
   import {sessionService} from '../../ws/sessionWS';
   import { MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
@@ -10,19 +11,17 @@ import { Component, OnInit , Inject} from '@angular/core';
   import {statesWS} from '../../ws/statesWS';
   import { luWS } from '../../ws/luWS';
   
-  
   interface DialogData {
     data: string;
   }
 
 @Component({
-  selector: 'app-customer-new',
-  templateUrl: './customer-new.component.html',
-  styleUrls: ['./customer-new.component.css']
+  selector: 'app-user-new',
+  templateUrl: './user-new.component.html',
+  styleUrls: ['./user-new.component.css']
 })
-export class CustomerNewComponent implements OnInit {
-  
-  
+export class UserNewComponent implements OnInit {
+
   
   
     dataForm: FormGroup;
@@ -37,21 +36,22 @@ export class CustomerNewComponent implements OnInit {
     dataId: any = "";
     isDup = false;
     customerDataList: any = [];
-    customerID = "";
+    resourceID = "";
     todayDate = new Date().toISOString().slice(0, 16);
-    countriesDataList : any = [];
-    citiesDataList : any = [];
-    statesDataList : any = [];
-    genderDataList : any = [];
+    departmentsDataList : any = [];
+    designationsDataList : any = [];
+    userRolesDataList : any = [];
+    yesNoDataList : any = [];
+    connUser : any = this.sessionService.getConnectedUsers();
   
     messagetext = '';
     constructor(
       private sessionService: sessionService,
       private router: Router,
       private fb: FormBuilder,
-      public dialogRef: MatDialogRef<CustomerNewComponent>,
+      public dialogRef: MatDialogRef<UserNewComponent>,
       private utilService : utilWS,
-      private customersService : customersWS,
+      private userService : mainWS,
       private countriesService : countriesWS,
       private citiesService : citiesWS,
       private statesService : statesWS,
@@ -62,31 +62,34 @@ export class CustomerNewComponent implements OnInit {
     ngOnInit() {
       this.dataForm = this.fb.group({
         id: ['', []],
-        customer_uid: [this.utilService.getUID('customer_uid'), []],
-        name: ['', []],
-        phone: ['', []],
-        mobile: ['', []],
-        email: ['', []],
-        address: ['', []],
-        card_no: ['', []],
-        country_uid: ['', []],
-        state_uid: ['', []],
-        city_uid: ['', []],
-        gender: ['', []],
+        resource_uid: [, []],
+        name: ['', [Validators.required]],
+        employee_id: ['', []],
+        user_name: ['', [Validators.required]],
+        password: ['', [Validators.required]],
+        designation: ['', []],
+        department: ['', []],
+        off_email: ['', []],
+        personal_email: ['', []],
+        office_phone: ['', []],
+        mobile_phone: ['', []],
+        locked: ['N', [Validators.required]],
+        active: ['Y', [Validators.required]],
+        app_role: ['', [Validators.required]],
         created_by: ['', []],
         created_on: ['', []],
         modified_by: ['', []],
         modified_on: ['', []]
-        
       }
         // , { validator: this.CheckUserName('UserName') }
       );
       
       //load lovs data for list population
-      this.loadCountries();
-      this.loadStates();
-      this.loadCities();
-      this.loadAllLUD('7');
+     
+      this.loadAllLUD('DEP');
+      this.loadAllLUD('DES');
+      this.loadAllLUD('20');  // Yes / No
+      this.loadAllLUD('USR');
   
       this.queryParams = this.sessionService.getParameters();
       // alert('point 1 - ' + this.queryParams[0].name);
@@ -95,14 +98,14 @@ export class CustomerNewComponent implements OnInit {
       // if operation = 1- new record  
       this.isDisabled = true; 
       if (this.queryParams[0].operation == 1) {
-        // alert('point 2');
         
-        //this.customerUID = this.queryParams[0].customer_uid;
+
+        this.dataForm.controls.resource_uid.setValue(this.utilService.getUID('resource_uid'));
       }
        // if operation = 2- update record   
       else if (this.queryParams[0].operation == 2)
       {
-        this.customerID = this.queryParams[0].customer_id;
+        this.resourceID = this.queryParams[0].resource_id;
         
         this.loadData(this.queryParams);
         
@@ -116,7 +119,10 @@ export class CustomerNewComponent implements OnInit {
       //alert("loading lud comp");  
       var luhData = [{value:id}]
       let response = await this.LUDService.getLUD(luhData);
-      if (id=='7'){this.genderDataList = response;}
+      if (id=='DEP'){this.departmentsDataList = response;}
+      if (id=='DES'){this.designationsDataList = response;}
+      if (id=='USR'){this.userRolesDataList = response;}
+      if (id=='20'){this.yesNoDataList = response;}
      
        //console.log("Data in LUD list " + this.LUDdataList.length );
     };
@@ -128,8 +134,8 @@ export class CustomerNewComponent implements OnInit {
       this.isBusy = true;
       this.dataForm.disable();
       //alert('loading data - ' + userid[0].value);
-      var customerToLoad = [{name: "customer_id" , value: id[0].customer_id}];
-      this.response = await this.customersService.getThisCustomers(customerToLoad);
+      var userToLoad = [{name: "resource_id" , value: id[0].resource_id}];
+      this.response = await this.userService.getThisUser(userToLoad);
       //alert('data - ' + this.response.name);
       this.dataId = this.response._id;
       this.dataForm.patchValue(this.response);
@@ -186,7 +192,7 @@ export class CustomerNewComponent implements OnInit {
         //this.userForm.reset();
         //this.router.navigate(['user']);
        // window.location.href = './lu';
-       this.dialogRef.close({message:'save' , customer_uid: this.dataForm.value.customer_uid });
+       this.dialogRef.close({message:'save' , resource_uid: this.dataForm.value.resource_uid });
       }
       else {
         //alert('Remove Errors first ')
@@ -200,10 +206,10 @@ export class CustomerNewComponent implements OnInit {
     addData() {
       //console.log('data: ' + this.dataForm.value.name);
       this.dataForm.controls.created_on.setValue(Date.now());
-      this.dataForm.controls.customer_uid.setValue(this.utilService.getUID('customer_uid'));
+      this.dataForm.controls.created_by.setValue(this.connUser.user_name);
       //this.dataForm.controls.item_uid.setValue(this.itemUID);
       //this.userForm.controls.user_name.setValue(upper(this.user_name));
-      this.customersService.addCustomers(this.dataForm.value).subscribe(
+      this.userService.AddUser(this.dataForm.value).subscribe(
         (response) => {
           //this.resp = response;
           console.log('Data added' + response);
@@ -228,10 +234,11 @@ export class CustomerNewComponent implements OnInit {
       this.dataForm.removeControl('id');
       this.dataForm.addControl('_id', new FormControl(['', []]));
       this.dataForm.controls._id.setValue(this.dataId);
-      //alert("Value is set to - " + this.userForm.controls._id.value);
+      this.dataForm.controls.modified_on.setValue(Date.now());
+      this.dataForm.controls.modified_by.setValue(this.connUser.user_name);
   
       //this.userForm.controls.user_name.setValue(upper(this.user_name));
-      this.customersService.updateCustomers(this.dataForm.value).subscribe(
+      this.userService.UpdateUser(this.dataForm.value).subscribe(
         (response) => {
           //this.resp = response;
           console.log('Data updated' + response);
@@ -248,28 +255,6 @@ export class CustomerNewComponent implements OnInit {
       this.dataForm.removeControl('_id');
     }
   
-    async loadCountries()
-    {
-    var response;
-    response = await this.countriesService.getCountries();
-    this.countriesDataList = response;
-    //alert("customers loaded - " + this.customersDataList.length);
-    }
-  
-    async loadStates()
-    {
-    var response;
-    response = await this.statesService.getStates();
-    this.statesDataList = response;
-    //alert("customers loaded - " + this.customersDataList.length);
-    }
-  
-    async loadCities()
-    {
-    var response;
-    response = await this.citiesService.getCities();
-    this.citiesDataList = response;
-    //alert("customers loaded - " + this.customersDataList.length);
-    }
+    
   
   }

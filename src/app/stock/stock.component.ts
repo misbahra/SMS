@@ -10,6 +10,9 @@ const moment = momentNs;
 import {LovComponent} from '../lov/lov.component';
 import { utilWS } from '../ws/utilWS';
 
+
+
+
 @Component({
   selector: 'app-stock',
   templateUrl: './stock.component.html',
@@ -29,7 +32,8 @@ export class StockComponent implements OnInit {
       onGridReady: () => {
         this.gridOptions.api.sizeColumnsToFit();
       }   
-    }
+    };
+    
   }
 
   stockDataList: any = [];
