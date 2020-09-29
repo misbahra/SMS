@@ -169,7 +169,7 @@ generatePDF()
   {
     content: [
               {  
-                text: this.venderName,  
+                text: 'Balance Sheet',
                 style: 'reportTitle' 
               } ,
               {  
@@ -179,7 +179,7 @@ generatePDF()
                 ] , style: 'qrStyle' 
             },
               {  
-                text: 'Balance Sheet',  
+                text: this.venderName,   
                 style: 'reportHeader' 
               } ,
               // {  
@@ -233,13 +233,16 @@ generatePDF()
                         ...this.rowData.map(p => ([new Date(p.gl_date).toLocaleString().slice(0,10), p.account_head_name, p.fund_amount, p.cargo_amount])),  
                         [ { text: 'Total Amount', colSpan: 2 }, 
                           {}, 
-                          this.rowData.reduce((sum, p) => sum + (p.fund_amount), 0).toFixed(2), 
-                          this.rowData.reduce((sum, p) => sum + (p.cargo_amount), 0).toFixed(2)
+                          {text: (this.rowData.reduce((sum, p) => sum + (p.fund_amount), 0).toFixed(2))
+                            , alignment: 'right'  }, 
+                          {text: (this.rowData.reduce((sum, p) => sum + (p.cargo_amount), 0).toFixed(2))
+                          , alignment: 'right'  }, 
                         ],
-                        [ { text: 'Net Amount', colSpan: 2 },
-                          {},{},  
-                          (this.rowData.reduce((sum, p) => sum + (p.fund_amount), 0)- 
-                          this.rowData.reduce((sum, p) => sum + (p.cargo_amount), 0)).toFixed(2)
+                        [ { text: 'Balance', colSpan: 2 , style: 'tableHeader' },
+                          {},  
+                          {text:(this.rowData.reduce((sum, p) => sum + (p.fund_amount), 0)- 
+                          this.rowData.reduce((sum, p) => sum + (p.cargo_amount), 0)).toFixed(2) , colSpan: 2
+                          ,style: 'tableHeader' , alignment: 'right'  }
                           
                         ]  
                     ]  
@@ -258,14 +261,14 @@ generatePDF()
                         height: '100px',
                         padding: '5px', 
                         color: 'Navy' ,
-                        //background:'black'
+                        fillColor:'black'
                         }, 
             reportHeader:{
                           fontSize: 15,  
                           bold: true,  
                           alignment: 'center',  
                           decoration: 'underline',  
-                          color: 'grey' 
+                          color: 'navy' 
                           },
             sectionHeader: {  
                             bold: true,  
@@ -274,7 +277,8 @@ generatePDF()
                             margin: [0, 15, 0, 15]  
                           }  ,
             separator: {  
-                           color:'grey',  
+                            color:'grey', 
+                            fillColor: 'grey', 
                             margin: [0, 3, 0, 5]  
                           },
             qrStyle:    {
