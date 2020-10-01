@@ -172,7 +172,11 @@ ngOnInit() {
       {headerName: 'Date', field: '_id.order_date', width: 200, sortable: true, filter:true },
       {headerName: 'Invoice#', field: '_id.invoice_number', width: 150, sortable: true, filter:true },
       {headerName: 'Customer', field: '_id.customer_name', width: 300, sortable: true, filter:true },
-      {headerName: 'Amount', field: 'order_amount', width: 300, sortable: true, filter:true },
+      {headerName: 'Amount', field: 'order_amount', width: 130, sortable: true, filter:true , cellStyle: {textAlign: "right",color:"green"},
+       valueFormatter: function(params) {
+       return params.value.toFixed(2)
+      },
+    },
       {headerName: 'Status', field: '_id.status', width: 100, sortable: true, filter:true },
       {headerName: 'HD', field: '_id.home_delivery', width: 100, sortable: true, filter:true },
       {headerName: 'PM', field: '_id.payment_mode', width: 100, sortable: true, filter:true },
@@ -205,10 +209,30 @@ ngOnInit() {
       },
     //{headerName: 'order#', field: 'order_uid' , width: 200, sortable: true, filter:true },
     {headerName: 'Item', field: 'item_name', width: 300, sortable: true, filter:true },
-    {headerName: 'Quantity', field: 'quantity', width: 150, sortable: true, filter:true },
-    {headerName: 'Rate', field: 'unit_sale_price', width: 150, sortable: true, filter:true },
-    {headerName: 'Total price', field: 'total_price', width: 200, sortable: true, filter:true },
-    {headerName: 'Net price', field: 'total_price_with_taxes', width: 200, sortable: true, filter:true },
+    {headerName: 'Quantity', field: 'quantity', width: 130, sortable: true, filter:true ,
+    cellStyle: {textAlign: "right"},
+    valueFormatter: function(params) {
+      return params.value.toFixed(2)
+     },
+   },
+    {headerName: 'Rate', field: 'unit_sale_price', width: 130, sortable: true, filter:true ,
+    cellStyle: {textAlign: "right"},
+    valueFormatter: function(params) {
+      return params.value.toFixed(2)
+     },
+   },
+    {headerName: 'Total price', field: 'total_price', width: 130, sortable: true, filter:true ,
+    cellStyle: {textAlign: "right",color:"green"}
+        ,  valueFormatter: function(params) {
+          return params.value.toFixed(2)
+         },
+       },
+    {headerName: 'Net price', field: 'total_price_with_taxes', width: 130, sortable: true, filter:true ,
+    cellStyle: {textAlign: "right",color:"blue"}
+        ,  valueFormatter: function(params) {
+          return params.value.toFixed(2)
+         },
+       },
     {headerName: 'Stock uid', field: 'stock_uid', width: 200, sortable: true, filter:true },
     {headerName: 'Posted', field: 'posted_to_stock ', width: 130, sortable: true, filter:true }
    
