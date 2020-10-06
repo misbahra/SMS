@@ -228,7 +228,7 @@ export class NewOrderComponent implements OnInit{
     );
      
     this.queryParams = this.sessionService.getParameters();
-    // alert('point 1 - ' + this.queryParams[0].name);
+     alert('point 1 - ' + this.queryParams[0].order_id);
     // this is the date which was set in the order form  
     this.receivedDate = this.queryParams[0].order_date; 
     //alert(this.receivedDate);
@@ -260,9 +260,9 @@ export class NewOrderComponent implements OnInit{
 
   async loadOrders(orderid: any) {
     //this.isBusy = true;
-    //alert('loading data - ' + userid[0].value);
+    //alert('loading data - ' + orderid);
     this.response = await this.orderService.getThisOrder([{value : orderid}]);
-    //alert('data - ' + this.response.name);
+    //alert('data - ' + this.response._id);
     this.OrderId = this.response._id;
     this.orderNumber = this.response.order_uid;
     this.response.order_date = this.response.order_date.slice(0, 16);; 

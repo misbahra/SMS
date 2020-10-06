@@ -325,7 +325,7 @@ editOrder() {
   else
   {
     this.sessionService.deleteParameters();
-  this.sessionService.setParameters([{ operation: 2, order_date : this.orderForm.value.order_date, order_id: this.rowDataClicked._id }]);
+  this.sessionService.setParameters([{ operation: 2, order_date : this.orderForm.value.order_date, order_id: this.rowDataClicked._id.order_uid }]);
   this.router.navigate(['/neworder'], {skipLocationChange: true});
   }
 }

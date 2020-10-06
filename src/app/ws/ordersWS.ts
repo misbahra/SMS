@@ -83,12 +83,13 @@ export class ordersWS {
     }
 
     getThisOrder(id: any) {
-        //alert('loading data in service - ' + userid[0].value);
+        //alert('loading data in service - ' + id[0].value);
         const searchParams = {
             params: {
                 param1: id[0].value
             }
         }
+       // alert('2 loading data in service - ' + id[0].value);
         return this.http.get(this.BASE_URL + '/thisOrder', searchParams).toPromise();
     }
 
