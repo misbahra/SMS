@@ -127,6 +127,7 @@ ngOnInit() {
   async loadAllOrders() {
     //alert("loading orederes");
     this.isBusy = true;
+    this.sumAmount = 0;
     //alert("Selected Date is - " + this.orderForm.value.order_date);
     
     var orderDate;

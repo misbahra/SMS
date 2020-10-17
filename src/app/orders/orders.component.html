@@ -12,7 +12,7 @@
         <div class="md-form ">
             <!-- <label class="font-weight form-row " for="order_date">Order Date</label> -->
             <input type="date" id="order_date" name="order_date" class="form-control form-control-sm"
-                placeholder="Order Date" formControlName="order_date"
+                placeholder="Order Date" formControlName="order_date" (change) = "loadAllOrders()"
                 [ngClass]="{ 'is-invalid':    fc.order_date.errors }"
                 >
             <div *ngIf=" fc.order_date.invalid " class="invalid-feedback">
