@@ -2,15 +2,17 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { sessionService } from '../ws/sessionWS';
+
 
 @Injectable()
 export class mainWS {
   constructor( 
-    private http: HttpClient
+    private http: HttpClient,
+    private sessionWS: sessionService
     ) { }
 
-  BASE_URL = 'http://localhost:4201';
- // BASE_URL = 'https://mraapp-api.herokuapp.com';
+    BASE_URL = this.sessionWS.getBaseUrl();//  
 
   getMessage() {
     return this.http.get(this.BASE_URL).toPromise();

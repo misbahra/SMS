@@ -2,14 +2,14 @@ import { Component, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-
+import { sessionService } from '../ws/sessionWS';
 
 @Injectable()
 export class customersWS {
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient,
+        private sessionWS: sessionService) { }
 
-      BASE_URL = 'http://localhost:4201';
-  //BASE_URL = 'https://mraapp-api.herokuapp.com';
+    BASE_URL = this.sessionWS.getBaseUrl();
 
     getCustomers() {
         return this.http.get(this.BASE_URL + '/allCustomers').toPromise();

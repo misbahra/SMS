@@ -120,8 +120,12 @@ export class StockNewComponent implements OnInit {
     this.response = await this.webService.getThisStock(stock_id);
     //alert('data - ' + this.response.name);
     this.dataId = this.response._id;
-    this.response.request_placed_on = new Date(this.response.request_placed_on).toISOString().slice(0, 16);
-    this.response.stock_received_on = new Date(this.response.stock_received_on).toISOString().slice(0, 16);
+    //alert('request_placed_on -' + this.response.request_placed_on.slice(0, 10) );
+    //this.response.request_placed_on = new Date(this.response.request_placed_on).toLocaleString().slice(0, 10);
+    //this.response.stock_received_on = new Date(this.response.stock_received_on).toLocaleString().slice(0, 10);
+    this.response.request_placed_on = this.response.request_placed_on.slice(0, 10);
+    this.response.stock_received_on = this.response.stock_received_on.slice(0, 10);
+
     //new Date().toISOString().slice(0, 16);
     this.dataForm.patchValue(this.response);
     this.stockUID = this.dataForm.value.stock_uid;

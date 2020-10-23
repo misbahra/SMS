@@ -13,8 +13,8 @@ export class sessionService {
  
   redirectUrl = "";
 
-  //BASE_URL = 'http://localhost:4201';
-  BASE_URL = 'https://mraapp-api.herokuapp.com';
+  BASE_URL = 'http://localhost:4201';
+  //BASE_URL = 'https://mraapp-api.herokuapp.com';
 
   conUser = JSON.parse(localStorage.getItem('conUser')) || [];
 
@@ -53,14 +53,14 @@ export class sessionService {
   }
 
   logout() {
-    console.log('sessiobService.logout : Start  ');
+   // console.log('sessiobService.logout : Start  ');
     localStorage.removeItem('conUser');
    
   }
 
   getConnectedUsers() {
-    console.log('sessiobService.getConnectedUsers : Start  ');
-    console.log(JSON.parse(localStorage.getItem('conUser')) || []);
+   // console.log('sessiobService.getConnectedUsers : Start  ');
+   // console.log(JSON.parse(localStorage.getItem('conUser')) || []);
     return JSON.parse(localStorage.getItem('conUser')) || [];
   }
 
@@ -74,7 +74,7 @@ export class sessionService {
    
    
     for (i = 0; i < user.length; i++) {
-      console.log('sessiobService.setConnectedUsers : Code is:' + user[i].code);
+     // console.log('sessiobService.setConnectedUsers : Code is:' + user[i].code);
 
       if (user[i].code = '1') {
 
@@ -95,7 +95,7 @@ export class sessionService {
     var i: any;
     for (i = 0; i < params.length; i++) {
 
-      console.log('Received Parameters :' + params[i].Name);
+      //console.log('Received Parameters :' + params[i].Name);
       this.queryParams.push(params[i]);
 
     }

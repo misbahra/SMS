@@ -52,10 +52,10 @@ export class LoginComponent implements OnInit {
       this.submitted = true;
   
       //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.model, null, 4));
-      console.log('LoginNew.onSubmit : User --> :' + this.LoginForm.value.UserName.toUpperCase() + ' Password --> :' + this.LoginForm.value.Password);
+      //console.log('LoginNew.onSubmit : User --> :' + this.LoginForm.value.UserName.toUpperCase() + ' Password --> :' + this.LoginForm.value.Password);
       //console.log('Data: ' +  this.angForm.value  );
       if (this.LoginForm.valid) {
-        console.log("LoginNew.onSubmit : going to validate login");
+       // console.log("LoginNew.onSubmit : going to validate login");
         this.validateLogin();
   
       }
@@ -69,19 +69,19 @@ export class LoginComponent implements OnInit {
     }
   
     validateLogin() {
-      console.log("LoginNew.validateLogin :start");
+     // console.log("LoginNew.validateLogin :start");
       this.isBusy = true;
       this.webService.validateLogin2(this.LoginForm.value).subscribe(res => {
         // console.log('User --> :' + this.angForm.username + ' Password --> :' + this.angForm.password  );
         //setTimeout(this.donothing,500);
-        console.log('res :' + JSON.stringify(res));
+       // console.log('res :' + JSON.stringify(res));
   
         this.resp = res;
         // alert(this.resp[0].msg);
         this.messagetext = this.resp[0].msg.toString();
         if (res[0].code == '1') {
           this.sessionService.setConnectedUsers(res);
-          console.log("LoginNew.validateLogin :calling menu.ngOnInit");
+          //console.log("LoginNew.validateLogin :calling menu.ngOnInit");
           //this.menu.ngOnInit;
           //alert (this.sessionService.redirectUrl);
           if (!this.sessionService.redirectUrl || this.sessionService.redirectUrl == "" )

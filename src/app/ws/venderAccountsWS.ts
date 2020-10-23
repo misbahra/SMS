@@ -8,9 +8,8 @@ import { sessionService } from '../ws/sessionWS';
 export class venderAccountsWS {
     constructor(private http: HttpClient, 
         private sessionWS: sessionService) { }
-
-    BASE_URL = this.sessionWS.getBaseUrl();//  'http://localhost:4201';
-  //BASE_URL = 'https://mraapp-api.herokuapp.com';
+        
+        BASE_URL = this.sessionWS.getBaseUrl();//  
 
     getVenderAccounts() {
         return this.http.get(this.BASE_URL + '/allVenderAccounts').toPromise();
