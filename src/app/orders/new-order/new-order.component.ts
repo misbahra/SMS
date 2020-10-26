@@ -228,7 +228,7 @@ export class NewOrderComponent implements OnInit{
     );
      
     this.queryParams = this.sessionService.getParameters();
-     alert('point 1 - ' + this.queryParams[0].order_id);
+    // alert('point 1 - ' + this.queryParams[0].order_id);
     // this is the date which was set in the order form  
     this.receivedDate = this.queryParams[0].order_date; 
     //alert(this.receivedDate);
@@ -559,6 +559,32 @@ openCustomersDialog(operation: any) {
   // else
   //{ alert('Please select a record to update.');}
 }
- 
+
+  // open the new / update form
+  openLov() {
+
+    // parameters lov type can be LUH - LU Header, 
+        //                            LUD  - LU Details
+        //                            USR  - Users
+        //                            VEN  - Venders
+        //                             CAT  - Categories
+        //                             ITM  - Items
+        //                             CIT  - Cities
+        //                             CON  - Countries
+        //                             STA  - States
+        //                             VAC  - Vender Accounts
+        //                             CUS  - Customers                           
+        // Nature : S - single value selection , M - Multile value selection
+   
+    this.utilService.openLov('CUS' , 'S', function(data){  
+      //alert( data.length)
+      if (data.length > 0) {
+        this.orderForm.controls.customer_uid.setValue(data[0].lov_uid);
+        alert( data[0].lov_uid)
+      }
+    });
+    
+    
+}
 
 }

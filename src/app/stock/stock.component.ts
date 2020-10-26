@@ -256,8 +256,21 @@ export class StockComponent implements OnInit {
 
     // open the new / update form
      openLov() {
+
+      // parameters lov type can be LUH - LU Header, 
+          //                            LUD  - LU Details
+          //                            USR  - Users
+          //                            VEN  - Venders
+          //                             CAT  - Categories
+          //                             ITM  - Items
+          //                             CIT  - Cities
+          //                             CON  - Countries
+          //                             STA  - States
+          //                             VAC  - Vender Accounts
+          //                             CUS  - Customers                           
+          // Nature : S - single value selection , M - Multile value selection
      
-      this.utilService.openLov('LUH' , 'M', function(data){  
+      this.utilService.openLov('CUS' , 'S', function(data){  
         alert( data.length)
       });
       

@@ -9,7 +9,7 @@
   import {mainWS} from '../ws/mainWS';
   import {ItemCategoriesWS} from '../ws/itemCategoriesWS';
   import {ItemsWS} from '../ws/itemsWS';
-  import {utilWS} from '../ws/utilWS';
+  //import {utilWS} from '../ws/utilWS';
   import { MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
   interface DialogData {
     data: string;
@@ -63,7 +63,7 @@ export class LovComponent implements OnInit {
         private statesService: statesWS,
         private mainService: mainWS,
        
-        private utilService: utilWS,
+       // private utilService: utilWS,
         public dialogRef: MatDialogRef<LovComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData
       ) {  }
@@ -105,20 +105,22 @@ export class LovComponent implements OnInit {
         }
 // lovtype handeling to load data
         if (this.queryParams.type == "LUH"){this.response = await this.luService.getLUH();}
-        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
-        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
-        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
-        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
-        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
-        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
-        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
-        // else if (this.queryParams.type == "LUH"){this.response = await this.webService.getLUH();}
+        else if (this.queryParams.type == "LUD"){this.response = await this.luService.getLUDFromDB({});}
+        //else if (this.queryParams.type == "USR"){this.response = await this. .getLUH();}
+        else if (this.queryParams.type == "VEN"){this.response = await this.venderService.getVenders();}
+        //else if (this.queryParams.type == "CAT"){this.response = await this.;}
+       // else if (this.queryParams.type == "ITM"){this.response = await this.item;}
+       // else if (this.queryParams.type == "CIT"){this.response = await this.webService.getLUH();}
+       // else if (this.queryParams.type == "CON"){this.response = await this.webService.getLUH();}
+       // else if (this.queryParams.type == "VAC"){this.response = await this.vender;}
+        else if (this.queryParams.type == "CUS"){this.response = await this.customerService.getCustomers();}
 
         else {}
         
 
         this.dataList = this.response;
-
+        // each response will have two column LOV_UID and LOV_DESC which are 
+        // basically virtual columns of each model 
         this.columnDefs = [
           {
             headerName: '',
@@ -143,7 +145,7 @@ onCancel() {
       }
      
 onSubmit() {
-       this.utilService.lov_selected_values = this.rowDataClicked;
+      // this.utilService.lov_selected_values = this.rowDataClicked;
          this.dialogRef.close('S');
     
       }

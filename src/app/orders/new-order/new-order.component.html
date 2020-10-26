@@ -39,15 +39,14 @@
         <div class="col">
           <div class="md-form">
             <label class="font-weight text-dark" for="customer_uid">Customer 
+              <a  
+                type="button" id = "btn_select_customer" (click)="openLov()">
+                <span class="fa fa-list pl-3 pr-5"></span>
+              </a> 
+             
               <a type="button" (click)="openCustomersDialog(1)">
-                <span >
-                  <i class="fa fa-user-plus pl-2" 
-                    aria-hidden="true">
-                    New</i>
-                   
-                  </span>
-                  
-                </a>
+                <span class="fa fa-plus pl-5 text-success"></span>
+             </a>
             </label>
                
             <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="customer_uid"
@@ -66,13 +65,9 @@
               </div>
             </div>
           </div>
-                
+            
         </div>
-        <!-- <div class="col m-0 p-0">
-        <div class="input-group-prepend">
-         
-        </div>
-      </div> -->
+       
 
         <div class="col">
           <!-- Order Date -->
