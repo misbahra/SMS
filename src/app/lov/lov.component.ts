@@ -9,7 +9,7 @@
   import {mainWS} from '../ws/mainWS';
   import {ItemCategoriesWS} from '../ws/itemCategoriesWS';
   import {ItemsWS} from '../ws/itemsWS';
-  //import {utilWS} from '../ws/utilWS';
+  import {utilWS} from '../ws/utilWS';
   import { MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
   interface DialogData {
     data: string;
@@ -63,7 +63,7 @@ export class LovComponent implements OnInit {
         private statesService: statesWS,
         private mainService: mainWS,
        
-       // private utilService: utilWS,
+        private utilService: utilWS,
         public dialogRef: MatDialogRef<LovComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData
       ) {  }
@@ -145,7 +145,7 @@ onCancel() {
       }
      
 onSubmit() {
-      // this.utilService.lov_selected_values = this.rowDataClicked;
+         this.utilService.lov_selected_values = this.rowDataClicked;
          this.dialogRef.close('S');
     
       }

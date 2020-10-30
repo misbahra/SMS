@@ -392,7 +392,7 @@ export class NewOrderComponent implements OnInit{
   addOrder() {
     //console.log('data: ' + this.orderForm.value.name);
     this.orderForm.controls.created_on.setValue(Date.now());
-    
+    alert("data is - " + this.orderForm.value.order_date);
     //this.userForm.controls.user_name.setValue(upper(this.user_name));
     this.orderService.addOrder(this.orderForm.value).subscribe(
       (response) => {
@@ -436,8 +436,8 @@ export class NewOrderComponent implements OnInit{
     //this.userForm.controls.user_name.setValue(upper(this.user_name));
     this.orderForm.removeControl('id');
     this.orderForm.addControl('_id', new FormControl(['', []]));
-    this.orderForm.controls._id.setValue(this.dataId);
-
+    this.orderForm.controls._id.setValue(this.OrderId);
+    //alert("data is - " + this.orderForm.value.order_date);
     this.orderService.updateOrder(this.orderForm.value).subscribe(
       (response) => {
         //this.resp = response;
@@ -562,7 +562,7 @@ openCustomersDialog(operation: any) {
 
   // open the new / update form
   openLov() {
-
+    var customerID = ""; 
     // parameters lov type can be LUH - LU Header, 
         //                            LUD  - LU Details
         //                            USR  - Users
@@ -575,16 +575,27 @@ openCustomersDialog(operation: any) {
         //                             VAC  - Vender Accounts
         //                             CUS  - Customers                           
         // Nature : S - single value selection , M - Multile value selection
-   
+     //   alert( 'lov is being called');
     this.utilService.openLov('CUS' , 'S', function(data){  
-      //alert( data.length)
+     // alert( data[0].lov_uid)
       if (data.length > 0) {
-        this.orderForm.controls.customer_uid.setValue(data[0].lov_uid);
-        alert( data[0].lov_uid)
+        customerID = data[0].lov_uid;
+
       }
     });
+    alert(" customerID - " + customerID);
+    if (customerID != "") {
+      this.orderForm.controls.customer_uid.setValue(customerID);
+    }
+  }
+     
+    setCustomer (customerID: any)
+      {
+        this.orderForm.controls.customer_uid.setValue(customerID);
+      }
     
     
-}
+    
+
 
 }

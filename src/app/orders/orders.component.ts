@@ -170,7 +170,10 @@ ngOnInit() {
         checkboxSelection: true
         },
       {headerName: '#', field: '_id.order_uid' , width: 200, sortable: true, filter:true  },
-      {headerName: 'Date', field: '_id.order_date', width: 200, sortable: true, filter:true },
+      {headerName: 'Date', field: '_id.order_date', width: 200, sortable: true, filter:true 
+      ,valueFormatter: function (params) {
+        return moment(params.value).format('DD-MMM-YYYY HH:mm');}
+    },
       {headerName: 'Invoice#', field: '_id.invoice_number', width: 150, sortable: true, filter:true },
       {headerName: 'Customer', field: '_id.customer_name', width: 300, sortable: true, filter:true },
       {headerName: 'Amount', field: 'order_amount', width: 130, sortable: true, filter:true , cellStyle: {textAlign: "right",color:"green"},
