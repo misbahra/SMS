@@ -3,9 +3,14 @@
 
   <div class="pt-2 pl-2 pb-2 section-header hd-navy">
 
-    <span >Cutomer Information & Order Details</span>
+    <span class=" float-left">Cutomer Information & Order Details</span>
 
     <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
+
+    <div class=" pl-4 float-left section-detail"> 
+       <input type="text" id="phoneNo" name="phoneNo" class="form-control form-control-sm " [(ngModel)] = "phoneNo" (change) = "setCustomer()">
+   
+      </div>  
 
     <div class=" float-right section-detail">
 
@@ -26,6 +31,7 @@
 
   <div>
 
+   
 
     <form [formGroup]="orderForm" class="form-sm m-2"  action="#!">
       <!-- row 1 -->
@@ -35,6 +41,8 @@
 
       <!-- row 2 -->
       <div class="form-row ">
+
+      
 
         <div class="col">
           <div class="md-form">
@@ -259,8 +267,8 @@
         <div class="col col-3">
           <div class="md-form">
             <label class="font-weight text-dark" for="card_number">Card Number</label>
-            <input type="text" id="card_number" name="home_delivery_address" class="form-control form-control-sm"
-              formControlName="home_delivery_address" [ngClass]="{ 'is-invalid': submitted && fc.card_number.errors }">
+            <input type="text" id="card_number" name="card_number" class="form-control form-control-sm"
+              formControlName="card_number" [ngClass]="{ 'is-invalid': submitted && fc.card_number.errors }">
 
 
             <div *ngIf="submitted && fc.card_number.invalid " class="invalid-feedback">
@@ -276,7 +284,7 @@
           <div class="md-form">
             <label class="font-weight text-dark" for="card_holder_name">Card Holder Name</label>
             <input type="text" id="card_holder_name" name="card_holder_name" class="form-control form-control-sm"
-              formControlName="home_delivery_address"
+              formControlName="card_holder_name"
               [ngClass]="{ 'is-invalid': submitted && fc.card_holder_name.errors }">
 
 
@@ -293,23 +301,7 @@
       </div>
 
 
-      <div class="form-row">
-
-        <div class="col-12">
-          <!-- Name -->
-          <div class="md-form">
-            <label class="font-weight text-dark" for="home_delivery_address">Delivery Address</label>
-            <input type="text" id="home_delivery_address" name="home_delivery_address"
-              class="form-control form-control-sm" formControlName="home_delivery_address"
-              [ngClass]="{ 'is-invalid': submitted && fc.home_delivery_address.errors }">
-            <div *ngIf="submitted && fc.home_delivery_address.invalid " class="invalid-feedback">
-              <div *ngIf="fc.home_delivery_address.errors.required">
-                Address is required
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+     
     </form>
   </div>
 

@@ -47,7 +47,7 @@ export class NewOrderComponent implements OnInit{
   orderNumber : any = this.utilService.getUID("order_uid");
   orderDate = new Date().toISOString().slice(0, 16);
   vat =0;
-  
+  phoneNo = "";
 
   orderForm: FormGroup;
   resp: any = [];
@@ -576,22 +576,34 @@ openCustomersDialog(operation: any) {
         //                             CUS  - Customers                           
         // Nature : S - single value selection , M - Multile value selection
      //   alert( 'lov is being called');
-    this.utilService.openLov('CUS' , 'S', function(data){  
+     var that = this;
+    this.utilService.openLov('CUS' , 'S', function(data) {  
      // alert( data[0].lov_uid)
       if (data.length > 0) {
         customerID = data[0].lov_uid;
+       // alert(" customerID - " + customerID);
+        if (customerID != "") {
+          that.orderForm.controls.customer_uid.setValue(customerID);
+        }
 
       }
     });
-    alert(" customerID - " + customerID);
-    if (customerID != "") {
-      this.orderForm.controls.customer_uid.setValue(customerID);
-    }
+   
   }
      
-    setCustomer (customerID: any)
+    setCustomer ()
       {
-        this.orderForm.controls.customer_uid.setValue(customerID);
+        var phoneNumber;
+        if (this.phoneNo.substr(0,1) == '0')
+       { phoneNumber = this.phoneNo.substr(1);}
+       else{phoneNumber = this.phoneNo}
+       //alert(phoneNumber)
+        var found = this.customerList.find(({ mobile , phone }) => (mobile.includes(phoneNumber) || phone.includes(phoneNumber)));
+      if (found){//alert(found.name);
+        this.orderForm.controls.customer_uid.setValue(found.customer_uid);}
+        else
+        {this.openCustomersDialog(1)}
+
       }
     
     
