@@ -12,11 +12,14 @@
       <div class="pt-2 pl-2 pb-4 section-header hd-cyan" >
         <span>Customers</span>
         <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
-       
+          
         <div class=" float-left">
             <span class="spinner-border" *ngIf="(isBusy == true)"></span>
           </div>
           <div class=" float-right section-detail">
+            <a style="cursor: pointer" (click)="exportexcel()">
+              <span class="fa fa-download p-2 pr-4"></span>
+            </a>
             <!-- parameter 1 to openStockDialog 
                 means its and new record and 2 mean its an update operation -->
               <a *ngIf="(userPrivs.createAllowed == 'Y')" 
@@ -30,9 +33,13 @@
             <a *ngIf="(userPrivs.createAllowed == 'Y')" 
                 type="button" (click)="deleteCustomer()">
                 <span class="fa fa-trash text-danger p-2"></span>
-              </a>
-            
+            </a>
+             
         </div>
+        <div class=" float-right section-detail"> 
+          <input type="date" id="dateFrom" name="dateFrom" class="form-control form-control-sm " [(ngModel)] = "dateFrom" >
+          
+          </div> 
       </div>
       <!-- [enableSorting]="true" [enableFilter]="true"
       [modules]="modules"

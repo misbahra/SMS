@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { customersWS } from '../ws/customersWS';
 import { CustomerNewComponent } from '../customers/customer-new/customer-new.component';
 import { sessionService } from '../ws/sessionWS';
+import { utilWS } from '../ws/utilWS';
 //import { MatDialog, MatDialogRef , MatDialogConfig } from '@angular/material/dialog';
 import { MatDialogModule, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import * as momentNs from 'moment';
@@ -23,6 +24,7 @@ export class CustomersComponent implements OnInit {
   constructor(
     private customersSevice: customersWS,
     private sessionService: sessionService,
+    private utilityService: utilWS,
     public dialog: MatDialog
   ) {
 
@@ -44,7 +46,7 @@ export class CustomersComponent implements OnInit {
     "deleteAllowed": "N",
     "createAllowed": "N"
   };
-
+  dateFrom : any;
   style = {
     marginTop: '0px',
     padding: '0px',
@@ -85,6 +87,7 @@ export class CustomersComponent implements OnInit {
       { headerName: 'Country', field: 'country_uid', width: 150, sortable: true, filter: true },
       { headerName: 'State', field: 'sate_uid', width: 150, sortable: true, filter: true },
       { headerName: 'City', field: 'city_uid', width: 150, sortable: true, filter: true },
+      { headerName: 'Created On', field: 'created_on', width: 150, sortable: true, filter: true },
     ];
     this.rowData = response;
     //if (this.userList.active == "true") {this.userList.active = "Y";} else {this.userList.active="N;"}
@@ -208,6 +211,17 @@ export class CustomersComponent implements OnInit {
       }
     }
 
+  }
+  exportexcel()
+  {
+    var found;
+    //var found = this.customersDataList.filter((created_on:any) => {(created_on >= new  Date('2020-10-20'))});
+    //var found = this.customersDataList.filter(({ mobile, phone}) => (mobile.includes('50') || phone.includes('50')));
+    if (this.dateFrom == "" || this.dateFrom == null) {found = this.customersDataList}
+    else {found = this.customersDataList.filter(({ created_on}) => (new Date (created_on) >= (new  Date(this.dateFrom))));}
+    //var found = this.customersDataList.filter((mobile) => {(mobile == '503023668')});
+    alert(found.length);
+    this.utilityService.exportAsExcelFile(found, 'sample');
   }
 
 }

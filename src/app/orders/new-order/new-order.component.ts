@@ -69,6 +69,7 @@ export class NewOrderComponent implements OnInit{
   dataId = "";
   isItemAddedRemoved = false;
   receivedDate: any;
+  
   @ViewChild("txtSearch") searchField: ElementRef;
   
 
@@ -392,7 +393,7 @@ export class NewOrderComponent implements OnInit{
   addOrder() {
     //console.log('data: ' + this.orderForm.value.name);
     this.orderForm.controls.created_on.setValue(Date.now());
-    alert("data is - " + this.orderForm.value.order_date);
+    //alert("data is - " + this.orderForm.value.order_date);
     //this.userForm.controls.user_name.setValue(upper(this.user_name));
     this.orderService.addOrder(this.orderForm.value).subscribe(
       (response) => {
@@ -606,7 +607,10 @@ openCustomersDialog(operation: any) {
 
       }
     
-    
+      clearCustomer()
+      {
+        this.orderForm.controls.customer_uid.setValue(null);
+      }
     
 
 
