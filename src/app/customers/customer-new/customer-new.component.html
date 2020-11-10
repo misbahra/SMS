@@ -45,7 +45,7 @@
                     <label class="font-weight form-row " for="name">Name</label>
                     <input type="text" id="name" name="name" 
                     class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="Name"
-                        formControlName="name" [ngClass]="{ 'is-invalid':   submitted && fc.name.errors }">
+                        formControlName="name" [ngClass]="{ 'is-invalid':   submitted && fc.name.errors }" >
                     <div *ngIf=" fc.name.invalid " class="invalid-feedback">
                         <div *ngIf="fc.name.errors.required">
                             Name is required

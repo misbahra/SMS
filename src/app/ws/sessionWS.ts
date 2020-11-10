@@ -13,7 +13,7 @@ export class sessionService {
  
   redirectUrl = "";
 
-  BASE_URL = 'http://localhost:4201';
+  BASE_URL = 'http://localhost:3000';
   //BASE_URL = 'https://mraapp-api.herokuapp.com';
 
   conUser = JSON.parse(localStorage.getItem('conUser')) || [];

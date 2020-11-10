@@ -1,4 +1,4 @@
-import { Component, OnInit , Inject} from '@angular/core';
+import { Component, OnInit , Inject, ElementRef} from '@angular/core';
   import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
   import {customersWS} from '../../ws/customersWS';
   import { Router } from "@angular/router";
@@ -56,7 +56,8 @@ export class CustomerNewComponent implements OnInit {
       private citiesService : citiesWS,
       private statesService : statesWS,
       private LUDService : luWS,
-      @Inject(MAT_DIALOG_DATA) public data: DialogData
+      @Inject(MAT_DIALOG_DATA) public data: DialogData,
+      private el: ElementRef
     ) { this.OnStart() }
   
     ngOnInit() {
@@ -96,7 +97,10 @@ export class CustomerNewComponent implements OnInit {
       this.isDisabled = true; 
       if (this.queryParams[0].operation == 1) {
         // alert('point 2');
-        
+        if (this.queryParams[0].mobile != null) {
+          this.dataForm.controls.mobile.setValue(this.queryParams[0].mobile);
+          this.dataForm.controls.phone.setValue(this.queryParams[0].mobile);
+        }
         //this.customerUID = this.queryParams[0].customer_uid;
       }
        // if operation = 2- update record   
@@ -109,6 +113,11 @@ export class CustomerNewComponent implements OnInit {
       }
       else {this.isDisabled = true;};
     }
+    //const firstControl = this.el.nativeElement.  nativeElement.querySelector('name');
+    //(< any > this.dataForm.get('name')).nativeElement.focus();
+    //firstControl.focus();
+    // document.getElementById("name").focus();
+    //(<any>this.dataForm.get('name')).nativeElement.focus();
      
     }
    
