@@ -33,6 +33,7 @@ import { vendersWS } from './ws/vendersWS';
 import { GlComponent } from './gl/gl.component';
 import { GlNewComponent } from './gl/gl-new/gl-new.component';
 import {glWS} from './ws/glWS';
+import {salWS} from './ws/salWS';
 import {venderAccountsWS} from './ws/venderAccountsWS';
 import { SalesComponent } from './Reports/sales/sales.component';
 import { VenderNewComponent } from './venders/vender-new/vender-new.component';
@@ -98,6 +99,7 @@ import { NewSalComponent } from './sal/new-sal/new-sal.component';
     mainWS,
     sessionService,
     luWS,
+    salWS,
     ordersWS,
     stockWS,
     customersWS,

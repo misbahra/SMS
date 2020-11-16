@@ -19,7 +19,7 @@ import { Routes, RouterModule } from '@angular/router';
  import{VendersComponent} from './venders/venders.component';
  import { CustomersComponent } from './customers/customers.component';
  import { ItemCategoriesComponent } from './item-categories/item-categories.component';
- // import{WsrMainComponent} from './wsr-main/wsr-main.component';
+ import{SalComponent} from './sal/sal.component';
 // import{WsrMainNewComponent} from './wsr-main/wsr-main-new/wsr-main-new.component';
 // import { FeedbackComponent } from './feedback/feedback.component';
 // import { FeedbackNewComponent } from './feedback/feedback-new/feedback-new.component';
@@ -64,7 +64,7 @@ const routes: Routes = [
   { path: 'vender',   component: VendersComponent },
   { path: 'customer',   component: CustomersComponent },
   { path: 'itemcategory',   component: ItemCategoriesComponent },
-  
+  { path: 'sal',   component: SalComponent },
  ];
 
 @NgModule({
