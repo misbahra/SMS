@@ -6,8 +6,9 @@ import { sessionService } from '../ws/sessionWS';
 import {MatDialogModule, MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import { LuhNewComponent } from '../lu/luh-new/luh-new.component';
 import { LudNewComponent } from '../lu/lud-new/lud-new.component';
-import * as momentNs from 'moment';
-const moment = momentNs;
+//import moment from 'moment';
+//const moment = momentNs;
+var moment = require('moment');
 import { stockWS } from '../ws/stockWS';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { customersWS } from '../ws/customersWS';
@@ -172,7 +173,9 @@ ngOnInit() {
       {headerName: '#', field: '_id.order_uid' , width: 200, sortable: true, filter:true  },
       {headerName: 'Date', field: '_id.order_date', width: 200, sortable: true, filter:true 
       ,valueFormatter: function (params) {
-        return moment(params.value).format('DD-MMM-YYYY HH:mm');}
+        return moment(params.value.substr(0,16)).format('DD-MMM-YYYY HH:mm');
+        //return params.value.substr(0,16);
+      }
     },
       {headerName: 'Invoice#', field: '_id.invoice_number', width: 150, sortable: true, filter:true },
       {headerName: 'Customer', field: '_id.customer_name', width: 300, sortable: true, filter:true },

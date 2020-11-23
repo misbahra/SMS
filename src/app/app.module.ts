@@ -16,7 +16,6 @@ import { LuhNewComponent } from './lu/luh-new/luh-new.component';
 import { LudNewComponent } from './lu/lud-new/lud-new.component';
 import { luWS } from './ws/luWS';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDialogModule } from '@angular/material/dialog';
 import { OrdersComponent } from './orders/orders.component';
 import { ordersWS } from './ws/ordersWS';
 import { stockWS } from './ws/stockWS';
@@ -50,6 +49,12 @@ import { LovComponent } from './lov/lov.component';
 import { UserNewComponent } from './User/user-new/user-new.component';
 import { SalComponent } from './sal/sal.component';
 import { NewSalComponent } from './sal/new-sal/new-sal.component';
+import { NewSalDetailsComponent } from './sal/new-sal-details/new-sal-details.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatDialogModule} from "@angular/material/dialog";
+
 
 
 @NgModule({
@@ -81,7 +86,8 @@ import { NewSalComponent } from './sal/new-sal/new-sal.component';
     UserNewComponent,
     SalComponent,
     NewSalComponent,
-    
+    NewSalDetailsComponent,
+   
   ],
   imports: [
     BrowserModule,
@@ -93,6 +99,9 @@ import { NewSalComponent } from './sal/new-sal/new-sal.component';
     MatDialogModule,
     BrowserAnimationsModule,
     Ng2SearchPipeModule,
+     MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
     
   ],
   providers: [

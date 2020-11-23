@@ -4,9 +4,10 @@ import { Router } from "@angular/router";
 import { sessionService } from '../ws/sessionWS';
 //import { MatDialog, MatDialogRef , MatDialogConfig } from '@angular/material/dialog';
 import {MatDialogModule, MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import { LuhNewComponent } from '../lu/luh-new/luh-new.component';
-import { LudNewComponent } from '../lu/lud-new/lud-new.component';
+import { NewSalDetailsComponent } from '../sal/new-sal-details/new-sal-details.component';
+import { NewSalComponent } from '../sal/new-sal/new-sal.component';
 import * as momentNs from 'moment';
+import { mainWS } from '../ws/mainWS';
 const moment = momentNs;
 
 
@@ -20,6 +21,7 @@ export class SalComponent implements OnInit {
     private webService: salWS,
     private router: Router,
     private sessionService: sessionService,
+    private resourceService : mainWS,
     public dialog: MatDialog
   ) {
 
@@ -33,8 +35,11 @@ export class SalComponent implements OnInit {
   selectedID: any = "No Selected";
   selectedCode: any = [];
   isluhCodeSelected: boolean = false;
+  totalSalary = 0;
   columnDefs = [];
   rowData:any = [];
+  selectedResource = "";
+  resourceList: any = [];
    rowDataClicked:any = {};
     userPrivs = {"viewAllowed":"N",
                 "editAllowed":"N",
@@ -70,7 +75,9 @@ defaultColDef = {
 
   async loadAllSalHeaders() {
     this.isBusy = true;
-    let response = await this.webService.getSalHeader();
+    //alert(this.selectedResource);
+    var paramData = {params: {"param1":this.selectedResource}};
+    let response = await this.webService.getSalHeader(paramData);
     this.LUHdataList = response;
 
     this.columnDefs = [
@@ -82,13 +89,19 @@ defaultColDef = {
         checkboxSelection: true
         },
 
-       { sal_header_uid: 'id', field: 'sal_header_uid' , width: 100  },
-       {  resource_uid: 'Resource', field: 'resource_uid' , width: 150  },
-       {  year: 'Year', field: 'year' , width: 100  },
-       {  month: 'Month', field: 'month' , width: 100  },
-       {  paid_on : 'Paid on', field: 'paid_on' , width: 150  },
-       {  status: 'Status', field: 'status' , width: 130  },
-       {  remarks: 'Remarks', field: 'remarks' , width: 200  }
+       { headerName: 'id', field: 'sal_header_uid' , width: 100  },
+       {  headerName: 'Status', field: 'status_desc' , width: 150  },
+       {  headerName: 'Resource', field: 'resource_name' , width: 150  },
+       {  headerName: 'Year', field: 'year' , width: 100  },
+       {  headerName: 'Month', field: 'month' , width: 100  },
+       {  headerName : 'Paid on', field: 'paid_on' , width: 200  
+       ,valueFormatter: function (params) {
+        return moment(params.value.substr(0,16)).format('DD-MMM-YYYY HH:mm');
+        //return params.value.substr(0,16);
+      }
+      },
+      
+       {  headerName: 'Remarks', field: 'remarks' , width: 200  }
     
      ];
     this.rowData = response;
@@ -105,6 +118,14 @@ defaultColDef = {
    
    let response = await this.webService.getsalDetails(id);
    this.LUDdataList = response;
+// calculate total
+this.totalSalary = 0;
+this.LUDdataList.forEach(element => {
+  this.totalSalary = this.totalSalary + element.amount_signed;
+});
+
+       
+
    this.columnDefs2 = [
     {
       headerName: '',
@@ -114,11 +135,29 @@ defaultColDef = {
       checkboxSelection: true
       },
    
-      { sal_detail_uid: 'id', field: 'sal_header_uid' , width: 100  },
-      {  pay_head: 'Head', field: 'pay_head' , width: 100  },
-      {  pay_amount: 'Amount', field: 'pay_amount' , width: 100  },
-      {  paid_on : 'Paid on', field: 'paid_on' , width: 100  },
-     {  remarks: 'Remarks', field: 'remarks' , width: 100  }
+      { headerName: 'id', field: 'sal_header_uid' , width: 100  },
+      {  headerName: 'Head', field: 'pay_head_desc' , width: 150  },
+    
+   
+      {  headerName: 'Amount', field: 'amount_signed' , width: 150 
+      ,
+      cellStyle: {textAlign: "right",color:"green"}
+      , valueFormatter: function(params) {
+        var num =   Math.floor(params.value).toFixed(2)
+          .toString()
+          .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        if (num == "0" ){return null;}
+        else {return num}
+        
+      },
+    }, 
+     {  headerName : 'Paid on', field: 'paid_on' , width: 150  
+      ,valueFormatter: function (params) {
+        return moment(params.value.substr(0,16)).format('DD-MMM-YYYY HH:mm');
+        //return params.value.substr(0,16);
+      }
+    },
+     {  remarheaderNameks: 'Remarks', field: 'remarks' , width: 200 }
    ];
   this.rowData2 = response;
 
@@ -192,8 +231,8 @@ defaultColDef = {
 
   ngOnInit() {
 
-
-    this.loadAllSalHeaders();
+    this.loadResources();
+   // this.loadAllSalHeaders();
     this.userPrivs = this.sessionService.getUsersPrivs();
     if (this.selectedCode.length > 0){this.loadAllLUD(this.selectedCode);}
    
@@ -218,7 +257,7 @@ defaultColDef = {
     //alert("test 1")
     if (id != null) {
 //alert("test 2")
-      this.sessionService.setParameters([{ name: "luh_id", value: this.rowDataClicked._id }]);
+      this.sessionService.setParameters([{ name: "sal_header_id", value: this.rowDataClicked._id }]);
 
     }
 
@@ -227,7 +266,7 @@ defaultColDef = {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     
-    const dialogRef = this.dialog.open(LuhNewComponent, dialogConfig);
+    const dialogRef = this.dialog.open(NewSalComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
@@ -255,19 +294,19 @@ openLudDialog(id: any) {
   //if sent then this will be opened for update
   if (id != null) {
     //alert("test 2")
-    this.sessionService.setParameters([{ name: "lud_id", value: this.rowDataClicked2._id }]);
+    this.sessionService.setParameters([{ name: "sal_detail_id", value: this.rowDataClicked2._id }]);
   }
   else
   {
  //alert("test 2-" + this.selectedID);  
-  this.sessionService.setParameters([{ name: "luh_code", value: this.rowDataClicked.luh_code }]);
+  this.sessionService.setParameters([{ name: "sal_header_uid", value: this.rowDataClicked.sal_header_uid }]);
   }
 
   const dialogConfig = new MatDialogConfig();
   dialogConfig.width = '600px';
   dialogConfig.disableClose = true;
   dialogConfig.autoFocus = true;
-  const dialogRef = this.dialog.open(LudNewComponent, dialogConfig);
+  const dialogRef = this.dialog.open(NewSalDetailsComponent, dialogConfig);
 
   dialogRef.afterClosed().subscribe(result => {
     console.log(result);
@@ -345,6 +384,15 @@ onRowSelected2(e)
 }
  
 }
+
+async loadResources()
+{
+  var response;
+response = await this.resourceService.getUsers();
+this.resourceList = response;
+//alert("Venders loaded - " + this.vendersDataList.length);
+}
+
 }
 
 

@@ -11,8 +11,9 @@ export class salWS {
 
     BASE_URL = this.sessionWS.getBaseUrl();// 
 
-    getSalHeader() {
-        return this.http.get(this.BASE_URL + '/allSalHeader').toPromise();
+    getSalHeader(params : any) {
+       // alert(params.param1);
+        return this.http.get(this.BASE_URL + '/allSalHeader', params).toPromise();
     }
 
     getsalDetails(sal_header_uid: any) {

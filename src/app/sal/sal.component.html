@@ -1,7 +1,16 @@
 <div class="ml-0 mr-0  border-1" style="width:100%;">
     <div class="p-2 header hd-sky" >
       <span>Manage Salaries</span>
-     
+      <div class= "float-right">
+      <select class="form-control  form-control-sm mr-sm-2 " id="resourceuid"
+                name="resourceuid" [(ngModel)] = "selectedResource" (change) = "loadAllSalHeaders()">
+                <!-- <option Selected value="">Select User Role</option> -->
+                <option *ngFor="let data of resourceList; index as i;" [value]=data.resource_uid>
+                    {{data.name}}
+                </option>
+                <!-- <option value=data.lud_code>data.lud_desc</option> -->
+            </select>
+          </div>
     </div>
   </div>
   
@@ -10,7 +19,7 @@
     <div class="column1">
   
       <div class="section-header hd-navy" >
-        <span >Salary Header</span>
+        <span >Salary Header {{selectedResource}}</span>
         <div class=" float-left">
           <span class="spinner-border" *ngIf="(isBusy)"></span>
           </div>
@@ -58,7 +67,11 @@
         <div class=" float-left">
         <span >Detail</span>
         <span class="pl-5">Selected Header / Detail: {{rowDataClicked.luh_code}} / {{rowDataClicked2.lud_code}}</span>
-        </div>
+
+        <span class="pl-5">Total Amount: {{totalSalary}}</span>
+        
+        
+      </div>
         <div class=" float-left">
         <span class="spinner-border" *ngIf="(isDetailBusy)"></span>
         </div>
@@ -67,7 +80,7 @@
             type="button" (click)="openLudDialog(1)">
             <span class="fa fa-pencil p-2 text-warning"></span>
           </a>
-        <a *ngIf="(userPrivs.createAllowed == 'Y' && rowDataClicked.luh_code)" 
+        <a *ngIf="(userPrivs.createAllowed == 'Y' && rowDataClicked.sal_header_uid)" 
             type="button" (click)="openLudDialog(null)">
           <span class="fa fa-plus text-white p-2"></span>
         </a>
