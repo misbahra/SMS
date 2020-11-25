@@ -125,6 +125,14 @@ export class salWS {
             )
     }
 
+   getSalSummary(id: any) {
+       
+       
+        return this.http.get(this.BASE_URL + '/summarySalary', id).toPromise();
+    }
+
+    
+
     // Error handling
     errorHandl(error: any) {
         let errorMessage = '';

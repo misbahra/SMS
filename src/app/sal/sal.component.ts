@@ -29,6 +29,7 @@ export class SalComponent implements OnInit {
   model: any = [];
   LUHdataList: any = [];
   LUDdataList: any = [];
+  salSummaryDataList: any = [];
   isBusy = false;
   isDetailBusy = false;
   resp: any[];
@@ -38,6 +39,9 @@ export class SalComponent implements OnInit {
   totalSalary = 0;
   columnDefs = [];
   rowData:any = [];
+  columnDefsSummary = [];
+  rowDataSummary:any = [];
+  
   selectedResource = "";
   resourceList: any = [];
    rowDataClicked:any = {};
@@ -73,7 +77,15 @@ defaultColDef = {
   filter:true
 };
 
-  async loadAllSalHeaders() {
+async loadData()
+{
+  await this.loadAllSalHeaders();
+  await this.loadSalSummary();
+  this.LUDdataList = [];
+  this.rowData2 = [];
+  this.totalSalary = 0;
+}  
+async loadAllSalHeaders() {
     this.isBusy = true;
     //alert(this.selectedResource);
     var paramData = {params: {"param1":this.selectedResource}};
@@ -89,12 +101,12 @@ defaultColDef = {
         checkboxSelection: true
         },
 
-       { headerName: 'id', field: 'sal_header_uid' , width: 100  },
-       {  headerName: 'Status', field: 'status_desc' , width: 150  },
-       {  headerName: 'Resource', field: 'resource_name' , width: 150  },
-       {  headerName: 'Year', field: 'year' , width: 100  },
-       {  headerName: 'Month', field: 'month' , width: 100  },
-       {  headerName : 'Paid on', field: 'paid_on' , width: 200  
+       //{ headerName: 'id', field: 'sal_header_uid' , width: 100  },
+       {  headerName: 'Status', field: 'status_desc' , width: 100  },
+       {  headerName: 'Resource', field: 'resource_name' , width: 130  },
+       {  headerName: 'Year', field: 'year' , width: 90  },
+       {  headerName: 'Month', field: 'month' , width: 90  },
+       {  headerName : 'Paid on', field: 'paid_on' , width: 130  
        ,valueFormatter: function (params) {
         return moment(params.value.substr(0,16)).format('DD-MMM-YYYY HH:mm');
         //return params.value.substr(0,16);
@@ -111,6 +123,40 @@ defaultColDef = {
     //if (this.userList.locked == "true") {this.userList.locked = "Y";} else {this.userList.locked="N;"}
     this.isBusy = false;
   };
+
+
+  async loadSalSummary() {
+    this.isBusy = true;
+    //alert(this.selectedResource);
+    var paramData = {params: {"param1":this.selectedResource}};
+    let response = await this.webService.getSalSummary(paramData);
+    this.rowDataSummary = response;
+
+    this.columnDefsSummary = [
+  
+       //{ headerName: 'Pay Head', field: '_id' , width: 100  },
+       {  headerName: 'Pay Head', field: 'pay_head_desc' , width: 300  },
+       {  headerName: 'Total Amount', field: 'total_pay_amount' , width: 160   ,
+       cellStyle: {textAlign: "right",color:"green"}
+       , valueFormatter: function(params) {
+         var num =   Math.floor(params.value).toFixed(2)
+           .toString()
+           .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+         if (num == "0" ){return null;}
+         else {return num}
+         
+       },
+     }, 
+    
+     ];
+     this.rowDataSummary = response;
+
+
+    //if (this.userList.active == "true") {this.userList.active = "Y";} else {this.userList.active="N;"}
+    //if (this.userList.locked == "true") {this.userList.locked = "Y";} else {this.userList.locked="N;"}
+    this.isBusy = false;
+  };
+
 
   async loadAllLUD(id: any) {
   
@@ -187,6 +233,7 @@ this.LUDdataList.forEach(element => {
            this.webService.deleteSalHeader(this.rowDataClicked).subscribe(
       (response) => {
         this.loadAllSalHeaders();
+        this.loadSalSummary();
 
       },
       (error) => {
@@ -272,6 +319,7 @@ this.LUDdataList.forEach(element => {
       console.log(result);
       if (result == "save") {
         this.loadAllSalHeaders();
+        this.loadSalSummary();
         this.rowDataClicked = {};
         this.rowDataClicked2 = {};
       }

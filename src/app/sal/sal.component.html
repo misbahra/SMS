@@ -1,130 +1,139 @@
-<div class="ml-0 mr-0  border-1" style="width:100%;">
-    <div class="p-2 header hd-sky" >
-      <span>Manage Salaries</span>
-      <div class= "float-right">
-      <select class="form-control  form-control-sm mr-sm-2 " id="resourceuid"
-                name="resourceuid" [(ngModel)] = "selectedResource" (change) = "loadAllSalHeaders()">
-                <!-- <option Selected value="">Select User Role</option> -->
-                <option *ngFor="let data of resourceList; index as i;" [value]=data.resource_uid>
-                    {{data.name}}
-                </option>
-                <!-- <option value=data.lud_code>data.lud_desc</option> -->
-            </select>
-          </div>
+<div class="border-1">
+  <div class="header hd-cyan">
+    <span>Manage Salaries</span>
+    <div class="float-right mt-1 mr-1">
+      <select class="form-control  form-control-sm mr-sm-2 " id="resourceuid" name="resourceuid"
+        [(ngModel)]="selectedResource" (change)="loadData()">
+        <!-- <option Selected value="">Select User Role</option> -->
+        <option *ngFor="let data of resourceList; index as i;" [value]=data.resource_uid>
+          {{data.name}}
+        </option>
+        <!-- <option value=data.lud_code>data.lud_desc</option> -->
+      </select>
     </div>
   </div>
-  
+</div>
+
+
+
+<!-- <div class="parent-div"> -->
+<div class="row">
+
   <!-- <div class="parent-div"> -->
-  <div class="row">
-    <div class="column1">
-  
-      <div class="section-header hd-navy" >
-        <span >Salary Header {{selectedResource}}</span>
-        <div class=" float-left">
-          <span class="spinner-border" *ngIf="(isBusy)"></span>
-          </div>
-        
-        <div class="float-right section-detail">
+  <div class="column1">
 
-              <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-                type="button" (click)="openLuhDialog(1)">
-                <span class="fa fa-pencil p-2 text-warning"></span>
-              </a>
-            <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-                type="button" (click)="openLuhDialog(null)">
-              <span class="fa fa-plus text-white p-2"></span>
-            </a>
-            <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-                type="button" (click)="DeleteLUH(1)">
-                <span class="fa fa-trash text-danger p-2"></span>
-              </a>
-    
-        </div>
+
+    <div class="section-header hd-green">
+      <span>Summary</span>
+      <div class=" float-left">
+        <span class="spinner-border" *ngIf="(isBusy)"></span>
       </div>
-      <!-- [enableSorting]="true" [enableFilter]="true"
-      [modules]="modules"
-          [frameworkComponents]="frameworkComponents"
-      -->
-      <div [ngStyle]="style">
-        <ag-grid-angular  
-          [pagination]="true"
-          [paginationPageSize]="15"
-          [unSortIcon]="true"
-          [animateRows]="true"
-          style="width: 100%; height:450px;"
-          class="ag-theme-blue"
-          [rowData]="rowData"
-          [columnDefs]="columnDefs"
-          [defaultColDef]="defaultColDef"
-          (rowSelected)="onRowSelected($event)">
-        </ag-grid-angular>
-      </div>
-  
     </div>
-    <!-- 2nd column -->
-    <div class="column2">
-      <div class="section-header hd-navy" >
-        <div class=" float-left">
-        <span >Detail</span>
-        <span class="pl-5">Selected Header / Detail: {{rowDataClicked.luh_code}} / {{rowDataClicked2.lud_code}}</span>
+    <!-- [enableSorting]="true" [enableFilter]="true"
+        [modules]="modules"
+            [frameworkComponents]="frameworkComponents"
+        -->
+    <div [ngStyle]="style">
+      <ag-grid-angular [pagination]="true" [paginationPageSize]="15" [unSortIcon]="true" [animateRows]="true"
+        style="width: 100%; height:477px;" class="ag-theme-blue" [rowData]="rowDataSummary" [columnDefs]="columnDefsSummary"
+        [defaultColDef]="defaultColDef">
+      </ag-grid-angular>
+    </div>
 
-        <span class="pl-5">Total Amount: {{totalSalary}}</span>
-        
-        
+  </div>
+
+  <!-- 2nd column -->
+  <div class="column2">
+
+    <div class="row">
+
+    <div class="section-header hd-green">
+      <span>Salary Header {{rowDataClicked.sal_header_uid}}</span>
+      <div class=" float-left">
+        <span class="spinner-border" *ngIf="(isBusy)"></span>
       </div>
-        <div class=" float-left">
-        <span class="spinner-border" *ngIf="(isDetailBusy)"></span>
-        </div>
-        <div class="float-right section-detail">
-          <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-            type="button" (click)="openLudDialog(1)">
-            <span class="fa fa-pencil p-2 text-warning"></span>
-          </a>
-        <a *ngIf="(userPrivs.createAllowed == 'Y' && rowDataClicked.sal_header_uid)" 
-            type="button" (click)="openLudDialog(null)">
+
+      <div class="float-right section-detail">
+
+        <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="openLuhDialog(1)">
+          <span class="fa fa-pencil p-2 text-warning"></span>
+        </a>
+        <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="openLuhDialog(null)">
           <span class="fa fa-plus text-white p-2"></span>
         </a>
-        <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-            type="button" (click)="DeleteLUD(1)">
-            <span class="fa fa-trash text-danger p-2"></span>
-          </a>
+        <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="DeleteLUH(1)">
+          <span class="fa fa-trash text-danger p-2"></span>
+        </a>
+
+      </div>
+    </div>
+    <!-- [enableSorting]="true" [enableFilter]="true"
+        [modules]="modules"
+            [frameworkComponents]="frameworkComponents"
+        -->
+    <div [ngStyle]="style">
+      <ag-grid-angular [pagination]="true" [paginationPageSize]="15" [unSortIcon]="true" [animateRows]="true"
+        style="width: 100%; height:210px;" class="ag-theme-blue" [rowData]="rowData" [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef" (rowSelected)="onRowSelected($event)">
+      </ag-grid-angular>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="section-header hd-green">
+      <div class=" float-left">
+        <span>Detail</span>
+        <span class="pl-3">Selected Header / Detail:</span> <span class="text-10">{{rowDataClicked.sal_header_uid}} /
+          {{rowDataClicked2.sal_detail_uid}}</span>
+
+        <span class="pl-5">Total Amount: {{totalSalary}}</span>
+
+
+      </div>
+      <div class=" float-left">
+        <span class="spinner-border" *ngIf="(isDetailBusy)"></span>
+      </div>
+      <div class="float-right section-detail">
+        <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="openLudDialog(1)">
+          <span class="fa fa-pencil p-2 text-warning"></span>
+        </a>
+        <a *ngIf="(userPrivs.createAllowed == 'Y' && rowDataClicked.sal_header_uid)" type="button"
+          (click)="openLudDialog(null)">
+          <span class="fa fa-plus text-white p-2"></span>
+        </a>
+        <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="DeleteLUD(1)">
+          <span class="fa fa-trash text-danger p-2"></span>
+        </a>
+
+      </div>
+
 
     </div>
-        
-      
-      </div>
-  
-      <!-- [enableSorting]="true"
+
+    <!-- [enableSorting]="true"
       [enableFilter]="true"  
      [modules]="modules"
           [frameworkComponents]="frameworkComponents"
               #agGrid
         -->
-      <div [ngStyle]="style">
-        <ag-grid-angular
-           [pagination]="true"
-           [unSortIcon]="true"
-           [animateRows]="true"
-           style="width: 100%; height:450px;"
-           class="ag-theme-blue"
-           [rowData]="rowData2"
-           [columnDefs]="columnDefs2"
-           [defaultColDef]="defaultColDef"
-           (rowSelected)="onRowSelected2($event)">
-        </ag-grid-angular>
-      </div>
-  
-  
-      <!-- </div> -->
-  
+    <div [ngStyle]="style">
+      <ag-grid-angular [pagination]="true" [unSortIcon]="true" [animateRows]="true" style="width: 100%; height:225px;"
+        class="ag-theme-blue" [rowData]="rowData2" [columnDefs]="columnDefs2" [defaultColDef]="defaultColDef"
+        (rowSelected)="onRowSelected2($event)">
+      </ag-grid-angular>
     </div>
+
+
   </div>
-  
-  
-  
-  
-  
-  
-  
-  <!-- <button mat-button (click)="openDialog()">Open dialog</button> -->
-  
+
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- <button mat-button (click)="openDialog()">Open dialog</button> -->

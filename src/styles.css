@@ -42,18 +42,17 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
 
 
 .row {
-        display: flex;
+        /* display: flex; */
         margin: 0 0 0 0;
         padding: 0 0 0 0;
+        width:100%
       }
 
 .row1 {
        height:200;
       }
 
-.row {
-        height: 200;
-      }
+
  
 .column {
         width: 100%;
@@ -101,11 +100,14 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
   height: 45px;
   font-size: 18px;
   padding: 2px 0px 3px 2px;
+  width:100%
+ 
 }
 
 .section-detail
 {
   font-size: 14px;
+  
 }
 
 .spinner-border
@@ -158,6 +160,13 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
  
 }
 
+.hd-green
+{
+  color:rgb(253, 253, 253); 
+  background-color: limegreen;
+ 
+}
+
 .table-fixed tbody, 
 .table-fixed thead,
 .trh,
@@ -191,5 +200,9 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
 .font-weight
 {
   font-weight: bold;
+}
+
+.text-10 {
+  font-size: 10px;
 }
 
