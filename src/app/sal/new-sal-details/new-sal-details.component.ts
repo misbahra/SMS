@@ -100,7 +100,7 @@ export class NewSalDetailsComponent implements OnInit {
   async loadData(id: any) {
     this.isBusy = true;
     this.dataForm.disable();
-    alert('loading data - ' + id[0].value);
+    //alert('loading data - ' + id[0].value);
     this.response = await this.webService.getThisSalDetail(id);
     //alert('data - ' + this.response.name);
     this.dataId = this.response._id;
