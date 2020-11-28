@@ -8,7 +8,7 @@ export class sessionService {
   constructor() { }
 
 
-
+  lov_selected_values: any = []
   queryParams: any = [];
  
   redirectUrl = "";
@@ -37,6 +37,16 @@ export class sessionService {
 
 
   }
+
+  setLovDate(data:any)
+ {
+   this.lov_selected_values = data;
+ } 
+
+ getLovDate()
+ {
+   return this.lov_selected_values;
+ }
 
   clearMessages() {
     this.wsr.next([]);

@@ -1,6 +1,7 @@
 import { Component, Injectable } from '@angular/core';
 import {MatDialogModule, MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {LovComponent} from '../lov/lov.component';
+import { sessionService } from '../ws/sessionWS';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
@@ -15,23 +16,24 @@ const EXCEL_EXTENSION = '.xlsx';
 @Injectable()
 export class utilWS {
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private sessionService : sessionService
   ) { 
    
   }
 
  
-  lov_selected_values: any = []
+//   lov_selected_values: any = []
 
- setLovDate(data:any)
- {
-   this.lov_selected_values = data;
- } 
+//  setLovDate(data:any)
+//  {
+//    this.lov_selected_values = data;
+//  } 
 
- getLovDate()
- {
-   return this.lov_selected_values;
- }
+//  getLovDate()
+//  {
+//    return this.lov_selected_values;
+//  }
 
  getUID(type:String)
   {
@@ -86,7 +88,8 @@ export class utilWS {
   //                             CUS  - Customers                           
    // Nature : S - single value selection , M - Multile value selection
    openLov  (lov_type: any , lov_nature: any, callback ) {
-    this.lov_selected_values = [];
+    //this.lov_selected_values = [];
+    this.sessionService.lov_selected_values = [];
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '600px';
     dialogConfig.data = { type : lov_type , lovNature: lov_nature};
@@ -96,7 +99,7 @@ export class utilWS {
     const dialogRef = this.dialog.open(LovComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-        if (result = 'S') {callback(this.lov_selected_values)}
+        if (result = 'S') {callback(this.sessionService.lov_selected_values )}
         else {callback([])}
   });
 }
