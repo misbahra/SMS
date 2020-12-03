@@ -241,8 +241,14 @@ ngOnInit() {
          },
        },
     {headerName: 'Stock uid', field: 'stock_uid', width: 200, sortable: true, filter:true },
-    {headerName: 'Posted', field: 'posted_to_stock ', width: 130, sortable: true, filter:true }
-   
+    {headerName: 'Posted', field: 'posted_to_stock', width: 130, sortable: true, filter:true },
+    {headerName: 'cp', field: 'unit_cost_price', width: 130, sortable: true, filter:true ,
+    cellStyle: {textAlign: "right",color:"blue"}
+        ,   valueFormatter: function(params) {
+         
+          return params.value.toFixed(2)
+         },
+       },
     
   ];
   this.rowData2 = response;
@@ -268,7 +274,7 @@ ngOnInit() {
     //this.webService.deleteLUH(this.LUHdataList[id]).subscribe(
       if (this.rowDataClicked._id) {
         if (confirm('Are you sure to delete record? All its items will also be deleted. ')) {
-           this.webService.deleteOrder(this.rowDataClicked).subscribe(
+           this.webService.deleteOrder(this.rowDataClicked._id).subscribe(
       (response) => {
         this.decreaseStockSold(this.orderItemsdataList);
         this.loadAllOrders();

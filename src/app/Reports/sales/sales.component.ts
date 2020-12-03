@@ -32,9 +32,10 @@ export class SalesComponent implements OnInit {
     }
     model: any = [];
     ordersdataList: any = [];
-    orderItemsdataList: any = [];
+    
     isBusy = false;
-    isLUDBusy = false;
+    isBusy2 = false;
+    isBusy3 = false;
     isEdit = false;
     resp: any[];
     selectedID: any = "No Selected";
@@ -62,6 +63,10 @@ export class SalesComponent implements OnInit {
   // for lud grid
   columnDefs2 = [];
   rowData2:any = [];
+
+  columnDefs3 = [];
+  rowData3:any = [];
+
    rowDataClicked2:any = {};
      
     style2 = {
@@ -203,6 +208,44 @@ export class SalesComponent implements OnInit {
           
         },
       },
+
+      {headerName: 'Comm', field: 'comm', width: 150, sortable: true, filter:true ,
+      cellStyle: {textAlign: "right",color:"blue"},
+      valueFormatter: function(params) {
+          var num =   Math.floor(params.value)
+          .toString()
+          .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        if (num == "0" ){return null;}
+        else {return num;}
+        
+      },
+    },
+
+    {headerName: 'Cost', field: 'cost_price', width: 150, sortable: true, filter:true ,
+    cellStyle: {textAlign: "right",color:"blue"},
+    valueFormatter: function(params) {
+     
+      var num =   Math.floor(params.value)
+        .toString()
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      if (num == "0" ){return null;}
+      else {return num;}
+      
+    },
+  },
+
+  {headerName: 'Profit', field: 'profit_amount', width: 150, sortable: true, filter:true ,
+  cellStyle: {textAlign: "right",color:"blue"},
+  valueFormatter: function(params) {
+   
+    var num =   Math.floor(params.value)
+      .toString()
+      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    if (num == "0" ){return null;}
+    else {return num;}
+    
+  },
+},
       ];
       this.rowData = response;
      
@@ -216,7 +259,7 @@ export class SalesComponent implements OnInit {
 
     async loadDayWiseSales() {
       //alert("loading orederes");
-      this.isBusy = true;
+      this.isBusy2 = true;
       this.rowData2 = [];
      
       var year;
@@ -246,10 +289,9 @@ export class SalesComponent implements OnInit {
                         "month" : month,
                          "customer_uid" : customerUID}];
                        
-      let response = await this.webService.getSummarySalesByDay(parameters);
+      var response = await this.webService.getSummarySalesByDay(parameters);
       
-      this.orderItemsdataList = response;
-      console.log("Data is : " + this.orderItemsdataList.length)
+    
       this.columnDefs2 = [
         // {
         //   headerName: '',
@@ -258,10 +300,10 @@ export class SalesComponent implements OnInit {
         //    filter: false,
         //   checkboxSelection: true
         //   },
-        {headerName: 'Year', field: '_id.year', width: 100, sortable: true, filter:true },
-        {headerName: 'Month', field: '_id.month', width: 120, sortable: true, filter:true },
-        {headerName: 'Day', field: '_id.day', width: 120, sortable: true, filter:true },
-        {headerName: 'Sales', field: 'order_amount', width: 120, sortable: true, filter:true ,
+       // {headerName: 'Year', field: '_id.year', width: 90, sortable: true, filter:true },
+       // {headerName: 'Month', field: '_id.month', width: 90, sortable: true, filter:true },
+        {headerName: 'Day', field: '_id.day', width: 90, sortable: true, filter:true },
+        {headerName: 'Sales', field: 'order_amount', width: 100, sortable: true, filter:true ,
         cellStyle: {textAlign: "right",color:"green"}
         , valueFormatter: function(params) {
           var num =   Math.floor(params.value)
@@ -272,7 +314,7 @@ export class SalesComponent implements OnInit {
           
         },
       },
-        {headerName: 'Quantity', field: 'order_quantity', width: 150, sortable: true, filter:true ,
+        {headerName: 'Qty', field: 'order_quantity', width: 100, sortable: true, filter:true ,
         cellStyle: {textAlign: "right",color:"red"},
         valueFormatter: function(params) {
           var num =   Math.floor(params.value)
@@ -283,14 +325,142 @@ export class SalesComponent implements OnInit {
           
         },
       },
+      {headerName: 'Cost', field: 'cost_price', width: 100, sortable: true, filter:true ,
+      cellStyle: {textAlign: "right",color:"blue"},
+      valueFormatter: function(params) {
+       
+        var num =   Math.floor(params.value)
+          .toString()
+          .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        if (num == "0" ){return null;}
+        else {return num;}
         
+      },
+    },
+  
+    {headerName: 'Pft', field: 'profit_amount', width: 100, sortable: true, filter:true ,
+    cellStyle: {textAlign: "right",color:"blue"},
+    valueFormatter: function(params) {
+     
+      var num =   Math.floor(params.value)
+        .toString()
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      if (num == "0" ){return null;}
+      else {return num;}
+      
+    },
+  }, 
       ];
       this.rowData2 = response;
      
   
       //if (this.userList.active == "true") {this.userList.active = "Y";} else {this.userList.active="N;"}
       //if (this.userList.locked == "true") {this.userList.locked = "Y";} else {this.userList.locked="N;"}
-      this.isBusy = false;
+      this.isBusy2 = false;
+    };
+
+
+    async loadItemWiseSales() {
+      //alert("loading item wise data");
+      this.isBusy3 = true;
+      this.rowData3 = [];
+     
+      var year;
+      var customerUID;
+      var month;
+     
+      if (    this.rowDataClicked._id.year == "" 
+          ||  this.rowDataClicked._id.year == null)
+       { year = "-1"} 
+        else {year = this.rowDataClicked._id.year;};
+  
+        if (    this.orderForm.value.customer_uid == "" 
+        ||  this.orderForm.value.customer_uid == null)
+     { customerUID = "-1"} 
+      else {
+        //alert("customerUID = " + this.orderForm.value.customer_uid ); 
+        customerUID = this.orderForm.value.customer_uid;};
+  
+      if (    this.rowDataClicked._id.month == "" 
+          ||  this.rowDataClicked._id.month == null)
+       { month = "-1"} 
+        else {month = this.rowDataClicked._id.month;};
+      
+
+       
+      var parameters = [{"year":year ,
+                        "month" : month,
+                         "customer_uid" : customerUID}];
+                       
+      var response = await this.webService.getSummarySalesByItem(parameters);
+      
+      
+      
+      this.columnDefs3 = [
+        // {
+        //   headerName: '',
+        //    width: 35,
+        //    sortable: false,
+        //    filter: false,
+        //   checkboxSelection: true
+        //   },
+       // {headerName: 'Year', field: '_id.year', width: 90, sortable: true, filter:true },
+        //{headerName: 'Month', field: '_id.month', width: 90, sortable: true, filter:true },
+        {headerName: 'Item', field: '_id.item_name', width: 250, sortable: true, filter:true },
+        {headerName: 'Sales', field: 'order_amount', width: 90, sortable: true, filter:true ,
+        cellStyle: {textAlign: "right",color:"green"}
+        , valueFormatter: function(params) {
+          var num =   Math.floor(params.value)
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          if (num == "0" ){return null;}
+          else {return num;}
+          
+        },
+      },
+        {headerName: 'Qty', field: 'order_quantity', width: 90, sortable: true, filter:true ,
+        cellStyle: {textAlign: "right",color:"red"},
+        valueFormatter: function(params) {
+          var num =   Math.floor(params.value)
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          if (num == "0" ){return null;}
+          else {return num;}
+          
+        },
+      },
+      {headerName: 'Cost', field: 'cost_price', width: 100, sortable: true, filter:true ,
+      cellStyle: {textAlign: "right",color:"blue"},
+      valueFormatter: function(params) {
+       
+        var num =   Math.floor(params.value)
+          .toString()
+          .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        if (num == "0" ){return null;}
+        else {return num;}
+        
+      },
+    },
+  
+    {headerName: 'Pft', field: 'profit_amount', width: 100, sortable: true, filter:true ,
+    cellStyle: {textAlign: "right",color:"blue"},
+    valueFormatter: function(params) {
+     
+      var num =   Math.floor(params.value)
+        .toString()
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      if (num == "0" ){return null;}
+      else {return num;}
+      
+    },
+  },
+      ];
+      this.rowData3 = response;
+     
+  
+      //if (this.userList.active == "true") {this.userList.active = "Y";} else {this.userList.active="N;"}
+      //if (this.userList.locked == "true") {this.userList.locked = "Y";} else {this.userList.locked="N;"}
+      this.isBusy3 = false;
     };
 
 
@@ -298,16 +468,17 @@ export class SalesComponent implements OnInit {
     // single getter for all form controls to access them from the html
   get fc() { return this.orderForm.controls; }
 
-  onRowSelected(e)
+  async onRowSelected(e)
 {
  
   if(e.node.selected) {
 
    // alert("Selected row is for  - " + e.node.data.name);
     this.rowDataClicked = e.node.data;
-    this.orderItemsdataList = [];
+    
     //alert(JSON.stringify(e.node.data));
     this.loadDayWiseSales();
+    this.loadItemWiseSales();
  }
  else
  {
@@ -317,8 +488,9 @@ export class SalesComponent implements OnInit {
   if (this.rowDataClicked){
       if (this.rowDataClicked.year == e.node.data.year && this.rowDataClicked.month == e.node.data.month ){
       this.rowDataClicked = {};
-      this.orderItemsdataList = [];
+      
       this.loadDayWiseSales();
+      this.loadItemWiseSales();
      
   }
  } 

@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { sessionService } from '../ws/sessionWS';
 import { glWS } from '../ws/glWS';
-import {GridOptions} from "@ag-grid-community/all-modules";
+import {GridOptions, AllCommunityModules} from "@ag-grid-community/all-modules";
 import {MatDialogModule, MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {GlNewComponent} from "../gl/gl-new/gl-new.component";
 import * as momentNs from 'moment';
 const moment = momentNs;
 import {utilWS} from '../ws/utilWS'
+import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-alpine-dark.css';
+import { WSASERVICE_NOT_FOUND } from 'constants';
 
 @Component({
   selector: 'app-gl',
@@ -24,11 +27,12 @@ export class GlComponent implements OnInit {
       public dialog: MatDialog,
       private utilService : utilWS
     ) {
-      this.gridOptions = <GridOptions>{
-        onGridReady: () => {
-          this.gridOptions.api.sizeColumnsToFit();
-        }   
-      }
+      // this.gridOptions = <GridOptions>{
+      //   onGridReady: () => {
+      //     this.gridOptions.api.sizeColumnsToFit();
+      //   }   
+      // }
+      this.configureGrid();
     }
   
     glDataList: any = [];
@@ -39,11 +43,13 @@ export class GlComponent implements OnInit {
     isDetailBusy = false;
     totalAmount : any = 0;
     venderGlDataList : any = [];
+    response : any = [];
     columnDefs = [];
     defaultColDef ;
     rowData: any = [];
     rowDataClicked:any = {};
     autoGroupColumnDef;
+    final_amount = 0;
     venderUID = "";
     venderName = "";
       userPrivs = {"viewAllowed":"N",
@@ -55,11 +61,19 @@ export class GlComponent implements OnInit {
       marginTop: '0px',
       padding:'0px',
       width: '100%',
-      height: '600px',
+      height: '500px  ',
       flex: '1 1 auto'
   };
   
-    
+  pinnedTopRowData;
+  pinnedBottomRowData; 
+  gridApi;
+  gridColumnApi;
+  data = [];
+  topRowData = [];
+  bottomRowData = [];
+
+  public modules = AllCommunityModules;
   
   
     async loadGL() {
@@ -87,81 +101,231 @@ export class GlComponent implements OnInit {
       this.isDetailBusy = true;
       this.venderName = vender_name;
       this.venderUID = vender_uid;
-      let response = await this.glService.getVenderGL([{"value":vender_uid}]);
-      this.venderGlDataList = response;
+      this.rowData = [];
+      this.response = [];
+      //alert("Vender - " + vender_uid);
+       this.response = await this.glService.getVenderGL([{"value":vender_uid}]);
+    alert("response - " + this.response.length);
 
-      this.defaultColDef = {
-        //flex: 1,
-        cellClass: 'number-cell',
-        resizable: true,
-      };
+      // this.defaultColDef = {
+      //   //flex: 1,
+      //   cellClass: 'number-cell',
+      //   resizable: true,
+      // };
       
-      this.columnDefs = [
-        {
-          headerName: '',
-          width: 45,
-          sortable: false,
-          filter: false,
-          checkboxSelection: true
+      // this.columnDefs = [
+      //   {
+      //     headerName: '',
+      //     width: 45,
+      //     sortable: false,
+      //     filter: false,
+      //     checkboxSelection: true
         
-        },
-        //{ headerName: 'Vender', field: 'vender_name', width: 150, sortable: true, filter: true },
-        { headerName: 'Date', field: 'gl_date', width: 130, sortable: true, filter: true 
-        , valueFormatter: function (params) {
-          return moment(params.value).format('DD-MMM-YYYY');}},
-        { headerName: 'Head', field: 'account_head_name', width: 200, sortable: true, filter: true },
-        { headerName: 'Curr', field: 'currency_desc', width: 130, sortable: true, filter: true },
-        { headerName: 'Sent', field: 'fund_amount', width: 150, sortable: true, filter: true 
-        ,cellClass: 'number-cell', resizable: true, cellStyle: {textAlign: "right",color:"green"}
-        , valueFormatter: function(params) {
-          var num =   Math.floor(params.value)
-            .toString()
-            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-          if (num == "0" ){return null;}
-          else {return num;}
+      //   },
+      //   //{ headerName: 'Vender', field: 'vender_name', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Date', field: 'gl_date', width: 130, sortable: true, filter: true 
+      //   , valueFormatter: function (params) {
+      //     return moment(params.value).format('DD-MMM-YYYY');}},
+      //   { headerName: 'Head', field: 'account_head_name', width: 200, sortable: true, filter: true },
+      //   { headerName: 'Curr', field: 'currency_desc', width: 130, sortable: true, filter: true },
+      //   { headerName: 'Sent', field: 'fund_amount', width: 150, sortable: true, filter: true 
+      //   ,cellClass: 'number-cell', resizable: true, cellStyle: {textAlign: "right",color:"green"}
+      //   , valueFormatter: function(params) {
+      //     var num =   Math.floor(params.value)
+      //       .toString()
+      //       .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      //     if (num == "0" ){return null;}
+      //     else {return num;}
           
-        },
-      },
-        { headerName: 'Received', field: 'cargo_amount', width: 150, sortable: true, filter: true 
-        , cellStyle: {textAlign: "right", color:"red"}
-        , valueFormatter: function(params) {
-          var num =   Math.floor(params.value)
-            .toString()
-            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-          if (num == "0" ){return null;}
-          else {return num;}
+      //   },
+      // },
+      //   { headerName: 'Received', field: 'cargo_amount', width: 150, sortable: true, filter: true 
+      //   , cellStyle: {textAlign: "right", color:"red"}
+      //   , valueFormatter: function(params) {
+      //     var num =   Math.floor(params.value)
+      //       .toString()
+      //       .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      //     if (num == "0" ){return null;}
+      //     else {return num;}
           
-        },
-      },
-      { headerName: 'Sent To', field: 'sent_to_vender_name', width: 150, sortable: true, filter: true },
-      { headerName: 'Sent to Account', field: 'sent_to_vender_account_uid', width: 150, sortable: true, filter: true },
-      { headerName: 'Through', field: 'through_vender_name', width: 150, sortable: true, filter: true },
-        { headerName: 'Account', field: 'vender_account_uid', width: 150, sortable: true, filter: true },
-        { headerName: 'Payment Sent On', field: 'funds_sent_on', width: 150, sortable: true, filter: true },
-        { headerName: 'Payment Received On', field: 'funds_received_on', width: 150, sortable: true, filter: true },
-        { headerName: 'Exchange', field: 'exchange', width: 150, sortable: true, filter: true },
-        { headerName: 'Other Charges', field: 'other_charges', width: 150, sortable: true, filter: true },
-        { headerName: 'Bill Amount', field: 'cargo_bill_amount', width: 150, sortable: true, filter: true },
-        { headerName: 'Cargo Amount', field: 'cargo_charges', width: 150, sortable: true, filter: true },
-        { headerName: 'Cargo VAT', field: 'cargo_vat', width: 150, sortable: true, filter: true },
-        { headerName: 'Cargo Comission', field: 'cargo_commission', width: 150, sortable: true, filter: true },
-        { headerName: 'Cargo Customs', field: 'customs_charges', width: 150, sortable: true, filter: true },
-        { headerName: 'Cargo Requested on', field: 'cargo_requested_on', width: 150, sortable: true, filter: true },
-        { headerName: 'Cargo Shipped on', field: 'cargo_shipped_on', width: 150, sortable: true, filter: true },
-        { headerName: 'Cargo Received on', field: 'cargo_received_on', width: 150, sortable: true, filter: true },
-        { headerName: 'Courier', field: 'courier_code', width: 150, sortable: true, filter: true },
-        { headerName: 'Cargo weight', field: 'cargo_weight', width: 150, sortable: true, filter: true },
-        { headerName: 'Cargo Items', field: 'cargo_items_count', width: 150, sortable: true, filter: true },
-        { headerName: 'Ref#', field: 'ref_number', width: 130, sortable: true, filter: true },
-        { headerName: 'Status', field: 'gl_status', width: 130, sortable: true, filter: true },
-        { headerName: 'Additional Details', field: 'additional_details', width: 150, sortable: true, filter: true },
-        { headerName: 'Remarks', field: 'remarks', width: 150, sortable: true, filter: true },
+      //   },
+      // },
+      // { headerName: 'Sent To', field: 'sent_to_vender_name', width: 150, sortable: true, filter: true },
+      // { headerName: 'Sent to Account', field: 'sent_to_vender_account_uid', width: 150, sortable: true, filter: true },
+      // { headerName: 'Through', field: 'through_vender_name', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Account', field: 'vender_account_uid', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Payment Sent On', field: 'funds_sent_on', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Payment Received On', field: 'funds_received_on', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Exchange', field: 'exchange', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Other Charges', field: 'other_charges', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Bill Amount', field: 'cargo_bill_amount', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Cargo Amount', field: 'cargo_charges', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Cargo VAT', field: 'cargo_vat', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Cargo Comission', field: 'cargo_commission', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Cargo Customs', field: 'customs_charges', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Cargo Requested on', field: 'cargo_requested_on', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Cargo Shipped on', field: 'cargo_shipped_on', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Cargo Received on', field: 'cargo_received_on', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Courier', field: 'courier_code', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Cargo weight', field: 'cargo_weight', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Cargo Items', field: 'cargo_items_count', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Ref#', field: 'ref_number', width: 130, sortable: true, filter: true },
+      //   { headerName: 'Status', field: 'gl_status', width: 130, sortable: true, filter: true },
+      //   { headerName: 'Additional Details', field: 'additional_details', width: 150, sortable: true, filter: true },
+      //   { headerName: 'Remarks', field: 'remarks', width: 150, sortable: true, filter: true },
   
-      ];
-      this.rowData = response;
-      this.isDetailBusy = false;
+      // ];
+      //setTimeout(this.refreshDetail, 2000 , response);
+      setTimeout(() => { 
+        this.rowData = this.response;
+        this.refreshGrid();
+        this.isDetailBusy = false; 
+      }, 
+      1000);
+      // this.rowData = response;
+      // this.isDetailBusy = false;
   
       };
+
+refreshDetail(data:any){
+  this.rowData = data;
+  this.isDetailBusy = false;
+}
+configureGrid(){
+
+ 
+  
+  this.columnDefs = [
+    {
+      headerName: '',
+      width: 45,
+      sortable: false,
+      filter: false,
+      checkboxSelection: true
+    
+    },
+    //{ headerName: 'Vender', field: 'vender_name', width: 150, sortable: true, filter: true },
+    { headerName: 'Date', field: 'gl_date', width: 130, sortable: true, filter: true ,
+   //pinnedRowCellRenderer: 'customPinnedRowRenderer',
+    pinnedRowCellRendererParams: { style: { color: 'blue' }} ,
+    valueFormatter: function (params) {
+      return moment(params.value).format('DD-MMM-YYYY');}},
+    { headerName: 'Head', field: 'account_head_name', width: 200, sortable: true, filter: true ,
+    //pinnedRowCellRenderer: 'customPinnedRowRenderer',
+    pinnedRowCellRendererParams: { style: {  color: 'blue' }} 
+    },
+    { headerName: 'Curr', field: 'currency_desc', width: 130, sortable: true, filter: true },
+    { headerName: 'Sent', field: 'fund_amount', width: 150, sortable: true, filter: true,
+    //pinnedRowCellRenderer: 'customPinnedRowRenderer',
+    pinnedRowCellRendererParams: { style: {  color: 'blue' }} 
+     
+    ,cellClass: 'number-cell', resizable: true, cellStyle: {textAlign: "right",color:"green"},
+    aggFunc: 'sum'
+    , valueFormatter: function(params) {
+      var num =   Math.floor(params.value)
+        .toString()
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      if (num == "0" ){return null;}
+      else {return num;}
+      
+    },
+  },
+    { headerName: 'Received', field: 'cargo_amount', width: 150, sortable: true, filter: true ,
+    //pinnedRowCellRenderer: 'customPinnedRowRenderer',
+    pinnedRowCellRendererParams: { style: { color: 'blue' }} 
+    
+    , cellStyle: {textAlign: "right", color:"red"}
+    , valueFormatter: function(params) {
+      var num =   Math.floor(params.value)
+        .toString()
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      if (num == "0" ){return null;}
+      else {return num;}
+      
+    },
+  },
+  { headerName: 'Sent To', field: 'sent_to_vender_name', width: 150, sortable: true, filter: true },
+  { headerName: 'Sent to Account', field: 'sent_to_vender_account_uid', width: 150, sortable: true, filter: true },
+  { headerName: 'Through', field: 'through_vender_name', width: 150, sortable: true, filter: true },
+    { headerName: 'Account', field: 'vender_account_uid', width: 150, sortable: true, filter: true },
+    { headerName: 'Payment Sent On', field: 'funds_sent_on', width: 150, sortable: true, filter: true },
+    { headerName: 'Payment Received On', field: 'funds_received_on', width: 150, sortable: true, filter: true },
+    { headerName: 'Exchange', field: 'exchange', width: 150, sortable: true, filter: true },
+    { headerName: 'Other Charges', field: 'other_charges', width: 150, sortable: true, filter: true },
+    { headerName: 'Bill Amount', field: 'cargo_bill_amount', width: 150, sortable: true, filter: true },
+    { headerName: 'Cargo Amount', field: 'cargo_charges', width: 150, sortable: true, filter: true },
+    { headerName: 'Cargo VAT', field: 'cargo_vat', width: 150, sortable: true, filter: true },
+    { headerName: 'Cargo Comission', field: 'cargo_commission', width: 150, sortable: true, filter: true },
+    { headerName: 'Cargo Customs', field: 'customs_charges', width: 150, sortable: true, filter: true },
+    { headerName: 'Cargo Requested on', field: 'cargo_requested_on', width: 150, sortable: true, filter: true },
+    { headerName: 'Cargo Shipped on', field: 'cargo_shipped_on', width: 150, sortable: true, filter: true },
+    { headerName: 'Cargo Received on', field: 'cargo_received_on', width: 150, sortable: true, filter: true },
+    { headerName: 'Courier', field: 'courier_code', width: 150, sortable: true, filter: true },
+    { headerName: 'Cargo weight', field: 'cargo_weight', width: 150, sortable: true, filter: true },
+    { headerName: 'Cargo Items', field: 'cargo_items_count', width: 150, sortable: true, filter: true },
+    { headerName: 'Ref#', field: 'ref_number', width: 130, sortable: true, filter: true },
+    { headerName: 'Status', field: 'gl_status', width: 130, sortable: true, filter: true },
+    { headerName: 'Additional Details', field: 'additional_details', width: 150, sortable: true, filter: true },
+    { headerName: 'Remarks', field: 'remarks', width: 150, sortable: true, filter: true },
+
+  ];
+
+     
+    this.defaultColDef = {
+      //flex: 1,
+      cellClass: 'number-cell',
+      resizable: true,
+    };
+
+    this.rowData = [];
+    this.pinnedTopRowData = [];
+    this.pinnedBottomRowData = [];
+}
+
+onGridReady(params) {
+  //alert("grid ready - " + this.rowData.length );
+  console.log(params);
+  this.gridApi = params.api;
+  this.gridColumnApi = params.columnApi;
+
+  this.topRowData = this.createData(this.rowData);
+  this.bottomRowData = this.createData(this.rowData);
+  params.api.setRowData(this.rowData);
+  params.api.setPinnedTopRowData(this.topRowData);
+  //params.api.setPinnedBottomRowData(this.bottomRowData);
+}
+
+refreshGrid() {
+  //scramble();
+  //alert("refreshGrid ready - " + this.rowData.length );
+  var params = {
+    force: 'Y',
+    suppressFlash: 'N',
+  };
+  
+  this.gridApi.setRowData(this.rowData);
+  this.gridApi.setPinnedTopRowData(this.createData(this.rowData));
+ 
+  this.gridApi.refreshCells(params);
+}
+
+createData(data: any) {
+  var result = [];
+  var total = 0;
+  var total_cargo_amount = 0;
+  this.rowData.forEach(element => {
+    total = total + element.fund_amount;
+    total_cargo_amount = total_cargo_amount + element.cargo_amount;
+  });
+  this.final_amount = total - total_cargo_amount;
+  
+  result.push({
+    account_head_name:"Total",
+    fund_amount: total,
+    cargo_amount : total_cargo_amount
+  });
+  return result;
+}
 
 generatePDF()
 {
@@ -336,6 +500,7 @@ generatePDF()
       
       this.loadGL();
       this.userPrivs = this.sessionService.getUsersPrivs();
+      //this.configureGrid();
       
     };
 
@@ -417,10 +582,11 @@ generatePDF()
           console.log(result);
           if (result == "save") {
             if (this.venderUID != "-1"){
+            //alert("vender uid " + this.venderUID)
             this.selectGL(this.venderUID, this.venderName);
           }
           else{this.venderUID = null;}
-            this.loadGL();
+            //this.loadGL();
             this.rowDataClicked = {};
 
           }

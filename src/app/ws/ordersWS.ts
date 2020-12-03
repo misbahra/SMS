@@ -54,6 +54,21 @@ export class ordersWS {
     
     return this.http.get(this.BASE_URL + '/summarySalesByDay', searchParams).toPromise();
 }
+
+//------------------------------
+
+getSummarySalesByItem(params: any) {
+        
+    const searchParams = {
+        params: {
+            param1: params[0].year,
+            param2: params[0].month,
+            param3: params[0].customer_uid
+        }
+    }
+    
+    return this.http.get(this.BASE_URL + '/summarySalesByItem', searchParams).toPromise();
+}
    
  //------------------------------
 

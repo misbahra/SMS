@@ -118,9 +118,9 @@ rowData2:any = [];
       },
     {headerName: 'Code', field: 'item_uid', width: 150 },
     {headerName: 'Name', field: 'item_name', width: 300 },
-    {headerName: 'Bar Code', field: 'item_bar_code', width: 150 },
     {headerName: 'Reorder Quantity', field: 'reorder_quantity' , width: 150 },
-   ];
+    {headerName: 'Bar Code', field: 'item_bar_code', width: 150 }, 
+  ];
   
    this.rowData2 = resp;
 

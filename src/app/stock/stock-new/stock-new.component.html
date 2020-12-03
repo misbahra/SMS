@@ -278,6 +278,23 @@
             </div>
             <!--close col -->
 
+            <div class="col-2">
+                <!-- stock_sold -->
+                <div class="md-form ">
+                    <label class="font-weight form-row " for="stock_sold">Stock Sold</label>
+                    <input type="number" id="stock_sold" name="stock_sold" class="form-control"
+                        placeholder="Stock Sold" formControlName="stock_sold"
+                        [ngClass]="{ 'is-invalid':   submitted && fc.stock_sold.errors }">
+                    <div *ngIf=" fc.stock_sold.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.stock_sold.errors.required">
+                            Stock Sold is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form ">

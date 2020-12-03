@@ -96,11 +96,11 @@ export class ItemNewComponent implements OnInit {
     async loadData(id: any) {
       this.isBusy = true;
       this.dataForm.disable();
-      //alert('loading data - ' + userid[0].value);
+      //alert('loading data - ' + id[0].item_id);
       var itemToLoad = [{name: "item_id" , value: id[0].item_id}];
       this.response = await this.itemService.getThisItem(itemToLoad);
-      //alert('data - ' + this.response.name);
-      this.dataId = this.response._id;
+      //alert('data - ' + this.response.length);
+      //this.dataId = this.response._id;
       this.dataForm.patchValue(this.response);
       
       this.dataForm.enable();
