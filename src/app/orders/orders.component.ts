@@ -12,7 +12,7 @@ var moment = require('moment');
 import { stockWS } from '../ws/stockWS';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { customersWS } from '../ws/customersWS';
-
+import { ItemsWS } from '../ws/itemsWS';
 
 @Component({
   selector: 'app-orders',
@@ -29,6 +29,7 @@ export class OrdersComponent implements OnInit {
     public stockService: stockWS,
     private fb: FormBuilder,
     private CustomersService: customersWS,
+    private itemsService : ItemsWS,
   ) {
 
   }
@@ -45,6 +46,7 @@ export class OrdersComponent implements OnInit {
   columnDefs = [];
   rowData:any = [];
   customerList: any = [];
+  itemsDataList : any = [];
   queryParams : any = [];
   orderForm: FormGroup;
   sumAmount: any = 0;
@@ -83,6 +85,7 @@ defaultColDef = {
 ngOnInit() {
 
   this.loadAllCustomers();
+  this.loadItems();
     //this.loadAllOrders();
     this.userPrivs = this.sessionService.getUsersPrivs();
     if (this.selectedCode.length > 0){this.loadAllOrderItems(this.selectedCode);}
@@ -92,6 +95,7 @@ ngOnInit() {
       customer_uid: ['', []],
       order_date: [new Date().toISOString().slice(0, 10) , []],
       invoice_number: ['',[]],
+      item_uid : ['', []]
     }
       // , { validator: this.CheckUserName('UserName') }
     );
@@ -134,6 +138,7 @@ ngOnInit() {
     var orderDate;
     var customerUID;
     var invoiceNumber;
+    var itemUID;
 
      
     
@@ -152,11 +157,17 @@ ngOnInit() {
         ||  this.orderForm.value.invoice_number == null)
      { invoiceNumber = "-1"} 
       else {invoiceNumber = this.orderForm.value.invoice_number;};
+
+      if (    this.orderForm.value.item_uid == "" 
+        ||  this.orderForm.value.item_uid == null)
+     { itemUID = "-1"} 
+      else {itemUID = this.orderForm.value.item_uid;};
     
 
     var parameters = [{"order_date":orderDate ,
                        "customer_uid" : customerUID,
-                      "invoice_number" : invoiceNumber }];
+                      "invoice_number" : invoiceNumber,
+                      "item_uid" : itemUID  }];
     //let response = await this.webService.getOrders(parameters);
     
     let response = await this.webService.getSummaryByOrder(parameters);
@@ -445,6 +456,13 @@ onRowSelected2(e)
  }
 }
  
+}
+async loadItems()
+{
+  var response;
+response = await this.itemsService.getItems();
+this.itemsDataList = response;
+//alert("Venders loaded - " + this.vendersDataList.length);
 }
 
 }

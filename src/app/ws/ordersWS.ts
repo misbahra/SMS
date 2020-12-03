@@ -17,7 +17,8 @@ export class ordersWS {
             params: {
                 param1: params[0].order_date,
                 param2: params[0].customer_uid,
-                param3: params[0].invoice_number
+                param3: params[0].invoice_number,
+                param4: params[0].item_uid
             }
         }
         
@@ -78,7 +79,8 @@ getSummarySalesByItem(params: any) {
         params: {
             param1: params[0].order_date,
             param2: params[0].customer_uid,
-            param3: params[0].invoice_number
+            param3: params[0].invoice_number,
+            param4: params[0].item_uid
         }
     }
     

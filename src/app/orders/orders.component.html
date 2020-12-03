@@ -65,6 +65,28 @@
       </div>
     </div>
     <!--cloumn colosed -->
+
+      <!--cloumn started -->
+      <div class="col">
+        <!-- request_placed_on -->
+        <div class="md-form ">
+            <!-- <label class="font-weight form-row " for="item_uid">Order Date</label> -->
+            <select class="form-control  form-control-sm" id="item_uid" name="item_uid"
+                formControlName="item_uid" [ngClass]="{ 'is-invalid': fc.item_uid.errors }">
+                <!-- <option Selected value="">Select User Role</option> -->
+                <option *ngFor="let data of itemsDataList; index as i;" [value]=data.item_uid>{{data.item_name}}
+                </option>
+                <!-- <option value=data.lud_code>data.lud_desc</option> -->
+              </select>
+            <div *ngIf=" fc.item_uid.invalid " class="invalid-feedback">
+                <div *ngIf="fc.item_uid.errors.required">
+                    Item is required
+                </div>
+  
+            </div>
+        </div>
+      </div>
+      <!--cloumn colosed -->
  <!--cloumn started -->
  <div class="col">
         <div class=" float-right">
