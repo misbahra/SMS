@@ -2,34 +2,37 @@
 
 
 
-<nav  class=" navbar navbar-expand-lg navbar-dark primary-color menu toolbar">
+<mat-toolbar color="primary" class= "p-0">
+<!-- <nav  class=" navbar navbar-expand-lg navbar-dark primary-color menu toolbar"> -->
    <!-- Navbar brand -->
-   <a  class="navbar-brand" href="#"> 
-    <img class= "brand_logo"  src="../../assets/Logo01.png"> 
-</a>
+   <!-- <a  class="navbar-brand" href="#">  -->
+    <img class= "brand_logo p-0 m-0"  src="../../assets/Logo01.png"> 
+<!-- </a> -->
 
 
    
  
 
     <!-- Collapse button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
       aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-    </button>
+    </button> -->
   
     <!-- Collapsible content 
     class="collapse navbar-collapse" id="basicExampleNav"-->
-    <div style="width:100%" class="collapse navbar-collapse" id="basicExampleNav">
-      <div style="width:100%">
-      <div class="float-left" >
+    <!-- <div style="width:100%" class="collapse navbar-collapse" id="basicExampleNav"> -->
+      <div style="width:100%" class="m-0 p-0">
+      <div class="float-left m-0 p-0" >
 
         <button  mat-button  routerLink="/home" ><mat-icon>home</mat-icon> Home </button>
        
         <button  mat-button  routerLink="/login-new" *ngIf = "(connectedUser.length == 0)" ><mat-icon>login</mat-icon> Login </button>
 
         <button  mat-button   *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" 
-        [matMenuTriggerFor]="settingMenu"><mat-icon>settings</mat-icon> settings </button>
+        [matMenuTriggerFor]="settingMenu">
+        
+        <mat-icon>settings</mat-icon> settings </button>
 
         <mat-menu #settingMenu="matMenu" xPosition="after">
           <button mat-menu-item  routerLink="/user">
@@ -280,26 +283,27 @@
        </ul> -->
       <!-- Links -->
     </div>
-      <div class="float-right" *ngIf = "(connectedUser.length != 0)" 
-      
-      > 
+      <div class="float-right p-0 m-0" *ngIf = "(connectedUser.length != 0)" > 
         Welcome  {{connectedUser.name}} 
-        <span class="h6 text-warning"><small>Connected Since: {{connectedUser.conn_date_time | date : 'short'}}</small></span>
-        <button class="btn-blank cans" 
+        <span class="text-warning"><small>Connected Since: {{connectedUser.conn_date_time | date : 'short'}}</small></span>
+        <button mat-icon-button *ngIf = "(connectedUser.length != 0)"  (click)= LogOut()>
+          <mat-icon>settings_power</mat-icon>
+         </button>
+        <!-- <button class="btn-blank cans" 
         *ngIf = "(connectedUser.length != 0)"  (click)= LogOut()>
         <i class="fa fa-power-off p-1"></i> 
-      </button>
+      </button> -->
      </div>
       <!-- <form class="form-inline">
         <div class="md-form my-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
         </div>
       </form> -->
-    </div>
+    <!-- </div> -->
     </div>
     <!-- Collapsible content -->
-  
-  </nav>
+  </mat-toolbar>
+  <!-- </nav> -->
   <!--/.Navbar-->
   
   <!-- <div class="menu toolbar"> 
