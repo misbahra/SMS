@@ -285,3 +285,8 @@
   color: greenyellow;
 }
   
+
+.mat-menu-item{
+  line-height: 20px;
+  border:0px;
+}

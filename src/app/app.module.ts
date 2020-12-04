@@ -54,7 +54,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from "@angular/material/dialog";
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatSliderModule } from '@angular/material/slider';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -101,8 +106,13 @@ import {MatDialogModule} from "@angular/material/dialog";
     Ng2SearchPipeModule,
      MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
-    
+    MatButtonModule,
+    NgbModule,
+    MatSliderModule,
+    MatIconModule,
+    MatMenuModule,
+    MatDividerModule,
+    MatCardModule
   ],
   providers: [
     mainWS,

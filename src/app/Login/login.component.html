@@ -1,69 +1,68 @@
-    
-<body>
-    <div class="container">
-      <div class="row">
-       
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto ">
-          <div class="card card-signin my-5 border border-dark rounded-top">
-            <div class = "pt-5 pb-5 text-center header  hd-sky rounded-top" style="height:100px"> 
-              
-              <p class="h5">Sign In</p>
-              <p class="section-detail">Welcome to Sales Management System</p>
+<div class="main-div">
+<mat-card class="z-depth" flex="50">
+  <div class="row center">
+  <mat-card-header>
+    <mat-card-title>Log in</mat-card-title>
+   
+  </mat-card-header>
+
+  <div class="row center">
+    <img class= "brand_logo"  src="../../assets/Logo01.png"> 
+   </div>
+
+
+  <p style="color:red;" *ngIf="submitted">{{this.messagetext}}</p>
+</div>
+
+  <form [formGroup]="LoginForm">
+    <div class="row center mt-4 mb-3">
+      <mat-form-field class="example-full-width">
+        <mat-label>User</mat-label>
+        <input matInput type="text" id="UserName" name="UserName" placeholder="User" formControlName="UserName"
+          oninput="this.value = this.value.toUpperCase()" [ngClass]="{ 'is-invalid': submitted && fc.UserName.errors }">
+        <div *ngIf="submitted && UserName.invalid " class="invalid-feedback">
+          <div *ngIf="UserName.errors.required">
+            User Name is required
           </div>
-            <div class="card-body">
-            
-              <p style="color:red;"
-               
-              >{{this.messagetext}}</p>
-            <form [formGroup] = "LoginForm">
-            <input type="text"
-                    id = "UserName"
-                    name="UserName"
-                    class="form-control"
-                    placeholder="username"
-                    formControlName="UserName"
-                    oninput="this.value = this.value.toUpperCase()"  
-                    [ngClass]="{ 'is-invalid': submitted && fc.UserName.errors }">
-                    <div *ngIf="submitted && UserName.invalid " class="invalid-feedback">
-                      <div *ngIf="UserName.errors.required">
-                        User Name is required
-                      </div>
-                      <div *ngIf="UserName.errors.minlength">
-                        User Name should be at least 4 characters
-                      </div>
-                      <div *ngIf="UserName.errors.invaliduser">
-                        Invalid user name
-                      </div>
-                    </div>  
-                    <br/>
-            <input type="password"
-                    name="password"
-                    class="form-control"
-                    placeholder="password"
-                    formControlName="Password"
-                    [ngClass]="{ 'is-invalid': submitted && fc.Password.errors }"
-                    >
-                    
-                    <div *ngIf="submitted && fc.Password.invalid " class="invalid-feedback">
-                      <div *ngIf="fc.Password.errors.required" >
-                        Password is required
-                      </div>
-                    </div>
-                    <br/>
-            <button [disabled] = "isBusy" (click)="onSubmit()"
-                    class="btn btn-lg btn-primary btn-block btn mr-1"> 
-                    <i class="fa fa-sign-in pr-3"></i>Login
-                    <!-- {{ isBusy == false ? 'Login' : 'Logging in, please wait' }}  -->
-                  </button>
-                    <div  class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf = "(isBusy == true)">
-                      <span class="sr-only">Loading...</span>
-                  </div>
-            </form>
-            <!-- <p>{{fc.UserName.value}} is submitted : {{submitted}}</p> -->
-            
-            </div> 
+          <div *ngIf="UserName.errors.minlength">
+            User Name should be at least 4 characters
+          </div>
+          <div *ngIf="UserName.errors.invaliduser">
+            Invalid user name
           </div>
         </div>
-      </div>
+      </mat-form-field>
+
     </div>
-  </body>
+    <div class="row center mb-5">
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="Password" id="Password" name="Password" placeholder="Password" formControlName="Password"
+          [ngClass]="{ 'is-invalid': submitted && fc.Password.errors }">
+        <div *ngIf="submitted && Password.invalid " class="invalid-feedback">
+          <div *ngIf="Password.errors.required">
+            Password is required
+          </div>
+          <div *ngIf="Password.errors.minlength">
+            Password should be at least 4 characters
+          </div>
+          <div *ngIf="Password.errors.invaliduser">
+            Invalid password
+          </div>
+        </div>
+      </mat-form-field>
+    </div>
+
+    <!-- <mat-divider></mat-divider> -->
+    <div class="row center mt-5">
+    <button mat-raised-button color="primary" [disabled]="isBusy" (click)="onSubmit()">
+      <mat-icon color="accent">login</mat-icon>Login
+
+    </button>
+    <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  </form>
+</mat-card>
+</div>

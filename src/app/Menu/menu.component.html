@@ -1,29 +1,110 @@
 <!--Navbar-->
-<nav  class=" navbar navbar-expand-lg navbar-dark primary-color menu toolbar">
 
-    <!-- Navbar brand -->
-    <a  class="navbar-brand" href="#"> 
-        <img class= "brand_logo"  src="../../assets/Logo01.png"> 
-    </a>
-  
+
+
+<nav  class=" navbar navbar-expand-lg navbar-dark primary-color menu toolbar">
+   <!-- Navbar brand -->
+   <a  class="navbar-brand" href="#"> 
+    <img class= "brand_logo"  src="../../assets/Logo01.png"> 
+</a>
+
+
+   
+ 
+
     <!-- Collapse button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
       aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
   
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="basicExampleNav">
-  
+    <!-- Collapsible content 
+    class="collapse navbar-collapse" id="basicExampleNav"-->
+    <div style="width:100%" class="collapse navbar-collapse" id="basicExampleNav">
+      <div style="width:100%">
+      <div class="float-left" >
+
+        <button  mat-button  routerLink="/home" ><mat-icon>home</mat-icon> Home </button>
+       
+        <button  mat-button  routerLink="/login-new" *ngIf = "(connectedUser.length == 0)" ><mat-icon>login</mat-icon> Login </button>
+
+        <button  mat-button   *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" 
+        [matMenuTriggerFor]="settingMenu"><mat-icon>settings</mat-icon> settings </button>
+
+        <mat-menu #settingMenu="matMenu" xPosition="after">
+          <button mat-menu-item  routerLink="/user">
+            <mat-icon>account_box</mat-icon>
+            <span>Users</span>
+          </button>
+         
+          <button mat-menu-item routerLink="/lu">
+            <mat-icon>build</mat-icon>
+            <span>Look Up</span>
+          </button>
+
+          <button mat-menu-item routerLink="/sal">
+            <mat-icon>money</mat-icon>
+            <span>Salary</span>
+          </button>
+        </mat-menu>
+
+
+        <button  mat-button   *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" 
+        [matMenuTriggerFor]="reportsMenu"><mat-icon>receipt</mat-icon> Reports </button>
+
+        <mat-menu #reportsMenu="matMenu" xPosition="after">
+          <button mat-menu-item  routerLink="/salesRep">
+            <mat-icon>monetization_on</mat-icon>
+            <span>Sales Report</span>
+          </button>
+       
+        </mat-menu>
+
+
+        <button  mat-button   *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" 
+        [matMenuTriggerFor]="formsMenu"><mat-icon>apps</mat-icon> Forms </button>
+
+        <mat-menu #formsMenu="matMenu" xPosition="after">
+          <button mat-menu-item  routerLink="/order">
+            <mat-icon>tasks</mat-icon>
+            <span>Orders</span>
+          </button>
+         
+          <button mat-menu-item routerLink="/vender">
+            <mat-icon>blur_circular</mat-icon>
+            <span>Venders</span>
+          </button>
+
+          <button mat-menu-item routerLink="/customer">
+            <mat-icon>adjust</mat-icon>
+            <span>Customers</span>
+          </button>
+
+          <button mat-menu-item routerLink="/itemcategory">
+            <mat-icon>blur_linear</mat-icon>
+            <span>Items</span>
+          </button>
+
+          <button mat-menu-item routerLink="/stock">
+            <mat-icon>blur_on</mat-icon>
+            <span>Stock</span>
+          </button>
+
+          <button mat-menu-item routerLink="/gl">
+            <mat-icon>storage</mat-icon>
+            <span>General Ledger</span>
+          </button>
+        </mat-menu>
+
       <!-- Links -->
-      <ul class="navbar-nav mr-auto ">
-        <li class="nav-item active">
+      <!-- <ul class="navbar-nav mr-auto "> -->
+       <!-- <li class="nav-item active">
           <a class="nav-link" href="#" routerLink="/home">
             <i class="fa fa-home p-1 greenHover">  </i> Home
           </a>
-        </li>
+        </li> -->
         <!-- *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" -->
-        <li class="nav-item dropdown active" *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" >
+        <!-- <li class="nav-item dropdown active" *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" >
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-cogs p-1 greenHover "></i> Settings
           </a> 
@@ -37,32 +118,32 @@
             <a class="dropdown-item " href="#"    routerLink="/sal">
               <i class="fa fa-th-list  pr-2">  </i>Salary
             </a>
-         
+          -->
               <!-- <a class="dropdown-item" href="#">Something else here</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Separated link</a> -->
-          </div>
-      </li>
+          <!-- </div>
+      </li> -->
 
       <!-- report -->
 
        <!-- *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" -->
-       <li class="nav-item dropdown active" *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" >
+       <!-- <li class="nav-item dropdown active" *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" >
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-file p-1 greenHover "></i> Reports
         </a> 
         <div class="dropdown-menu">
           <a class="dropdown-item " href="#"    routerLink="/salesRep">
             <i class="fa fa-user  pr-2">  </i>Sales
-          </a>
+          </a> -->
          
             <!-- <a class="dropdown-item" href="#">Something else here</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Separated link</a> -->
-        </div>
-        </li>
+        <!-- </div>
+        </li> -->
 
-        <li class="nav-item dropdown active" *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" >
+        <!-- <li class="nav-item dropdown active" *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" >
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-tasks p-1 greenHover "></i> Forms
           </a> 
@@ -91,7 +172,7 @@
             </a>
 
           </div>
-          </li>
+          </li> -->
 
         
   
@@ -188,17 +269,18 @@
             <i class="fa fa-sign-in p-1">  </i>Login
           </a>
         </li> -->
-        <li class="nav-item active ">
+        <!-- <li class="nav-item active ">
           <a class="nav-link " href="#"  *ngIf = "(connectedUser.length == 0)" routerLink="/login-new">
             <i class="fa fa-sign-in-alt p-1 greenHover">  </i>Login 
-            <!-- Reactive -->
+            
           </a>
         </li>
   
       
-       </ul>
+       </ul> -->
       <!-- Links -->
-      <div class="md-form my-0" *ngIf = "(connectedUser.length != 0)" 
+    </div>
+      <div class="float-right" *ngIf = "(connectedUser.length != 0)" 
       
       > 
         Welcome  {{connectedUser.name}} 
@@ -213,6 +295,7 @@
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
         </div>
       </form> -->
+    </div>
     </div>
     <!-- Collapsible content -->
   
