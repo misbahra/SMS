@@ -1,292 +1,53 @@
 
-   .toolbar {
-    height: 40px;
-    align-items: center;
-    background-color: #310555;
-    color: white;
-    text-align:center;
-    font-size: 14px; 
-    /*display: flex;*/
-    
+  .mat-menu-item {
+    color: rgb(91, 12, 165) !important;
+    outline:none; 
   }
+
+  .mat-icon {
+    color: rgb(198, 119, 230) !important;
+  }
+  
+ 
+  button.mat-button{
+    outline:none;
+    color: rgb(66, 7, 134) !important;
+   
+}
+   
+  .mat-menu-item:hover {
+      background-color: rgb(227, 230, 198);
+      color: rgb(66, 7, 134) !important;
+  }
+
+  div.plMenuCSS { 
+    max-width:500px;
+    background-color:lightgreen;
+    }
+
+
 
   .brand_logo {
     height: 30px;
     width: 30px;
     margin-bottom: 4px;
     border-radius: 5px;
+    box-shadow:2px 2px 1px slategrey;
   }
 
-  #grad1 {
-    /* height: 200px; */
-    background: red; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(left, orange , yellow, green, cyan, blue, violet); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(right, orange, yellow, green, cyan, blue, violet); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(right, orange, yellow, green, cyan, blue, violet); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to right, orange , yellow, green, cyan, blue, violet); /* Standard syntax (must be last) */
-}
-  .menu
-   {
-    margin-bottom: 0px;
-   }
-
-  .myMenu {
-    width: 80px;
-    color:green;
-  }
-
-   .grid {
-    align-items: center;
-    text-align:center;
-    background-color:white;
-    color: black;
-    font-weight: 600;
-    font-size: 16px;
-    position: relative;
-    /*float: right;
-    margin-right: 200px;*/
-    width: 220px; 
-    margin: 0 auto;
-    padding: 10px;
-    
-    /*display: flex;*/
-  }
-
-  .table{
-        border-style: solid;
-        border-width: 2px;
-        border-color: rgb(252, 151, 151);
-        margin: 0px;
-        padding: 0px;
-  }
-    .col {
-      margin: 0px;
-      padding: 10px;
-      border-style: solid;
-      border-width: 2px;
-  }
-
-  .row {
-    margin: 0px;
-    padding: 10px;
-    border-style: solid;
-    border-width: 2px;
-}
-
-.example-card {
-  max-width: 400px;
-  max-height: 300px;
-  }
-
-  .example-msg-card {
-    width: 100%;
-    }
-
-.example-header-image {
-  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_lqbNIqWkwURBPdf2pVb8pMmIX1LhT0WMFXZAUZyYYomW-gEsHA&s');
-  background-size: cover;
-}
-
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  border: 0px;
-}
-
-.modal-bar {
-  background-color: rgb(60, 6, 95);
-  margin: 0px;
-  padding: 0px;
-  border: 0px;
-  width: 100%;
-  height:40px;
-}
-
-/* Modal Content */
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 0px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-/* Modal Content */
-.modal-text {
-  padding: 20px;
-  }
+ 
+  
 
 /* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.mainForm
-{
-  color: #0a033b;
-  background-color:rgb(255, 255, 255); 
-  font-size: 12px;
-  font-weight: bold;
-  /*text-align: center;*/
-  border: 1px solid gray;
-  border-radius: 5px;
-  padding: 5px;
-
-}
-
-.mainForm2
-{
-  color: #4232bd;
-  background-color:rgb(236, 238, 243); 
-  font-size: 12px;
-  font-weight: bold;
-  /*text-align: center;*/
-  border: 1px solid gray;
-  border-radius: 5px;
-  padding: 10px;
-
-}
-.center {
-  margin: auto;
-  width: 30%;
-  }
-
-  input[type=text], input[type=password] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-  }
-  
-  .btn-green {
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    background-color: #4CAF50;
-    color: white;
-  }
-
-  .btn-red {
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: auto;
-    background-color: rgb(245, 7, 7);
-    color: white;
-  }
-
-  .btn-blue {
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    background-color:rgb(66, 66, 194);
-    color: white;
-  }
-
-  .btn-blank {
-    padding: 10px 20px 10px 10px;
-    border: none; /*2px solid rgb(240, 240, 245) ; 
-    border-radius: 5px;*/
-    cursor: pointer;
-    /* width: 100%; */
-    background-color: Transparent;
-    color: rgb(242, 242, 247);
-  }
+.btn {
+  color: #800dc2;
  
-  .btn-green:hover {
-    background-color: lightseagreen;
-  }
-
-  .btn-red:hover {
-    background-color: lightcoral;
-  }
-  
-  .btn-blue:hover {
-    background-color: rgb(147, 147, 229) ;
-  }
-
-  .btn-blank:hover {
-    color: rgb(250, 8, 8) ;
-  }
-
-  .cancelbtn {
-    width: auto;
-    padding: 10px 18px;
-    background-color: #f44336;
-  }
-  
-  .imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-  }
-  
-  .avatar {
-    width: 35px;
-    border-radius: 50%;
-  }
-  
-  .container {
-    padding: 10px;
-  }
-  
-  .psw {
-    float:right;
-    padding-top: 16px;
-  }
-
-  .can {
-    float: left;
-    padding-top: 16px;
-  }
-  .error {
-   color: red;
-  }
-
-
-.success {
- color: green;
 }
 
-.fill-remaining-space {
-  flex: 1 1 auto;
-} 
+.btn:hover
+ {
+  color: rgb(253, 0, 0);
  
-.greenHover {
-  color:white;
 }
-.greenHover:hover {
-  color: greenyellow;
-}
-  
 
-.mat-menu-item{
-  line-height: 20px;
-  border:0px;
-}
+

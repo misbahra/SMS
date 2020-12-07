@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from "@angular/router";
 import { mainWS } from '../ws/mainWS';
 import {sessionService} from '../ws/sessionWS';
 
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  styleUrls: ['./menu.component.css'],
+  //encapsulation: ViewEncapsulation.None
 })
 export class MenuComponent implements OnInit {
 

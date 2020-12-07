@@ -1,19 +1,14 @@
 <!--Navbar-->
 
 
-
+<!-- <mat-toolbar color="primary"> -->
 <nav  class=" navbar navbar-expand-lg navbar-dark primary-color menu toolbar">
    <!-- Navbar brand -->
-   <a  class="navbar-brand" href="#"> 
-    <img class= "brand_logo"  src="../../assets/Logo01.png"> 
-</a>
-
-
    
- 
+    <img class= "brand_logo"  src="../../assets/Logo01.png"> 
 
     <!-- Collapse button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+    <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#basicExampleNav"
       aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -32,7 +27,7 @@
         [matMenuTriggerFor]="settingMenu"><mat-icon>settings</mat-icon> settings </button>
 
         <mat-menu #settingMenu="matMenu" xPosition="after">
-          <button mat-menu-item  routerLink="/user">
+          <button mat-menu-item  routerLink="/user" class="plMenuCSS">
             <mat-icon>account_box</mat-icon>
             <span>Users</span>
           </button>
@@ -96,188 +91,7 @@
           </button>
         </mat-menu>
 
-      <!-- Links -->
-      <!-- <ul class="navbar-nav mr-auto "> -->
-       <!-- <li class="nav-item active">
-          <a class="nav-link" href="#" routerLink="/home">
-            <i class="fa fa-home p-1 greenHover">  </i> Home
-          </a>
-        </li> -->
-        <!-- *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" -->
-        <!-- <li class="nav-item dropdown active" *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" >
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-cogs p-1 greenHover "></i> Settings
-          </a> 
-          <div class="dropdown-menu">
-            <a class="dropdown-item " href="#"    routerLink="/user">
-              <i class="fa fa-user  pr-2">  </i>Users
-            </a>
-            <a class="dropdown-item " href="#"    routerLink="/lu">
-              <i class="fa fa-th-list  pr-2">  </i>Look Up
-            </a>
-            <a class="dropdown-item " href="#"    routerLink="/sal">
-              <i class="fa fa-th-list  pr-2">  </i>Salary
-            </a>
-          -->
-              <!-- <a class="dropdown-item" href="#">Something else here</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a> -->
-          <!-- </div>
-      </li> -->
-
-      <!-- report -->
-
-       <!-- *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" -->
-       <!-- <li class="nav-item dropdown active" *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" >
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-file p-1 greenHover "></i> Reports
-        </a> 
-        <div class="dropdown-menu">
-          <a class="dropdown-item " href="#"    routerLink="/salesRep">
-            <i class="fa fa-user  pr-2">  </i>Sales
-          </a> -->
-         
-            <!-- <a class="dropdown-item" href="#">Something else here</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a> -->
-        <!-- </div>
-        </li> -->
-
-        <!-- <li class="nav-item dropdown active" *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" >
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-tasks p-1 greenHover "></i> Forms
-          </a> 
-          <div class="dropdown-menu">
-            <a class="dropdown-item " href="#"    routerLink="/order">
-              <i class="fa fa-first-order  pr-2">  </i>Orders
-            </a>
-            
-            <a class="dropdown-item " href="#"    routerLink="/vender">
-              <i class="fa fa-address-card  pr-2">  </i>Venders
-            </a>
-           
-            <a class="dropdown-item " href="#"    routerLink="/customer">
-              <i class="fa fa-users  pr-2">  </i>Customers
-            </a>
-
-            <a class="dropdown-item " href="#"    routerLink="/itemcategory">
-              <i class="fa fa-list  pr-2">  </i>Items
-            </a>
-
-            <a class="dropdown-item " href="#"    routerLink="/stock">
-              <i class="fa fa-building  pr-2">  </i>Stock
-            </a>
-            <a class="dropdown-item " href="#"    routerLink="/gl">
-              <i class="fa fa-calendar  pr-2">  </i>Ledger
-            </a>
-
-          </div>
-          </li> -->
-
-        
-  
-        <!-- <li class="nav-item active">
-          <a class="nav-link" href="#"   *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" routerLink="/user">
-            <i class="fa fa-user p-1 greenHover">  </i>Users
-          </a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="#"   *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" routerLink="/lu">
-            <i class="fa fa-th-list p-1 greenHover">  </i>Look Up
-          </a>
-        </li> -->
-        <!-- <li class="nav-item active">
-          <a class="nav-link" href="#"   *ngIf = "(connectedUser.length != 0)" routerLink="/order">
-            <i class="fa fa-window-maximize p-1 greenHover">  </i>Orders
-          </a>
-        </li> -->
-
-        <!-- <li class="nav-item active">
-          <a class="nav-link" href="#"   *ngIf = "(connectedUser.length != 0)" routerLink="/vender">
-            <i class="fa fa-window-maximize p-1 greenHover">  </i>Venders
-          </a>
-        </li>
-
-        <li class="nav-item active">
-          <a class="nav-link" href="#"   *ngIf = "(connectedUser.length != 0)" routerLink="/customer">
-            <i class="fa fa-window-maximize p-1 greenHover">  </i>Customers
-          </a>
-
-          
-        </li> -->
-       
-        
-          <!-- <li class="nav-item active">
-            <a class="nav-link" href="#"   *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" routerLink="/lu">
-              <i class="fa fa-th-list p-1 greenHover">  </i>Look Up
-            </a>
-          </li> -->
-       
-          <!-- <li class="nav-item dropdown active" *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-download  p-1 greenHover"></i> Export
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item " href="#"    routerLink="/clientreport">
-                <i class="fa fa-stream pr-2 ">  </i>Client Report
-              </a>
-              <a class="dropdown-item " href="#"    routerLink="/wsrreport">
-                <i class="fa fa-clone pr-2 ">  </i>WSR
-              </a>
-                 <a class="dropdown-item" href="#">Something else here</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a> 
-            </div>
-        </li> -->
-  
-        <!-- <li class="nav-item dropdown active" *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-download  p-1 greenHover"></i> Import
-          </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item " href="#"    routerLink="/orcimport">
-              <i class="fa fa-stream pr-2 ">  </i>Import Excel
-            </a>
-          
-          </div>
-      </li> -->
-  
-  
-          <!-- <div class="btn-group open">
-            <a class="btn btn-primary" href="#"><i class="fa fa-user fa-fw"></i> User</a>
-            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-              <span class="fa fa-caret-down" title="Toggle dropdown menu"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <li><a href="#"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>
-              <li><a href="#"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
-              <li><a href="#"><i class="fa fa-ban fa-fw"></i> Ban</a></li>
-              <li class="divider"></li>
-              <li><a href="#"><i class="fa fa-unlock"></i> Make admin</a></li>
-            </ul>
-          </div> -->
-        
-          
-          
-        <!-- <li class="nav-item active">
-          <a class="nav-link" href="#"  *ngIf = "(connectedUser.length != 0)" routerLink="/itemcategory">
-            <i class="fa fa-comments p-1 greenHover">  </i>Items
-          </a>
-        </li> -->
-        <!-- <li class="nav-item active">
-          <a class="nav-link" href="#"  *ngIf = "(connectedUser.length == 0)" routerLink="/login">
-            <i class="fa fa-sign-in p-1">  </i>Login
-          </a>
-        </li> -->
-        <!-- <li class="nav-item active ">
-          <a class="nav-link " href="#"  *ngIf = "(connectedUser.length == 0)" routerLink="/login-new">
-            <i class="fa fa-sign-in-alt p-1 greenHover">  </i>Login 
-            
-          </a>
-        </li>
-  
-      
-       </ul> -->
+   
       <!-- Links -->
     </div>
       <div class="float-right" *ngIf = "(connectedUser.length != 0)" 
@@ -285,36 +99,12 @@
       > 
         Welcome  {{connectedUser.name}} 
         <span class="h6 text-warning"><small>Connected Since: {{connectedUser.conn_date_time | date : 'short'}}</small></span>
-        <button class="btn-blank cans" 
+        <button class="btn" 
         *ngIf = "(connectedUser.length != 0)"  (click)= LogOut()>
         <i class="fa fa-power-off p-1"></i> 
       </button>
      </div>
-      <!-- <form class="form-inline">
-        <div class="md-form my-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-        </div>
-      </form> -->
-    </div>
-    </div>
-    <!-- Collapsible content -->
-  
-  </nav>
-  <!--/.Navbar-->
-  
-  <!-- <div class="menu toolbar"> 
     
-      <div *ngFor="let users of connectedUser"> 
-         Welcome  {{users.Name}}
-        
-      </div>
-      
-        <button class="btn-blank cans" 
-        *ngIf = "(connectedUser.length > 0)"  (click)= LogOut()>Logout</button>
-      <button class="btn-blank cans" *ngIf = "(connectedUser.length == 0)" (click)= Login()>Login</button>
-      <button class="btn-blank cans" *ngIf = "(connectedUser.length == 0)" (click)= LoginNew()>Login Reactive</button>
-      -->
-      <!-- <my-ngMenu> </my-ngMenu> -->
-    <!--</div>  -->
-      
-      <!-- <button mat-stroked-button routerLink="/newMessage">New Message</button> -->
+    </div>
+    </div>
+   
