@@ -11,20 +11,22 @@
     <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#basicExampleNav"
       aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-    </button>
+    </button> -->
   
     <!-- Collapsible content 
     class="collapse navbar-collapse" id="basicExampleNav"-->
-    <div style="width:100%" class="collapse navbar-collapse" id="basicExampleNav">
-      <div style="width:100%">
-      <div class="float-left" >
+    <!-- <div style="width:100%" class="collapse navbar-collapse" id="basicExampleNav"> -->
+      <div style="width:100%" class="m-0 p-0">
+      <div class="float-left m-0 p-0" >
 
         <button  mat-button  routerLink="/home" ><mat-icon>home</mat-icon> Home </button>
        
         <button  mat-button  routerLink="/login-new" *ngIf = "(connectedUser.length == 0)" ><mat-icon>login</mat-icon> Login </button>
 
         <button  mat-button   *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" 
-        [matMenuTriggerFor]="settingMenu"><mat-icon>settings</mat-icon> settings </button>
+        [matMenuTriggerFor]="settingMenu">
+        
+        <mat-icon>settings</mat-icon> settings </button>
 
         <mat-menu #settingMenu="matMenu" xPosition="after">
           <button mat-menu-item  routerLink="/user" class="plMenuCSS">
@@ -94,15 +96,13 @@
    
       <!-- Links -->
     </div>
-      <div class="float-right" *ngIf = "(connectedUser.length != 0)" 
-      
-      > 
+      <div class="float-right p-0 m-0" *ngIf = "(connectedUser.length != 0)" > 
         Welcome  {{connectedUser.name}} 
         <span class="h6 text-warning"><small>Connected Since: {{connectedUser.conn_date_time | date : 'short'}}</small></span>
         <button class="btn" 
         *ngIf = "(connectedUser.length != 0)"  (click)= LogOut()>
         <i class="fa fa-power-off p-1"></i> 
-      </button>
+      </button> -->
      </div>
     
     </div>
