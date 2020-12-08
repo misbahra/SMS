@@ -2,109 +2,117 @@
 
 
 <!-- <mat-toolbar color="primary"> -->
-<nav  class=" navbar navbar-expand-lg navbar-dark primary-color menu toolbar">
-   <!-- Navbar brand -->
-   
-    <img class= "brand_logo"  src="../../assets/Logo01.png"> 
+<nav class=" navbar navbar-expand-lg navbar-dark primary-color menu toolbar">
+  <!-- Navbar brand -->
 
-    <!-- Collapse button -->
-    <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#basicExampleNav"
-      aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button> -->
-  
-    <!-- Collapsible content 
+  <img class="brand_logo" src="../../assets/Logo01.png">
+
+  <!-- Collapse button -->
+  <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#basicExampleNav"
+    aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button> -->
+
+  <!-- Collapsible content 
     class="collapse navbar-collapse" id="basicExampleNav"-->
-    <!-- <div style="width:100%" class="collapse navbar-collapse" id="basicExampleNav"> -->
-      <div style="width:100%" class="m-0 p-0">
-      <div class="float-left m-0 p-0" >
+  <!-- <div style="width:100%" class="collapse navbar-collapse" id="basicExampleNav"> -->
+  <div style="width:100%" class="m-0 p-0">
+    <div class="float-left m-0 p-0">
 
-        <button  mat-button  routerLink="/home" ><mat-icon>home</mat-icon> Home </button>
-       
-        <button  mat-button  routerLink="/login-new" *ngIf = "(connectedUser.length == 0)" ><mat-icon>login</mat-icon> Login </button>
+      <button mat-button routerLink="/home">
+        <mat-icon>home</mat-icon> Home
+      </button>
 
-        <button  mat-button   *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" 
+      <button mat-button routerLink="/login-new" *ngIf="(connectedUser.length == 0)">
+        <mat-icon>login</mat-icon> Login
+      </button>
+
+      <button mat-button *ngIf="(connectedUser.length != 0 && connectedUser.app_role == 'AAD')"
         [matMenuTriggerFor]="settingMenu">
-        
-        <mat-icon>settings</mat-icon> settings </button>
 
-        <mat-menu #settingMenu="matMenu" xPosition="after">
-          <button mat-menu-item  routerLink="/user" class="plMenuCSS">
-            <mat-icon>account_box</mat-icon>
-            <span>Users</span>
-          </button>
-         
-          <button mat-menu-item routerLink="/lu">
-            <mat-icon>build</mat-icon>
-            <span>Look Up</span>
-          </button>
+        <mat-icon>settings</mat-icon> settings
+      </button>
 
-          <button mat-menu-item routerLink="/sal">
-            <mat-icon>money</mat-icon>
-            <span>Salary</span>
-          </button>
-        </mat-menu>
+      <mat-menu #settingMenu="matMenu" xPosition="after">
+        <button mat-menu-item routerLink="/user" class="plMenuCSS">
+          <mat-icon>account_box</mat-icon>
+          <span>Users</span>
+        </button>
 
+        <button mat-menu-item routerLink="/lu">
+          <mat-icon>build</mat-icon>
+          <span>Look Up</span>
+        </button>
 
-        <button  mat-button   *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" 
-        [matMenuTriggerFor]="reportsMenu"><mat-icon>receipt</mat-icon> Reports </button>
-
-        <mat-menu #reportsMenu="matMenu" xPosition="after">
-          <button mat-menu-item  routerLink="/salesRep">
-            <mat-icon>monetization_on</mat-icon>
-            <span>Sales Report</span>
-          </button>
-       
-        </mat-menu>
+        <button mat-menu-item routerLink="/sal">
+          <mat-icon>money</mat-icon>
+          <span>Salary</span>
+        </button>
+      </mat-menu>
 
 
-        <button  mat-button   *ngIf = "(connectedUser.length != 0 && connectedUser.app_role == 'AAD')" 
-        [matMenuTriggerFor]="formsMenu"><mat-icon>apps</mat-icon> Forms </button>
+      <button mat-button *ngIf="(connectedUser.length != 0 && connectedUser.app_role == 'AAD')"
+        [matMenuTriggerFor]="reportsMenu">
+        <mat-icon>receipt</mat-icon> Reports
+      </button>
 
-        <mat-menu #formsMenu="matMenu" xPosition="after">
-          <button mat-menu-item  routerLink="/order">
-            <mat-icon>tasks</mat-icon>
-            <span>Orders</span>
-          </button>
-         
-          <button mat-menu-item routerLink="/vender">
-            <mat-icon>blur_circular</mat-icon>
-            <span>Venders</span>
-          </button>
+      <mat-menu #reportsMenu="matMenu" xPosition="after">
+        <button mat-menu-item routerLink="/salesRep">
+          <mat-icon>monetization_on</mat-icon>
+          <span>Sales Report</span>
+        </button>
 
-          <button mat-menu-item routerLink="/customer">
-            <mat-icon>adjust</mat-icon>
-            <span>Customers</span>
-          </button>
+      </mat-menu>
 
-          <button mat-menu-item routerLink="/itemcategory">
-            <mat-icon>blur_linear</mat-icon>
-            <span>Items</span>
-          </button>
 
-          <button mat-menu-item routerLink="/stock">
-            <mat-icon>blur_on</mat-icon>
-            <span>Stock</span>
-          </button>
+      <button mat-button *ngIf="(connectedUser.length != 0 && connectedUser.app_role == 'AAD')"
+        [matMenuTriggerFor]="formsMenu">
+        <mat-icon>apps</mat-icon> Forms
+      </button>
 
-          <button mat-menu-item routerLink="/gl">
-            <mat-icon>storage</mat-icon>
-            <span>General Ledger</span>
-          </button>
-        </mat-menu>
+      <mat-menu #formsMenu="matMenu" xPosition="after">
+        <button mat-menu-item routerLink="/order">
+          <mat-icon>tasks</mat-icon>
+          <span>Orders</span>
+        </button>
 
-   
+        <button mat-menu-item routerLink="/vender">
+          <mat-icon>blur_circular</mat-icon>
+          <span>Venders</span>
+        </button>
+
+        <button mat-menu-item routerLink="/customer">
+          <mat-icon>adjust</mat-icon>
+          <span>Customers</span>
+        </button>
+
+        <button mat-menu-item routerLink="/itemcategory">
+          <mat-icon>blur_linear</mat-icon>
+          <span>Items</span>
+        </button>
+
+        <button mat-menu-item routerLink="/stock">
+          <mat-icon>blur_on</mat-icon>
+          <span>Stock</span>
+        </button>
+
+        <button mat-menu-item routerLink="/gl">
+          <mat-icon>storage</mat-icon>
+          <span>General Ledger</span>
+        </button>
+      </mat-menu>
+
+
       <!-- Links -->
     </div>
-      <div class="float-right p-0 m-0" *ngIf = "(connectedUser.length != 0)" > 
-        Welcome  {{connectedUser.name}} 
-        <span class="h6 text-warning"><small>Connected Since: {{connectedUser.conn_date_time | date : 'short'}}</small></span>
-        <button class="btn" 
-        *ngIf = "(connectedUser.length != 0)"  (click)= LogOut()>
-        <i class="fa fa-power-off p-1"></i> 
+    <div class="float-right p-0 m-0" *ngIf="(connectedUser.length != 0)">
+      Welcome {{connectedUser.name}}
+      <span class="h6 text-warning"><small>Connected Since:
+          {{connectedUser.conn_date_time | date : 'short'}}</small></span>
+      <button class="btn" *ngIf="(connectedUser.length != 0)" (click)=LogOut()>
+        <i class="fa fa-power-off p-1"></i>
       </button> -->
-     </div>
-    
     </div>
-    </div>
-   
+
+  </div>
+</nav>
