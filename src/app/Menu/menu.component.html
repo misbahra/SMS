@@ -1,21 +1,10 @@
 <!--Navbar-->
 
 
-<!-- <mat-toolbar color="primary"> -->
-<nav class=" navbar navbar-expand-lg navbar-dark primary-color menu toolbar">
-  <!-- Navbar brand -->
+<mat-toolbar >
 
   <img class="brand_logo" src="../../assets/Logo01.png">
 
-  <!-- Collapse button -->
-  <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#basicExampleNav"
-    aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button> 
-
-  <!-- Collapsible content 
-    class="collapse navbar-collapse" id="basicExampleNav"-->
-  <!-- <div style="width:100%" class="collapse navbar-collapse" id="basicExampleNav"> -->
   <div style="width:100%" class="m-0 p-0">
     <div class="float-left m-0 p-0">
 
@@ -105,9 +94,9 @@
 
       <!-- Links -->
     </div>
-    <div class="float-right p-0 m-0" *ngIf="(connectedUser.length != 0)">
+    <div class="float-right p-0 m-0 section-detail" *ngIf="(connectedUser.length != 0)">
       Welcome {{connectedUser.name}}
-      <span class="h6 text-warning"><small>Connected Since:
+      <span class="h6 text-success"><small>Connected Since:
           {{connectedUser.conn_date_time | date : 'short'}}</small></span>
       <button class="btn" *ngIf="(connectedUser.length != 0)" (click)=LogOut()>
         <i class="fa fa-power-off p-1"></i>
@@ -115,4 +104,5 @@
     </div>
 
   </div>
-</nav>
+
+</mat-toolbar>

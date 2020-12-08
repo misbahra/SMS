@@ -1,4 +1,8 @@
 
+  .mat-toolbar
+  {height:45px;
+  padding:4px;}
+
   .mat-menu-item {
     color: rgb(91, 12, 165) !important;
     outline:none; 
@@ -16,8 +20,10 @@
 }
    
   .mat-menu-item:hover {
-      background-color: rgb(227, 230, 198);
+      /* background-color: rgb(227, 230, 198); */
       color: rgb(66, 7, 134) !important;
+      font-weight: bold;
+      text-shadow: none;
   }
 
   div.plMenuCSS { 
