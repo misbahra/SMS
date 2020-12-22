@@ -9,8 +9,8 @@ import * as momentNs from 'moment';
 const moment = momentNs;
 import {LovComponent} from '../lov/lov.component';
 import { utilWS } from '../ws/utilWS';
-
-
+import {jsPDF, jsPDFOptions} from 'jspdf';
+import 'jspdf-autotable';
 
 
 @Component({
@@ -98,6 +98,8 @@ export class StockComponent implements OnInit {
       sortable: true, 
       filter: true
     };
+
+
     
     this.columnDefs = [
       {
@@ -176,6 +178,49 @@ export class StockComponent implements OnInit {
     this.userPrivs = this.sessionService.getUsersPrivs();
     
   };
+
+  createPdf(){
+    var opt: jsPDFOptions = {
+      orientation: 'p',
+      unit: 'mm',
+      format: 'a4',
+      // unit: "in",
+      //   format: [4, 2]
+     
+     }
+
+     var vHeader = ['a' , 'b' , 'c'];
+     var vData = [
+       {col1:'11' , col2:'12' , col3:'13'},
+       {col1:'21' , col2:'22' , col3:'23'},
+    ];
+
+    var header = createHeaders(vHeader);
+
+        function createHeaders(keys) {
+            return keys.map(key => ({
+              'name': key,
+              'prompt': key,
+              'width':65,
+              'align':'center',
+              'padding':0
+            }));
+        }
+        let styles = {
+          autoSize: true,
+          printHeaders: false,
+          columnWidths: 80
+        }
+   
+    // Landscape export, 2×4 inches
+    const doc = new jsPDF(opt);
+    //doc.table(20, 10 , vData, header, styles);
+
+    doc.autoTable(col, rows, { startY: 10 });
+
+    doc.text("Hello world!", 10, 10);
+    doc.save("two-by-four.pdf");
+  }
 
   onRowSelected(e) {
 
