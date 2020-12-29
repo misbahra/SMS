@@ -267,24 +267,43 @@ generatePDF()
     info: {
       title: this.venderName + new Date().toLocaleString().slice(0,16),
       author: '',
-      subject: 'Balance Sheet',
+      subject: 'Statement of Account',
       keywords: '',
     },
     content: [
-              {  
-                text: 'Balance Sheet',
-                style: 'reportTitle' 
-              } ,
-              {  
-                columns: [  
-                    [{ qr: `${this.venderName}`, fit: '50' }],  
-                   // [{ text: 'Signature', alignment: 'right', italics: true }],  
-                ] , style: 'qrStyle' 
-            },
-              {  
-                text: this.venderName,   
-                style: 'reportHeader' 
-              } ,
+     { columns: [
+             
+             [ { text: '     ', style: 'reportTitle'}, 
+               {  
+                text: 'Statement of Account',
+                style: 'reportTitle',
+                alignment: ''   
+              } 
+            ] ,
+            [{ qr: `${this.venderName}`, fit: '50' , style: 'qrStyle' ,  alignment: 'right'} ],
+          ]
+          },
+          
+              
+            //   {  
+            //     columns: [
+            //     [
+            //       {}
+            //       {text: 'Statement of Account',
+            //       style: 'reportTitle',
+            //       alignment: 'left'  }
+
+            //     ],
+            //     [  
+            //         [{ qr: `${this.venderName}`, fit: '50' , style: 'qrStyle' ,  alignment: 'right'}  ]
+                   
+            //     ] 
+            //   ]  
+            // },
+              // {  
+              //   text: this.venderName,   
+              //   style: 'reportHeader' 
+              // } ,
               // {  
               //   text: 'Customer Details',  
               //   style: 'sectionHeader'  
@@ -303,8 +322,9 @@ generatePDF()
                 columns: [  
                             [  
                                 {  
-                                    text: '',  
-                                    bold: true  
+                                    text: this.venderName,
+                                    bold: false,
+                                    style: {'font-size': '5px'}  
                                 },  
                                
                             ],  
