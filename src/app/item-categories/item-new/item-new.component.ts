@@ -100,7 +100,7 @@ export class ItemNewComponent implements OnInit {
       var itemToLoad = [{name: "item_id" , value: id[0].item_id}];
       this.response = await this.itemService.getThisItem(itemToLoad);
       //alert('data - ' + this.response.length);
-      //this.dataId = this.response._id;
+      this.dataId = this.response._id;
       this.dataForm.patchValue(this.response);
       
       this.dataForm.enable();

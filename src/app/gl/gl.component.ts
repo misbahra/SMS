@@ -103,78 +103,10 @@ export class GlComponent implements OnInit {
       this.venderUID = vender_uid;
       this.rowData = [];
       this.response = [];
+
       //alert("Vender - " + vender_uid);
        this.response = await this.glService.getVenderGL([{"value":vender_uid}]);
-    alert("response - " + this.response.length);
-
-      // this.defaultColDef = {
-      //   //flex: 1,
-      //   cellClass: 'number-cell',
-      //   resizable: true,
-      // };
       
-      // this.columnDefs = [
-      //   {
-      //     headerName: '',
-      //     width: 45,
-      //     sortable: false,
-      //     filter: false,
-      //     checkboxSelection: true
-        
-      //   },
-      //   //{ headerName: 'Vender', field: 'vender_name', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Date', field: 'gl_date', width: 130, sortable: true, filter: true 
-      //   , valueFormatter: function (params) {
-      //     return moment(params.value).format('DD-MMM-YYYY');}},
-      //   { headerName: 'Head', field: 'account_head_name', width: 200, sortable: true, filter: true },
-      //   { headerName: 'Curr', field: 'currency_desc', width: 130, sortable: true, filter: true },
-      //   { headerName: 'Sent', field: 'fund_amount', width: 150, sortable: true, filter: true 
-      //   ,cellClass: 'number-cell', resizable: true, cellStyle: {textAlign: "right",color:"green"}
-      //   , valueFormatter: function(params) {
-      //     var num =   Math.floor(params.value)
-      //       .toString()
-      //       .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-      //     if (num == "0" ){return null;}
-      //     else {return num;}
-          
-      //   },
-      // },
-      //   { headerName: 'Received', field: 'cargo_amount', width: 150, sortable: true, filter: true 
-      //   , cellStyle: {textAlign: "right", color:"red"}
-      //   , valueFormatter: function(params) {
-      //     var num =   Math.floor(params.value)
-      //       .toString()
-      //       .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-      //     if (num == "0" ){return null;}
-      //     else {return num;}
-          
-      //   },
-      // },
-      // { headerName: 'Sent To', field: 'sent_to_vender_name', width: 150, sortable: true, filter: true },
-      // { headerName: 'Sent to Account', field: 'sent_to_vender_account_uid', width: 150, sortable: true, filter: true },
-      // { headerName: 'Through', field: 'through_vender_name', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Account', field: 'vender_account_uid', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Payment Sent On', field: 'funds_sent_on', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Payment Received On', field: 'funds_received_on', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Exchange', field: 'exchange', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Other Charges', field: 'other_charges', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Bill Amount', field: 'cargo_bill_amount', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Cargo Amount', field: 'cargo_charges', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Cargo VAT', field: 'cargo_vat', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Cargo Comission', field: 'cargo_commission', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Cargo Customs', field: 'customs_charges', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Cargo Requested on', field: 'cargo_requested_on', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Cargo Shipped on', field: 'cargo_shipped_on', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Cargo Received on', field: 'cargo_received_on', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Courier', field: 'courier_code', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Cargo weight', field: 'cargo_weight', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Cargo Items', field: 'cargo_items_count', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Ref#', field: 'ref_number', width: 130, sortable: true, filter: true },
-      //   { headerName: 'Status', field: 'gl_status', width: 130, sortable: true, filter: true },
-      //   { headerName: 'Additional Details', field: 'additional_details', width: 150, sortable: true, filter: true },
-      //   { headerName: 'Remarks', field: 'remarks', width: 150, sortable: true, filter: true },
-  
-      // ];
       //setTimeout(this.refreshDetail, 2000 , response);
       setTimeout(() => { 
         this.rowData = this.response;
@@ -331,21 +263,47 @@ generatePDF()
 {
   const documentDefinition = 
   {
+    watermark: { text: this.venderName, color: 'blue', opacity: 0.1, bold: true, italics: false },
+    info: {
+      title: this.venderName + new Date().toLocaleString().slice(0,16),
+      author: '',
+      subject: 'Statement of Account',
+      keywords: '',
+    },
     content: [
-              {  
-                text: 'Balance Sheet',
-                style: 'reportTitle' 
-              } ,
-              {  
-                columns: [  
-                    [{ qr: `${this.venderName}`, fit: '50' }],  
-                   // [{ text: 'Signature', alignment: 'right', italics: true }],  
-                ] , style: 'qrStyle' 
-            },
-              {  
-                text: this.venderName,   
-                style: 'reportHeader' 
-              } ,
+     { columns: [
+             
+             [ { text: '     ', style: 'reportTitle'}, 
+               {  
+                text: 'Statement of Account',
+                style: 'reportTitle',
+                alignment: ''   
+              } 
+            ] ,
+            [{ qr: `${this.venderName}`, fit: '50' , style: 'qrStyle' ,  alignment: 'right'} ],
+          ]
+          },
+          
+              
+            //   {  
+            //     columns: [
+            //     [
+            //       {}
+            //       {text: 'Statement of Account',
+            //       style: 'reportTitle',
+            //       alignment: 'left'  }
+
+            //     ],
+            //     [  
+            //         [{ qr: `${this.venderName}`, fit: '50' , style: 'qrStyle' ,  alignment: 'right'}  ]
+                   
+            //     ] 
+            //   ]  
+            // },
+              // {  
+              //   text: this.venderName,   
+              //   style: 'reportHeader' 
+              // } ,
               // {  
               //   text: 'Customer Details',  
               //   style: 'sectionHeader'  
@@ -364,8 +322,9 @@ generatePDF()
                 columns: [  
                             [  
                                 {  
-                                    text: '',  
-                                    bold: true  
+                                    text: this.venderName,
+                                    bold: false,
+                                    style: {'font-size': '5px'}  
                                 },  
                                
                             ],  
@@ -386,15 +345,20 @@ generatePDF()
               //   style: 'sectionHeader'  
               //  },  
             {  
+              layout: 'lightHorizontalLines',
                 table: {  
                     headerRows: 1,
                     widths: ['auto', '*', 'auto', 'auto'],  
                     body: [   
                         [ {text:'Date' ,style: 'tableHeader'}, 
                           {text:'Account Head' ,style: 'tableHeader'}, 
-                          {text:'Sent',style: 'tableHeader'}, 
-                          {text:'Received' ,style: 'tableHeader'} ],  
-                        ...this.rowData.map(p => ([new Date(p.gl_date).toLocaleString().slice(0,10), p.account_head_name, p.fund_amount, p.cargo_amount])),  
+                          {text:'Sent',style: 'tableHeader', alignment: 'right'}, 
+                          {text:'Received' ,style: 'tableHeader', alignment: 'right'} ],  
+                        ...this.rowData.map(p => ([new Date(p.gl_date).toLocaleString().slice(0,10), 
+                          p.account_head_name, 
+                          [{text:p.fund_amount , alignment: 'right' , style: 'sent'}], 
+                          [{text:p.cargo_amount , alignment: 'right' , style: 'received'}], 
+                         ])),  
                         [ { text: 'Total Amount', colSpan: 2 }, 
                           {}, 
                           {text: (this.rowData.reduce((sum, p) => sum + (p.fund_amount), 0).toFixed(2))
@@ -454,6 +418,14 @@ generatePDF()
                             color:'navy',                
                             background:'white'
                               },
+            sent:    {
+                                color:'green',                
+                            
+                                  }, 
+            received:    {
+                                    color:'red',                
+                                 
+                                      },
             tableHeader:    {
                             color:'white',                
                             fillColor: 'navy',
