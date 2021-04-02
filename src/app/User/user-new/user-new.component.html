@@ -18,12 +18,12 @@
             <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
                 <span class="sr-only">Loading...</span>
             </div>
-            <div class="form-row">
+            <div class="row">
                
                 <div class="col">
                     <!-- resource_uid -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="resource_uid">User #</label>
+                        <label class="font-weight row " for="resource_uid">User #</label>
                         <input readonly type="text" id="resource_uid" name="resource_uid" 
                         class="form-control form-control-sm mr-sm-2 js-example-basic-single"
                             placeholder="Code" formControlName="resource_uid"
@@ -42,7 +42,7 @@
                 <div class="col">
                     <!-- name -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="name">Name</label>
+                        <label class="font-weight row " for="name">Name</label>
                         <input type="text" id="name" name="name" 
                         class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="Name"
                             formControlName="name" [ngClass]="{ 'is-invalid':   submitted && fc.name.errors }">
@@ -58,7 +58,7 @@
                 <div class="col">
                     <!-- employee_id -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="employee_id">Employee ID </label>
+                        <label class="font-weight row " for="employee_id">Employee ID </label>
                         <input type="text" id="employee_id" name="employee_id" 
                         class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="employee_id"
                             formControlName="employee_id" [ngClass]="{ 'is-invalid':   submitted && fc.employee_id.errors }">
@@ -74,11 +74,11 @@
     
             </div>
     
-            <div class="form-row mt-3">
+            <div class="row mt-3">
                 <div class="col">
                     <!-- user_name -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="user_name">User Name </label>
+                        <label class="font-weight row " for="user_name">User Name </label>
                         <input type="text" id="user_name" name="user_name" 
                         class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="user_name"
                             formControlName="user_name" [ngClass]="{ 'is-invalid':   submitted && fc.user_name.errors }">
@@ -95,7 +95,7 @@
                 <div class="col">
                     <!-- password -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="password">Password </label>
+                        <label class="font-weight row " for="password">Password </label>
                         <input type="password" id="password" name="password" 
                         class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="password"
                             formControlName="password" [ngClass]="{ 'is-invalid':   submitted && fc.password.errors }">
@@ -112,8 +112,8 @@
      <div class="col">
         <!-- designation -->
         <div class="md-form ">
-            <label class="font-weight form-row " for="designation">Designation</label>
-            <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="designation"
+            <label class="font-weight row " for="designation">Designation</label>
+            <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="designation"
                 name="designation" formControlName="designation"
                 [ngClass]="{ 'is-invalid': submitted && fc.designation.errors }">
                 <!-- <option Selected value="">Select User Role</option> -->
@@ -135,12 +135,12 @@
             <!--close row -->
     
     
-            <div class="form-row mt-3">
+            <div class="row mt-3">
                 <div class="col">
                     <!-- department -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="department">Department</label>
-                        <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="department"
+                        <label class="font-weight row " for="department">Department</label>
+                        <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="department"
                             name="department" formControlName="department"
                             [ngClass]="{ 'is-invalid': submitted && fc.department.errors }">
                             <!-- <option Selected value="">Select User Role</option> -->
@@ -162,7 +162,7 @@
                 <div class="col">
                     <!-- off_email -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="off_email">off_email</label>
+                        <label class="font-weight row " for="off_email">off_email</label>
                         <input type="text" id="off_email" name="off_email" 
                         class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="off_email"
                             formControlName="off_email" [ngClass]="{ 'is-invalid':   submitted && fc.off_email.errors }">
@@ -179,7 +179,7 @@
                 <div class="col">
                     <!-- personal_email -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="personal_email">personal_email</label>
+                        <label class="font-weight row " for="personal_email">personal_email</label>
                         <input type="text" id="personal_email" name="personal_email" 
                         class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="personal_email"
                             formControlName="personal_email" [ngClass]="{ 'is-invalid':   submitted && fc.personal_email.errors }">
@@ -195,14 +195,14 @@
     
             </div>
     
-            <!-- // next form-row -->
-            <div class="form-row mt-3">
+            <!-- // next row -->
+            <div class="row mt-3">
     
     
                 <div class="col">
                     <!-- office_phone -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="office_phone">office_phone</label>
+                        <label class="font-weight row " for="office_phone">office_phone</label>
                         <input type="text" id="office_phone" name="office_phone" 
                         class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="office_phone"
                             formControlName="office_phone" [ngClass]="{ 'is-invalid':   submitted && fc.office_phone.errors }">
@@ -219,7 +219,7 @@
                 <div class="col">
                     <!-- mobile_phone -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="mobile_phone">Mobile</label>
+                        <label class="font-weight row " for="mobile_phone">Mobile</label>
                         <input type="text" id="mobile_phone" name="mobile_phone" 
                         class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="Card Number"
                             formControlName="mobile_phone" [ngClass]="{ 'is-invalid':   submitted && fc.mobile_phone.errors }">
@@ -238,14 +238,14 @@
     
             </div>
     
-            <!-- // next form-row -->
-            <div class="form-row mt-3">
+            <!-- // next row -->
+            <div class="row mt-3">
      <!--close col -->
      <div class="col">
         <!-- locked -->
         <div class="md-form ">
-            <label class="font-weight form-row " for="locked">locked</label>
-            <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="locked"
+            <label class="font-weight row " for="locked">locked</label>
+            <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="locked"
                 name="locked" formControlName="locked"
                 [ngClass]="{ 'is-invalid': submitted && fc.locked.errors }">
                 <!-- <option Selected value="">Select User Role</option> -->
@@ -266,8 +266,8 @@
      <div class="col">
         <!-- active -->
         <div class="md-form ">
-            <label class="font-weight form-row " for="active">active</label>
-            <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="active"
+            <label class="font-weight row " for="active">active</label>
+            <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="active"
                 name="active" formControlName="active"
                 [ngClass]="{ 'is-invalid': submitted && fc.active.errors }">
                 <!-- <option Selected value="">Select User Role</option> -->
@@ -288,8 +288,8 @@
      <div class="col">
         <!-- app_role -->
         <div class="md-form ">
-            <label class="font-weight form-row " for="app_role">Role</label>
-            <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="app_role"
+            <label class="font-weight row " for="app_role">Role</label>
+            <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="app_role"
                 name="app_role" formControlName="app_role"
                 [ngClass]="{ 'is-invalid': submitted && fc.app_role.errors }">
                 <!-- <option Selected value="">Select User Role</option> -->

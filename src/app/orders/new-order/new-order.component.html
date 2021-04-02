@@ -1,26 +1,31 @@
-<div class="m-1 bg">
 
 
-  <div class="pt-2 pl-2 pb-2 section-header hd-navy">
+<div class="m-1 p-0 bg">
 
-    <span class=" float-left">Cutomer Information & Order Details</span>
 
-    <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
+  <div class="row mt-2 pt-2 section-header hd-navy">
+    <div class="col text-start">
+      <span class=" float-left">Cutomer Information & Order Details</span>
+    </div>
+      <div class=" col text-start">
+      <input type="text"  id="phoneNo" 
+                          name="phoneNo" 
+                          class="form-control form-control-sm " 
+                          [(ngModel)] = "phoneNo" 
+                          (change) = "setCustomer()"
+                          placeholder="Phone Number">
+      </div>
+     
 
-    <div class=" pl-4 float-left section-detail"> 
-       <input type="text" id="phoneNo" name="phoneNo" class="form-control form-control-sm " [(ngModel)] = "phoneNo" (change) = "setCustomer()">
-   
-      </div>  
-
-    <div class=" float-right section-detail">
+     <div class=" col text-end section-detail">
 
       <!-- parameter 1 to openStockDialog 
             means its and new record and 2 mean its an update operation -->
       <a type="button" (click)="onSubmit()">
-        <span class="fa fa-save  mr-4"></span>
+        <span class="fa fa-save fa-2x  ps-4"></span>
       </a>
       <a type="button" (click)="onCancel()">
-        <span class="fa fa-close  mr-2"></span>
+        <span class="fa fa-close fa-2x  ms-4"></span>
       </a>
 
 
@@ -34,33 +39,29 @@
    
 
     <form [formGroup]="orderForm" class="form-sm m-2"  action="#!">
+    
       <!-- row 1 -->
-
-      <!-- order detail section -->
-
-
-      <!-- row 2 -->
-      <div class="form-row ">
+      <div class="row ">
 
       
 
         <div class="col">
           <div class="md-form">
-            <label class="font-weight text-dark" for="customer_uid">Customer 
+            <label  for="customer_uid">Customer 
               <a  
                 type="button" id = "btn_select_customer" (click)="openLov()">
-                <span class="fa fa-list pl-3 pr-5"></span>
+                <span class="fa fa-list ps-2"></span>
               </a> 
              
               <a type="button" (click)="openCustomersDialog(1)">
-                <span class="fa fa-plus pl-3 text-success"></span>
+                <span class="fa fa-plus ps-2 text-success"></span>
              </a>
              <a type="button" (click)="clearCustomer()">
-              <span class="fa fa-refresh pl-3 text-danger"></span>
+              <span class="fa fa-refresh ps-2 text-danger"></span>
            </a>
             </label>
                
-            <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="customer_uid"
+            <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="customer_uid"
               name="customer_uid" formControlName="customer_uid"
               [ngClass]="{ 'is-invalid': submitted && fc.customer_uid.errors }">
               <!-- <option Selected value="">Select User Role</option> -->
@@ -83,7 +84,7 @@
         <div class="col">
           <!-- Order Date -->
           <div class="md-form ">
-            <label class="font-weight text-dark" for="order_date">Order Date</label>
+            <label  for="order_date">Order Date</label>
             <input type="datetime-local" id="order_date" [value]="orderDate" name="order_date"
               class="form-control form-control-sm " formControlName="order_date"
               [ngClass]="{ 'is-invalid':   submitted && fc.order_date.errors }">
@@ -99,7 +100,7 @@
         <div class="col col-1">
           <!-- invoice # -->
           <div class="md-form ">
-            <label class="font-weight text-dark" for="invoice_number">Invoice#</label>
+            <label  for="invoice_number">Invoice#</label>
             <input type="text" id="invoice_number" name="invoice_number" class="form-control form-control-sm "
               formControlName="invoice_number" [ngClass]="{ 'is-invalid':   submitted && fc.invoice_number.errors }">
             <div *ngIf=" fc.invoice_number.invalid " class="invalid-feedback">
@@ -113,8 +114,8 @@
 
         <div class="col col-1">
           <div class="md-form">
-            <label class="font-weight text-dark" for="status">Status</label>
-            <select class="form-control  form-control-sm mr-sm-2" id="status" name="status" formControlName="status"
+            <label  for="status">Status</label>
+            <select class="form-select  form-select-sm mr-sm-2" id="status" name="status" formControlName="status"
               [ngClass]="{ 'is-invalid': submitted && fc.status.errors }">
               <!-- <option Selected value="">Select User Role</option> -->
               <option *ngFor="let data of orderStatusList; index as i;" [value]=data.lud_code>{{data.lud_desc}}
@@ -137,8 +138,8 @@
 
         <div class="col col-2">
           <div class="md-form">
-            <label class="font-weight text-dark" for="home_delivery">Home Delivery</label>
-            <select class="form-control  form-control-sm mr-sm-2" id="home_delivery" name="home_delivery"
+            <label  for="home_delivery">Home Delivery</label>
+            <select class="form-select  form-control-sm mr-sm-2" id="home_delivery" name="home_delivery"
               formControlName="home_delivery" [ngClass]="{ 'is-invalid': submitted && fc.home_delivery.errors }">
               <!-- <option Selected value="">Select User Role</option> -->
               <option *ngFor="let data of yesNoList; index as i;" [value]=data.lud_code>{{data.lud_desc}}</option>
@@ -156,8 +157,8 @@
 
         <div class="col col-2">
           <div class="md-form">
-            <label class="font-weight text-dark" for="payment_mode">Payment Mode</label>
-            <select class="form-control  form-control-sm mr-sm-2" id="payment_mode" name="payment_mode"
+            <label  for="payment_mode">Payment Mode</label>
+            <select class="form-select  form-control-sm mr-sm-2" id="payment_mode" name="payment_mode"
               formControlName="payment_mode" [ngClass]="{ 'is-invalid': submitted && fc.payment_mode.errors }">
               <!-- <option Selected value="">Select User Role</option> -->
               <option *ngFor="let data of paymentTypeList; index as i;" [value]=data.lud_code>{{data.lud_desc}}
@@ -175,21 +176,16 @@
         </div>
       </div>
 
-      <!-- row 2 -->
-
-      <!-- <div class="form-row"> -->
-
-
-      <!-- </div> -->
+   
 
       <!-- row 3 -->
 
-      <div class="form-row" *ngIf="fc.home_delivery.value == 'Y'">
+      <div class="row" *ngIf="fc.home_delivery.value == 'Y'">
 
         <div class="col-6">
           <!-- Name -->
           <div class="md-form">
-            <label class="font-weight text-dark" for="delivered_by">Delivered By</label>
+            <label  for="delivered_by">Delivered By</label>
             <input type="text" id="delivered_by" name="delivered_by" class="form-control form-control-sm"
               formControlName="delivered_by" [ngClass]="{ 'is-invalid': submitted && fc.delivered_by.errors }">
             <div *ngIf="submitted && fc.delivered_by.invalid " class="invalid-feedback">
@@ -205,7 +201,7 @@
         <div class="col-6">
           <!-- Name -->
           <div class="md-form">
-            <label class="font-weight text-dark" for="delivered_on">Delivered On</label>
+            <label  for="delivered_on">Delivered On</label>
             <input type="datetime-local" id="delivered_on" name="delivered_on" class="form-control form-control-sm"
               formControlName="delivered_on" [ngClass]="{ 'is-invalid': submitted && fc.delivered_on.errors }">
             <div *ngIf="submitted && fc.delivered_on.invalid " class="invalid-feedback">
@@ -223,12 +219,12 @@
 
       <!-- row 4 -->
 
-      <div class="form-row" *ngIf="fc.home_delivery.value == 'Y'">
+      <div class="row" *ngIf="fc.home_delivery.value == 'Y'">
 
         <div class="col-12">
           <!-- Name -->
           <div class="md-form">
-            <label class="font-weight text-dark" for="home_delivery_address">Address</label>
+            <label  for="home_delivery_address">Address</label>
             <input type="text" id="home_delivery_address" name="home_delivery_address"
               class="form-control form-control-sm" formControlName="home_delivery_address"
               [ngClass]="{ 'is-invalid': submitted && fc.home_delivery_address.errors }">
@@ -244,15 +240,15 @@
 
       </div>
       <!-- Row 5 -->
-      <div class="form-row" *ngIf="fc.payment_mode.value == '2'">
+      <div class="row" *ngIf="fc.payment_mode.value == '2'">
 
 
 
         <div class="col col-3">
           <!-- Order Date -->
           <div class="md-form ">
-            <label class="font-weight text-dark" for="card_type">Card Type</label>
-            <select class="form-control  form-control-sm mr-sm-2" id="card_type" name="card_type"
+            <label for="card_type">Card Type</label>
+            <select class="form-select  form-control-sm mr-sm-2" id="card_type" name="card_type"
               formControlName="card_type" [ngClass]="{ 'is-invalid': submitted && fc.card_type.errors }">
               <!-- <option Selected value="">Select User Role</option> -->
               <option *ngFor="let data of cardTypeList; index as i;" [value]=data.lud_code>{{data.lud_desc}}</option>
@@ -269,7 +265,7 @@
 
         <div class="col col-3">
           <div class="md-form">
-            <label class="font-weight text-dark" for="card_number">Card Number</label>
+            <label  for="card_number">Card Number</label>
             <input type="text" id="card_number" name="card_number" class="form-control form-control-sm"
               formControlName="card_number" [ngClass]="{ 'is-invalid': submitted && fc.card_number.errors }">
 
@@ -285,7 +281,7 @@
 
         <div class="col col-6">
           <div class="md-form">
-            <label class="font-weight text-dark" for="card_holder_name">Card Holder Name</label>
+            <label  for="card_holder_name">Card Holder Name</label>
             <input type="text" id="card_holder_name" name="card_holder_name" class="form-control form-control-sm"
               formControlName="card_holder_name"
               [ngClass]="{ 'is-invalid': submitted && fc.card_holder_name.errors }">
@@ -308,10 +304,11 @@
     </form>
   </div>
 
-  <div class="pt-2 pl-2 pb-2 section-header hd-navy">
+  <div class=" ps-2 pb-2 section-header hd-navy">
     <span >Items</span>
   </div>
 
+  <div class=" m-0 p-0">
   <div class="row bg ">
 
     <div class="column1 table-responsive">
@@ -349,8 +346,8 @@
         </thead>
         <tbody>
           <tr *ngFor="let stock of stockDataListDisplay |filter:term ; let i=index">
-            <td class="pt-0 pb-0 mt-0 mb-0">{{stock.stock_uid}}</td>
-            <td class="pt-0 pb-0 mt-0 mb-0">{{stock.item_name}}</td>
+            <td class="col pt-0 pb-0 mt-0 mb-0">{{stock.stock_uid}}</td>
+            <td class="col pt-0 pb-0 mt-0 mb-0">{{stock.item_name}}</td>
 
             <td class="pt-0 pb-0 mt-0 mb-0">
               <button type="button" class="btn pt-0 pb-0 mt-0 mb-0" (click)="selectStock(stock.stock_uid)">
@@ -360,21 +357,23 @@
         </tbody>
       </table>
     </div>
-    <div class="column2 table-striped-sm pl-2">
-      <div class="p-2 mb-1 b-1 section-header hd-purple">
+
+    <div class="column2 table-striped-sm ps-2">
+      <div class="row p-2 mb-1 section-header hd-purple">
         <!-- <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span> -->
 
-        <div class="float-left">
+        <div class="col text-left">
           Added Items
         </div>
 
-        <div class="float-right mr-2 section-detail"> <b>Total Amount:</b> {{totalAmount}}</div>
-        <div class="float-right mr-2 section-detail"> <b>Vat:</b> {{vat}}</div>
-        <div class="float-right mr-2 section-detail"> <b>Order Amount:</b> {{totalAmount}}</div>
+        <div class="col text-end ms-2 section-detail"> Total Amount: {{totalAmount}}</div>
+        <div class="col text-end ms-2 section-detail"> Vat: {{vat}}</div>
+        <div class="col text-end ms-2 section-detail"> Order Amount: {{totalAmount}}</div>
       </div>
-      <div class="float-left pl-3 section-detail"><b>Order#:</b>{{orderNumber}}</div>
-      <div class="float-right pr-4 section-detail"><b>Dated:</b>{{orderDate}}</div>
-
+      <div class="row p-2 mb-1">
+      <div class="col text-start pl-3 section-detail"><b>Order#:</b>{{orderNumber}}</div>
+      <div class="col text-end pr-4 section-detail"><b>Dated:</b>{{orderDate}}</div>
+    </div>
 
 
    
@@ -406,5 +405,6 @@
               </table>
        
     </div>
+  </div>
   </div>
 </div>

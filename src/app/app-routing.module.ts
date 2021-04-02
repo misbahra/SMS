@@ -20,6 +20,10 @@ import { Routes, RouterModule } from '@angular/router';
  import { CustomersComponent } from './customers/customers.component';
  import { ItemCategoriesComponent } from './item-categories/item-categories.component';
  import{SalComponent} from './sal/sal.component';
+ import{ImgUploadComponent} from './img-upload/img-upload.component';
+ import{AppdataComponent} from './appdata/appdata.component';
+ import{RolesComponent} from './roles/roles.component';
+ 
 // import{WsrMainNewComponent} from './wsr-main/wsr-main-new/wsr-main-new.component';
 // import { FeedbackComponent } from './feedback/feedback.component';
 // import { FeedbackNewComponent } from './feedback/feedback-new/feedback-new.component';
@@ -53,18 +57,22 @@ import { AuthGuard }   from './ws/authGuardService';
 const routes: Routes = [
   { path: '',       component: HomeComponent},
   { path: 'home',    component: HomeComponent},
-  { path: 'user',   component: UserComponent },
+  { path: 'user',   component: UserComponent  , canActivate: [AuthGuard]},
   { path: 'login-new',   component: LoginComponent},
-  { path: 'lu',   component: LuComponent },
-  { path: 'order',   component: OrdersComponent },
-  { path: 'neworder',   component: NewOrderComponent },
-  { path: 'stock',   component: StockComponent },
-  { path: 'gl',   component: GlComponent },
-  { path: 'salesRep',   component: SalesComponent },
-  { path: 'vender',   component: VendersComponent },
-  { path: 'customer',   component: CustomersComponent },
-  { path: 'itemcategory',   component: ItemCategoriesComponent },
-  { path: 'sal',   component: SalComponent },
+  { path: 'lu',   component: LuComponent   , canActivate: [AuthGuard]},
+  { path: 'order',   component: OrdersComponent   , canActivate: [AuthGuard]},
+  { path: 'neworder',   component: NewOrderComponent   , canActivate: [AuthGuard]},
+  { path: 'stock',   component: StockComponent   , canActivate: [AuthGuard]},
+  { path: 'gl',   component: GlComponent   , canActivate: [AuthGuard]},
+  { path: 'salesRep',   component: SalesComponent   , canActivate: [AuthGuard]},
+  { path: 'vender',   component: VendersComponent   , canActivate: [AuthGuard]},
+  { path: 'customer',   component: CustomersComponent   , canActivate: [AuthGuard]},
+  { path: 'itemcategory',   component: ItemCategoriesComponent   , canActivate: [AuthGuard]},
+  { path: 'sal',   component: SalComponent   , canActivate: [AuthGuard]},
+  { path: 'imgUpload',   component: ImgUploadComponent   , canActivate: [AuthGuard]},
+  { path: 'appData',   component: AppdataComponent   , canActivate: [AuthGuard]},
+  { path: 'role',   component: RolesComponent   , canActivate: [AuthGuard]},
+  
  ];
 
 @NgModule({

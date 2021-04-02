@@ -16,14 +16,14 @@
     <!-- Form -->
     <form [formGroup]="dataForm" class="text-center" style="color: #757575;" action="#!">
     
-        <div class="form-row">
+        <div class="row">
             <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
                 <span class="sr-only">Loading...</span>
             </div>
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form has-float-label">
-                    <label class="font-weight form-row " for="sal_header_uid">Header UID</label>
+                    <label class="font-weight row " for="sal_header_uid">Header UID</label>
                     <input type="text" id="sal_header_uid" name="sal_header_uid" class="form-control" placeholder="Header UID"
                         formControlName="sal_header_uid"
                         [ngClass]="{ 'is-invalid':   submitted && fc.sal_header_uid.errors }" disabled>
@@ -40,7 +40,7 @@
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form has-float-label">
-                    <label class="font-weight form-row " for="sal_detail_uid">Detail UID</label>
+                    <label class="font-weight row " for="sal_detail_uid">Detail UID</label>
     
                     <input type="text" id="sal_detail_uid" name="sal_detail_uid" class="form-control" placeholder="Detail UID"
                     formControlName="sal_detail_uid"
@@ -56,11 +56,11 @@
             </div>
             <!--close col -->
         </div>
-        <div class="form-row">
+        <div class="row">
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form has-float-label">
-                    <label class="font-weight form-row " for="pay_head">Pay Type</label>
+                    <label class="font-weight row " for="pay_head">Pay Type</label>
     
                     <select class="form-control  " id="pay_head" name="pay_head"
                         formControlName="pay_head" [ngClass]="{ 'is-invalid': submitted && fc.pay_head.errors }">
@@ -86,7 +86,7 @@
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form has-float-label">
-                    <label class="font-weight form-row " for="pay_amount">Amount</label>
+                    <label class="font-weight row " for="pay_amount">Amount</label>
     
                     <input type="number" id="pay_amount" name="pay_amount" class="form-control" placeholder="Amount"
                     formControlName="pay_amount" [ngClass]="{ 'is-invalid':   submitted && fc.pay_amount.errors }">
@@ -102,12 +102,12 @@
             <!--close col -->
         </div>
     
-        <div class="form-row">
+        <div class="row">
             <div class="col">
     
                 <!-- Employee ID -->
                 <div class="md-form has-float-label">
-                    <label class="font-weight form-row " for="paid_on">Paid On</label>
+                    <label class="font-weight row " for="paid_on">Paid On</label>
                     <input type="datetime-local" id="paid_on" name="paid_on" class="form-control" placeholder="Paid Date"
                         formControlName="paid_on" [ngClass]="{ 'is-invalid':   submitted && fc.paid_on.errors }">
                     <div *ngIf=" fc.paid_on.invalid " class="invalid-feedback">
@@ -122,11 +122,11 @@
     
             </div>
     
-        <div class="form-row mt-3">
+        <div class="row mt-3">
             <div class="col">
                 <!-- User Name -->
                 <div class="md-form">
-                    <label class="font-weight form-row " for="remarks">Remarks</label>
+                    <label class="font-weight row " for="remarks">Remarks</label>
                     <input type="textarea" id="remarks" name="remarks" class="form-control" placeholder="Remarks"
                         formControlName="remarks" [ngClass]="{ 'is-invalid': submitted && fc.remarks.errors }">
                     <div *ngIf="submitted && fc.remarks.invalid " class="invalid-feedback">

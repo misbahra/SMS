@@ -15,14 +15,14 @@
     <!-- Form -->
     <form [formGroup]="dataForm" class="text-center" style="color: #757575;" action="#!">
 
-        <div class="form-row">
+        <div class="row">
             <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
                 <span class="sr-only">Loading...</span>
             </div>
             <div class="col2">
                 <!-- cat_uid -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="cat_uid">Category UID</label>
+                    <label class="font-weight row " for="cat_uid">Category UID</label>
                     <input readonly type="text" id="cat_uid" name="cat_uid" class="form-control" placeholder="Code"
                         formControlName="cat_uid" [ngClass]="{ 'is-invalid':   submitted && fc.cat_uid.errors }">
 
@@ -37,11 +37,11 @@
             </div>
             <!--close col -->
         </div>
-        <div class="form-row">
+        <div class="row">
             <div class="col">
                 <!-- cat_name -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="cat_name">Name</label>
+                    <label class="font-weight row " for="cat_name">Name</label>
                     <input type="text" id="cat_name" name="cat_name" class="form-control" placeholder="Name"
                         formControlName="cat_name" [ngClass]="{ 'is-invalid':   submitted && fc.cat_name.errors }">
                     <div *ngIf=" fc.cat_name.invalid " class="invalid-feedback">
@@ -55,13 +55,13 @@
             <!--close col -->
         </div>
 
-        <!-- // next form-row -->
-        <div class="form-row">
+        <!-- // next row -->
+        <div class="row">
 
             <div class="col">
                 <!-- cat_desc -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="cat_desc">Description</label>
+                    <label class="font-weight row " for="cat_desc">Description</label>
                     <input type="text" id="cat_desc" name="cat_desc" class="form-control" placeholder="Description"
                         formControlName="cat_desc" [ngClass]="{ 'is-invalid':   submitted && fc.cat_desc.errors }">
                     <div *ngIf=" fc.cat_desc.invalid " class="invalid-feedback">
@@ -77,12 +77,12 @@
 
 
 
-        <div class="form-row mt-3">
+        <div class="row mt-3">
             <!--close col -->
             <div class="col">
                 <!-- vat_rate  -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="vat_rate">Vat Rate</label>
+                    <label class="font-weight row " for="vat_rate">Vat Rate</label>
                     <input type="number" id="vat_rate" name="vat_rate" class="form-control" placeholder="Vat Rate"
                         formControlName="vat_rate" [ngClass]="{ 'is-invalid':   submitted && fc.vat_rate.errors }">
                     <div *ngIf=" fc.vat_rate.invalid " class="invalid-feedback">
@@ -98,7 +98,7 @@
             <div class="col">
                 <!-- sales_tax_rate -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="sales_tax_rate">Sales Tax Rate</label>
+                    <label class="font-weight row " for="sales_tax_rate">Sales Tax Rate</label>
                     <input type="text" id="sales_tax_rate" name="sales_tax_rate" class="form-control"
                         placeholder="Sales Tax Rate" formControlName="sales_tax_rate"
                         [ngClass]="{ 'is-invalid':   submitted && fc.sales_tax_rate.errors }">
@@ -115,7 +115,7 @@
             <div class="col">
                 <!-- withholding_tax_rate -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="withholding_tax_rate">WH Tax Rate</label>
+                    <label class="font-weight row " for="withholding_tax_rate">WH Tax Rate</label>
                     <input type="text" id="withholding_tax_rate" name="withholding_tax_rate" class="form-control"
                         placeholder="WH TAx Rate" formControlName="withholding_tax_rate"
                         [ngClass]="{ 'is-invalid':   submitted && fc.withholding_tax_rate.errors }">
@@ -131,8 +131,8 @@
             <div class="col">
                 <!-- active -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="active">Active</label>
-                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="active"
+                    <label class="font-weight row " for="active">Active</label>
+                    <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="active"
                         name="active" formControlName="active"
                         [ngClass]="{ 'is-invalid': submitted && fc.country_uid.errors }">
                         <!-- <option Selected value="">Select User Role</option> -->

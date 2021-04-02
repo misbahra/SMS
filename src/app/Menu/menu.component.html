@@ -1,98 +1,80 @@
 <!--Navbar-->
 
+<nav class="navbar navbar-expand-lg navbar-light hd-purple">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      
+      <img class="brand_logo" src="../../assets/Logo01.png" alt="" >
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ">
+        <li class="nav-item ">
+          <a class="nav-link active text-white" aria-current="page" routerLink="/home">
+            <i class="fa fa-home fa-w-18 fa-lg"></i>
+            Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" routerLink="/login-new" *ngIf="(connectedUser.length == 0)">
+            <i class="fa fa-sign-in fa-w-18 fa-lg"></i> Login
+          </a>
+        </li>
+        
 
-<mat-toolbar >
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active text-white" href="#" id="settingMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+          *ngIf="(connectedUser.length != 0 && connectedUser.app_role == 'AAD')"
+          >
+          <i class="fa fa-gear fa-w-18 fa-lg"></i> Settings
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="/user"><i class="fa fa-users fa-w-18 fa-lg p-2"></i>Users</a></li>
+            <li><a class="dropdown-item" routerLink="/lu"><i class="fa fa-th-list fa-w-18 fa-lg p-2"></i>LookUp</a></li>
+            <!-- <li><hr class="dropdown-divider"></li> -->
+            <li><a class="dropdown-item" routerLink="/sal"><i class="fa fa-money fa-w-18 fa-lg p-2"></i>Salary</a></li>
+            <li><a class="dropdown-item" routerLink="/imgUpload"><i class="fa fa-cloud-upload fa-w-18 fa-lg p-2"></i>Upload</a></li>
+            <li><a class="dropdown-item" routerLink="/appData"><i class="fa fa-cubes fa-w-18 fa-lg p-2"></i>AppData</a></li>
+            <li><a class="dropdown-item" routerLink="/role"><i class="fa fa-cubes fa-w-18 fa-lg p-2"></i>Roles</a></li>
+          </ul>
+        </li>
 
-  <img class="brand_logo" src="../../assets/Logo01.png">
-
-  <div style="width:100%" class="m-0 p-0">
-    <div class="float-left m-0 p-0">
-
-      <button mat-button routerLink="/home">
-        <mat-icon>home</mat-icon> Home
-      </button>
-
-      <button mat-button routerLink="/login-new" *ngIf="(connectedUser.length == 0)">
-        <mat-icon>login</mat-icon> Login
-      </button>
-
-      <button mat-button *ngIf="(connectedUser.length != 0 && connectedUser.app_role == 'AAD')"
-        [matMenuTriggerFor]="settingMenu">
-
-        <mat-icon>settings</mat-icon> settings
-      </button>
-
-      <mat-menu #settingMenu="matMenu" xPosition="after">
-        <button mat-menu-item routerLink="/user" class="plMenuCSS">
-          <mat-icon>account_box</mat-icon>
-          <span>Users</span>
-        </button>
-
-        <button mat-menu-item routerLink="/lu">
-          <mat-icon>build</mat-icon>
-          <span>Look Up</span>
-        </button>
-
-        <button mat-menu-item routerLink="/sal">
-          <mat-icon>money</mat-icon>
-          <span>Salary</span>
-        </button>
-      </mat-menu>
-
-
-      <button mat-button *ngIf="(connectedUser.length != 0 && connectedUser.app_role == 'AAD')"
-        [matMenuTriggerFor]="reportsMenu">
-        <mat-icon>receipt</mat-icon> Reports
-      </button>
-
-      <mat-menu #reportsMenu="matMenu" xPosition="after">
-        <button mat-menu-item routerLink="/salesRep">
-          <mat-icon>monetization_on</mat-icon>
-          <span>Sales Report</span>
-        </button>
-
-      </mat-menu>
-
-
-      <button mat-button *ngIf="(connectedUser.length != 0 && connectedUser.app_role == 'AAD')"
-        [matMenuTriggerFor]="formsMenu">
-        <mat-icon>apps</mat-icon> Forms
-      </button>
-
-      <mat-menu #formsMenu="matMenu" xPosition="after">
-        <button mat-menu-item routerLink="/order">
-          <mat-icon>tasks</mat-icon>
-          <span>Orders</span>
-        </button>
-
-        <button mat-menu-item routerLink="/vender">
-          <mat-icon>blur_circular</mat-icon>
-          <span>Venders</span>
-        </button>
-
-        <button mat-menu-item routerLink="/customer">
-          <mat-icon>adjust</mat-icon>
-          <span>Customers</span>
-        </button>
-
-        <button mat-menu-item routerLink="/itemcategory">
-          <mat-icon>blur_linear</mat-icon>
-          <span>Items</span>
-        </button>
-
-        <button mat-menu-item routerLink="/stock">
-          <mat-icon>blur_on</mat-icon>
-          <span>Stock</span>
-        </button>
-
-        <button mat-menu-item routerLink="/gl">
-          <mat-icon>storage</mat-icon>
-          <span>General Ledger</span>
-        </button>
-      </mat-menu>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active text-white" href="#" id="reportsMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+          *ngIf="(connectedUser.length != 0 && connectedUser.app_role == 'AAD')"
+          >
+          <i class="fa fa-leanpub fa-w-18 fa-lg"></i> Reports
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="/salesRep"><i class="fa fa-paper-plane-o fa-w-18 fa-lg p-2"></i>Sales Report</a></li>
+            
+          </ul>
+        </li>
 
 
-      <!-- Links -->
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle active text-white" href="#" id="settingMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+        *ngIf="(connectedUser.length != 0 && connectedUser.app_role == 'AAD')"
+        >
+        <i class="fa fa-server fa-w-18 fa-lg"></i> Forms
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" routerLink="/order"><i class="fa fa-id-card fa-w-18 fa-lg p-2"></i>Orders</a></li>
+          <li><a class="dropdown-item" routerLink="/vender"><i class="fa fa-address-card-o fa-w-18 fa-lg p-2"></i>Venders</a></li>
+          <!-- <li><hr class="dropdown-divider"></li> -->
+          <li><a class="dropdown-item" routerLink="/customer"><i class="fa fa-id-badge fa-w-18 fa-lg p-2"></i>Customers</a></li>
+          <li><a class="dropdown-item" routerLink="/itemcategory"><i class="fa fa-sign-language fa-w-18 fa-lg p-2"></i>Items</a></li>
+          <li><a class="dropdown-item" routerLink="/stock"><i class="fa fa-home fa-w-18 fa-lg p-2"></i>Stock</a></li>
+          <li><a class="dropdown-item" routerLink="/gl"><i class="fa fa-braille fa-w-18 fa-lg p-2"></i>GL</a></li>
+        </ul>
+      </li>
+       
+      </ul>
+ 
     </div>
     <div class="float-right p-0 m-0 section-detail" *ngIf="(connectedUser.length != 0)">
       Welcome {{connectedUser.name}}
@@ -102,7 +84,5 @@
         <i class="fa fa-power-off p-1"></i>
       </button> 
     </div>
-
   </div>
-
-</mat-toolbar>
+</nav>

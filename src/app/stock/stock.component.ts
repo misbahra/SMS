@@ -10,7 +10,7 @@ const moment = momentNs;
 import {LovComponent} from '../lov/lov.component';
 import { utilWS } from '../ws/utilWS';
 import {jsPDF, jsPDFOptions} from 'jspdf';
-import 'jspdf-autotable';
+//import 'jspdf-autotable';
 
 
 @Component({
@@ -216,7 +216,7 @@ export class StockComponent implements OnInit {
     const doc = new jsPDF(opt);
     //doc.table(20, 10 , vData, header, styles);
 
-    doc.autoTable(col, rows, { startY: 10 });
+    //doc.autoTable(col, rows, { startY: 10 });
 
     doc.text("Hello world!", 10, 10);
     doc.save("two-by-four.pdf");

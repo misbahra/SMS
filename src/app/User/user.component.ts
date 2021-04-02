@@ -6,7 +6,7 @@ import { sessionService } from '../ws/sessionWS';
 import {GridOptions} from "@ag-grid-community/all-modules";
 import { MatDialogModule, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UserNewComponent } from '../User/user-new/user-new.component';
-
+import { luWS } from './../ws/luWS';
 interface DialogData {
   data: string;
 }
@@ -19,24 +19,6 @@ interface DialogData {
 export class UserComponent implements OnInit {
   public gridOptions:GridOptions;
   
-
-
-  constructor(
-    private webService: mainWS,
-    private router: Router,
-    private sessionService: sessionService,
-    public dialog: MatDialog
-  ) {
-    // this.frameworkComponents = {
-    //   buttonRenderer: ButtonRendererComponent,
-    // }
-
-    this.gridOptions = <GridOptions>{
-      onGridReady: () => {
-        this.gridOptions.api.sizeColumnsToFit();
-      }   
-    }
-  }
   model: any = [];
   userList: any;
   isBusy = false;
@@ -47,6 +29,10 @@ export class UserComponent implements OnInit {
 
   columnDefs = [];
   rowData: any = [];
+
+  rolesList: any = [];
+  rolesColumnDefs = [];
+  
 
   userPrivs = {
     "viewAllowed": "N",
@@ -62,6 +48,38 @@ export class UserComponent implements OnInit {
     height: '100%',
     flex: '1 1 auto'
   };
+  
+
+  constructor(
+    private webService: mainWS,
+    private router: Router,
+    private sessionService: sessionService,
+    public dialog: MatDialog,
+    private LUDService : luWS,
+  ) {
+    // this.frameworkComponents = {
+    //   buttonRenderer: ButtonRendererComponent,
+    // }
+
+    this.gridOptions = <GridOptions>{
+      onGridReady: () => {
+        this.gridOptions.api.sizeColumnsToFit();
+      }   
+    }
+
+    this.rolesColumnDefs = [
+                      {
+                        headerName: '',
+                        width: 35,
+                        sortable: false,
+                        filter: false,
+                        checkboxSelection: true
+                      },
+                      { headerName: 'Role Code', field: 'lud_code', width: 150, sortable: true, filter: true },
+                      { headerName: 'Role Description', field: 'lud_desc', width: 350, sortable: true, filter: true }
+                     ];
+                    
+                  }
   //modules = [ClientSideRowModelModule];
 
   //@ViewChild('agGrid') agGrid;
@@ -186,8 +204,18 @@ export class UserComponent implements OnInit {
 
     this.userPrivs = this.sessionService.getUsersPrivs();
     this.loadAllUsers();
+    this.loadAllLUD('USR');
     //console.log(this.route.snapshot.params.name);
    
+  };
+
+  async loadAllLUD(id: any) {
+    //alert("loading lud comp");  
+    var luhData = [{value:id}]
+    let response = await this.LUDService.getLUD(luhData);
+    if (id=='USR'){this.rolesList = response;}
+    
+
   };
 
   fillLarge() {

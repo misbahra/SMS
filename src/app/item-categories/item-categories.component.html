@@ -1,5 +1,5 @@
 
-    <div class="header hd-gold" >
+    <div class="header hd-gold pt-2 ps-2" >
       <span>Manage Item / Categories</span>
       
     </div>
@@ -8,32 +8,33 @@
   <!-- <div class="parent-div"> -->
   <div class="row">
     <div class="column1">
-  
-      <div class="pt-2 pl-2 pb-4 section-header hd-purple">
-        <span >Categories</span>
-        <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
-       
-        <div class=" float-left">
-            <span class="spinner-border" *ngIf="(isBusy == true)"></span>
-          </div>
-          <div class=" float-right section-detail">
-            <!-- parameter 1 to openStockDialog 
-                means its and new record and 2 mean its an update operation -->
-              <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-                type="button" (click)="openItemCategoryDialog('2')">
-                <span class="fa fa-pencil p-2 text-warning"></span>
-              </a>
-            <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-                type="button" (click)="openItemCategoryDialog('1')">
-              <span class="fa fa-plus text-white p-2"></span>
-            </a>
-            <a *ngIf="(userPrivs.createAllowed == 'Y')" 
-                type="button" (click)="deleteItemCategory()">
-                <span class="fa fa-trash text-danger p-2"></span>
-              </a>
-            
-        </div>
-      </div>
+          <div class="row pt-2 ps-2 m-0 section-header hd-purple">
+            <div class="col p-0 ">
+              <span >Categories</span>
+              <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
+            </div>
+            <div class=" col text-start p-0">
+                <span class="spinner-border" *ngIf="(isBusy == true)"></span>
+            </div>
+            <div class=" col text-end section-detail">
+                <!-- parameter 1 to openStockDialog 
+                    means its and new record and 2 mean its an update operation -->
+                  <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+                    type="button" (click)="openItemCategoryDialog('2')">
+                    <span class="fa fa-pencil ps-2 text-warning"></span>
+                  </a>
+                <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+                    type="button" (click)="openItemCategoryDialog('1')">
+                  <span class="fa fa-plus text-white ps-2"></span>
+                </a>
+                <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+                    type="button" (click)="deleteItemCategory()">
+                    <span class="fa fa-trash text-danger ps-2"></span>
+                  </a>
+                
+              </div>
+            </div>
+          
       <!-- [enableSorting]="true" [enableFilter]="true"
       [modules]="modules"
           [frameworkComponents]="frameworkComponents"
@@ -54,17 +55,24 @@
       </div>
   
     </div>
+
     <!-- 2nd column -->
     <div class="column2">
-      <div class="pt-2 pl-2 pb-4 section-header hd-purple">
-       
-        <span >Items</span>
-  
-        <span class="pl-5">Selected Category / Item: {{rowDataClicked.cat_uid}} / {{rowDataClicked2.item_uid}}</span>
-        <div class=" float-left">
+      <div class="row pt-2 ps-2 pb-4 section-header hd-purple">
+
+        <div class="col">
+          <span >Items</span>
+        </div>
+
+        <div class="col text start">
+          <span class="pl-5">Selected: {{rowDataClicked.cat_uid}} / {{rowDataClicked2.item_uid}}</span>
+        </div>
+
+
+        <div class=" col">
             <span class="spinner-border" *ngIf="(isDetailBusy == true)"></span>
-          </div>
-          <div class=" float-right section-detail">
+        </div>
+        <div class=" col text-end section-detail">
             <!-- parameter 1 to openStockDialog 
                 means its and new record and 2 mean its an update operation -->
               <a *ngIf="(userPrivs.createAllowed == 'Y')" 

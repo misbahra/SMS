@@ -18,12 +18,12 @@
         <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
             <span class="sr-only">Loading...</span>
         </div>
-        <div class="form-row">
+        <div class="row">
            
             <div class="col">
                 <!-- customer_uid -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="customer_uid">Customer #</label>
+                    <label class="font-weight row " for="customer_uid">Customer #</label>
                     <input readonly type="text" id="customer_uid" name="customer_uid" 
                     class="form-control form-control-sm mr-sm-2 js-example-basic-single"
                         placeholder="Code" formControlName="customer_uid"
@@ -42,7 +42,7 @@
             <div class="col">
                 <!-- name -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="name">Name</label>
+                    <label class="font-weight row " for="name">Name</label>
                     <input type="text" id="name" name="name" 
                     class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="Name"
                         formControlName="name" [ngClass]="{ 'is-invalid':   submitted && fc.name.errors }" >
@@ -58,8 +58,8 @@
             <div class="col">
                 <!-- gender -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="gender">Gender</label>
-                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="gender"
+                    <label class="font-weight row " for="gender">Gender</label>
+                    <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="gender"
                         name="gender" formControlName="gender"
                         [ngClass]="{ 'is-invalid': submitted && fc.gender.errors }">
                         <!-- <option Selected value="">Select User Role</option> -->
@@ -79,13 +79,13 @@
 
         </div>
 
-        <div class="form-row mt-3">
+        <div class="row mt-3">
 
             
             <div class="col">
                 <!-- mobile -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="mobile">Mobile </label>
+                    <label class="font-weight row " for="mobile">Mobile </label>
                     <input type="text" id="mobile" name="mobile" 
                     class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="Mobile"
                         formControlName="mobile" [ngClass]="{ 'is-invalid':   submitted && fc.mobile.errors }">
@@ -103,7 +103,7 @@
             <div class="col">
                 <!-- phone -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="phone">Phone</label>
+                    <label class="font-weight row " for="phone">Phone</label>
                     <input type="text" id="phone" name="phone" 
                     class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="Phone"
                         formControlName="phone" [ngClass]="{ 'is-invalid':   submitted && fc.phone.errors }">
@@ -122,7 +122,7 @@
             <div class="col">
                 <!-- email -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="email">eMail</label>
+                    <label class="font-weight row " for="email">eMail</label>
                     <input type="text" id="email" name="email" 
                     class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="email"
                         formControlName="email" [ngClass]="{ 'is-invalid':   submitted && fc.email.errors }">
@@ -140,14 +140,14 @@
         <!--close row -->
 
 
-        <div class="form-row mt-3">
+        <div class="row mt-3">
 
 
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="country_uid">Country</label>
-                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="country_uid"
+                    <label class="font-weight row " for="country_uid">Country</label>
+                    <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="country_uid"
                         name="country_uid" formControlName="country_uid"
                         [ngClass]="{ 'is-invalid': submitted && fc.country_uid.errors }">
                         <!-- <option Selected value="">Select User Role</option> -->
@@ -168,9 +168,9 @@
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="state_uid">State</label>
+                    <label class="font-weight row " for="state_uid">State</label>
 
-                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="state_uid"
+                    <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="state_uid"
                         name="state_uid" formControlName="state_uid"
                         [ngClass]="{ 'is-invalid': submitted && fc.state_uid.errors }">
                         <!-- <option Selected value="">Select User Role</option> -->
@@ -194,9 +194,9 @@
             <div class="col">
                 <!-- city_uid -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="city_uid">City</label>
+                    <label class="font-weight row " for="city_uid">City</label>
 
-                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="city_uid"
+                    <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="city_uid"
                         name="city_uid" formControlName="city_uid"
                         [ngClass]="{ 'is-invalid': submitted && fc.city_uid.errors }">
                         <!-- <option Selected value="">Select User Role</option> -->
@@ -217,14 +217,14 @@
 
         </div>
 
-        <!-- // next form-row -->
-        <div class="form-row mt-3">
+        <!-- // next row -->
+        <div class="row mt-3">
 
 
             <div class="col-6">
                 <!-- address -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="address">Address</label>
+                    <label class="font-weight row " for="address">Address</label>
                     <input type="text" id="address" name="address" 
                     class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="Address"
                         formControlName="address" [ngClass]="{ 'is-invalid':   submitted && fc.address.errors }">
@@ -241,7 +241,7 @@
             <div class="col-6">
                 <!-- card_no -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="card_no">Card Number</label>
+                    <label class="font-weight row " for="card_no">Card Number</label>
                     <input type="text" id="card_no" name="card_no" 
                     class="form-control form-control-sm mr-sm-2 js-example-basic-single" placeholder="Card Number"
                         formControlName="card_no" [ngClass]="{ 'is-invalid':   submitted && fc.card_no.errors }">

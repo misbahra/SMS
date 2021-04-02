@@ -1,0 +1,65 @@
+
+
+<div class="row bg">
+
+    
+
+    <div class="column2">
+        <div class="pt-2 pl-2 section-header hd-cyan">
+
+            <div class=" float-left">
+                <span class="spinner-border" *ngIf="(isDetailBusy == true)"></span>
+            </div>
+            <div class=" float-right section-detail">
+                <!-- parameter 1 to openStockDialog 
+                means its and new record and 2 mean its an update operation -->
+                <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="openGLDialog(2)">
+                    <span class="fa fa-pencil p-2 text-warning"></span>
+                </a>
+                <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="openGLDialog(1)">
+                    <span class="fa fa-plus text-white p-2"></span>
+                </a>
+                <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="deleteGL()">
+                    <span class="fa fa-trash text-danger p-2"></span>
+                </a>
+
+
+
+               
+
+            </div>
+        </div>
+        <div [ngStyle]="style">
+            <ag-grid-angular [pagination]="true" [unSortIcon]="true" [animateRows]="true"
+                style="width:100%; height:100%;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs"
+                [defaultColDef]="defaultColDef" [pinnedTopRowData]="pinnedTopRowData"
+                [pinnedBottomRowData]="pinnedBottomRowData" [enableCellChangeFlash]="true"
+                (gridReady)="onGridReady($event)" (rowSelected)="onRowSelected($event)">
+            </ag-grid-angular>
+        </div>
+    </div>
+
+    <div class="column1">
+
+        <div class="pt-2 pl-2 section-header hd-cyan">
+
+            <div class=" float-left">
+                Select Criteria
+            </div>
+            <a  type="button" (click)="addImage(1)">
+                <span class="fa fa-plus text-white p-2"></span>
+            </a>
+           
+           
+        </div>
+       
+        <div *ngIf ="(totalImages == 1)">
+            Images list
+            <div *ngFor="let data of rowData; index as i;" >
+                {{data.uid}}
+                {{data.image_name}}
+            </div>
+        </div>
+
+    </div>
+</div>

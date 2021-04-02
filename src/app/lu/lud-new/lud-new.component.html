@@ -19,12 +19,12 @@
             <!-- Form -->
             <form [formGroup]="dataForm" class="text-center" style="color: #757575;" action="#!">
 
-                <div class="form-row">
+                <div class="row">
                    
                     <div class="col">
                         <!-- Employee ID -->
                         <div class="md-form ">
-                            <label class = "font-weight form-row " for="luh_code">Header Code</label>
+                            <label class = "font-weight row " for="luh_code">Header Code</label>
                             <input type="text" id="luh_code" name="luh_codec" class="form-control"
                                 placeholder="Header Code" formControlName="luh_code"
                                 Disabled = "1=1">
@@ -34,11 +34,11 @@
                     <!--close col -->
                 </div>
 
-                <div class="form-row mt-3">
+                <div class="row mt-3">
                     <div class="col">
                         <!-- User Name -->
                         <div class="md-form">
-                            <label class = "font-weight form-row " for="lud_desc">Description</label>
+                            <label class = "font-weight row " for="lud_desc">Description</label>
                             <input id="lud_desc" name="lud_desc" class="form-control" placeholder="Description"
                                 formControlName="lud_desc"
                                 [ngClass]="{ 'is-invalid': submitted && fc.lud_desc.errors }">
@@ -55,12 +55,12 @@
                 </div>
                 <!--close row -->
 
-                <div class="form-row  mt-2">
+                <div class="row  mt-2">
                    
                     <div class="col">
                         <!-- Employee ID -->
                         <div class="md-form ">
-                            <label class = "font-weight form-row " for="lud_code">Code</label>
+                            <label class = "font-weight row " for="lud_code">Code</label>
                             <input type="text" id="lud_code" name="lud_code" class="form-control"
                                 placeholder="Code" formControlName="lud_code" oninput="this.value = this.value.toUpperCase()"
                                 [ngClass]="{ 'is-invalid':   submitted && fc.lud_code.errors }">
@@ -84,11 +84,11 @@
                 <!-- </div>
 
 
-                <div class="form-row mt-3"> -->
+                <div class="row mt-3"> -->
                     <div class="col">
                         <!-- User Name -->
                         <div class="md-form">
-                            <label class = "font-weight form-row " for="value">Value</label>
+                            <label class = "font-weight row " for="value">Value</label>
                             <input id="value" name="value" class="form-control" placeholder="Value"
                                 formControlName="value"
                                 [ngClass]="{ 'is-invalid': submitted && fc.value.errors }">
@@ -105,12 +105,12 @@
                 <!-- </div> -->
                 <!--close row -->
 
-                <!-- <div class="form-row  mt-2"> -->
+                <!-- <div class="row  mt-2"> -->
                    
                     <div class="col">
                         <!-- Employee ID -->
                         <div class="md-form ">
-                            <label class = "font-weight form-row " for="display_order">Display Order</label>
+                            <label class = "font-weight row " for="display_order">Display Order</label>
                             <input type="text" id="display_order" name="display_order" class="form-control"
                                 placeholder="Display Order" formControlName="display_order"
                                 [ngClass]="{ 'is-invalid':   submitted && fc.display_order.errors }">
@@ -125,12 +125,12 @@
                     <!--close col -->
                 </div>
 
-                <div class="form-row  mt-2">
+                <div class="row  mt-2">
                    
                     <div class="col">
                         <!-- Employee ID -->
                         <div class="md-form ">
-                            <label class = "font-weight form-row " for="active">Active</label>
+                            <label class = "font-weight row " for="active">Active</label>
                            
                             <select  
                             class="form-control   form-control-sm" id="active" name="active" formControlName="active"
@@ -155,12 +155,12 @@
                     <!--close col -->
                 </div>
 
-                <div class="form-row mt-2">
+                <div class="row mt-2">
                    
                     <div class="col">
                         <!-- Employee ID -->
                         <div class="md-form ">
-                            <label class = "font-weight form-row " for="freezed">Freezed</label>
+                            <label class = "font-weight row " for="freezed">Freezed</label>
                             <select  
                             class="form-control   form-control-sm" id="freezed" name="freezed" formControlName="freezed"
                             placeholder="Freezed"

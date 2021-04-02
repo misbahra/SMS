@@ -1,8 +1,10 @@
 <div class="border-1">
-  <div class="header hd-cyan">
-    <span>Manage Salaries</span>
-    <div class="float-right mt-1 mr-1">
-      <select class="form-control  form-control-sm mr-sm-2 " id="resourceuid" name="resourceuid"
+  <div class="row pt-2 ps-2 pb-4 section-header hd-navy">
+    <div class="col">
+      <span>Manage Salaries</span>
+    </div>
+    <div class="col text-end">
+      <select class="form-select  form-select-sm  " id="resourceuid" name="resourceuid"
         [(ngModel)]="selectedResource" (change)="loadData()">
         <!-- <option Selected value="">Select User Role</option> -->
         <option *ngFor="let data of resourceList; index as i;" [value]=data.resource_uid>
@@ -23,9 +25,12 @@
   <div class="column1">
 
 
-    <div class="section-header hd-green">
-      <span>Summary</span>
-      <div class=" float-left">
+    <div class="row pt-2 section-header hd-green">
+      <div class=" col text-start">
+        <span>Summary</span>
+      </div>
+
+      <div class=" col text-start">
         <span class="spinner-border" *ngIf="(isBusy)"></span>
       </div>
     </div>
@@ -47,13 +52,20 @@
 
     <div class="row">
 
-    <div class="section-header hd-green">
-      <span>Salary Header {{rowDataClicked.sal_header_uid}}</span>
-      <div class=" float-left">
+    <div class="row pt-2 section-header hd-green">
+
+      <div class=" col text-start">
+        Salary Header 
+      </div>
+      <div class=" col ps-2 fs-6 text-start">
+         {{rowDataClicked.month}} - {{rowDataClicked.year}}
+      </div>
+      
+      <div class=" col text-start">
         <span class="spinner-border" *ngIf="(isBusy)"></span>
       </div>
 
-      <div class="float-right section-detail">
+      <div class=" col text-end section-detail">
 
         <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="openLuhDialog(1)">
           <span class="fa fa-pencil p-2 text-warning"></span>
@@ -80,21 +92,25 @@
 
   </div>
 
-  <div class="row">
-    <div class="section-header hd-green">
-      <div class=" float-left">
+  <div class="row ">
+    <div class="row pt-2 section-header hd-green">
+      
+      <div class=" col-1 text-start">
         <span>Detail</span>
-        <span class="pl-3">Selected Header / Detail:</span> <span class="text-10">{{rowDataClicked.sal_header_uid}} /
-          {{rowDataClicked2.sal_detail_uid}}</span>
-
-        <span class="pl-5">Total Amount: {{totalSalary}}</span>
-
-
       </div>
-      <div class=" float-left">
+      
+     
+      <div class=" col-3 ps-2 fs-6 text-start">
+        Selected:{{rowDataClicked2.pay_head_desc}}
+      </div>
+
+      <div class=" col-3 fs-6 text-end">
+        Total Amount: {{totalSalary}}
+      </div>
+      <div class="col-1 text-start">
         <span class="spinner-border" *ngIf="(isDetailBusy)"></span>
       </div>
-      <div class="float-right section-detail">
+      <div class=" col-4 text-end section-detail">
         <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="openLudDialog(1)">
           <span class="fa fa-pencil p-2 text-warning"></span>
         </a>

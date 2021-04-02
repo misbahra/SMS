@@ -15,14 +15,14 @@
         <!-- Form -->
         <form [formGroup]="dataForm" class="text-center" style="color: #757575;" action="#!">
     
-            <div class="form-row">
+            <div class="row">
                 <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
                     <span class="sr-only">Loading...</span>
                 </div>
                 <div class="col2">
                     <!-- item_uid -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="item_uid">Item UID</label>
+                        <label class="font-weight row " for="item_uid">Item UID</label>
                         <input readonly type="text" id="item_uid" name="item_uid" class="form-control" placeholder="Item UID"
                             formControlName="item_uid" [ngClass]="{ 'is-invalid':   submitted && fc.item_uid.errors }">
     
@@ -40,7 +40,7 @@
                 <div class="col2">
                     <!-- cat_uid -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="cat_uid">Category UID</label>
+                        <label class="font-weight row " for="cat_uid">Category UID</label>
                         <input readonly type="text" id="cat_uid" name="cat_uid" class="form-control" placeholder="Category UID"
                             formControlName="cat_uid" [ngClass]="{ 'is-invalid':   submitted && fc.cat_uid.errors }">
     
@@ -56,11 +56,11 @@
                 <!--close col -->
 
             </div>
-            <div class="form-row">
+            <div class="row">
                 <div class="col">
                     <!-- item_name -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="item_name">Name</label>
+                        <label class="font-weight row " for="item_name">Name</label>
                         <input type="text" id="item_name" name="item_name" class="form-control" placeholder="Name"
                             formControlName="item_name" [ngClass]="{ 'is-invalid':   submitted && fc.item_name.errors }">
                         <div *ngIf=" fc.item_name.invalid " class="invalid-feedback">
@@ -73,14 +73,32 @@
                 </div>
                 <!--close col -->
             </div>
+
+            <div class="row">
+                <div class="col">
+                    <!-- item_code -->
+                    <div class="md-form ">
+                        <label class="font-weight row " for="item_code">Code</label>
+                        <input type="text" id="item_code" name="item_code" class="form-control" placeholder="Name"
+                            formControlName="item_code" [ngClass]="{ 'is-invalid':   submitted && fc.item_code.errors }">
+                        <div *ngIf=" fc.item_code.invalid " class="invalid-feedback">
+                            <div *ngIf="fc.item_code.errors.required">
+                                Item Code is required
+                            </div>
     
-            <!-- // next form-row -->
-            <div class="form-row">
+                        </div>
+                    </div>
+                </div>
+                <!--close col -->
+            </div>
+    
+            <!-- // next row -->
+            <div class="row">
     
                 <div class="col">
                     <!-- item_bar_code -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="item_bar_code">Bar Code</label>
+                        <label class="font-weight row " for="item_bar_code">Bar Code</label>
                         <input type="text" id="item_bar_code" name="item_bar_code" class="form-control" placeholder="Bar Code"
                             formControlName="item_bar_code" [ngClass]="{ 'is-invalid':   submitted && fc.item_bar_code.errors }">
                         <div *ngIf=" fc.item_bar_code.invalid " class="invalid-feedback">
@@ -96,12 +114,12 @@
     
     
     
-            <div class="form-row mt-3">
+            <div class="row mt-3">
                 <!--close col -->
                 <div class="col">
                     <!-- reorder_quantity  -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="reorder_quantity">Reorder Quantity</label>
+                        <label class="font-weight row " for="reorder_quantity">Reorder Quantity</label>
                         <input type="number" id="reorder_quantity" name="reorder_quantity" class="form-control" placeholder="Reorder Quantity"
                             formControlName="reorder_quantity" [ngClass]="{ 'is-invalid':   submitted && fc.reorder_quantity.errors }">
                         <div *ngIf=" fc.reorder_quantity.invalid " class="invalid-feedback">

@@ -10,7 +10,10 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, Sans-Serif; }
-
+.text-white
+{
+  color:white;
+}
 .fa-trash, .fa-close
 {
     color: red;
@@ -73,7 +76,8 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
 
 .bg
 {
-    background-color: rgb(252, 252, 253);
+    /* background-image:url('./assets/Home_BG.jpg');  */
+    background-repeat: no-repeat;
     background-size:100% 100%;
     height: 100%;
 }
@@ -86,13 +90,23 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
   margin-right: 2px;
 }
 
+.top-bar
+{
+height:60px; 
+/* background-color: rgb(21, 102, 142);  */
+background-image:url('./assets/Top_Strip_02.jpeg');
+color:rgb(65, 5, 177);
+padding: 0px 0px 0px 0px;
+margin: 0px;
+z-index: -5;
+text-align: center;
+}
     
 .header
     {
-        
         height:40px;
         font-size: 18px;
-        padding: 2px 0px 3px 2px;
+        /* padding: 2px 0px 3px 2px; */
             }
 
 .section-header
@@ -135,7 +149,7 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
 {
   color:rgb(12, 10, 79); 
   background-color:rgb(181, 171, 103);
- 
+  
 }
 
 .hd-cyan
@@ -163,7 +177,14 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
 .hd-green
 {
   color:rgb(253, 253, 253); 
-  background-color: limegreen;
+  background-color: rgb(89, 180, 89);
+ 
+}
+
+.hd-grey
+{
+  color:rgb(253, 253, 253); 
+  background-color: rgb(166, 175, 166);
  
 }
 
@@ -209,3 +230,51 @@ body { margin: 0; font-family: Segoe UI, Segoe UI Midlevel, Segoe WP, Arial, San
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+mat-card{
+  width: 350px;
+  height: 400px;
+  
+  margin-left:auto;
+  margin-right:auto;  
+  
+}
+mat-form-field {
+  width: 100%;
+}
+
+.center{
+  justify-content: center;
+  align-items: center;
+}
+
+.main-div{
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ 
+.brand_logo
+{
+      border:2px solid #fff;
+      height: 20%;
+      width:20%;
+      box-shadow: 10px 10px 5px #ccc;
+}
+
+.ag-allow
+{
+  color:rgb(78, 241, 78); 
+  /* background-color:rgb(255, 255, 255);  */
+  
+}
+
+.ag-denay
+{
+  color:rgb(250, 7, 7); 
+  /* background-color:rgb(255, 255, 255);  */
+  
+}

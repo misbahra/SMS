@@ -54,6 +54,7 @@ export class ItemNewComponent implements OnInit {
         item_uid: [this.utilService.getUID('item_uid'), []],
         cat_uid: ['', []],
         item_name: ['', []],
+        item_code: ['', []],
         item_bar_code: ['', []],
         reorder_quantity: ['', []],
         created_by: ['', []],

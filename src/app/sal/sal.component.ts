@@ -185,7 +185,7 @@ this.LUDdataList.forEach(element => {
       {  headerName: 'Head', field: 'pay_head_desc' , width: 150  },
     
    
-      {  headerName: 'Amount', field: 'amount_signed' , width: 150 
+      {  headerName: 'Amount', field: 'amount_signed' , width: 100 
       ,
       cellStyle: {textAlign: "right",color:"green"}
       , valueFormatter: function(params) {

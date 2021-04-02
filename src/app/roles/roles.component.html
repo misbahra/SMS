@@ -1,0 +1,197 @@
+<div class="row  hd-navy header pt-2 pb-2">
+    <div class="col">
+      <span >Manage Roles & Permissions</span>
+    </div>
+
+    <div class="col text-start">
+        <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
+    </div>
+    Select Role:
+    <div class="col text-end">
+       
+      
+        <select [(ngModel)] = "selectedRole" class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="designation"
+            name="role" 
+           (change) = 'roleChange()'>
+            <!-- <option Selected value="">Select User Role</option> -->
+            <option *ngFor="let data of rolesList; index as i;" [value]=data.lud_code>
+                {{data.lud_desc}}
+            </option>
+        </select>
+    
+    </div>
+
+   
+   
+  </div>
+  
+  <!-- *ngIf = "action == 'C' || action == 'M'" -->
+<div 
+class="row p-2 mt-2 mb-2 text-center border border-primary border-3">
+<!-- Form -->
+<form [formGroup]="dataForm" class="text-center" style="color: #757575;" action="#!">
+
+    <div class="row">
+        
+        <div class="col text-start">
+            <!-- Employee ID -->
+            <div class="md-form has-float-label">
+                <label class="row" for="module">Module</label>
+
+                <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="module"
+                    name="module" formControlName="module"
+                    [ngClass]="{ 'is-invalid': submitted && fc.module.errors }">
+                    <!-- <option Selected value="">Select User module</option> -->
+                    <option *ngFor="let data of modulesList; index as i;" [value]=data.lud_code>
+                        {{data.lud_desc}}
+                    </option>
+                    <!-- <option value=data.lud_code>data.lud_desc</option> -->
+                </select>
+
+                <div *ngIf=" fc.module.invalid " class="invalid-feedback">
+                    <div *ngIf="fc.module.errors.required">
+                        Module is required
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--close col -->
+
+        <div class="col text-center">
+            <!-- Employee ID -->
+            <div class="md-form ">
+                <label class="row" for="insert_allowed">Insert Allowed</label>
+                <input type="checkbox" id="insert_allowed" name="insert_allowed" 
+                class="form-check-input mt-0" placeholder="Insert Allowed"
+                
+                    formControlName="insert_allowed"
+                    [ngClass]="{ 'is-invalid':   submitted && fc.insert_allowed.errors }" >
+                <div *ngIf=" fc.insert_allowed.invalid " class="invalid-feedback">
+                    <div *ngIf="fc.insert_allowed.errors.required">
+                        Insert allowed is required
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--close col -->
+   
+        <div class="col text-center">
+            <!-- Employee ID -->
+            <div class="md-form has-float-label">
+                <label class="row " for="update_allowed">Update Allowed</label>
+                <input type="checkbox" id="update_allowed" name="update_allowed" 
+                class="form-check-input mt-0" placeholder="Insert Allowed"
+                
+                    formControlName="update_allowed"
+                    [ngClass]="{ 'is-invalid':   submitted && fc.update_allowed.errors }" >
+                <div *ngIf=" fc.update_allowed.invalid " class="invalid-feedback">
+                    <div *ngIf="fc.update_allowed.errors.required">
+                        Update allowed is required
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--close col -->
+
+        <div class="col text-center">
+            <!-- Employee ID -->
+            <div class="md-form has-float-label">
+                <label class="row " for="delete_allowed">Delete Allowed</label>
+                <input type="checkbox" id="delete_allowed" name="delete_allowed" 
+                class="form-check-input mt-0" placeholder="Insert Allowed"
+                
+                    formControlName="delete_allowed"
+                    [ngClass]="{ 'is-invalid':   submitted && fc.delete_allowed.errors }" >
+                <div *ngIf=" fc.delete_allowed.invalid " class="invalid-feedback">
+                    <div *ngIf="fc.delete_allowed.errors.required">
+                        Delete allowed is required
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--close col -->
+
+        <div class="col text-center">
+            <!-- Employee ID -->
+            <div class="md-form has-float-label">
+                <label class="row " for="view_allowed">View Allowed</label>
+                <input type="checkbox" id="view_allowed" name="view_allowed" 
+                class="form-check-input mt-0" placeholder="View Allowed"
+                
+                    formControlName="view_allowed"
+                    [ngClass]="{ 'is-invalid':   submitted && fc.view_allowed.errors }" >
+                <div *ngIf=" fc.view_allowed.invalid " class="invalid-feedback">
+                    <div *ngIf="fc.view_allowed.errors.required">
+                        View allowed is required
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--close col -->
+    <!--close row -->
+
+    <!-- Submit button -->
+    <div class=" col text-end">
+
+        <button [disabled]="isBusy || selectedRole == '' " (click)="onSubmit()" class="btn  btn-info pl-5 pr-5">
+            <i class="fa fa-save pr-2"> </i> Save
+            <!-- {{ isBusy == false ? 'Login' : 'Logging in, please wait' }}  -->
+        </button>
+       
+        <!-- <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
+                        <span class="sr-only">Loading...</span>
+                    </div> -->
+
+    </div>
+</div>
+</form>
+</div>
+
+<div class="row  hd-navy header mt-2 pt-2">
+    <div class="col">
+        <span > Permisssions </span>
+      </div>
+
+      <div class="col text-end">
+        <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="modifyData()">
+          <span class="fa fa-pencil pe-3 text-warning"></span>
+        </a>
+        <!-- <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="newData()">
+          <span class="fa fa-plus text-white pe-3"></span>
+        </a> -->
+        <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="deleteData()">
+          <span class="fa fa-trash text-danger"></span>
+        </a>
+    
+      </div>
+
+</div>
+
+<!-- <form>
+
+   <input [(ngModel)]="classesData[i].title" name="{{'title-' + i}}" type="text" />
+
+    <p>{{classesData | json}}</p>
+    <div *ngFor="let classData of classesData; let i=index;trackBy:trackByIndex;">
+      <input [(ngModel)]="classesData[i].title" name="{{'title-' + i}}" type="text" />
+    </div>
+    <button (click)="duplicate()">Duplicate</button>
+  </form> -->
+  <div class="row pt-2 mt-2 text-center">
+  <ag-grid-angular
+    style="width: 100%; height: 400px;"
+    class="ag-theme-alpine"
+    [rowData]="rolesData"
+    class="ag-theme-alpine" 
+    (gridReady) = "onGridReady($event)"
+    (rowSelected)="onRowSelected($event)"
+    [columnDefs]="columnDefs"
+
+>
+</ag-grid-angular>
+</div>

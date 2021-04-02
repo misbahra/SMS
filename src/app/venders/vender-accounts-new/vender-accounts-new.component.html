@@ -17,14 +17,14 @@
         <form [formGroup]="dataForm" class="text-center" style="color: #757575;" action="#!">
     
 <!-- ------------------------------------ -->
-<div class="form-row">
+<div class="row">
     <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
         <span class="sr-only">Loading...</span>
     </div>
     <div class="col">
         <!-- vender_account_uid -->
         <div class="md-form ">
-            <label class="font-weight form-row " for="vender_account_uid">Vender Account UID</label>
+            <label class="font-weight row " for="vender_account_uid">Vender Account UID</label>
             <input readonly type="text" id="vender_account_uid" name="vender_account_uid" class="form-control" 
             placeholder="Vender Account UID"
                 formControlName="vender_account_uid" [ngClass]="{ 'is-invalid':   submitted && fc.vender_account_uid.errors }">
@@ -43,7 +43,7 @@
     <div class="col">
         <!-- vender_uid -->
         <div class="md-form ">
-            <label class="font-weight form-row " for="vender_uid">Vender UID</label>
+            <label class="font-weight row " for="vender_uid">Vender UID</label>
             <input readonly type="text" id="vender_uid" name="vender_uid" class="form-control" 
             placeholder="Vender UID"
                 formControlName="vender_uid" [ngClass]="{ 'is-invalid':   submitted && fc.vender_uid.errors }">
@@ -62,12 +62,12 @@
     </div>
 <!-- ------------------------------------------- -->
 
-            <div class="form-row">
+            <div class="row">
                
                 <div class="col">
                     <!-- account_title -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="account_title">Account Title</label>
+                        <label class="font-weight row " for="account_title">Account Title</label>
                         <input  type="text" id="account_title" name="account_title" class="form-control" 
                         placeholder="Account Title"
                             formControlName="account_title" [ngClass]="{ 'is-invalid':   submitted && fc.account_title.errors }">
@@ -85,7 +85,7 @@
                 <div class="col">
                     <!-- account_no -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="account_no">Account Number</label>
+                        <label class="font-weight row " for="account_no">Account Number</label>
                         <input type="text" id="account_no" name="account_no" class="form-control" 
                         placeholder="Account #"
                             formControlName="account_no" [ngClass]="{ 'is-invalid':   submitted && fc.account_no.errors }">
@@ -99,13 +99,13 @@
                 </div>
                 <!--close col -->
     
-                <!-- // next form-row -->
+                <!-- // next row -->
     
     
                 <div class="col">
                     <!-- iban -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="iban">IBAN</label>
+                        <label class="font-weight row " for="iban">IBAN</label>
                         <input type="text" id="iban" name="iban" class="form-control" 
                         placeholder="IBAN"
                             formControlName="iban" [ngClass]="{ 'is-invalid':   submitted && fc.iban.errors }">
@@ -122,12 +122,12 @@
 
 <!-- --------------------------------------- -->
 
-<div class="form-row">
+<div class="row">
     
     <div class="col">
         <!-- bank_name -->
         <div class="md-form ">
-            <label class="font-weight form-row " for="bank_name">Bank Name</label>
+            <label class="font-weight row " for="bank_name">Bank Name</label>
             <input  type="text" id="bank_name" name="bank_name" class="form-control" 
             placeholder="Bank Name"
                 formControlName="bank_name" [ngClass]="{ 'is-invalid':   submitted && fc.bank_name.errors }">
@@ -145,7 +145,7 @@
     <div class="col">
         <!-- branch_name -->
         <div class="md-form ">
-            <label class="font-weight form-row " for="branch_name">Branch Name</label>
+            <label class="font-weight row " for="branch_name">Branch Name</label>
             <input type="text" id="branch_name" name="branch_name" class="form-control" 
             placeholder="Branch Name"
                 formControlName="branch_name" [ngClass]="{ 'is-invalid':   submitted && fc.branch_name.errors }">
@@ -165,7 +165,7 @@
     <div class="col">
         <!-- branch_code -->
         <div class="md-form ">
-            <label class="font-weight form-row " for="branch_code">Branch Code</label>
+            <label class="font-weight row " for="branch_code">Branch Code</label>
             <input type="text" id="branch_code" name="branch_code" class="form-control" 
             placeholder="Branch Code"
                 formControlName="branch_code" [ngClass]="{ 'is-invalid':   submitted && fc.branch_code.errors }">
@@ -179,12 +179,12 @@
     </div>
     <!--close col -->
 </div>
-<!-- // next form-row -->
-<div class="form-row mt-3">
+<!-- // next row -->
+<div class="row mt-3">
 <div class="col">
     <!-- branch_address -->
     <div class="md-form ">
-        <label class="font-weight form-row " for="branch_address">Branch Address</label>
+        <label class="font-weight row " for="branch_address">Branch Address</label>
         <input type="text" id="branch_address" name="branch_address" class="form-control" 
         placeholder="Branch Address"
             formControlName="branch_address" [ngClass]="{ 'is-invalid':   submitted && fc.branch_address.errors }">
@@ -198,16 +198,16 @@
 </div>
 <!--close col -->
 </div>
-<!-- // next form-row -->
+<!-- // next row -->
     <!-- -------------------------------------------- -->
-            <div class="form-row mt-3">
+            <div class="row mt-3">
     
     
                 <div class="col">
                                  <!-- Employee ID -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="country_uid">Country</label>
-                        <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" 
+                        <label class="font-weight row " for="country_uid">Country</label>
+                        <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" 
                                     id="country_uid" name="country_uid"
                             formControlName="country_uid" [ngClass]="{ 'is-invalid': submitted && fc.country_uid.errors }">
                             <!-- <option Selected value="">Select User Role</option> -->
@@ -228,9 +228,9 @@
                 <div class="col">
                     <!-- Employee ID -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="state_uid">State</label>
+                        <label class="font-weight row " for="state_uid">State</label>
                         
-                        <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" 
+                        <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" 
                                     id="state_uid" name="state_uid"
                             formControlName="state_uid" [ngClass]="{ 'is-invalid': submitted && fc.state_uid.errors }">
                             <!-- <option Selected value="">Select User Role</option> -->
@@ -254,9 +254,9 @@
                 <div class="col">
                     <!-- city_uid -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="city_uid">City</label>
+                        <label class="font-weight row " for="city_uid">City</label>
                           
-                        <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" 
+                        <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" 
                                     id="city_uid" name="city_uid"
                             formControlName="city_uid" [ngClass]="{ 'is-invalid': submitted && fc.city_uid.errors }">
                             <!-- <option Selected value="">Select User Role</option> -->
@@ -279,12 +279,12 @@
     
     
     
-            <div class="form-row mt-3">
+            <div class="row mt-3">
                 <!--close col -->
                 <div class="col">
                     <!-- postal_code  -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="postal_code">Postal Code</label>
+                        <label class="font-weight row " for="postal_code">Postal Code</label>
                         <input type="text" id="postal_code" name="postal_code" class="form-control"
                             placeholder="Postal Code" formControlName="postal_code"
                             [ngClass]="{ 'is-invalid':   submitted && fc.postal_code.errors }"
@@ -302,7 +302,7 @@
                 <div class="col">
                     <!-- zip_code -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="zip_code">Zip Code</label>
+                        <label class="font-weight row " for="zip_code">Zip Code</label>
                         <input type="text" id="zip_code" name="zip_code" class="form-control"
                             placeholder="Zip Code" formControlName="zip_code"
                             [ngClass]="{ 'is-invalid':   submitted && fc.zip_code.errors }"
@@ -320,7 +320,7 @@
                 <div class="col">
                     <!-- email -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="email">eMail</label>
+                        <label class="font-weight row " for="email">eMail</label>
                         <input type="text" id="email" name="email" class="form-control"
                             placeholder="email" formControlName="email"
                             [ngClass]="{ 'is-invalid':   submitted && fc.email.errors }"
@@ -338,7 +338,7 @@
                 <div class="col">
                     <!-- phone1 -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="phone1">Phone 1</label>
+                        <label class="font-weight row " for="phone1">Phone 1</label>
                         <input type="text" id="phone1" name="phone1" class="form-control"
                             placeholder="Phone 1" formControlName="phone1"
                             [ngClass]="{ 'is-invalid':   submitted && fc.phone1.errors }"
@@ -359,7 +359,7 @@
             <div class="col">
                 <!-- phone2 -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="phone2">Phone 2 </label>
+                    <label class="font-weight row " for="phone2">Phone 2 </label>
                     <input type="text" id="phone2" name="phone2" class="form-control" placeholder="Phone 2"
                         formControlName="phone2" [ngClass]="{ 'is-invalid':   submitted && fc.phone2.errors }"
                         >
@@ -374,14 +374,14 @@
             <!--close col -->
         </div>
         <!--close row -->
-            <!-- // next form-row -->
-            <div class="form-row mt-3">
+            <!-- // next row -->
+            <div class="row mt-3">
                
     
                 <div class="col-6">
                     <!-- address1 -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="address1">Address 1</label>
+                        <label class="font-weight row " for="address1">Address 1</label>
                         <input  type="text" id="address1" name="address1" class="form-control" 
                         placeholder="Address 1"
                             formControlName="address1" [ngClass]="{ 'is-invalid':   submitted && fc.address1.errors }">
@@ -398,7 +398,7 @@
                 <div class="col-6">
                     <!-- address2 -->
                     <div class="md-form ">
-                        <label class="font-weight form-row " for="address2">Address 2</label>
+                        <label class="font-weight row " for="address2">Address 2</label>
                         <input type="text" id="address2" name="address2" class="form-control"
                             placeholder="Address 2" formControlName="address2"
                             [ngClass]="{ 'is-invalid':   submitted && fc.address2.errors }">

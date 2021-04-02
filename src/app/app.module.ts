@@ -61,6 +61,13 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { ImgUploadComponent } from './img-upload/img-upload.component';
+import {imguploadWS} from './ws/img-uploadWS';
+import { AppdataComponent } from './appdata/appdata.component';
+import {appdataWS} from './ws/appdataWS';
+import { AppdataNewComponent } from './appdata/appdata-new/appdata-new.component';
+import { RolesComponent } from './roles/roles.component';
+import { rolePermissionsWS } from './ws/rolePermissionsWS';
 
 
 @NgModule({
@@ -93,6 +100,10 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     SalComponent,
     NewSalComponent,
     NewSalDetailsComponent,
+    ImgUploadComponent,
+    AppdataComponent,
+    AppdataNewComponent,
+    RolesComponent,
    
   ],
   imports: [
@@ -132,7 +143,10 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     citiesWS,
     statesWS,
     ItemsWS,
-    ItemCategoriesWS
+    ItemCategoriesWS,
+    imguploadWS,
+    appdataWS,
+    rolePermissionsWS
   ],
   bootstrap: [AppComponent],
   entryComponents: [LuhNewComponent]

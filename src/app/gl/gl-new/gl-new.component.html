@@ -14,14 +14,14 @@
 
 
          <!-- row started -->
-         <div class="form-row">
+         <div class="row">
 
           <!--cloumn started -->
           <div class="col">
             <!-- gl_uid -->
             <div class="md-form ">
-                <label class="font-weight form-row " for="gl_uid">GL UID</label>
-                <input readonly type="text" id="gl_uid" name="gl_uid" class="form-row " placeholder="UID"
+                <label class="font-weight row " for="gl_uid">GL UID</label>
+                <input readonly type="text" id="gl_uid" name="gl_uid" class="row " placeholder="UID"
                     formControlName="gl_uid" [ngClass]="{ 'is-invalid':   submitted && fc.gl_uid.errors }">
                 <div *ngIf=" fc.gl_uid.invalid " class="invalid-feedback">
                     <div *ngIf="fc.vender_uid.errors.required">
@@ -39,9 +39,9 @@
     <div class="col">
         <!-- vender_uid -->
         <div class="md-form ">
-            <label class="font-weight form-row " for="vender_uid">Vender</label>
+            <label class="font-weight row " for="vender_uid">Vender</label>
             <!-- [change]= "onVenderChange()" -->
-            <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="vender_uid"
+            <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="vender_uid"
                 name="vender_uid" formControlName="vender_uid"
                 [ngClass]="{ 'is-invalid': submitted && fc.vender_uid.errors }"
                 (change)= "onVenderChange()">
@@ -67,7 +67,7 @@
 <div class="col">
     <!-- gl_date -->
     <div class="md-form ">
-        <label class="font-weight form-row " for="gl_date">GL Date</label>
+        <label class="font-weight row " for="gl_date">GL Date</label>
         <input type="date" id="gl_date" name="gl_date" class="form-control form-control-sm"
             placeholder="GL Date" formControlName="gl_date"
             [ngClass]="{ 'is-invalid':   submitted && fc.gl_date.errors }">
@@ -85,7 +85,7 @@
  <div class="col">
     <!-- ref_number -->
     <div class="md-form ">
-        <label class="font-weight form-row " for="ref_number">Ref#</label>
+        <label class="font-weight row " for="ref_number">Ref#</label>
         <input type="text" id="ref_number" name="ref_number" class="form-control form-control-sm" placeholder="Reference #"
             formControlName="ref_number" [ngClass]="{ 'is-invalid':   submitted && fc.ref_number.errors }">
         <div *ngIf=" fc.ref_number.invalid " class="invalid-feedback">
@@ -102,15 +102,15 @@
     <!------------------- row closed ------------------>
 
         <!-- row started -->
-        <div class="form-row">
+        <div class="row">
 
             <!--cloumn started -->
             <div class="col">
                 <!-- account_head_code -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="account_head_code">Account Head</label>
+                    <label class="font-weight row " for="account_head_code">Account Head</label>
                     
-                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="account_head_code"
+                    <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="account_head_code"
                         name="account_head_code" formControlName="account_head_code"
                         [ngClass]="{ 'is-invalid': submitted && fc.account_head_code.errors }"
                         (change)= "selectAccountHead()">
@@ -135,7 +135,7 @@
              <div class="col">
                 <!-- total_amount -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="total_amount">Total Amount</label>
+                    <label class="font-weight row " for="total_amount">Total Amount</label>
                     <input type="Number" id="total_amount" name="total_amount" class="form-control form-control-sm" 
                     placeholder="Total Amount"
                         formControlName="total_amount"
@@ -154,8 +154,8 @@
              <div class="col">
                 <!-- currency -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="currency">Currency</label>
-                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="currency"
+                    <label class="font-weight row " for="currency">Currency</label>
+                    <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="currency"
                         name="currency" formControlName="currency"
                         [ngClass]="{ 'is-invalid': submitted && fc.currency.errors }">
                         <!-- <option Selected value="">Select User Role</option> -->
@@ -179,15 +179,15 @@
         <!------------------- row closed ------------------>
 
         <!-- row started -->
-        <div class="form-row" *ngIf="fc.account_head_code.value == 'FND'">
+        <div class="row" *ngIf="fc.account_head_code.value == 'FND'">
 
 
             <!--cloumn started -->
             <div class="col">
                 <!-- vender_account_uid -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="vender_account_uid">Vender Account</label>
-                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="vender_account_uid"
+                    <label class="font-weight row " for="vender_account_uid">Vender Account</label>
+                    <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="vender_account_uid"
                         name="vender_account_uid" formControlName="vender_account_uid"
                         [ngClass]="{ 'is-invalid': submitted && fc.vender_account_uid.errors }">
                         <!-- <option Selected value="">Select User Role</option> -->
@@ -212,7 +212,7 @@
             <div class="col">
                 <!-- funds_sent_on -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="funds_sent_on">Funds Sent On</label>
+                    <label class="font-weight row " for="funds_sent_on">Funds Sent On</label>
                     <input type="date" id="funds_sent_on" name="funds_sent_on" class="form-control form-control-sm"
                         placeholder="Funds Sent Date" formControlName="funds_sent_on"
                         [ngClass]="{ 'is-invalid':   submitted && fc.funds_sent_on.errors }">
@@ -230,7 +230,7 @@
             <div class="col">
                 <!-- funds_received_on -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="funds_received_on">Funds Received On</label>
+                    <label class="font-weight row " for="funds_received_on">Funds Received On</label>
                     <input type="date" id="funds_received_on" name="funds_received_on" class="form-control form-control-sm"
                         placeholder="Funds Received Date" formControlName="funds_received_on"
                         [ngClass]="{ 'is-invalid':   submitted && fc.funds_received_on.errors }">
@@ -249,15 +249,15 @@
         <!------------------- row closed ------------------>
 
         <!-- row started -->
-        <div class="form-row" *ngIf="fc.account_head_code.value == 'FND'">
+        <div class="row" *ngIf="fc.account_head_code.value == 'FND'">
 
 
               <!--cloumn started -->
               <div class="col">
                 <!-- through_vender_uid -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="through_vender_uid">Through Vender</label>
-                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="through_vender_uid"
+                    <label class="font-weight row " for="through_vender_uid">Through Vender</label>
+                    <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="through_vender_uid"
                     name="through_vender_uid" formControlName="through_vender_uid"
                     [ngClass]="{ 'is-invalid': submitted && fc.through_vender_uid.errors }">
                     <!-- <option Selected value="">Select User Role</option> -->
@@ -280,8 +280,8 @@
            <div class="col">
             <!-- exchange -->
             <div class="md-form ">
-                <label class="font-weight form-row " for="exchange">Exchange</label>
-                <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="exchange"
+                <label class="font-weight row " for="exchange">Exchange</label>
+                <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="exchange"
                         name="exchange" formControlName="exchange"
                         [ngClass]="{ 'is-invalid': submitted && fc.exchange.errors }">
                         <!-- <option Selected value="">Select User Role</option> -->
@@ -304,7 +304,7 @@
             <div class="col">
                 <!-- other_charges -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="other_charges">Other Charges</label>
+                    <label class="font-weight row " for="other_charges">Other Charges</label>
                     <input type="Number" id="other_charges" name="other_charges" class="form-control form-control-sm"
                         placeholder="Other Charges" formControlName="other_charges"
                         [ngClass]="{ 'is-invalid':   submitted && fc.other_charges.errors }">
@@ -324,14 +324,14 @@
 
 
         <!-- row started -->
-        <div class="form-row" *ngIf="fc.account_head_code.value == 'CAR'">
+        <div class="row" *ngIf="fc.account_head_code.value == 'CAR'">
 
 
             <!--cloumn started -->
             <div class="col">
                 <!-- cargo_bill_amount -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="cargo_bill_amount">Cargo Bill Amount</label>
+                    <label class="font-weight row " for="cargo_bill_amount">Cargo Bill Amount</label>
                     <input type="Number" id="cargo_bill_amount" name="cargo_bill_amount" class="form-control form-control-sm"
                         placeholder="Cargo Bill Amount #" formControlName="cargo_bill_amount"
                         [ngClass]="{ 'is-invalid':   submitted && fc.cargo_bill_amount.errors }">
@@ -349,7 +349,7 @@
             <div class="col">
                 <!-- cargo_charges -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="cargo_charges">Cargo Charges</label>
+                    <label class="font-weight row " for="cargo_charges">Cargo Charges</label>
                     <input type="Number" id="cargo_charges" name="cargo_charges" class="form-control form-control-sm" 
                     placeholder="Cargo Charges"
                         formControlName="cargo_charges"
@@ -368,7 +368,7 @@
             <div class="col">
                 <!-- cargo_vat -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="cargo_vat">Vat</label>
+                    <label class="font-weight row " for="cargo_vat">Vat</label>
                     <input type="Number" id="cargo_vat" name="cargo_vat" class="form-control form-control-sm" placeholder="Vat"
                         formControlName="cargo_vat" [ngClass]="{ 'is-invalid':   submitted && fc.cargo_vat.errors }">
                     <div *ngIf=" fc.cargo_vat.invalid " class="invalid-feedback">
@@ -385,7 +385,7 @@
             <div class="col">
                 <!-- cargo_commission -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="cargo_commission">Comission</label>
+                    <label class="font-weight row " for="cargo_commission">Comission</label>
                     <input type="text" id="cargo_commission" name="cargo_commission" class="form-control form-control-sm"
                         placeholder="Comission" formControlName="cargo_commission"
                         [ngClass]="{ 'is-invalid':   submitted && fc.cargo_commission.errors }">
@@ -403,14 +403,14 @@
 
 
         <!-- row started -->
-        <div class="form-row" *ngIf="fc.account_head_code.value == 'CAR'">
+        <div class="row" *ngIf="fc.account_head_code.value == 'CAR'">
 
 
             <!--cloumn started -->
             <div class="col">
                 <!-- customs_charges -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="customs_charges">Customs</label>
+                    <label class="font-weight row " for="customs_charges">Customs</label>
                     <input type="Number" id="customs_charges" name="customs_charges" class="form-control form-control-sm"
                         placeholder="Customs Charges" formControlName="customs_charges"
                         [ngClass]="{ 'is-invalid':   submitted && fc.customs_charges.errors }">
@@ -428,7 +428,7 @@
             <div class="col">
                 <!-- cargo_weight -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="cargo_weight">Cargo Weight</label>
+                    <label class="font-weight row " for="cargo_weight">Cargo Weight</label>
                     <input type="Number" id="cargo_weight" name="cargo_weight" class="form-control form-control-sm"
                         placeholder="Cargo Weight" formControlName="cargo_weight"
                         [ngClass]="{ 'is-invalid':   submitted && fc.cargo_weight.errors }">
@@ -446,7 +446,7 @@
             <div class="col">
                 <!-- cargo_items_count -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="cargo_items_count">Item Count</label>
+                    <label class="font-weight row " for="cargo_items_count">Item Count</label>
                     <input type="Number" id="cargo_items_count" name="cargo_items_count" class="form-control form-control-sm"
                         placeholder="Item Count" formControlName="cargo_items_count"
                         [ngClass]="{ 'is-invalid':   submitted && fc.cargo_items_count.errors }">
@@ -464,14 +464,14 @@
 
 
         <!-- row started -->
-        <div class="form-row" *ngIf="fc.account_head_code.value == 'CAR'">
+        <div class="row" *ngIf="fc.account_head_code.value == 'CAR'">
 
 
             <!--cloumn started -->
             <div class="col">
                 <!-- cargo_requested_on -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="cargo_requested_on">Requested on</label>
+                    <label class="font-weight row " for="cargo_requested_on">Requested on</label>
                     <input type="date" id="cargo_requested_on" name="cargo_requested_on" class="form-control form-control-sm"
                         placeholder="Cargo Requested on" formControlName="cargo_requested_on"
                         [ngClass]="{ 'is-invalid':   submitted && fc.cargo_requested_on.errors }">
@@ -489,7 +489,7 @@
             <div class="col">
                 <!-- cargo_shipped_on -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="cargo_shipped_on">Shipped on</label>
+                    <label class="font-weight row " for="cargo_shipped_on">Shipped on</label>
                     <input type="date" id="cargo_shipped_on" name="cargo_shipped_on" class="form-control form-control-sm"
                         placeholder="Cargo Shipped on" formControlName="cargo_shipped_on"
                         [ngClass]="{ 'is-invalid':   submitted && fc.cargo_shipped_on.errors }">
@@ -507,7 +507,7 @@
             <div class="col">
                 <!-- cargo_received_on -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="cargo_received_on">Received on</label>
+                    <label class="font-weight row " for="cargo_received_on">Received on</label>
                     <input type="date" id="cargo_received_on" name="cargo_received_on" class="form-control form-control-sm"
                         placeholder="Cargo Received on" formControlName="cargo_received_on"
                         [ngClass]="{ 'is-invalid':   submitted && fc.cargo_received_on.errors }">
@@ -523,15 +523,15 @@
         </div>
         <!------------------- row closed ------------------>
 <!-- row started -->
-<div class="form-row" *ngIf="fc.account_head_code.value == 'LFR'">
+<div class="row" *ngIf="fc.account_head_code.value == 'LFR'">
 
 
       <!--cloumn started -->
       <div class="col">
         <!-- sent_to_vender_uid -->
         <div class="md-form ">
-            <label class="font-weight form-row " for="sent_to_vender_uid">To Vender</label>
-            <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="sent_to_vender_uid"
+            <label class="font-weight row " for="sent_to_vender_uid">To Vender</label>
+            <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="sent_to_vender_uid"
                 name="sent_to_vender_uid" formControlName="sent_to_vender_uid"
                 [ngClass]="{ 'is-invalid': submitted && fc.sent_to_vender_uid.errors }"
                 (change)= "selectSentToVender()">
@@ -555,8 +555,8 @@
       <div class="col">
         <!-- sent_to_vender_account_uid -->
         <div class="md-form ">
-            <label class="font-weight form-row " for="sent_to_vender_account_uid">Vender Account</label>
-            <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" id="sent_to_vender_account_uid"
+            <label class="font-weight row " for="sent_to_vender_account_uid">Vender Account</label>
+            <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="sent_to_vender_account_uid"
                 name="sent_to_vender_account_uid" formControlName="sent_to_vender_account_uid"
                 [ngClass]="{ 'is-invalid': submitted && fc.sent_to_vender_account_uid.errors }">
                 <!-- <option Selected value="">Select User Role</option> -->
@@ -579,14 +579,14 @@
 </div>
 <!------------------- row closed ------------------>
         <!-- row started -->
-        <div class="form-row">
+        <div class="row">
 
 
             <!--cloumn started -->
             <div class="col">
                 <!-- remarks -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="remarks">Remarks</label>
+                    <label class="font-weight row " for="remarks">Remarks</label>
                     <input type="text" id="remarks" name="remarks" class="form-control form-control-sm" placeholder="Remarks"
                         formControlName="remarks" [ngClass]="{ 'is-invalid':   submitted && fc.remarks.errors }">
                     <div *ngIf=" fc.remarks.invalid " class="invalid-feedback">
@@ -602,14 +602,14 @@
         <!------------------- row closed ------------------>
 
         <!-- row started -->
-        <div class="form-row">
+        <div class="row">
 
 
             <!--cloumn started -->
             <div class="col">
                 <!-- additional_details -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="additional_details">Additial Details</label>
+                    <label class="font-weight row " for="additional_details">Additial Details</label>
                     <input type="text" id="additional_details" name="additional_details" class="form-control form-control-sm"
                         placeholder="Addional Details" formControlName="additional_details"
                         [ngClass]="{ 'is-invalid':   submitted && fc.additional_details.errors }">

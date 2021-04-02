@@ -16,15 +16,15 @@
     <!-- Form -->
     <form [formGroup]="dataForm" class="text-center" style="color: #757575;" action="#!">
 
-        <div class="form-row">
+        <div class="row">
             <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
                 <span class="sr-only">Loading...</span>
             </div>
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="vender_uid">Vender</label>
-                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" 
+                    <label class="font-weight row " for="vender_uid">Vender</label>
+                    <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" 
                     id="vender_uid" name="vender_uid"
               formControlName="vender_uid" [ngClass]="{ 'is-invalid': submitted && fc.vender_uid.errors }">
               <!-- <option Selected value="">Select User Role</option> -->
@@ -47,8 +47,8 @@
             <div class="col">
                 <!-- item_uid -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="item_uid">Items</label>
-                    <select class="form-control  form-control-sm mr-sm-2 js-example-basic-single" 
+                    <label class="font-weight row " for="item_uid">Items</label>
+                    <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" 
                     id="item_uid" name="item_uid"
               formControlName="item_uid" [ngClass]="{ 'is-invalid': submitted && fc.item_uid.errors }">
               <!-- <option Selected value="">Select User Role</option> -->
@@ -71,7 +71,7 @@
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="stock_code">Code</label>
+                    <label class="font-weight row " for="stock_code">Code</label>
                     <input type="text" id="stock_code" name="stock_code" class="form-control" 
                     placeholder="Code"
                         formControlName="stock_code" [ngClass]="{ 'is-invalid':   submitted && fc.stock_code.errors }">
@@ -85,13 +85,13 @@
             </div>
             <!--close col -->
 
-            <!-- // next form-row -->
+            <!-- // next row -->
 
 
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="stock_desc">Description</label>
+                    <label class="font-weight row " for="stock_desc">Description</label>
                     <input type="text" id="stock_desc" name="stock_desc" class="form-control" placeholder="Description"
                         formControlName="stock_desc" [ngClass]="{ 'is-invalid':   submitted && fc.stock_desc.errors }">
                     <div *ngIf=" fc.stock_desc.invalid " class="invalid-feedback">
@@ -105,13 +105,13 @@
             <!--close col -->
         </div>
 
-        <div class="form-row mt-3">
+        <div class="row mt-3">
 
 
             <div class="col">
                              <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="request_placed_on">Request Date</label>
+                    <label class="font-weight row " for="request_placed_on">Request Date</label>
                     <input type="date" id="request_placed_on" name="request_placed_on" class="form-control"
                         placeholder="Request Date" formControlName="request_placed_on"
                         [ngClass]="{ 'is-invalid':   submitted && fc.request_placed_on.errors }">
@@ -128,7 +128,7 @@
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="stock_received_on">Received Date</label>
+                    <label class="font-weight row " for="stock_received_on">Received Date</label>
                     <input type="date" id="stock_received_on" name="stock_received_on" class="form-control"
                         placeholder="Received Date" formControlName="stock_received_on"
                         [ngClass]="{ 'is-invalid':   submitted && fc.stock_received_on.errors }">
@@ -145,12 +145,12 @@
 
 
 
-        <div class="form-row mt-3">
+        <div class="row mt-3">
             <!--close col -->
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="items_count">Total Items</label>
+                    <label class="font-weight row " for="items_count">Total Items</label>
                     <input type="number" id="items_count" name="items_count" class="form-control"
                         placeholder="Total Items" formControlName="items_count"
                         [ngClass]="{ 'is-invalid':   submitted && fc.items_count.errors }"
@@ -168,7 +168,7 @@
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="total_bill_amount">Total Amount</label>
+                    <label class="font-weight row " for="total_bill_amount">Total Amount</label>
                     <input type="number" id="total_bill_amount" name="total_bill_amount" class="form-control"
                         placeholder="Total Amount" formControlName="total_bill_amount"
                         [ngClass]="{ 'is-invalid':   submitted && fc.total_bill_amount.errors }"
@@ -186,7 +186,7 @@
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="shipping_charges">Shipping Charges</label>
+                    <label class="font-weight row " for="shipping_charges">Shipping Charges</label>
                     <input type="number" id="shipping_charges" name="shipping_charges" class="form-control"
                         placeholder="Shipping Charges" formControlName="shipping_charges"
                         [ngClass]="{ 'is-invalid':   submitted && fc.shipping_charges.errors }"
@@ -204,7 +204,7 @@
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="delivery_charges">Delivery Charges</label>
+                    <label class="font-weight row " for="delivery_charges">Delivery Charges</label>
                     <input type="number" id="delivery_charges" name="delivery_charges" class="form-control"
                         placeholder="Delivery Charges" formControlName="delivery_charges"
                         [ngClass]="{ 'is-invalid':   submitted && fc.delivery_charges.errors }"
@@ -225,7 +225,7 @@
         <div class="col">
             <!-- Employee ID -->
             <div class="md-form ">
-                <label class="font-weight form-row " for="vat">Vat </label>
+                <label class="font-weight row " for="vat">Vat </label>
                 <input type="number" id="vat" name="vat" class="form-control" placeholder="VAT"
                     formControlName="vat" [ngClass]="{ 'is-invalid':   submitted && fc.vat.errors }"
                     (keyup)= "calculateCostPrice()">
@@ -240,14 +240,14 @@
         <!--close col -->
     </div>
     <!--close row -->
-        <!-- // next form-row -->
-        <div class="form-row mt-3">
+        <!-- // next row -->
+        <div class="row mt-3">
            
 
             <div class="col-2">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="items_cost">Cost Price</label>
+                    <label class="font-weight row " for="items_cost">Cost Price</label>
                     <input readonly type="number" id="items_cost" name="items_cost" class="form-control" 
                     placeholder="Cost Price"
                         formControlName="items_cost" [ngClass]="{ 'is-invalid':   submitted && fc.items_cost.errors }">
@@ -264,7 +264,7 @@
             <div class="col-2">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="sales_price">Sales Price</label>
+                    <label class="font-weight row " for="sales_price">Sales Price</label>
                     <input type="number" id="sales_price" name="sales_price" class="form-control"
                         placeholder="Sales Price" formControlName="sales_price"
                         [ngClass]="{ 'is-invalid':   submitted && fc.sales_price.errors }">
@@ -281,7 +281,7 @@
             <div class="col-2">
                 <!-- stock_sold -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="stock_sold">Stock Sold</label>
+                    <label class="font-weight row " for="stock_sold">Stock Sold</label>
                     <input type="number" id="stock_sold" name="stock_sold" class="form-control"
                         placeholder="Stock Sold" formControlName="stock_sold"
                         [ngClass]="{ 'is-invalid':   submitted && fc.stock_sold.errors }">
@@ -298,7 +298,7 @@
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight form-row " for="stock_bar_code">Bar Code</label>
+                    <label class="font-weight row " for="stock_bar_code">Bar Code</label>
                     <input type="text" id="stock_bar_code" name="stock_bar_code" class="form-control"
                         placeholder="Bar Code" formControlName="stock_bar_code"
                         [ngClass]="{ 'is-invalid':   submitted && fc.stock_bar_code.errors }">

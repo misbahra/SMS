@@ -1,0 +1,16 @@
+
+<div class="main-div">
+   <mat-card class="z-depth" flex="50">
+<input class='file' (change)="onImagePicked($event)" placeholder="Upload Image" 
+   type="file" />
+   <button class='button' (click)="onImageUpload()">Upload Image</button>
+
+    <div *ngIf="imageUrl">
+     Preview Image from AWS
+     <br />
+     <img width="200px" src="{{ 
+     imageUrl }}"
+     />
+    </div>
+   </mat-card>
+</div>

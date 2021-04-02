@@ -1,68 +1,69 @@
 <div class="main-div">
-<mat-card class="z-depth" flex="50">
-  <div class="row center">
-  <mat-card-header>
-    <mat-card-title>Log in</mat-card-title>
-   
-  </mat-card-header>
+  <mat-card class="z-depth" flex="50">
+    <div class="row center">
+      <mat-card-header>
+        <mat-card-title>Log in</mat-card-title>
 
-  <div class="row center">
-    <img class= "brand_logo"  src="../../assets/Logo01.png"> 
-   </div>
+      </mat-card-header>
+
+      <div class="row center">
+        <img class="brand_logo" src="../../assets/Logo01.png">
+      </div>
 
 
-  <p style="color:red;" *ngIf="submitted">{{this.messagetext}}</p>
-</div>
+      <p style="color:red;" *ngIf="submitted">{{this.messagetext}}</p>
+    </div>
 
-  <form [formGroup]="LoginForm">
-    <div class="row center mt-4 mb-3">
-      <mat-form-field class="example-full-width">
-        <mat-label>User</mat-label>
-        <input matInput type="text" id="UserName" name="UserName" placeholder="User" formControlName="UserName"
-          oninput="this.value = this.value.toUpperCase()" [ngClass]="{ 'is-invalid': submitted && fc.UserName.errors }">
-        <div *ngIf="submitted && UserName.invalid " class="invalid-feedback">
-          <div *ngIf="UserName.errors.required">
-            User Name is required
+    <form [formGroup]="LoginForm">
+      <div class="row center mt-4 mb-3">
+        <mat-form-field class="example-full-width">
+          <mat-label>User</mat-label>
+          <input matInput type="text" id="UserName" name="UserName" placeholder="User" formControlName="UserName"
+            oninput="this.value = this.value.toUpperCase()"
+            [ngClass]="{ 'is-invalid': submitted && fc.UserName.errors }">
+          <div *ngIf="submitted && UserName.invalid " class="invalid-feedback">
+            <div *ngIf="UserName.errors.required">
+              User Name is required
+            </div>
+            <div *ngIf="UserName.errors.minlength">
+              User Name should be at least 4 characters
+            </div>
+            <div *ngIf="UserName.errors.invaliduser">
+              Invalid user name
+            </div>
           </div>
-          <div *ngIf="UserName.errors.minlength">
-            User Name should be at least 4 characters
+        </mat-form-field>
+
+      </div>
+      <div class="row center mb-5">
+        <mat-form-field class="example-full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="Password" id="Password" name="Password" placeholder="Password"
+            formControlName="Password" [ngClass]="{ 'is-invalid': submitted && fc.Password.errors }">
+          <div *ngIf="submitted && Password.invalid " class="invalid-feedback">
+            <div *ngIf="Password.errors.required">
+              Password is required
+            </div>
+            <div *ngIf="Password.errors.minlength">
+              Password should be at least 4 characters
+            </div>
+            <div *ngIf="Password.errors.invaliduser">
+              Invalid password
+            </div>
           </div>
-          <div *ngIf="UserName.errors.invaliduser">
-            Invalid user name
-          </div>
+        </mat-form-field>
+      </div>
+
+      <!-- <mat-divider></mat-divider> -->
+      <div class="row center mt-5">
+        <button mat-raised-button color="primary" [disabled]="isBusy" (click)="onSubmit()">
+          <mat-icon color="accent">login</mat-icon>Login
+
+        </button>
+        <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
+          <span class="sr-only">Loading...</span>
         </div>
-      </mat-form-field>
-
-    </div>
-    <div class="row center mb-5">
-      <mat-form-field class="example-full-width">
-        <mat-label>Password</mat-label>
-        <input matInput type="Password" id="Password" name="Password" placeholder="Password" formControlName="Password"
-          [ngClass]="{ 'is-invalid': submitted && fc.Password.errors }">
-        <div *ngIf="submitted && Password.invalid " class="invalid-feedback">
-          <div *ngIf="Password.errors.required">
-            Password is required
-          </div>
-          <div *ngIf="Password.errors.minlength">
-            Password should be at least 4 characters
-          </div>
-          <div *ngIf="Password.errors.invaliduser">
-            Invalid password
-          </div>
-        </div>
-      </mat-form-field>
-    </div>
-
-    <!-- <mat-divider></mat-divider> -->
-    <div class="row center mt-5">
-    <button mat-raised-button color="primary" [disabled]="isBusy" (click)="onSubmit()">
-      <mat-icon color="accent">login</mat-icon>Login
-
-    </button>
-    <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
-      <span class="sr-only">Loading...</span>
-    </div>
-  </div>
-  </form>
-</mat-card>
+      </div>
+    </form>
+  </mat-card>
 </div>

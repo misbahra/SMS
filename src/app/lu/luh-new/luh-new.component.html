@@ -16,14 +16,14 @@
             <!-- Form -->
             <form [formGroup]="dataForm" class="text-center" style="color: #757575;" action="#!">
 
-                <div class="form-row">
+                <div class="row">
                     <div class="spinner-border" style="color: rgb(79, 3, 221);" *ngIf="(isBusy == true)">
                         <span class="sr-only">Loading...</span>
                     </div>
                     <div class="col">
                         <!-- Employee ID -->
                         <div class="md-form ">
-                            <label class = "font-weight form-row " for="luh_desc">Description</label>
+                            <label class = "font-weight row " for="luh_desc">Description</label>
                             <input type="text" id="luh_desc" name="luh_desc" class="form-control"
                                 placeholder="Description" formControlName="luh_desc"
                                 [ngClass]="{ 'is-invalid':   submitted && fc.luh_desc.errors }">
@@ -38,11 +38,11 @@
                     <!--close col -->
                 </div>
 
-                <div class="form-row mt-3">
+                <div class="row mt-3">
                     <div class="col">
                         <!-- User Name -->
                         <div class="md-form">
-                            <label class = "font-weight form-row " for="luh_code">Code</label>
+                            <label class = "font-weight row " for="luh_code">Code</label>
                             <input id="luh_code" name="luh_code" class="form-control" placeholder="Code"
                                 formControlName="luh_code" oninput="this.value = this.value.toUpperCase()"
                                 [ngClass]="{ 'is-invalid': submitted && fc.luh_code.errors }">
