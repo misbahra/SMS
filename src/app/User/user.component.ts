@@ -7,6 +7,8 @@ import {GridOptions} from "@ag-grid-community/all-modules";
 import { MatDialogModule, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UserNewComponent } from '../User/user-new/user-new.component';
 import { luWS } from './../ws/luWS';
+
+
 interface DialogData {
   data: string;
 }
@@ -26,13 +28,17 @@ export class UserComponent implements OnInit {
   title = 'app';
   frameworkComponents: any;
   rowDataClicked: any = {};
+  assRowDataClicked: any = {};
+  avlRowDataClicked: any = {};
 
   columnDefs = [];
   rowData: any = [];
 
   rolesList: any = [];
   rolesColumnDefs = [];
-  
+  assignedRolesColumnDefs = [];
+  assignedRoles : any = [];
+  previousSelectedNode = '';
 
   userPrivs = {
     "viewAllowed": "N",
@@ -49,6 +55,8 @@ export class UserComponent implements OnInit {
     flex: '1 1 auto'
   };
   
+gridAPI : any;
+columnAPI : any;
 
   constructor(
     private webService: mainWS,
@@ -65,29 +73,8 @@ export class UserComponent implements OnInit {
       onGridReady: () => {
         this.gridOptions.api.sizeColumnsToFit();
       }   
-    }
+    };
 
-    this.rolesColumnDefs = [
-                      {
-                        headerName: '',
-                        width: 35,
-                        sortable: false,
-                        filter: false,
-                        checkboxSelection: true
-                      },
-                      { headerName: 'Role Code', field: 'lud_code', width: 150, sortable: true, filter: true },
-                      { headerName: 'Role Description', field: 'lud_desc', width: 350, sortable: true, filter: true }
-                     ];
-                    
-                  }
-  //modules = [ClientSideRowModelModule];
-
-  //@ViewChild('agGrid') agGrid;
-
-  async loadAllUsers() {
-    this.isBusy = true;
-    let response = await this.webService.getUsers();
-    this.userList = response;
 
     this.columnDefs = [
       {
@@ -107,7 +94,8 @@ export class UserComponent implements OnInit {
       },
       { headerName: 'Name', field: 'name', width: 225, sortable: true, filter: true },
       { headerName: 'User ID', field: 'user_name', width: 130, sortable: true, filter: true },
-      { headerName: 'Role', field: 'app_role_desc', width: 175, sortable: true, filter: true },
+      //{ headerName: 'Role', field: 'app_role', width: 175, sortable: true, filter: true },
+      { headerName: 'Employee#', field: 'employee_id', width: 175, sortable: true, filter: true },
       { headerName: 'Department', field: 'd_name', width: 150, sortable: true, filter: true },
       { headerName: 'Designation', field: 'desig_name', width: 150, sortable: true, filter: true },
       { headerName: 'Locked', field: 'locked_desc', width: 130, sortable: true, filter: true },
@@ -133,10 +121,56 @@ export class UserComponent implements OnInit {
       //return newLink;
 
     ];
+
+    this.rolesColumnDefs = [
+                      {
+                        headerName: '',
+                        width: 35,
+                        sortable: false,
+                        filter: false,
+                        checkboxSelection: true
+                      },
+                      { headerName: 'Role Code', field: 'lud_code', width: 150, sortable: true, filter: true },
+                      { headerName: 'Role Description', field: 'lud_desc', width: 350, sortable: true, filter: true }
+                     ];
+                    
+                  
+
+    this.assignedRolesColumnDefs = [
+                    {
+                      headerName: '',
+                      width: 35,
+                      sortable: false,
+                      filter: false,
+                      checkboxSelection: true
+                    },
+                    { headerName: 'id', field: '_id', width: 150, sortable: true, filter: true },
+                    { headerName: 'Role', field: 'role', width: 150, sortable: true, filter: true },
+                    { headerName: 'Role Desc', field: 'role_desc', width: 150, sortable: true, filter: true }
+                    
+                   ];
+                  
+                };
+  //modules = [ClientSideRowModelModule];
+
+  //@ViewChild('agGrid') agGrid;
+
+  async loadAllUsers() {
+    this.assRowDataClicked = {};
+    this.isBusy = true;
+    let response = await this.webService.getUsers();
+    this.userList = response;
+
+    
     this.rowData = response;
     //if (this.userList.active == "true") {this.userList.active = "Y";} else {this.userList.active="N;"}
     //if (this.userList.locked == "true") {this.userList.locked = "Y";} else {this.userList.locked="N;"}
+    
     this.isBusy = false;
+    //setTimeout(function(){ alert("Hello"); }, 3000);
+    
+    //this.reselectRow(this.previousSelectedNode);
+    
   };
 
   format_date(params) {
@@ -204,7 +238,7 @@ export class UserComponent implements OnInit {
 
     this.userPrivs = this.sessionService.getUsersPrivs();
     this.loadAllUsers();
-    this.loadAllLUD('USR');
+    
     //console.log(this.route.snapshot.params.name);
    
   };
@@ -248,7 +282,8 @@ export class UserComponent implements OnInit {
 
       // alert("Selected row is for  - " + e.node.data.name);
       this.rowDataClicked = e.node.data;
-
+      this.assignedRoles = this.rowDataClicked.app_role;
+      this.loadAllLUD('USR');
     }
     else {
 
@@ -257,6 +292,51 @@ export class UserComponent implements OnInit {
       if (this.rowDataClicked) {
         if (this.rowDataClicked._id == e.node.data._id) {
           this.rowDataClicked = {};
+
+        }
+      }
+    }
+
+  }
+
+  onAvlRowSelected(e) {
+
+    if (e.node.selected) {
+
+      // alert("Selected row is for  - " + e.node.data.name);
+      this.avlRowDataClicked = e.node.data;
+      
+    }
+    else {
+
+      // alert("De-Selected row  for - " + e.node.data.name );
+      // if deselected and already selected is deselected then wash the data 
+      if (this.avlRowDataClicked) {
+        if (this.avlRowDataClicked.lud_code == e.node.data.lud_code) {
+          this.avlRowDataClicked = {};
+
+        }
+      }
+    }
+
+  }
+
+
+  onAssRowSelected(e) {
+
+    if (e.node.selected) {
+
+      // alert("Selected row is for  - " + e.node.data.name);
+      this.assRowDataClicked = e.node.data;
+      
+    }
+    else {
+
+      // alert("De-Selected row  for - " + e.node.data.name );
+      // if deselected and already selected is deselected then wash the data 
+      if (this.assRowDataClicked) {
+        if (this.assRowDataClicked.lud_code == e.node.data.lud_code) {
+          this.assRowDataClicked = {};
 
         }
       }
@@ -318,7 +398,71 @@ export class UserComponent implements OnInit {
     //{ alert('Please select a record to update.');}
   }
 
+  async assignRole(){
 
+    if (this.avlRowDataClicked.lud_code) {
+      var data = {_id:this.rowDataClicked._id , role:{role:this.avlRowDataClicked.lud_code}}
+      this.webService.addRole(data).subscribe(
+        (response) => {
+          //this.resp = response;
+          console.log('Data updated' + response);
+          this.previousSelectedNode = this.rowDataClicked._id;
+          
+          this.loadAllUsers();
+          alert("Role assigned successfully")
+          this.reselectRow(this.previousSelectedNode);
+          //this.addRole(this.previousSelectedNode , {role:this.avlRowDataClicked.lud_code} );
+         
+          // this.loadAllUsers();
+  
+        },
+        (error) => {
+          //Handle the error here
+          //If not handled, then throw it
+          console.error(error);
+  
+        })
+    }
+    else { alert('Please select a record to update.'); }
+    //addRole
+  }
 
+  addRole(user_id: any, role:any ) {
+    var selectedIndex : any;
+    var found = this.userList.find(function(post, index) {
+      if(post._id == user_id){
+        
+        selectedIndex = index;
+       
+        return true;
+      }
+    });
+    this.userList[selectedIndex].app_role.push (role);
+    this.assignedRoles.push(role);
+  }
+
+  deleteRole(){ this.reselectRow(this.previousSelectedNode);}
+
+  onGridReady(params){
+      this.gridAPI = params.api;
+      this.columnAPI = params.columnApi;
+      
+  }
+
+  reselectRow(id:any){
+    this.rowDataClicked = {};
+    this.assignedRoles = [];
+    this.rolesList = [];
+    this.gridAPI.forEachNode(node => {
+      alert(node.data._id + ' - '+ node.data.name + ' - ' + id);
+
+      if (node.data._id ==  id) {
+        alert('Mathched - ' + node.data._id + ' - '+ node.data.name + ' - ' + id);
+       node.setSelected(false);
+       node.setSelected(true);
+      }
+     })
+
+  }
 
 }

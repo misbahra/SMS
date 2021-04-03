@@ -135,4 +135,14 @@ export class mainWS {
       )
   }
 
+   // addUser
+   addRole(data: any): Observable<any> {
+    //alert("In update user");
+    return this.http.post(this.BASE_URL + '/addRole', data)
+      .pipe(
+        retry(1),
+        catchError(this.errorHandl)
+      )
+  }
+
 }
