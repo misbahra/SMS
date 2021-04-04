@@ -4,6 +4,9 @@
     <span >Manage Resources</span>
     <span >Selected User: {{rowDataClicked.name}}</span>
   </div>
+  <div class="col text-start">
+    <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
+</div>
   <div class="col text-end">
     <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="openUserDialog('2')">
       <span class="fa fa-pencil pe-3 text-warning"></span>
@@ -38,6 +41,7 @@
 </div>
 
 <div *ngIf = "rowDataClicked._id" class="row pt-2">
+
   <div class="col">
     <div class="row">
       
@@ -45,14 +49,15 @@
           <div class="col">
             <span >Available Roles</span>
           </div>
+
           <div class="col text-end">
-            <a type="button" 
-            data-bs-toggle="tooltip" data-bs-placement="top" title="Grant Selected Role"
-            (click)="assignRole()">
-              <span class="fa fa-arrow-right pe-3 text-warning"></span>
+           
+            <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="assignRole()">
+              <span class="fa fa-plus text-success"></span>
             </a>
-            
+        
           </div>
+         
         </div>
       
     </div>  
@@ -65,8 +70,8 @@
             [animateRows]="true" 
             style="width: 100%; height:400px;" 
             class="ag-theme-alpine" 
-            [rowData]="rolesList"
-            [columnDefs]="rolesColumnDefs" 
+            [rowData]="avlRolesList"
+            [columnDefs]="avlRolesColumnDefs" 
             (rowSelected)="onAvlRowSelected($event)"
             >
         </ag-grid-angular> 
@@ -74,23 +79,24 @@
     </div>
   </div>
 
-
   <div class="col">
     <div class="row">
       
-        <div class="row  hd-navy header pt-2">
+        <div class="row  hd-navy header pt-2 ">
           <div class="col">
-            <span >Granted Roles</span>
+            <span >Assigned Roles</span>
           </div>
-
+          <div class="col text-start">
+            <span class="spinner-border text-warning" *ngIf="(isAssignedBusy == true)"></span>
+        </div>
           <div class="col text-end">
-            <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" 
-            data-bs-toggle="tooltip" data-bs-placement="top" title="Revoke Selected Role"
-            (click)="deleteRole()">
+           
+            <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="revokeRole()">
               <span class="fa fa-trash text-danger"></span>
             </a>
         
           </div>
+         
         </div>
       
     </div>  
@@ -104,11 +110,15 @@
             style="width: 100%; height:400px;" 
             class="ag-theme-alpine" 
             [rowData]="assignedRoles"
-            [columnDefs]="assignedRolesColumnDefs" 
+            [columnDefs]="rolesColumnDefs" 
             (rowSelected)="onAssRowSelected($event)"
             >
         </ag-grid-angular> 
       </div>
     </div>
+  </div>
+
+
+    
 
 </div>

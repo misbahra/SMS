@@ -145,4 +145,24 @@ export class mainWS {
       )
   }
 
+   // addUser
+   deleteRole(data: any): Observable<any> {
+    //alert("In update user");
+    return this.http.post(this.BASE_URL + '/deleteRole', data)
+      .pipe(
+        retry(1),
+        catchError(this.errorHandl)
+      )
+  }
+
+  getThisUserRoles(userid: any) {
+    //alert('loading data in service - ' + userid[0].value);
+    const searchParams = {
+      params: {
+        param1: userid[0].value
+      }
+    }
+    return this.http.get(this.BASE_URL + '/thisuser', searchParams).toPromise();
+  }
+
 }

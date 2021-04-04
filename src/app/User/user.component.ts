@@ -24,19 +24,21 @@ export class UserComponent implements OnInit {
   model: any = [];
   userList: any;
   isBusy = false;
+  isAssignedBusy  = false;
   resp: any[];
   title = 'app';
   frameworkComponents: any;
   rowDataClicked: any = {};
   assRowDataClicked: any = {};
   avlRowDataClicked: any = {};
-
+  response: any = [];
   columnDefs = [];
   rowData: any = [];
 
-  rolesList: any = [];
+  avlRolesList: any = [];
+  avlRolesColumnDefs = [];
+  
   rolesColumnDefs = [];
-  assignedRolesColumnDefs = [];
   assignedRoles : any = [];
   previousSelectedNode = '';
 
@@ -55,8 +57,11 @@ export class UserComponent implements OnInit {
     flex: '1 1 auto'
   };
   
-gridAPI : any;
-columnAPI : any;
+  gridAPI : any;
+  columnAPI : any;
+  avlGridAPI : any;
+  avlColumnAPI : any;
+
 
   constructor(
     private webService: mainWS,
@@ -130,27 +135,28 @@ columnAPI : any;
                         filter: false,
                         checkboxSelection: true
                       },
+                      { headerName: 'Role Code', field: 'role', width: 150, sortable: true, filter: true },
+                      { headerName: 'Role Description', field: 'role_desc', width: 350, sortable: true, filter: true }
+                     ];
+                    
+                  
+                    
+
+    this.avlRolesColumnDefs = [
+                      {
+                        headerName: '',
+                        width: 35,
+                        sortable: false,
+                        filter: false,
+                        checkboxSelection: true
+                      },
                       { headerName: 'Role Code', field: 'lud_code', width: 150, sortable: true, filter: true },
                       { headerName: 'Role Description', field: 'lud_desc', width: 350, sortable: true, filter: true }
                      ];
                     
                   
-
-    this.assignedRolesColumnDefs = [
-                    {
-                      headerName: '',
-                      width: 35,
-                      sortable: false,
-                      filter: false,
-                      checkboxSelection: true
-                    },
-                    { headerName: 'id', field: '_id', width: 150, sortable: true, filter: true },
-                    { headerName: 'Role', field: 'role', width: 150, sortable: true, filter: true },
-                    { headerName: 'Role Desc', field: 'role_desc', width: 150, sortable: true, filter: true }
-                    
-                   ];
-                  
-                };
+  };
+  
   //modules = [ClientSideRowModelModule];
 
   //@ViewChild('agGrid') agGrid;
@@ -238,7 +244,7 @@ columnAPI : any;
 
     this.userPrivs = this.sessionService.getUsersPrivs();
     this.loadAllUsers();
-    
+    this.loadAllLUD('USR');
     //console.log(this.route.snapshot.params.name);
    
   };
@@ -246,9 +252,10 @@ columnAPI : any;
   async loadAllLUD(id: any) {
     //alert("loading lud comp");  
     var luhData = [{value:id}]
-    let response = await this.LUDService.getLUD(luhData);
-    if (id=='USR'){this.rolesList = response;}
     
+    
+    let response = await this.LUDService.getLUD(luhData);
+    if (id=='USR'){this.avlRolesList = response;}
 
   };
 
@@ -273,17 +280,16 @@ columnAPI : any;
     };
   }
 
-
-
-
   onRowSelected(e) {
 
     if (e.node.selected) {
 
       // alert("Selected row is for  - " + e.node.data.name);
       this.rowDataClicked = e.node.data;
-      this.assignedRoles = this.rowDataClicked.app_role;
-      this.loadAllLUD('USR');
+      //this.assignedRoles = this.rowDataClicked.app_role;
+      this.getThisUserRoles(this.rowDataClicked._id)
+     
+      
     }
     else {
 
@@ -299,6 +305,31 @@ columnAPI : any;
 
   }
 
+  onAssRowSelected(e) {
+
+    if (e.node.selected) {
+
+      // alert("Selected row is for  - " + e.node.data.name);
+      this.assRowDataClicked = e.node.data;
+      
+    }
+    else {
+
+      // alert("De-Selected row  for - " + e.node.data.name );
+      // if deselected and already selected is deselected then wash the data 
+      if (this.assRowDataClicked) {
+        if (this.assRowDataClicked.role == e.node.data.role) {
+          this.assRowDataClicked = {};
+
+        }
+      }
+    }
+
+  }
+
+
+
+  
   onAvlRowSelected(e) {
 
     if (e.node.selected) {
@@ -320,29 +351,7 @@ columnAPI : any;
     }
 
   }
-
-
-  onAssRowSelected(e) {
-
-    if (e.node.selected) {
-
-      // alert("Selected row is for  - " + e.node.data.name);
-      this.assRowDataClicked = e.node.data;
-      
-    }
-    else {
-
-      // alert("De-Selected row  for - " + e.node.data.name );
-      // if deselected and already selected is deselected then wash the data 
-      if (this.assRowDataClicked) {
-        if (this.assRowDataClicked.lud_code == e.node.data.lud_code) {
-          this.assRowDataClicked = {};
-
-        }
-      }
-    }
-
-  }
+  
 
    // open the new / update form
    openUserDialog(operation: any) {
@@ -398,19 +407,60 @@ columnAPI : any;
     //{ alert('Please select a record to update.');}
   }
 
-  async assignRole(){
+  assignRole(){
 
     if (this.avlRowDataClicked.lud_code) {
-      var data = {_id:this.rowDataClicked._id , role:{role:this.avlRowDataClicked.lud_code}}
-      this.webService.addRole(data).subscribe(
+
+      var found;
+
+      try {
+        var found = this.assignedRoles.find(({ role }) => role === this.avlRowDataClicked.lud_code);
+        
+      }
+      catch (e) {
+        found = [];
+      }
+
+      if (!found){
+
+            var data = {_id:this.rowDataClicked._id , role:{role:this.avlRowDataClicked.lud_code}}
+            this.webService.addRole(data).subscribe(
+              (response) => {
+                
+                this.getThisUserRoles(this.rowDataClicked._id);
+                
+              
+                //this.addRole(this.previousSelectedNode , {role:this.avlRowDataClicked.lud_code} );
+              
+                // this.loadAllUsers();
+        
+              },
+              (error) => {
+                //Handle the error here
+                //If not handled, then throw it
+                console.error(error);
+        
+              })
+            }
+            else{
+               alert('This role has already been assigned.');
+            }
+    }
+    else { alert('Please select a role to asign.'); }
+    //addRole
+  }
+
+
+  revokeRole(){
+
+    if (this.assRowDataClicked.role) {
+      var data = {_id:this.rowDataClicked._id , sub_id:this.assRowDataClicked._id}
+      this.webService.deleteRole(data).subscribe(
         (response) => {
-          //this.resp = response;
-          console.log('Data updated' + response);
-          this.previousSelectedNode = this.rowDataClicked._id;
+                   
+          this.getThisUserRoles(this.rowDataClicked._id);
           
-          this.loadAllUsers();
-          alert("Role assigned successfully")
-          this.reselectRow(this.previousSelectedNode);
+         
           //this.addRole(this.previousSelectedNode , {role:this.avlRowDataClicked.lud_code} );
          
           // this.loadAllUsers();
@@ -423,46 +473,38 @@ columnAPI : any;
   
         })
     }
-    else { alert('Please select a record to update.'); }
+    else { alert('Please select a role to rewoke.'); }
     //addRole
   }
 
-  addRole(user_id: any, role:any ) {
-    var selectedIndex : any;
-    var found = this.userList.find(function(post, index) {
-      if(post._id == user_id){
-        
-        selectedIndex = index;
-       
-        return true;
-      }
-    });
-    this.userList[selectedIndex].app_role.push (role);
-    this.assignedRoles.push(role);
-  }
 
-  deleteRole(){ this.reselectRow(this.previousSelectedNode);}
+  
 
   onGridReady(params){
+    //alert('its main grid ready ')
       this.gridAPI = params.api;
       this.columnAPI = params.columnApi;
       
   }
 
-  reselectRow(id:any){
-    this.rowDataClicked = {};
-    this.assignedRoles = [];
-    this.rolesList = [];
-    this.gridAPI.forEachNode(node => {
-      alert(node.data._id + ' - '+ node.data.name + ' - ' + id);
+  onAvlGridReady(params){
+   // alert('its roles grid ready ')
+    this.avlGridAPI = params.api;
+    this.avlColumnAPI = params.columnApi;
+     
+}
 
-      if (node.data._id ==  id) {
-        alert('Mathched - ' + node.data._id + ' - '+ node.data.name + ' - ' + id);
-       node.setSelected(false);
-       node.setSelected(true);
-      }
-     })
-
-  }
+async getThisUserRoles(id: any) {
+  this.isAssignedBusy = true;
+  var userToLoad = [{name: "resource_id" , value: id}];
+  this.response = await this.webService.getThisUserRoles(userToLoad);
+  //alert('data - ' + this.response.name);
+  console.log(this.response)
+  this.assignedRoles = this.response.app_role;
+  
+ 
+  this.isAssignedBusy = false;
+};
+ 
 
 }
