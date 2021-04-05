@@ -1,9 +1,13 @@
 
 <div class="row  hd-navy header pt-2">
-  <div class="col">
+  <div class="col m-0 pe-2">
     <span >Manage Resources</span>
-    <span >Selected User: {{rowDataClicked.name}}</span>
   </div>
+
+  <div class="col m-0">
+     <span class="pe-4 ">Selected User: {{rowDataClicked.name}}</span>
+  </div>
+
   <div class="col text-start">
     <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
 </div>
@@ -53,7 +57,7 @@
           <div class="col text-end">
            
             <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="assignRole()">
-              <span class="fa fa-plus text-success"></span>
+              <span class="fa fa-arrow-circle-right text-success" text='Assign Role'></span>
             </a>
         
           </div>

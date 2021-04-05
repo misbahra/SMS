@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
     LoginForm: FormGroup;
     model: any = {};
     resp: any = [];
+    userPermissions: any = [];
+    
     submitted = false;
     isBusy = false;
   
@@ -67,6 +69,12 @@ export class LoginComponent implements OnInit {
       //this.resp = [];
       //alert(this.resp);
     }
+
+    async loadUserPermissions(id:any){
+      this.userPermissions = await this.webService.getThisUserAllPermissions(id);
+      console.log('loading permissions');
+      console.log(JSON.stringify(this.userPermissions));
+    }
   
     validateLogin() {
      // console.log("LoginNew.validateLogin :start");
@@ -74,13 +82,24 @@ export class LoginComponent implements OnInit {
       this.webService.validateLogin2(this.LoginForm.value).subscribe(res => {
         // console.log('User --> :' + this.angForm.username + ' Password --> :' + this.angForm.password  );
         //setTimeout(this.donothing,500);
-       // console.log('res :' + JSON.stringify(res));
-  
+        //this.userPermissions = this.webService.getThisUserAllPermissions(res[0].id);
+       
         this.resp = res;
         // alert(this.resp[0].msg);
         this.messagetext = this.resp[0].msg.toString();
         if (res[0].code == '1') {
+          
+          //console.log(res);
+
+          //this.loadUserPermissions(res[0].id);
+
+          //res[0].permissions = this.userPermissions;
+          console.log('after ...... ');
+          console.log('res :' + JSON.stringify(res));
+          //console.log('permissions :' + JSON.stringify(this.userPermissions));
+          
           this.sessionService.setConnectedUsers(res);
+
           //console.log("LoginNew.validateLogin :calling menu.ngOnInit");
           //this.menu.ngOnInit;
           //alert (this.sessionService.redirectUrl);

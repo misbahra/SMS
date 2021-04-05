@@ -165,4 +165,14 @@ export class mainWS {
     return this.http.get(this.BASE_URL + '/thisuser', searchParams).toPromise();
   }
 
+  getThisUserAllPermissions(userid: any) {
+    //alert('loading data in service - ' + userid[0].value);
+    const searchParams = {
+      params: {
+        param1: userid
+      }
+    }
+    return this.http.get(this.BASE_URL + '/thisUserAllPermissions', searchParams).toPromise();
+  }
+
 }

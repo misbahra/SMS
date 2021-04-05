@@ -1,6 +1,7 @@
 import { Component, Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
+
 //https://alligator.io/js/introduction-localstorage-sessionstorage/
 
 @Injectable()
@@ -81,6 +82,7 @@ export class sessionService {
 
   setConnectedUsers(user: any) {
     var i: any;
+   // load permissions
    
    
     for (i = 0; i < user.length; i++) {
