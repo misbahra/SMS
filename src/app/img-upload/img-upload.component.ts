@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {imguploadWS} from '../ws/img-uploadWS';
+import { sessionService } from '../ws/sessionWS';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
@@ -12,12 +13,18 @@ export class ImgUploadComponent  {
 
   imageObj: File;
    imageUrl: string;
+   userPrivs = {	insert_allowed : false,
+					update_allowed : false,
+					delete_allowed : false,
+					view_allowed : false};
 
-  constructor(private imgUploadService: imguploadWS) {
+  constructor(private imgUploadService: imguploadWS,  
+              private sessionService: sessionService,) {
     
    }
 
  ngOnInit() {
+  this.userPrivs = this.sessionService.getUsersPrivs('UPL');
   }
 
   // ...... other methods and imports skipped for brevity

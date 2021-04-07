@@ -52,10 +52,10 @@ export class GlComponent implements OnInit {
     final_amount = 0;
     venderUID = "";
     venderName = "";
-      userPrivs = {"viewAllowed":"N",
-                  "editAllowed":"N",
-                  "deleteAllowed":"N",
-                  "createAllowed":"N"};
+    userPrivs = {	insert_allowed : false,
+      update_allowed : false,
+      delete_allowed : false,
+      view_allowed : false};
      
       style = {
       marginTop: '0px',
@@ -471,7 +471,7 @@ generatePDF()
   
       
       this.loadGL();
-      this.userPrivs = this.sessionService.getUsersPrivs();
+      this.userPrivs = this.sessionService.getUsersPrivs('GL');
       //this.configureGrid();
       
     };

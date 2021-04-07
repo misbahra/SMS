@@ -43,10 +43,10 @@ export class VendersComponent implements OnInit {
   columnDefs = [];
   rowData:any = [];
    rowDataClicked:any = {};
-    userPrivs = {"viewAllowed":"N",
-                "editAllowed":"N",
-                "deleteAllowed":"N",
-                "createAllowed":"N"};
+    userPrivs = {	insert_allowed : false,
+					update_allowed : false,
+					delete_allowed : false,
+					view_allowed : false};
    
     style = {
     marginTop: '0px',
@@ -193,7 +193,7 @@ rowData2:any = [];
 
 
     this.loadVenders();
-    this.userPrivs = this.sessionService.getUsersPrivs();
+    this.userPrivs = this.sessionService.getUsersPrivs('VND');
     if (this.selectedCode.length > 0){this.LoadVA(this.selectedCode);}
    
   };

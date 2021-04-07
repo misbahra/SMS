@@ -75,6 +75,16 @@ export class sessionService {
     return JSON.parse(localStorage.getItem('conUser')) || [];
   }
 
+  // getUsersPrivsForPage(page : any) {
+  //   // console.log('sessiobService.getConnectedUsers : Start  ');
+  //   // console.log(JSON.parse(localStorage.getItem('conUser')) || []);
+  //   var connUser : any = [];
+  //   var connUserPrivs : any = [];
+  //   connUser =  JSON.parse(localStorage.getItem('conUser')) || [];
+  //   connUserPrivs = connUser[0].permissions;
+  //   console.log(JSON.stringify(connUserPrivs))
+  //  }
+
   IsLoggedIn() {
    
     return (localStorage.getItem('conUser'));
@@ -114,9 +124,15 @@ export class sessionService {
   }
 
   //getting users privs
-  getUsersPrivs() {
-    let userPrivs = { "viewAllowed": "Y", "editAllowed": "Y", "deleteAllowed": "Y", "createAllowed": "Y" };
-    return userPrivs;
+  getUsersPrivs(page: any) {
+    var userPermission = this.getConnectedUsers().permissions.find(({ module }) => module === page);
+ 
+    // let userPrivs = { "viewAllowed": userPermission.view_allowed ? "Y" : "N", 
+    //                   "editAllowed": userPermission.update_allowed ? "Y" : "N",
+    //                   "deleteAllowed": userPermission.delete_allowed ? "Y" : "N",
+    //                   "createAllowed":  userPermission.insert_allowed ? "Y" : "N"
+    //                  };
+    return userPermission;
   }
 
 }

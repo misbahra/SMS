@@ -23,12 +23,10 @@ export class RolesComponent implements OnInit {
   columnDefs = [];
   queryParams: any = [];
   action = 'C';
-  userPrivs = {
-    "viewAllowed": "Y",
-    "editAllowed": "Y",
-    "deleteAllowed": "Y",
-    "createAllowed": "Y"
-  };
+  userPrivs = {	insert_allowed : false,
+					update_allowed : false,
+					delete_allowed : false,
+					view_allowed : false};
 gridAPI;
 columnAPI;
 rowDataClicked:any = {};
@@ -51,8 +49,8 @@ rowDataClicked:any = {};
         },
 
        //{ headerName: 'id', field: 'sal_header_uid' , width: 100  },
-       {  headerName: 'Role', field: 'role_desc' , width: 500 , cellStyle: {textAlign: "left" } ,},
-       {  headerName: 'Module', field: 'module_desc' , width: 450 , cellStyle: {textAlign: "left" }, },
+       {  headerName: 'Role', field: 'role_desc' , width: 450 , cellStyle: {textAlign: "left" } ,},
+       {  headerName: 'Module', field: 'module_desc' , width: 400 , cellStyle: {textAlign: "left" }, },
        {  headerName: 'Insert', field: 'insert_allowed' , width: 100  , 
        cellClass: params => {
         return params.value === true ? 'ag-allow' : 'ag-denay';
@@ -111,14 +109,7 @@ rowDataClicked:any = {};
       modified_on: ['', []],
     })
 
- 
-    
-    this.classesData = [
-      { title: 'Hello0' },
-      { title: 'Hello1' },
-      { title: 'Hello2' }
-    ];
-
+    this.userPrivs = this.sessionService.getUsersPrivs('ROLE');
     this.loadAllLUD('USR');
     this.loadAllLUD('APPM');
     
@@ -141,7 +132,7 @@ rowDataClicked:any = {};
   async loadAllRolesData() {
     this.isBusy=true;
     //alert("selected role:" + this.selectedRole);  
-    this.rolesData = await this.roleService.getRolesPermissions([{'value':this.selectedRole}]);
+    this.rolesData = await this.roleService.getAllThisRolePermissions([{'value':this.selectedRole}]);
     //console.log(this.rolesData);
     this.isBusy=false;
   };
@@ -174,10 +165,9 @@ rowDataClicked:any = {};
     //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.model, null, 4));
     console.log('On submit');
     //console.log('Data: ' +  this.angForm.value  );
-    //alert('user  -  ' + this.UserId);
+    //alert('Role selected   -  ' + this.selectedRole);
     if (this.dataForm.valid) {
       if (this.action == 'C') {
-
         try {
           found = this.rolesData.find(({ role, module }) => role === this.selectedRole && module === this.dataForm.value.module);
           
@@ -216,12 +206,17 @@ rowDataClicked:any = {};
   }
 
   addData() {
-    console.log('data: ' + this.dataForm.value.name);
+    console.log(this.selectedRole);
     this.dataForm.controls.created_on.setValue(Date.now());
 
     this.dataForm.controls.role.setValue(this.selectedRole);
 
-    this.roleService.addRolesPermissions(this.dataForm.value).subscribe(
+    if (this.dataForm.value.insert_allowed ||
+      this.dataForm.value.update_allowed ||
+      this.dataForm.value.delete_allowed 
+   ){this.dataForm.controls.view_allowed.setValue(true);}
+
+    this.roleService.addRolePermission(this.dataForm.value).subscribe(
       (response) => {
         //this.resp = response;
         console.log('Data added' + response);
@@ -244,12 +239,18 @@ rowDataClicked:any = {};
 
     this.dataForm.controls.modified_on.setValue(Date.now());
     this.dataForm.removeControl('id');
+
+    if (this.dataForm.value.insert_allowed ||
+      this.dataForm.value.update_allowed ||
+      this.dataForm.value.delete_allowed 
+   ){this.dataForm.controls.view_allowed.setValue(true);}
+
     this.dataForm.addControl('_id', new FormControl(['', []]));
     this.dataForm.controls._id.setValue(this.rowDataClicked._id);
     //alert("Value is set to - " + this.userForm.controls._id.value);
 
     //this.userForm.controls.user_name.setValue(upper(this.user_name));
-    this.roleService.updateRolesPermissions(this.dataForm.value).subscribe(
+    this.roleService.updateRolePermission(this.dataForm.value).subscribe(
       (response) => {
         //this.resp = response;
         console.log('Data updated' + response);
@@ -312,7 +313,7 @@ rowDataClicked:any = {};
     //this.webService.deleteLUD(this.LUDdataList[id]).subscribe(
       if (this.rowDataClicked._id) {
         if (confirm('Are you sure to delete record?')) {
-           this.roleService.deleteRolesPermissions(this.rowDataClicked).subscribe(
+           this.roleService.deleteRolePermission(this.rowDataClicked).subscribe(
                       (response) => {
                         this.loadAllRolesData();
 

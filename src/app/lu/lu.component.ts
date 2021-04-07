@@ -39,10 +39,10 @@ export class LuComponent implements OnInit {
   columnDefs = [];
   rowData:any = [];
    rowDataClicked:any = {};
-    userPrivs = {"viewAllowed":"N",
-                "editAllowed":"N",
-                "deleteAllowed":"N",
-                "createAllowed":"N"};
+   userPrivs = {	insert_allowed : false,
+					update_allowed : false,
+					delete_allowed : false,
+					view_allowed : false};
    
     style = {
     marginTop: '0px',
@@ -188,9 +188,8 @@ defaultColDef = {
 
   ngOnInit() {
 
-
+    this.userPrivs = this.sessionService.getUsersPrivs('LU');
     this.loadAllLUH();
-    this.userPrivs = this.sessionService.getUsersPrivs();
     if (this.selectedCode.length > 0){this.loadAllLUD(this.selectedCode);}
    
   };

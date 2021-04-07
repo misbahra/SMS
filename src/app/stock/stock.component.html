@@ -67,15 +67,15 @@
             <div class="col  text-end section-detail">
                 <!-- parameter 1 to openStockDialog 
                     means its and new record and 2 mean its an update operation -->
-                  <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+                  <a *ngIf="(userPrivs.update_allowed)" 
                     type="button" (click)="openStockDialog(2)">
                     <span class="fa fa-pencil p-2 text-warning"></span>
                   </a>
-                <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+                <a *ngIf="(userPrivs.insert_allowed)" 
                     type="button" (click)="openStockDialog(1)">
                   <span class="fa fa-plus text-white p-2"></span>
                 </a>
-                <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+                <a *ngIf="(userPrivs.delete_allowed)" 
                     type="button" (click)="deleteStock()">
                     <span class="fa fa-trash text-danger p-2"></span>
                   </a>

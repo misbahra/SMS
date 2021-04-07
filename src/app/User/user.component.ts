@@ -37,17 +37,18 @@ export class UserComponent implements OnInit {
 
   avlRolesList: any = [];
   avlRolesColumnDefs = [];
-  
   rolesColumnDefs = [];
   assignedRoles : any = [];
+
+  allPrivsColumnDefs = [];
+  allPrivs : any = [];
+  
   previousSelectedNode = '';
 
-  userPrivs = {
-    "viewAllowed": "N",
-    "editAllowed": "N",
-    "deleteAllowed": "N",
-    "createAllowed": "N"
-  };
+  userPrivs = {	insert_allowed : false,
+					update_allowed : false,
+					delete_allowed : false,
+					view_allowed : false};
 
 
   style = {
@@ -135,8 +136,8 @@ export class UserComponent implements OnInit {
                         filter: false,
                         checkboxSelection: true
                       },
-                      { headerName: 'Role Code', field: 'role', width: 150, sortable: true, filter: true },
-                      { headerName: 'Role Description', field: 'role_desc', width: 350, sortable: true, filter: true }
+                     // { headerName: 'Role Code', field: 'role', width: 150, sortable: true, filter: true },
+                      { headerName: 'All Roles', field: 'role_desc', width: 300, sortable: true, filter: true }
                      ];
                     
                   
@@ -150,12 +151,63 @@ export class UserComponent implements OnInit {
                         filter: false,
                         checkboxSelection: true
                       },
-                      { headerName: 'Role Code', field: 'lud_code', width: 150, sortable: true, filter: true },
-                      { headerName: 'Role Description', field: 'lud_desc', width: 350, sortable: true, filter: true }
+                     // { headerName: 'Role Code', field: 'lud_code', width: 150, sortable: true, filter: true },
+                      { headerName: 'Assigned Role', field: 'lud_desc', width: 300, sortable: true, filter: true }
                      ];
                     
                   
-  };
+  
+
+              this.allPrivsColumnDefs = [
+                {
+                  headerName: '',
+                  width: 35,
+                  sortable: false,
+                  filter: false,
+                  checkboxSelection: true
+                },
+                { headerName: 'Page', field: 'module_desc', width: 250, sortable: true, filter: true },
+                {  headerName: 'Insert', field: 'insert_allowed' , width: 90  , 
+       cellClass: params => {
+        return params.value === true ? 'ag-allow' : 'ag-denay';
+    }, 
+    cellRenderer: function(params) {
+      if (params.value){return '<span><i class="fa fa-check-square"></i></span>'}
+      else {return '<span><i class="fa fa-times"></i></span>'}
+  }
+  },
+       {  headerName: 'Update', field: 'update_allowed' , width: 100 ,
+       cellClass: params => {
+        return params.value === true ? 'ag-allow' : 'ag-denay';
+    }, 
+    cellRenderer: function(params) {
+      if (params.value){return '<span><i class="fa fa-check-square"></i></span>'}
+      else {return '<span><i class="fa fa-times"></i></span>'}
+  }
+  },
+       {  headerName: 'Delete', field: 'delete_allowed' , width: 100  ,
+       cellClass: params => {
+        return params.value === true ? 'ag-allow' : 'ag-denay';
+    },
+    cellRenderer: function(params) {
+      if (params.value){return '<span><i class="fa fa-check-square"></i></span>'}
+      else {return '<span><i class="fa fa-times"></i></span>'}
+  }
+  },
+       {  headerName: 'View', field: 'view_allowed' , width: 100  ,
+       cellClass: params => {
+        return params.value === true ? 'ag-allow' : 'ag-denay';
+    },
+    cellRenderer: function(params) {
+      if (params.value){return '<span><i class="fa fa-check-square"></i></span>'}
+      else {return '<span><i class="fa fa-times"></i></span>'}
+  }
+  },
+    
+     ];
+  
+
+};
   
   //modules = [ClientSideRowModelModule];
 
@@ -242,7 +294,8 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
 
-    this.userPrivs = this.sessionService.getUsersPrivs();
+    this.userPrivs = this.sessionService.getUsersPrivs('USR');
+    
     this.loadAllUsers();
     this.loadAllLUD('USR');
     //console.log(this.route.snapshot.params.name);
@@ -499,10 +552,13 @@ async getThisUserRoles(id: any) {
   var userToLoad = [{name: "resource_id" , value: id}];
   this.response = await this.webService.getThisUserRoles(userToLoad);
   //alert('data - ' + this.response.name);
-  console.log(this.response)
+  //console.log(this.response)
   this.assignedRoles = this.response.app_role;
-  
- 
+
+  // load all permissions of this user
+  var response = await this.webService.getThisUserAllPermissions(userToLoad);
+  this.allPrivs = response;
+
   this.isAssignedBusy = false;
 };
  

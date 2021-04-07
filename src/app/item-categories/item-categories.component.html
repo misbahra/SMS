@@ -19,15 +19,15 @@
             <div class=" col text-end section-detail">
                 <!-- parameter 1 to openStockDialog 
                     means its and new record and 2 mean its an update operation -->
-                  <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+                  <a *ngIf="(userPrivs.update_allowed)" 
                     type="button" (click)="openItemCategoryDialog('2')">
                     <span class="fa fa-pencil ps-2 text-warning"></span>
                   </a>
-                <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+                <a *ngIf="(userPrivs.insert_allowed)" 
                     type="button" (click)="openItemCategoryDialog('1')">
                   <span class="fa fa-plus text-white ps-2"></span>
                 </a>
-                <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+                <a *ngIf="(userPrivs.delete_allowed)" 
                     type="button" (click)="deleteItemCategory()">
                     <span class="fa fa-trash text-danger ps-2"></span>
                   </a>
@@ -75,15 +75,15 @@
         <div class=" col text-end section-detail">
             <!-- parameter 1 to openStockDialog 
                 means its and new record and 2 mean its an update operation -->
-              <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+              <a *ngIf="(userPrivs.update_allowed)" 
                 type="button" (click)="openItemsDialog('2')">
                 <span class="fa fa-pencil p-2 text-warning"></span>
               </a>
-            <a *ngIf="(userPrivs.createAllowed == 'Y' &&  rowDataClicked._id)" 
+            <a *ngIf="(userPrivs.update_allowed &&  rowDataClicked._id)" 
                 type="button" (click)="openItemsDialog('1')">
               <span class="fa fa-plus text-white p-2"></span>
             </a>
-            <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+            <a *ngIf="(userPrivs.update_allowed)" 
                 type="button" (click)="deleteItem()">
                 <span class="fa fa-trash text-danger p-2"></span>
               </a>

@@ -50,10 +50,10 @@ export class StockComponent implements OnInit {
   rowDataClicked:any = {};
   itemUID = "";
   item_name = "";
-    userPrivs = {"viewAllowed":"N",
-                "editAllowed":"N",
-                "deleteAllowed":"N",
-                "createAllowed":"N"};
+    userPrivs = {	insert_allowed : false,
+					update_allowed : false,
+					delete_allowed : false,
+					view_allowed : false};
    
     style = {
     marginTop: '0px',
@@ -175,7 +175,7 @@ export class StockComponent implements OnInit {
 
     
     this.loadStock();
-    this.userPrivs = this.sessionService.getUsersPrivs();
+    this.userPrivs = this.sessionService.getUsersPrivs('STK');
     
   };
 

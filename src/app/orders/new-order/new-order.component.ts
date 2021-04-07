@@ -74,10 +74,10 @@ export class NewOrderComponent implements OnInit{
   
 
    rowDataClicked:any = {};
-    userPrivs = {"viewAllowed":"N",
-                "editAllowed":"N",
-                "deleteAllowed":"N",
-                "createAllowed":"N"};
+    userPrivs = {	insert_allowed : false,
+					update_allowed : false,
+					delete_allowed : false,
+					view_allowed : false};
    
     style = {
     marginTop: '0px',
@@ -201,7 +201,7 @@ export class NewOrderComponent implements OnInit{
 
     
     this.loadStock();
-    this.userPrivs = this.sessionService.getUsersPrivs();
+    this.userPrivs = this.sessionService.getUsersPrivs('USR');
 
     this.orderForm = this.fb.group({
       id: ['', []],

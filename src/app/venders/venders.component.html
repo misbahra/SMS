@@ -20,15 +20,15 @@
           <div class=" col text-end section-detail">
             <!-- parameter 1 to openStockDialog 
                 means its and new record and 2 mean its an update operation -->
-              <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+              <a *ngIf="(userPrivs.update_allowed)" 
                 type="button" (click)="openVendersDialog('2')">
                 <span class="fa fa-pencil p-2 text-warning"></span>
               </a>
-            <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+            <a *ngIf="(userPrivs.update_allowed)" 
                 type="button" (click)="openVendersDialog('1')">
               <span class="fa fa-plus text-white p-2"></span>
             </a>
-            <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+            <a *ngIf="(userPrivs.update_allowed)" 
                 type="button" (click)="deleteVender()">
                 <span class="fa fa-trash text-danger p-2"></span>
               </a>
@@ -71,15 +71,15 @@
           <div class=" col text-end section-detail">
             <!-- parameter 1 to openStockDialog 
                 means its and new record and 2 mean its an update operation -->
-              <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+              <a *ngIf="(userPrivs.update_allowed)" 
                 type="button" (click)="openVenderAccountsDialog('2')">
                 <span class="fa fa-pencil p-2 text-warning"></span>
               </a>
-            <a *ngIf="(userPrivs.createAllowed == 'Y' &&  rowDataClicked._id)" 
+            <a *ngIf="(userPrivs.insert_allowed &&  rowDataClicked._id)" 
                 type="button" (click)="openVenderAccountsDialog('1')">
               <span class="fa fa-plus text-white p-2"></span>
             </a>
-            <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+            <a *ngIf="(userPrivs.delete_allowed)" 
                 type="button" (click)="deleteVA()">
                 <span class="fa fa-trash text-danger p-2"></span>
               </a>

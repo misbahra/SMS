@@ -12,13 +12,13 @@
     <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span>
 </div>
   <div class="col text-end">
-    <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="openUserDialog('2')">
+    <a *ngIf="(userPrivs.update_allowed)" type="button" (click)="openUserDialog('2')">
       <span class="fa fa-pencil pe-3 text-warning"></span>
     </a>
-    <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="openUserDialog('1')">
+    <a *ngIf="(userPrivs.insert_allowed)" type="button" (click)="openUserDialog('1')">
       <span class="fa fa-plus text-white pe-3"></span>
     </a>
-    <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="deleteCustomer()">
+    <a *ngIf="(userPrivs.delete_allowed)" type="button" (click)="deleteCustomer()">
       <span class="fa fa-trash text-danger"></span>
     </a>
 
@@ -46,17 +46,17 @@
 
 <div *ngIf = "rowDataClicked._id" class="row pt-2">
 
-  <div class="col">
+  <div class="col-3">
     <div class="row">
       
         <div class="row  hd-navy header pt-2">
           <div class="col">
-            <span >Available Roles</span>
+            <span >All Roles</span>
           </div>
 
           <div class="col text-end">
            
-            <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="assignRole()">
+            <a *ngIf="(userPrivs.insert_allowed)" type="button" (click)="assignRole()">
               <span class="fa fa-arrow-circle-right text-success" text='Assign Role'></span>
             </a>
         
@@ -83,19 +83,19 @@
     </div>
   </div>
 
-  <div class="col">
+  <div class="col-3">
     <div class="row">
       
         <div class="row  hd-navy header pt-2 ">
-          <div class="col">
-            <span >Assigned Roles</span>
+          <div class="col-6 fs-6 ">
+            <span >Asgnigned Roles</span>
           </div>
-          <div class="col text-start">
+          <div class="col-2 text-start p-0">
             <span class="spinner-border text-warning" *ngIf="(isAssignedBusy == true)"></span>
         </div>
-          <div class="col text-end">
+          <div class="col text-end ">
            
-            <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="revokeRole()">
+            <a *ngIf="(userPrivs.delete_allowed)" type="button" (click)="revokeRole()">
               <span class="fa fa-trash text-danger"></span>
             </a>
         
@@ -122,6 +122,40 @@
     </div>
   </div>
 
+
+
+  <div class="col">
+    <div class="row">
+      
+        <div class="row  hd-navy header pt-2 ">
+          <div class="col">
+            <span >Permissions Summary</span>
+          </div>
+          <div class="col text-start">
+            <span class="spinner-border text-warning" *ngIf="(isAssignedBusy == true)"></span>
+        </div>
+         
+         
+        </div>
+      
+    </div>  
+
+    <div class="row p-0 m-0">
+      <div class="col p-0 m-0">
+        <ag-grid-angular 
+            [pagination]="true" 
+            [unSortIcon]="true"
+            [animateRows]="true" 
+            style="width: 100%; height:400px;" 
+            class="ag-theme-alpine" 
+            [rowData]="allPrivs"
+            [columnDefs]="allPrivsColumnDefs" 
+           
+            >
+        </ag-grid-angular> 
+      </div>
+    </div>
+  </div>
 
     
 

@@ -33,10 +33,17 @@ export class MenuComponent implements OnInit {
       //console.log('menu.ngOnInit: start ');
      // console.log(JSON.parse(localStorage.getItem('conUser')) || []);
       this.connectedUser = JSON.parse(localStorage.getItem('conUser')) || [];
+      //console.log(JSON.stringify(this.connectedUser.permissions));
       //this.loadConnectedUser();
       //this.connectedUser = this.sessionService.getConnectedUsers();
       //this.connectedUser = this.sessionService.connectedUser;
       //console.log('menu.ngOnInit: connected user -' + this.connectedUser.name)
+   }
+
+   isPageAvailable(page : any){
+     var found = this.connectedUser.permissions.find(({ module }) => module === page);
+     if (found){return found.view_allowed}
+     else {return false}
    }
 
   LogOut() {

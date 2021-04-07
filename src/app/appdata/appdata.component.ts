@@ -57,10 +57,10 @@ export class AppdataComponent implements OnInit {
       final_amount = 0;
       venderUID = "";
       venderName = "";
-        userPrivs = {"viewAllowed":"N",
-                    "editAllowed":"N",
-                    "deleteAllowed":"N",
-                    "createAllowed":"N"};
+      userPrivs = {	insert_allowed : false,
+					update_allowed : false,
+					delete_allowed : false,
+					view_allowed : false};
        
         style = {
         marginTop: '0px',
@@ -210,7 +210,7 @@ export class AppdataComponent implements OnInit {
     
         
         this.loadAppData();
-        this.userPrivs = this.sessionService.getUsersPrivs();
+        this.userPrivs = this.sessionService.getUsersPrivs('APPD');
         //this.configureGrid();
         
       };

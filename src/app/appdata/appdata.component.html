@@ -13,13 +13,13 @@
             <div class=" float-right section-detail">
                 <!-- parameter 1 to openStockDialog 
                 means its and new record and 2 mean its an update operation -->
-                <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="openGLDialog(2)">
+                <a *ngIf="(userPrivs.update_allowed)" type="button" (click)="openGLDialog(2)">
                     <span class="fa fa-pencil p-2 text-warning"></span>
                 </a>
-                <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="openGLDialog(1)">
+                <a *ngIf="(userPrivs.insert_allowed)" type="button" (click)="openGLDialog(1)">
                     <span class="fa fa-plus text-white p-2"></span>
                 </a>
-                <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="deleteGL()">
+                <a *ngIf="(userPrivs.delete_allowed)" type="button" (click)="deleteGL()">
                     <span class="fa fa-trash text-danger p-2"></span>
                 </a>
 

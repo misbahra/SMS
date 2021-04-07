@@ -82,7 +82,7 @@ export class SalesComponent implements OnInit {
     this.loadAllLUD(11);
    
       //this.loadAllOrders();
-      this.userPrivs = this.sessionService.getUsersPrivs();
+      this.userPrivs = this.sessionService.getUsersPrivs('USR');
      
       //this.orderForm = new this.fb.group();
        this.orderForm = this.fb.group({

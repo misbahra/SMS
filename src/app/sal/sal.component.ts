@@ -45,10 +45,10 @@ export class SalComponent implements OnInit {
   selectedResource = "";
   resourceList: any = [];
    rowDataClicked:any = {};
-    userPrivs = {"viewAllowed":"N",
-                "editAllowed":"N",
-                "deleteAllowed":"N",
-                "createAllowed":"N"};
+   userPrivs = {	insert_allowed : false,
+					update_allowed : false,
+					delete_allowed : false,
+					view_allowed : false};
    
     style = {
     marginTop: '0px',
@@ -280,7 +280,7 @@ this.LUDdataList.forEach(element => {
 
     this.loadResources();
    // this.loadAllSalHeaders();
-    this.userPrivs = this.sessionService.getUsersPrivs();
+   this.userPrivs = this.sessionService.getUsersPrivs('SAL');
     if (this.selectedCode.length > 0){this.loadAllLUD(this.selectedCode);}
    
   };

@@ -40,12 +40,10 @@ export class CustomersComponent implements OnInit {
   rowData: any = [];
   defaultColDef;
   rowDataClicked: any = {};
-  userPrivs = {
-    "viewAllowed": "N",
-    "editAllowed": "N",
-    "deleteAllowed": "N",
-    "createAllowed": "N"
-  };
+  userPrivs = {	insert_allowed : false,
+					update_allowed : false,
+					delete_allowed : false,
+					view_allowed : false};
   dateFrom : any;
   style = {
     marginTop: '0px',
@@ -128,7 +126,7 @@ export class CustomersComponent implements OnInit {
 
 
     this.loadCustomers();
-    this.userPrivs = this.sessionService.getUsersPrivs();
+    this.userPrivs = this.sessionService.getUsersPrivs('CUS');
 
 
   };

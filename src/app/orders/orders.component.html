@@ -117,13 +117,13 @@
       <span class="pe-5"> Total Amount: {{sumAmount}}</span>
       <!-- parameter 1 to openStockDialog 
                 means its and new record and 2 mean its an update operation -->
-      <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="editOrder()">
+      <a *ngIf="(userPrivs.update_allowed)" type="button" (click)="editOrder()">
         <span class="fa fa-pencil p-2 text-warning"></span>
       </a>
-      <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="createOrder()">
+      <a *ngIf="(userPrivs.insert_allowed)" type="button" (click)="createOrder()">
         <span class="fa fa-plus text-white p-2"></span>
       </a>
-      <a *ngIf="(userPrivs.createAllowed == 'Y')" type="button" (click)="deleteOrder()">
+      <a *ngIf="(userPrivs.delete_allowed)" type="button" (click)="deleteOrder()">
         <span class="fa fa-trash text-danger p-2"></span>
       </a>
   

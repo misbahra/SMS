@@ -51,10 +51,10 @@ export class OrdersComponent implements OnInit {
   orderForm: FormGroup;
   sumAmount: any = 0;
    rowDataClicked:any = {};
-    userPrivs = {"viewAllowed":"N",
-                "editAllowed":"N",
-                "deleteAllowed":"N",
-                "createAllowed":"N"};
+    userPrivs = {	insert_allowed : false,
+					update_allowed : false,
+					delete_allowed : false,
+					view_allowed : false};
    
     style = {
     marginTop: '0px',
@@ -87,7 +87,7 @@ ngOnInit() {
   this.loadAllCustomers();
   this.loadItems();
     //this.loadAllOrders();
-    this.userPrivs = this.sessionService.getUsersPrivs();
+    this.userPrivs = this.sessionService.getUsersPrivs('USR');
     if (this.selectedCode.length > 0){this.loadAllOrderItems(this.selectedCode);}
     //this.orderForm = new this.fb.group();
      this.orderForm = this.fb.group({

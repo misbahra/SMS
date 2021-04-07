@@ -26,30 +26,30 @@
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active text-white" href="#" id="settingMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-          *ngIf="(connectedUser.length != 0 && connectedUser.app_role == 'AAD')"
+          *ngIf="(connectedUser.length != 0 )"
           >
           <i class="fa fa-gear fa-w-18 fa-lg"></i> Settings
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" routerLink="/user"><i class="fa fa-users fa-w-18 fa-lg p-2"></i>Users</a></li>
-            <li><a class="dropdown-item" routerLink="/lu"><i class="fa fa-th-list fa-w-18 fa-lg p-2"></i>LookUp</a></li>
+            <li *ngIf = "isPageAvailable('USR')"><a class="dropdown-item" routerLink="/user"><i class="fa fa-users fa-w-18 fa-lg p-2"></i>Users</a></li>
+            <li *ngIf = "isPageAvailable('LU')"><a class="dropdown-item" routerLink="/lu"><i class="fa fa-th-list fa-w-18 fa-lg p-2"></i>LookUp</a></li>
             <!-- <li><hr class="dropdown-divider"></li> -->
-            <li><a class="dropdown-item" routerLink="/sal"><i class="fa fa-money fa-w-18 fa-lg p-2"></i>Salary</a></li>
-            <li><a class="dropdown-item" routerLink="/imgUpload"><i class="fa fa-cloud-upload fa-w-18 fa-lg p-2"></i>Upload</a></li>
-            <li><a class="dropdown-item" routerLink="/appData"><i class="fa fa-cubes fa-w-18 fa-lg p-2"></i>AppData</a></li>
-            <li><a class="dropdown-item" routerLink="/role"><i class="fa fa-cubes fa-w-18 fa-lg p-2"></i>Roles</a></li>
+            <li *ngIf = "isPageAvailable('SAL')"><a class="dropdown-item" routerLink="/sal"><i class="fa fa-money fa-w-18 fa-lg p-2"></i>Salary</a></li>
+            <li *ngIf = "isPageAvailable('UPL')"><a class="dropdown-item" routerLink="/imgUpload"><i class="fa fa-cloud-upload fa-w-18 fa-lg p-2"></i>Upload</a></li>
+            <li *ngIf = "isPageAvailable('APPD')"><a class="dropdown-item" routerLink="/appData"><i class="fa fa-cubes fa-w-18 fa-lg p-2"></i>AppData</a></li>
+            <li *ngIf = "isPageAvailable('ROLE')"><a class="dropdown-item" routerLink="/role"><i class="fa fa-cubes fa-w-18 fa-lg p-2"></i>Roles</a></li>
           </ul>
         </li>
 
         
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active text-white" href="#" id="reportsMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-          *ngIf="(connectedUser.length != 0 && connectedUser.app_role == 'AAD')"
+          *ngIf="(connectedUser.length != 0 )"
           >
           <i class="fa fa-leanpub fa-w-18 fa-lg"></i> Reports
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" routerLink="/salesRep"><i class="fa fa-paper-plane-o fa-w-18 fa-lg p-2"></i>Sales Report</a></li>
+            <li *ngIf = "isPageAvailable('SRP')"><a class="dropdown-item" routerLink="/salesRep"><i class="fa fa-paper-plane-o fa-w-18 fa-lg p-2"></i>Sales Report</a></li>
             
           </ul>
         </li>
@@ -58,18 +58,18 @@
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle active text-white" href="#" id="settingMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-        *ngIf="(connectedUser.length != 0 && connectedUser.app_role == 'AAD')"
+        *ngIf="(connectedUser.length != 0 )"
         >
         <i class="fa fa-server fa-w-18 fa-lg"></i> Forms
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" routerLink="/order"><i class="fa fa-id-card fa-w-18 fa-lg p-2"></i>Orders</a></li>
-          <li><a class="dropdown-item" routerLink="/vender"><i class="fa fa-address-card-o fa-w-18 fa-lg p-2"></i>Venders</a></li>
+          <li *ngIf = "isPageAvailable('ORD')"><a class="dropdown-item" routerLink="/order"><i class="fa fa-id-card fa-w-18 fa-lg p-2"></i>Orders</a></li>
+          <li *ngIf = "isPageAvailable('VND')"><a class="dropdown-item" routerLink="/vender"><i class="fa fa-address-card-o fa-w-18 fa-lg p-2"></i>Venders</a></li>
           <!-- <li><hr class="dropdown-divider"></li> -->
-          <li><a class="dropdown-item" routerLink="/customer"><i class="fa fa-id-badge fa-w-18 fa-lg p-2"></i>Customers</a></li>
-          <li><a class="dropdown-item" routerLink="/itemcategory"><i class="fa fa-sign-language fa-w-18 fa-lg p-2"></i>Items</a></li>
-          <li><a class="dropdown-item" routerLink="/stock"><i class="fa fa-home fa-w-18 fa-lg p-2"></i>Stock</a></li>
-          <li><a class="dropdown-item" routerLink="/gl"><i class="fa fa-braille fa-w-18 fa-lg p-2"></i>GL</a></li>
+          <li *ngIf = "isPageAvailable('CUS')"><a class="dropdown-item" routerLink="/customer"><i class="fa fa-id-badge fa-w-18 fa-lg p-2"></i>Customers</a></li>
+          <li *ngIf = "isPageAvailable('ITM')"><a class="dropdown-item" routerLink="/itemcategory"><i class="fa fa-sign-language fa-w-18 fa-lg p-2"></i>Items</a></li>
+          <li *ngIf = "isPageAvailable('STK')"><a class="dropdown-item" routerLink="/stock"><i class="fa fa-home fa-w-18 fa-lg p-2"></i>Stock</a></li>
+          <li *ngIf = "isPageAvailable('GL')"><a class="dropdown-item" routerLink="/gl"><i class="fa fa-braille fa-w-18 fa-lg p-2"></i>GL</a></li>
         </ul>
       </li>
        

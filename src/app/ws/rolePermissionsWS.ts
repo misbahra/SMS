@@ -13,18 +13,18 @@ export class rolePermissionsWS {
 
     getAllRolesPermissions(params : any) {
        // alert(params.param1);
-        return this.http.get(this.BASE_URL + '/allRoles', params).toPromise();
+        return this.http.get(this.BASE_URL + '/allRolePermissions', params).toPromise();
     }
 
    
-    getRolesPermissions(id: any) {
+    getAllThisRolePermissions(id: any) {
         //alert('loading data in service - ' + userid[0].value);
         const searchParams = {
             params: {
                 param1: id[0].value
             }
         }
-        return this.http.get(this.BASE_URL + '/allRolePermissions', searchParams).toPromise();
+        return this.http.get(this.BASE_URL + '/allThisRolePermissions', searchParams).toPromise();
     }
 
     getThisRolesPermissions(id: any) {
@@ -34,14 +34,14 @@ export class rolePermissionsWS {
                 param1: id[0].value
             }
         }
-        return this.http.get(this.BASE_URL + '/thisRole', searchParams).toPromise();
+        return this.http.get(this.BASE_URL + '/thisRolePermission', searchParams).toPromise();
     }
 
 
     // add
-    addRolesPermissions(data: any): Observable<any> {
+    addRolePermission(data: any): Observable<any> {
         //alert("in add user");
-        return this.http.post(this.BASE_URL + '/AddRole', data)
+        return this.http.post(this.BASE_URL + '/addRolePermission', data)
             .pipe(
                 retry(1),
                 catchError(this.errorHandl)
@@ -50,9 +50,9 @@ export class rolePermissionsWS {
 
  
     // Update 
-    updateRolesPermissions(data: any): Observable<any> {
+    updateRolePermission(data: any): Observable<any> {
         //alert("In update user");
-        return this.http.post(this.BASE_URL + '/updateRole', data)
+        return this.http.post(this.BASE_URL + '/updateRolePermission', data)
             .pipe(
                 retry(1),
                 catchError(this.errorHandl)
@@ -63,9 +63,9 @@ export class rolePermissionsWS {
  
 
     // delete 
-    deleteRolesPermissions(data: any): Observable<any> {
+    deleteRolePermission(data: any): Observable<any> {
         //alert("inside service;" + data._id);
-        return this.http.post(this.BASE_URL + '/deleteRole', data)
+        return this.http.post(this.BASE_URL + '/deleteRolePermission', data)
             .pipe(
                 retry(1),
                 catchError(this.errorHandl)

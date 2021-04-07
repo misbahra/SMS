@@ -16,21 +16,22 @@
         <div class=" col">
             <span class="spinner-border" *ngIf="(isBusy == true)"></span>
         </div>
-        <div class=" col text-end section-detail">
+        <div *ngIf="(userPrivs.insert_allowed)" 
+            class=" col text-end section-detail">
           <a style="cursor: pointer" (click)="exportexcel()">
             <span class="fa fa-download p-2 pr-4"></span>
           </a>
           <!-- parameter 1 to openStockDialog 
               means its and new record and 2 mean its an update operation -->
-            <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+            <a *ngIf="(userPrivs.update_allowed)" 
               type="button" (click)="openCustomersDialog('2')">
               <span class="fa fa-pencil p-2 text-warning"></span>
             </a>
-          <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+          <a *ngIf="(userPrivs.insert_allowed)" 
               type="button" (click)="openCustomersDialog('1')">
             <span class="fa fa-plus text-white p-2"></span>
           </a>
-          <a *ngIf="(userPrivs.createAllowed == 'Y')" 
+          <a *ngIf="(userPrivs.delete_allowed)" 
               type="button" (click)="deleteCustomer()">
               <span class="fa fa-trash text-danger p-2"></span>
           </a>

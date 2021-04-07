@@ -167,9 +167,10 @@ export class mainWS {
 
   getThisUserAllPermissions(userid: any) {
     //alert('loading data in service - ' + userid[0].value);
+
     const searchParams = {
       params: {
-        param1: userid
+         param1: userid[0].value
       }
     }
     return this.http.get(this.BASE_URL + '/thisUserAllPermissions', searchParams).toPromise();
