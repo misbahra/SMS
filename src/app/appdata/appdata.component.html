@@ -1,16 +1,15 @@
 
 
-<div class="row bg">
+        <div class="row pt-2 pl-2 section-header hd-navy">
+            <div class="col float-left">
+                <span>Mobile Application Data</span>
+            </div>
 
-    
-
-    <div class="column2">
-        <div class="pt-2 pl-2 section-header hd-cyan">
-
-            <div class=" float-left">
+            <div class="col">
                 <span class="spinner-border" *ngIf="(isDetailBusy == true)"></span>
             </div>
-            <div class=" float-right section-detail">
+
+            <div class="col text-end section-detail">
                 <!-- parameter 1 to openStockDialog 
                 means its and new record and 2 mean its an update operation -->
                 <a *ngIf="(userPrivs.update_allowed)" type="button" (click)="openGLDialog(2)">
@@ -23,43 +22,49 @@
                     <span class="fa fa-trash text-danger p-2"></span>
                 </a>
 
-
-
-               
-
             </div>
         </div>
-        <div [ngStyle]="style">
+        <div class="row p-0 m-0">
+            <div class="col p-0 m-0">
             <ag-grid-angular [pagination]="true" [unSortIcon]="true" [animateRows]="true"
-                style="width:100%; height:100%;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs"
-                [defaultColDef]="defaultColDef" [pinnedTopRowData]="pinnedTopRowData"
-                [pinnedBottomRowData]="pinnedBottomRowData" [enableCellChangeFlash]="true"
-                (gridReady)="onGridReady($event)" (rowSelected)="onRowSelected($event)">
+                style="width:100%; height:300px;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs"
+                [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" (rowSelected)="onRowSelected($event)">
+            </ag-grid-angular>
+        </div>
+        </div>
+    
+
+           <div class="row pt-2 ps-2 mt-2 section-header hd-navy">
+            <div class="col">
+                Images
+            </div>
+            <div class="col">
+                <span class="spinner-border" *ngIf="(isDetailBusy == true)"></span>
+            </div>
+
+            <div class="col text-end section-detail">
+                <!-- parameter 1 to openStockDialog 
+                means its and new record and 2 mean its an update operation -->
+                <a *ngIf="(userPrivs.update_allowed)" type="button" (click)="openImageDialog(2)">
+                    <span class="fa fa-pencil p-2 text-warning"></span>
+                </a>
+                <a *ngIf="(userPrivs.insert_allowed)" type="button" (click)="openImageDialog(1)">
+                    <span class="fa fa-plus text-white p-2"></span>
+                </a>
+                <a *ngIf="(userPrivs.delete_allowed)" type="button" (click)="deleteImage()">
+                    <span class="fa fa-trash text-danger p-2"></span>
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="row p-0 m-0">
+            <div class="col p-0 m-0">
+            <ag-grid-angular [pagination]="true" [unSortIcon]="true" [animateRows]="true"
+                style="width:100%; height:500px;" class="ag-theme-alpine" [rowData]="rowDataImg"
+                [columnDefs]="columnDefsImg" [defaultColDef]="defaultColDef"
+                (rowSelected)="onRowSelectedImg($event)">
             </ag-grid-angular>
         </div>
     </div>
-
-    <div class="column1">
-
-        <div class="pt-2 pl-2 section-header hd-cyan">
-
-            <div class=" float-left">
-                Select Criteria
-            </div>
-            <a  type="button" (click)="addImage(1)">
-                <span class="fa fa-plus text-white p-2"></span>
-            </a>
-           
-           
-        </div>
-       
-        <div *ngIf ="(totalImages == 1)">
-            Images list
-            <div *ngFor="let data of rowData; index as i;" >
-                {{data.uid}}
-                {{data.image_name}}
-            </div>
-        </div>
-
-    </div>
-</div>

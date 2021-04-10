@@ -137,7 +137,7 @@ export class UserComponent implements OnInit {
                         checkboxSelection: true
                       },
                      // { headerName: 'Role Code', field: 'role', width: 150, sortable: true, filter: true },
-                      { headerName: 'All Roles', field: 'role_desc', width: 300, sortable: true, filter: true }
+                      { headerName: 'All Roles', field: 'role_desc', width: 275, sortable: true, filter: true }
                      ];
                     
                   
@@ -152,20 +152,20 @@ export class UserComponent implements OnInit {
                         checkboxSelection: true
                       },
                      // { headerName: 'Role Code', field: 'lud_code', width: 150, sortable: true, filter: true },
-                      { headerName: 'Assigned Role', field: 'lud_desc', width: 300, sortable: true, filter: true }
+                      { headerName: 'Assigned Role', field: 'lud_desc', width: 275, sortable: true, filter: true }
                      ];
                     
                   
   
 
               this.allPrivsColumnDefs = [
-                {
-                  headerName: '',
-                  width: 35,
-                  sortable: false,
-                  filter: false,
-                  checkboxSelection: true
-                },
+                // {
+                //   headerName: '',
+                //   width: 35,
+                //   sortable: false,
+                //   filter: false,
+                //   checkboxSelection: true
+                // },
                 { headerName: 'Page', field: 'module_desc', width: 250, sortable: true, filter: true },
                 {  headerName: 'Insert', field: 'insert_allowed' , width: 90  , 
        cellClass: params => {
@@ -176,7 +176,7 @@ export class UserComponent implements OnInit {
       else {return '<span><i class="fa fa-times"></i></span>'}
   }
   },
-       {  headerName: 'Update', field: 'update_allowed' , width: 100 ,
+       {  headerName: 'Update', field: 'update_allowed' , width: 90 ,
        cellClass: params => {
         return params.value === true ? 'ag-allow' : 'ag-denay';
     }, 
@@ -185,7 +185,7 @@ export class UserComponent implements OnInit {
       else {return '<span><i class="fa fa-times"></i></span>'}
   }
   },
-       {  headerName: 'Delete', field: 'delete_allowed' , width: 100  ,
+       {  headerName: 'Delete', field: 'delete_allowed' , width: 90  ,
        cellClass: params => {
         return params.value === true ? 'ag-allow' : 'ag-denay';
     },
@@ -194,7 +194,7 @@ export class UserComponent implements OnInit {
       else {return '<span><i class="fa fa-times"></i></span>'}
   }
   },
-       {  headerName: 'View', field: 'view_allowed' , width: 100  ,
+       {  headerName: 'View', field: 'view_allowed' , width: 90  ,
        cellClass: params => {
         return params.value === true ? 'ag-allow' : 'ag-denay';
     },

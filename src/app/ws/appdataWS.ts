@@ -65,6 +65,36 @@ export class appdataWS {
             )
     }
 
+        // add Image
+        addImage(data: any): Observable<any> {
+            //alert("in add user");
+            return this.http.post(this.BASE_URL + '/addImage', data)
+                .pipe(
+                    retry(1),
+                    catchError(this.errorHandl)
+                )
+        }
+
+
+         // update Image
+         updateImage(data: any): Observable<any> {
+            //alert("in add user");
+            return this.http.post(this.BASE_URL + '/updateImage', data)
+                .pipe(
+                    retry(1),
+                    catchError(this.errorHandl)
+                )
+        }
+    
+          // add Image
+          deleteImage(data: any): Observable<any> {
+            //alert("in add user");
+            return this.http.post(this.BASE_URL + '/deleteImage', data)
+                .pipe(
+                    retry(1),
+                    catchError(this.errorHandl)
+                )
+        }
 
 
     // Error handling
