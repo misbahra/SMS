@@ -1,0 +1,188 @@
+<div class=" row h3 p-3 header-bar1 hd-navy">
+    Manage App Data
+</div>
+<div class="row border border-1">
+    <p class="is-invalid">{{messagetext}}</p>
+
+    <!--Card content-->
+    <div class="card-body  px-lg-5 pt-0">
+
+        <!-- Form -->
+        <form [formGroup]="dataForm" class="text-center" style="color: #757575;" action="submit">
+
+            <div class="row mt-2">
+
+                <div class="col">
+                    <div class="form-floating mb-3">
+
+                        <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="category"
+                            name="category" formControlName="category"
+                            [ngClass]="{ 'is-invalid': submitted && fc.category.errors }" >
+                            <!-- <option Selected value="">Select User Role</option> -->
+                            <option *ngFor="let data of categoryDataList; index as i;" [value]=data.lud_code>
+                                {{data.lud_desc}}
+                            </option>
+                            <!-- <option value=data.lud_code>data.lud_desc</option> -->
+                        </select>
+                        <label class="floatingInput " for="category">Category</label>
+
+                        <div *ngIf=" fc.category.invalid " class="invalid-feedback">
+                            <div *ngIf="fc.category.errors.required">
+                                Category is required
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--close col -->
+            </div>
+
+            <div class="row mt-2">
+
+                <div class="col">
+                    <div class="form-floating mb-3">
+
+                        <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="type"
+                            name="type" formControlName="type"
+                            [ngClass]="{ 'is-invalid': submitted && fc.type.errors }" >
+                            <!-- <option Selected value="">Select User Role</option> -->
+                            <option *ngFor="let data of typeDataList; index as i;" [value]=data.lud_code>
+                                {{data.lud_desc}}
+                            </option>
+                            <!-- <option value=data.lud_code>data.lud_desc</option> -->
+                        </select>
+                        <label class="floatingInput " for="type">Types</label>
+
+                        <div *ngIf=" fc.type.invalid " class="invalid-feedback">
+                            <div *ngIf="fc.type.errors.required">
+                                Type is required
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--close col -->
+            </div>
+
+            <div class="row mt-2">
+
+                <div class="col">
+                    <div class="form-floating mb-3">
+
+                        <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="suit_type"
+                            name="suit_type" formControlName="suit_type"
+                            [ngClass]="{ 'is-invalid': submitted && fc.suit_type.errors }" >
+                            <!-- <option Selected value="">Select User Role</option> -->
+                            <option *ngFor="let data of suitDataList; index as i;" [value]=data.lud_code>
+                                {{data.lud_desc}}
+                            </option>
+                            <!-- <option value=data.lud_code>data.lud_desc</option> -->
+                        </select>
+                        <label class="floatingInput " for="suit_type">Suite Type</label>
+
+                        <div *ngIf=" fc.suit_type.invalid " class="invalid-feedback">
+                            <div *ngIf="fc.suit_type.errors.required">
+                                Suit is required
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--close col -->
+            </div>
+
+
+            <div class="row mt-2">
+
+                <div class="col">
+                    <div class="form-floating mb-3">
+
+                        <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="stuff"
+                            name="stuff" formControlName="stuff"
+                            [ngClass]="{ 'is-invalid': submitted && fc.stuff.errors }" >
+                            <!-- <option Selected value="">Select User Role</option> -->
+                            <option *ngFor="let data of stuffDataList; index as i;" [value]=data.lud_code>
+                                {{data.lud_desc}}
+                            </option>
+                            <!-- <option value=data.lud_code>data.lud_desc</option> -->
+                        </select>
+                        <label class="floatingInput " for="stuff">Stuff</label>
+
+                        <div *ngIf=" fc.stuff.invalid " class="invalid-feedback">
+                            <div *ngIf="fc.stuff.errors.required">
+                                Stuff is required
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--close col -->
+            </div>
+
+            <div class="row mt-2">
+
+                <div class="col">
+                    <div class="form-floating mb-3">
+
+                        <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" id="brand"
+                            name="brand" formControlName="brand"
+                            [ngClass]="{ 'is-invalid': submitted && fc.brand.errors }" >
+                            <!-- <option Selected value="">Select User Role</option> -->
+                            <option *ngFor="let data of brandDataList; index as i;" [value]=data.lud_code>
+                                {{data.lud_desc}}
+                            </option>
+                            <!-- <option value=data.lud_code>data.lud_desc</option> -->
+                        </select>
+                        <label class="floatingInput " for="brand">Brand</label>
+
+                        <div *ngIf=" fc.brand.invalid " class="invalid-feedback">
+                            <div *ngIf="fc.brand.errors.required">
+                                Brand is required
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--close col -->
+            </div>
+
+
+            <!-- // next row -->
+            <div class="row">
+
+                <div class="col text-start mt-3 mb-3">
+                    <div class="form-check form-switch">
+
+                        <input type="checkbox" id="active" name="active" class="form-check-input p-0" placeholder=""
+                            formControlName="active" [ngClass]="{ 'is-invalid':   submitted && fc.active.errors }">
+                        <label class="form-check-label p-0" for="active">Active</label>
+
+                        <div *ngIf=" fc.active.invalid " class="invalid-feedback">
+                            <div *ngIf="fc.active.errors.required">
+                                Active is required
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--close col -->
+            </div>
+
+
+
+                <!-- Submit button -->
+                <div class=" row mt-3 text-center">
+
+                    <button type="button" (click)="onSubmit()" class="btn btn-success btn-lg me-2">
+                        <i class="fa fa-cloud-upload pe-2"></i>
+                        Save</button>
+                    <button type="button" (click)="onCancel()" class="btn btn-info btn-lg">
+                        <i class="fa fa-chevron-circle-left pe-2"></i>
+                        Cencel</button>
+                </div>
+
+        </form>
+        <!-- Form -->
+
+    </div>
+</div>

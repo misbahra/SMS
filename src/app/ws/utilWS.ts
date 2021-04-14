@@ -51,6 +51,7 @@ export class utilWS {
     else if(type == "resource_uid") {prefix = "RES"}
     else if(type == "sal_header_uid") {prefix = "SAL"}
     else if(type == "sal_detail_uid") {prefix = "SALD"}
+    else if(type == "image_upload") {prefix = "IMGN"} // to get image name
     else {prefix = ""} ;
 
     var d = new Date();

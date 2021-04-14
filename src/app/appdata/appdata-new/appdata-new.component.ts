@@ -6,7 +6,7 @@ import { Component, OnInit , Inject} from '@angular/core';
   import * as wsrSessionService from '../../ws/sessionWS';
   import { MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
   import { utilWS } from '../../ws/utilWS';
-  import { vendersWS } from '../../ws/vendersWS';
+  
   
   
   interface DialogData {
@@ -31,18 +31,14 @@ export class AppdataNewComponent implements OnInit {
       isDisabled = false;
       response: any = [];
       invalid: any = [];
-      dataId: any = "";
-      isDup = false;
-      stockdataList: any = [];
-      venderName = "";
-      venderUID = "";
-      glID = "";
+      id = "";
       enableVenderList = false;
       todayDate = new Date().toISOString().slice(0, 16);
-      vendersDataList : any = [];
-      glAccountHeadsDataList : any = [];
-      currencyDataList : any = [];
-      courierDataList : any = [];
+      categoryDataList : any = [];
+      typeDataList : any = [];
+      suitDataList : any = [];
+      stuffDataList : any = [];
+      brandDataList : any = [];
       venderAccountsDataList : any = [];
     
       messagetext = '';
@@ -52,7 +48,6 @@ export class AppdataNewComponent implements OnInit {
         private fb: FormBuilder,
         public dialogRef: MatDialogRef<AppdataNewComponent>,
         private utilService : utilWS,
-        private vendersService : vendersWS,
         private luService: luWS,
         @Inject(MAT_DIALOG_DATA) public data: DialogData
       ) { this.OnStart() }
@@ -60,35 +55,12 @@ export class AppdataNewComponent implements OnInit {
       ngOnInit() {
         this.dataForm = this.fb.group({
           id: ['', []],
-          gl_uid: ['' , [Validators.required]],
-          gl_date: ['' , []],
-          account_head_code: ['' , [Validators.required]],
-          vender_uid: ['' , [Validators.required]],
-          through_vender_uid: ['' , []],
-          vender_account_uid: ['' , []],
-          funds_sent_on: ['' , []],
-          funds_received_on: ['' , []],
-          exchange: ['' , []],
-          ref_number: ['' , []],
-          total_amount: ['' , [Validators.required]],
-          other_charges: ['' , []],
-          remarks: ['' , []],
-          currency: ['2' , []],
-          cargo_bill_amount: ['' , []],
-          cargo_charges: ['' , []],
-          cargo_vat: ['' , []],
-          cargo_commission: ['' , []],
-          customs_charges: ['' , []],
-          cargo_requested_on: ['' , []],
-          cargo_shipped_on: ['' , []],
-          cargo_received_on: ['' , []],
-          courier_code : ['' , []],
-          cargo_weight: ['' , []],
-          cargo_items_count: ['' , []],
-          additional_details: ['' , []],
-          gl_status: ['' , []],
-          sent_to_vender_uid : ['' , []],
-          sent_to_vender_account_uid : ['' , []],
+          category: ['' , [Validators.required]],
+          type: ['' , [Validators.required]],
+          suit_type: ['' , [Validators.required]],
+          stuff: ['' , [Validators.required]],
+          brand: ['' , [Validators.required]],
+          active: [true , [Validators.required]],
           created_by: ['' , []],
           created_on: ['' , []],
           modified_by: ['' , []],
@@ -98,10 +70,12 @@ export class AppdataNewComponent implements OnInit {
         );
         
         //load vender for list population
-        this.loadVenders();
-        this.loadAllLUD('13');
-      this.loadAllLUD('12');
-      this.loadAllLUD('GAH');
+       
+      this.loadAllLUD('ACT'); //app data categories
+      this.loadAllLUD('ATP'); // app data types
+      this.loadAllLUD('AST'); // app data suits types
+      this.loadAllLUD('ASF'); // app data stuff
+      this.loadAllLUD('ABR'); // app data brand
     
         this.queryParams = this.sessionService.getParameters();
         
@@ -109,46 +83,34 @@ export class AppdataNewComponent implements OnInit {
           
         // if operation = 1- new record  
         this.isDisabled = true; 
-        if (this.queryParams[0].operation == 1) {
+        if (this.queryParams[0].operation == '1') {
+          this.id ='';           
           
-          if (this.queryParams[0].vender_uid == "-1") 
-          //-1 means no vender received, so we shall enable vender list in form
-          {
-            this.enableVenderList = true;
-          }
-          else
-          {
-            this.enableVenderList = false;
-            this.venderUID = this.queryParams[0].vender_uid;
-          this.venderName = this.queryParams[0].vender_name;
-          this.dataForm.controls.vender_uid.setValue(this.venderUID);
-          
-          }
-          this.dataForm.controls.gl_uid.setValue(this.utilService.getUID('gl_uid'));
         }
          // if operation = 2- update record   
-        else if (this.queryParams[0].operation == 2)
+        else if (this.queryParams[0].operation == '2')
         {
-          this.venderUID = this.queryParams[0].vender_uid;
-          this.venderName = this.queryParams[0].vender_name;
-          this.glID = this.queryParams[0].gl_id;
-          this.loadData(this.glID);
+          this.id = this.queryParams[0].id;
+          this.dataForm.patchValue(this.queryParams[0].data);      
           
         }
         else {this.isDisabled = true;};
       }
-      this.webService.getThisAD(this.venderUID);
+     
   
       }
   
+      OnStart(){}
      
       async loadAllLUD(id: any) {
-        
+
         var luhData = [{value:id}]
         let response = await this.luService.getLUD(luhData);
-        if (id=='13'){this.currencyDataList = response;}
-        if (id=='12'){this.courierDataList = response;}
-        if (id=='GAH'){this.glAccountHeadsDataList = response;}
+        if (id=='ACT'){this.categoryDataList = response;}
+        if (id=='ATP'){this.typeDataList = response;}
+        if (id=='AST'){this.suitDataList = response;}
+        if (id=='ASF'){this.stuffDataList = response;}
+        if (id=='ABR'){this.brandDataList = response;}
        
         
          //console.log("Data in LUD list " + this.LUDdataList.length );
@@ -157,33 +119,7 @@ export class AppdataNewComponent implements OnInit {
       // single getter for all form controls to access them from the html
       get fc() { return this.dataForm.controls; }
     
-      async loadData(id: any) {
-        this.isBusy = true;
-        this.dataForm.disable();
-       
-        var gl_id = [{name: "gl_id" , value: id}];
-        this.response = await this.webService.getThisAD(gl_id);
-       
-        this.dataId = this.response._id;
-        this.response.gl_date = new Date(this.response.gl_date).toISOString().slice(0, 10);
-        this.response.funds_sent_on = new Date(this.response.funds_sent_on).toISOString().slice(0, 10);
-        this.response.funds_received_on = new Date(this.response.funds_received_on).toISOString().slice(0, 10);
-        this.response.cargo_requested_on = new Date(this.response.cargo_requested_on).toISOString().slice(0, 10);
-        this.response.cargo_shipped_on = new Date(this.response.cargo_shipped_on).toISOString().slice(0, 10);
-        this.response.cargo_received_on = new Date(this.response.cargo_received_on).toISOString().slice(0, 10);
-        
-        
-        //this.response.stock_received_on = new Date(this.response.stock_received_on).toISOString().slice(0, 16);
-        //new Date().toISOString().slice(0, 16);
-        this.dataForm.patchValue(this.response);
-        //this.venderName = this.dataForm.value.stock_uid;
-        this.dataForm.enable();
-       
-        this.isBusy = false;
-      };
-    
-      OnStart() {
-      }
+     
     
       public findInvalidControls() {
         const invalid = [];
@@ -269,7 +205,7 @@ export class AppdataNewComponent implements OnInit {
         this.dataForm.controls.modified_on.setValue(Date.now());
         this.dataForm.removeControl('id');
         this.dataForm.addControl('_id', new FormControl(['', []]));
-        this.dataForm.controls._id.setValue(this.dataId);
+        this.dataForm.controls._id.setValue(this.id);
        
     
         //this.userForm.controls.user_name.setValue(upper(this.user_name));
@@ -290,14 +226,5 @@ export class AppdataNewComponent implements OnInit {
         this.dataForm.removeControl('_id');
       }
     
-      async loadVenders()
-      {
-        var response;
-      response = await this.vendersService.getVenders();
-      this.vendersDataList = response;
       
-      }
-    
-      
-  
     }

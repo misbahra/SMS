@@ -87,14 +87,29 @@ export class appdataWS {
         }
     
           // add Image
-          deleteImage(data: any): Observable<any> {
-            //alert("in add user");
+          deleteImageFile(data: any): Observable<any> {
+            alert("in deleteImageFile - Deleting image : " + data);
+            const deleteKey = {
+                    param1: data
+                }
+            
+            return this.http.post(this.BASE_URL + '/deleteImageFile', deleteKey)
+                .pipe(
+                    retry(1),
+                    catchError(this.errorHandl)
+                )
+        }
+
+         // delete Image
+         deleteImage(data: any): Observable<any> {
+            
             return this.http.post(this.BASE_URL + '/deleteImage', data)
                 .pipe(
                     retry(1),
                     catchError(this.errorHandl)
                 )
         }
+
 
 
     // Error handling

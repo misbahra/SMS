@@ -17,8 +17,14 @@ export class imguploadWS {
  
 
   imageUpload(imageForm: FormData) {
-    console.log('image uploading');
-    console.log(imageForm);
+    //console.log('image uploading');
+    //console.log(imageForm);
     return this.http.post(this.BASE_URL + '/uploadImage',imageForm);
+   }
+
+   deleteUpload(imageData: any) {
+    //console.log('image uploading');
+    //console.log(imageForm);
+    return this.http.post(this.BASE_URL + '/uploadImage',imageData);
    }
 }
