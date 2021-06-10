@@ -1,0 +1,26 @@
+<div class="row pt-2 ps-2 m-0 section-header hd-purple">
+    <div class="col p-0 ">
+      <span >Batch Processes</span>
+      <!-- <span class="pl-2"><b>Selected Header:</b> {{rowDataClicked.luh_code}}</span> -->
+    </div>
+    <div class=" col text-start p-0">
+        <span class="spinner-border" *ngIf="(isBusy == true)"></span>
+    </div>
+    <div class=" col text-end section-detail">
+       
+     detail   
+    </div>
+
+    
+    
+</div>
+<div col  text-center class="mt-2 p-3">
+<a  
+      type="button" (click)="setStockCode()" (disabled)="isBusy">
+      <span class="fa fa-list p-2"> Process Stock Codes and Stock Bar Codes</span>
+    </a>
+
+    <p>To records: {{stockDataList.length}}</p>
+
+         <p><ngb-progressbar [animated]="true" type="success" textType="white" [striped]="true" [showValue]="true" [value]=percent></ngb-progressbar></p>
+</div>

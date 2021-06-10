@@ -79,7 +79,8 @@ rowData2:any = [];
          filter: false,
         checkboxSelection: true
         },
-      {headerName: 'Code', field: 'vender_uid' , width: 150, sortable: true, filter:true  },
+      // {headerName: 'Code', field: 'vender_uid' , width: 150, sortable: true, filter:true  },
+      {headerName: 'Code', field: 'vender_code' , width: 150, sortable: true, filter:true  },
       {headerName: 'Name', field: 'vender_name', width: 340, sortable: true, filter:true },
      ];
     this.rowData = response;

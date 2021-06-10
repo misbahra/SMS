@@ -33,6 +33,8 @@ export class MenuComponent implements OnInit {
       //console.log('menu.ngOnInit: start ');
      // console.log(JSON.parse(localStorage.getItem('conUser')) || []);
       this.connectedUser = JSON.parse(localStorage.getItem('conUser')) || [];
+      //console.log(JSON.stringify(this.connectedUser));
+      //alert('Menu')
       //console.log(JSON.stringify(this.connectedUser.permissions));
       //this.loadConnectedUser();
       //this.connectedUser = this.sessionService.getConnectedUsers();
@@ -41,9 +43,13 @@ export class MenuComponent implements OnInit {
    }
 
    isPageAvailable(page : any){
-     var found = this.connectedUser.permissions.find(({ module }) => module === page);
-     if (found){return found.view_allowed}
-     else {return false}
+    
+     if (this.connectedUser) {
+            var found = this.connectedUser.permissions.find(({ module }) => module === page);
+            if (found){return found.view_allowed}
+            else {return false}
+     }
+     else{return false}
    }
 
   LogOut() {

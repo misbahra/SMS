@@ -54,6 +54,7 @@ export class AppdataComponent implements OnInit {
   rowDataClicked: any = {};
   rowDataClickedImage: any = {};
   selectedIndex: any;
+  imgUrl = '';
 
   final_amount = 0;
   venderUID = "";
@@ -86,21 +87,22 @@ export class AppdataComponent implements OnInit {
 
   async loadAppData() {
     this.isBusy = true;
-    this.isDetailBusy = true;
+    
 
     this.rowData = [];
     this.response = [];
+    this.rowDataClicked = {};
 
-    //alert("Vender - " + vender_uid);
+    
     this.response = await this.appDataService.getAD();
-
+    this.rowData = this.response;
+    //this.refreshGrid();
+    this.isBusy = false;
     //setTimeout(this.refreshDetail, 2000 , response);
-    setTimeout(() => {
-      this.rowData = this.response;
-      this.refreshGrid();
-      this.isDetailBusy = false;
-    },
-      1000);
+    // setTimeout(() => {
+      
+    // },
+    //   1000);
     // this.rowData = response;
     // this.isDetailBusy = false;
 
@@ -111,8 +113,6 @@ export class AppdataComponent implements OnInit {
     this.isDetailBusy = false;
   }
   configureGrid() {
-
-
 
     this.columnDefs = [
       {
@@ -156,6 +156,8 @@ export class AppdataComponent implements OnInit {
       { headerName: 'Active', field: 'active', width: 150, sortable: true, filter: true },
       { headerName: 'In Stock', field: 'is_in_stock', width: 150, sortable: true, filter: true },
       { headerName: 'Is New', field: 'is_new', width: 150, sortable: true, filter: true },
+      { headerName: 'Show Price', field: 'show_price', width: 150, sortable: true, filter: true },
+      { headerName: 'Is Main', field: 'is_main_image', width: 150, sortable: true, filter: true },
       { headerName: 'Is In Offer', field: 'is_offer', width: 150, sortable: true, filter: true },
       { headerName: 'Offer Type', field: 'offer_type', width: 150, sortable: true, filter: true },
       { headerName: 'Discount Rate', field: 'discount_rate', width: 150, sortable: true, filter: true },
@@ -301,15 +303,18 @@ export class AppdataComponent implements OnInit {
       this.rowDataImg = this.rowDataClicked.images;
       //this.totalImages = this.rowDataClicked.images.length;
       // this.updateData();
+      this.imgUrl = '';
     }
     else {
       // alert("De-Selected row  for - " + e.node.data.name );
       // if deselected and already selected is deselected then wash the data 
-      this.appImagesList = {};
-      this.totalImages = 0;//this.appImagesList.length;
+     
+      
       if (this.rowDataClicked) {
         if (this.rowDataClicked._id == e.node.data._id) {
           this.rowDataClicked = {};
+          this.rowDataImg = [];
+          this.imgUrl = '';
 
         }
       }
@@ -322,6 +327,7 @@ export class AppdataComponent implements OnInit {
     if (e.node.selected) {
       // alert("Selected row is for  - " + e.node.data.name);
       this.rowDataClickedImage = e.node.data;
+      this.imgUrl = this.rowDataClickedImage.url;
 
     }
     else {
@@ -332,7 +338,7 @@ export class AppdataComponent implements OnInit {
       if (this.rowDataClickedImage) {
         if (this.rowDataClickedImage._id == e.node.data._id) {
           this.rowDataClickedImage = {};
-
+          this.imgUrl = '';
         }
       }
     }
@@ -345,7 +351,7 @@ export class AppdataComponent implements OnInit {
   // open the new / update form
   openAppDialog(id: any) {
     // create new record is clicked
-    alert('opening app dialog');
+   // alert('opening app dialog');
     var operationOK = false;
     var vender_uid;
     // operation is new record
@@ -370,8 +376,6 @@ export class AppdataComponent implements OnInit {
         data: this.rowDataClicked
       }]);
 
-
-
       const dialogConfig = new MatDialogConfig();
       dialogConfig.width = '1000px';
 
@@ -379,16 +383,13 @@ export class AppdataComponent implements OnInit {
       const dialogRef = this.dialog.open(AppdataNewComponent, dialogConfig);
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
+       // console.log(result);
+      
         if (result == "save") {
-          if (this.venderUID != "-1"){
-          //alert("vender uid " + this.venderUID)
-          this.loadAppData;
-        }
-        else{this.venderUID = null;}
+         
+          this.loadAppData();
           //this.loadGL();
-          this.rowDataClicked = {};
-
+          
         }
         return (result);
       });
@@ -399,7 +400,8 @@ export class AppdataComponent implements OnInit {
 
 
   async updateData() {
-    var appData: any;;
+    this.isDetailBusy = true;
+    var appData: any;
     appData = await this.appDataService.getThisAD([{ value: this.rowDataClicked._id }])
     // update the selected row
 
@@ -408,6 +410,7 @@ export class AppdataComponent implements OnInit {
     this.rowData[this.selectedIndex].images = appData.images;
     this.rowDataImg = appData.images;
     this.rowDataClickedImage = {};
+    this.isDetailBusy = false;
   }
 
   // open the new / update form
@@ -417,12 +420,14 @@ export class AppdataComponent implements OnInit {
 
     // operation is new record
     if (id == 1) {
-      // add data operation       
-      operationOK = true;
+      // add data operation   
+      if (!this.rowDataClicked._id) { alert('Please select application data record.'); }    
+      else { operationOK = true };
     }
     // operation is update
     else if (id == 2) {
-      if (!this.rowDataClickedImage._id) { alert('Please select a record to update.'); }
+      if (!this.rowDataClicked._id) { alert('Please select application data record.'); }
+      else if (!this.rowDataClickedImage._id) { alert('Please select an image record.'); }
       else { operationOK = true };
     }
 
@@ -465,7 +470,7 @@ export class AppdataComponent implements OnInit {
         return (result);
       });
     }
-    else { alert('Please select a record to update.'); }
+    //else { alert('Please select a record to update.'); }
   }
 
 }

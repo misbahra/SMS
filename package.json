@@ -40,6 +40,7 @@
     "ng-grid": "^2.0.1",
     "ng-select2": "^1.2.2",
     "ng2-search-filter": "^0.5.1",
+    "ngx-barcode": "^0.3.0",
     "path": "^0.12.7",
     "pdfmake": "^0.1.68",
     "pdfmake-unicode": "0.0.1",

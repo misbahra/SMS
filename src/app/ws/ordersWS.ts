@@ -80,7 +80,8 @@ getSummarySalesByItem(params: any) {
             param1: params[0].order_date,
             param2: params[0].customer_uid,
             param3: params[0].invoice_number,
-            param4: params[0].item_uid
+            param4: params[0].item_uid,
+            param5: params[0].payment_mode
         }
     }
     

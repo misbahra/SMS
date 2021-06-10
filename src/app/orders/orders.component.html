@@ -80,7 +80,22 @@
                 </div>
            
           </div>
+
           <!--cloumn colosed -->
+
+          <div class="col col-2">
+
+            <!-- <label for="payment_mode">Payment Mode</label> -->
+            <select class="form-select  form-control-sm mr-sm-2" id="payment_mode" name="payment_mode"
+              formControlName="payment_mode" [ngClass]="{ 'is-invalid': fc.payment_mode.errors }">
+              <!-- <option Selected value="">Select User Role</option> -->
+              <option *ngFor="let data of paymentTypeList; index as i;" [value]=data.lud_code>{{data.lud_desc}}
+              </option>
+              <!-- <option value=data.lud_code>data.lud_desc</option> -->
+            </select>
+  
+          </div>
+
         <!--cloumn started -->
         <div class="col-3 text-end m-0 ps-0">
             <button [disabled]="isBusy" (click)= "loadAllOrders()" class="btn  btn-info" data-toggle="tooltip"

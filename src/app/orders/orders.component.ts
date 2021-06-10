@@ -8,6 +8,7 @@ import { LuhNewComponent } from '../lu/luh-new/luh-new.component';
 import { LudNewComponent } from '../lu/lud-new/lud-new.component';
 //import moment from 'moment';
 //const moment = momentNs;
+import { luWS } from '../ws/luWS';
 var moment = require('moment');
 import { stockWS } from '../ws/stockWS';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -30,6 +31,7 @@ export class OrdersComponent implements OnInit {
     private fb: FormBuilder,
     private CustomersService: customersWS,
     private itemsService : ItemsWS,
+    private luService: luWS,
   ) {
 
   }
@@ -43,6 +45,7 @@ export class OrdersComponent implements OnInit {
   selectedID: any = "No Selected";
   selectedCode: any = [];
   isluhCodeSelected: boolean = false;
+  paymentTypeList: any = [];
   columnDefs = [];
   rowData:any = [];
   customerList: any = [];
@@ -86,6 +89,7 @@ ngOnInit() {
 
   this.loadAllCustomers();
   this.loadItems();
+  this.loadAllLUD('1');
     //this.loadAllOrders();
     this.userPrivs = this.sessionService.getUsersPrivs('USR');
     if (this.selectedCode.length > 0){this.loadAllOrderItems(this.selectedCode);}
@@ -95,7 +99,8 @@ ngOnInit() {
       customer_uid: ['', []],
       order_date: [new Date().toISOString().slice(0, 10) , []],
       invoice_number: ['',[]],
-      item_uid : ['', []]
+      item_uid : ['', []],
+      payment_mode : ['', []]
     }
       // , { validator: this.CheckUserName('UserName') }
     );
@@ -128,6 +133,16 @@ ngOnInit() {
      //console.log("Data in LUD list " + this.LUDdataList.length );
   };
 
+  async loadAllLUD(id: any) {
+    //alert("loading lud comp");  
+    var luhData = [{value:id}]
+    let response = await this.luService.getLUD(luhData);
+    if (id=='1'){this.paymentTypeList = response;}
+   
+    
+     //console.log("Data in LUD list " + this.LUDdataList.length );
+  };
+
 
   async loadAllOrders() {
     //alert("loading orederes");
@@ -139,7 +154,7 @@ ngOnInit() {
     var customerUID;
     var invoiceNumber;
     var itemUID;
-
+    var paymentMode;
      
     
     
@@ -162,12 +177,18 @@ ngOnInit() {
         ||  this.orderForm.value.item_uid == null)
      { itemUID = "-1"} 
       else {itemUID = this.orderForm.value.item_uid;};
+
+      if (    this.orderForm.value.payment_mode == "" 
+      ||  this.orderForm.value.payment_mode == null)
+   { paymentMode = "-1"} 
+    else {paymentMode = this.orderForm.value.payment_mode;};
     
 
     var parameters = [{"order_date":orderDate ,
                        "customer_uid" : customerUID,
                       "invoice_number" : invoiceNumber,
-                      "item_uid" : itemUID  }];
+                      "item_uid" : itemUID ,
+                      "payment_mode" : paymentMode  }];
     //let response = await this.webService.getOrders(parameters);
     
     let response = await this.webService.getSummaryByOrder(parameters);

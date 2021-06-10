@@ -1,6 +1,6 @@
 import { Component, OnInit , Inject} from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import * as luWS from '../../ws/luWS';
+import {luWS} from '../../ws/luWS';
 import * as stockWS from '../../ws/stockWS';
 import { Router } from "@angular/router";
 import * as wsrSessionService from '../../ws/sessionWS';
@@ -8,6 +8,8 @@ import { MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
 import { utilWS } from '../../ws/utilWS';
 import { vendersWS } from '../../ws/vendersWS';
 import { ItemsWS } from '../../ws/itemsWS';
+import { DatePipe } from '@angular/common';
+
 
 interface DialogData {
   data: string;
@@ -37,6 +39,11 @@ export class StockNewComponent implements OnInit {
   todayDate = new Date().toISOString().slice(0, 16);
   vendersDataList : any = [];
   itemsDataList : any = [];
+  stuffDataList : any = [];
+  brandDataList : any = [];
+  colorDataList : any = [];
+  designDataList : any = [];
+  barCode = '';
 
   messagetext = '';
   constructor(private webService: stockWS.stockWS,
@@ -48,16 +55,20 @@ export class StockNewComponent implements OnInit {
     private vendersService : vendersWS,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private itemsService : ItemsWS,
-    
+    private luService: luWS,
+    public datepipe: DatePipe
   ) { this.OnStart() }
 
   ngOnInit() {
     this.dataForm = this.fb.group({
       id: ['', []],
-      stock_uid: ['', []],
+      stock_uid: [this.utilService.getUID('stock_uid'), []],
       item_uid: ['', []],
       items_count: [1, []],
       vender_uid: ['', []],
+      stuff: ['', []],
+      brand: ['', []],
+      color: ['', []],
       total_bill_amount: [0, []],
       items_cost: [0, []],
       shipping_charges: [0, []],
@@ -69,6 +80,7 @@ export class StockNewComponent implements OnInit {
       vat: [0, []],
       stock_sold: [0, []],
       stock_code: ['', []],
+      design_code: ['', []],
       stock_desc: ['', []],
       created_by: ['', []],
       created_on: ['', []],
@@ -81,7 +93,11 @@ export class StockNewComponent implements OnInit {
     //load vender for list population
     this.loadVenders();
     this.loadItems();
-
+    this.loadAllLUD('STST');
+    this.loadAllLUD('BRND');
+    this.loadAllLUD('COLR');
+    this.loadAllLUD('DESC');
+    //this.setStockCode();
     this.queryParams = this.sessionService.getParameters();
     // alert('point 1 - ' + this.queryParams[0].name);
     if (this.queryParams.length > 0 ) {
@@ -107,6 +123,20 @@ export class StockNewComponent implements OnInit {
   }
    
   }
+
+  async loadAllLUD(id: any) {
+    //alert("loading lud comp");  
+    var luhData = [{value:id}]
+    let response = await this.luService.getLUD(luhData);
+    if (id=='STST'){this.stuffDataList = response;}
+    if (id=='BRND'){this.brandDataList = response;}
+    if (id=='COLR'){this.colorDataList = response;}
+    if (id=='DESC'){this.designDataList = response;}
+    
+    
+     //console.log("Data in LUD list " + this.LUDdataList.length );
+  };
+ 
  
 
   // single getter for all form controls to access them from the html
@@ -129,6 +159,7 @@ export class StockNewComponent implements OnInit {
     //new Date().toISOString().slice(0, 16);
     this.dataForm.patchValue(this.response);
     this.stockUID = this.dataForm.value.stock_uid;
+    this.barCode=this.dataForm.value.stock_bar_code;
     this.dataForm.enable();
    
     this.isBusy = false;
@@ -155,27 +186,39 @@ export class StockNewComponent implements OnInit {
     this.dialogRef.close('cancel');
   }
 
-calculateCostPrice() {
+calculateCostPrice(action:any) {
 var total_bill_amount = this.dataForm.value.total_bill_amount;
 var shipping_charges = this.dataForm.value.shipping_charges;
 var delivery_charges = this.dataForm.value.delivery_charges;
 var vat = this.dataForm.value.vat;
 var items_count = this.dataForm.value.items_count;
+var items_cost = this.dataForm.value.items_cost;
 
 if (total_bill_amount == null) {total_bill_amount = 0;}
 if (shipping_charges == null) {shipping_charges = 0;}
 if (delivery_charges == null) {delivery_charges = 0;}
 if (vat == null) {vat = 0;}
 if (items_count == null) {items_count = 0;}
+if (items_cost == null) {items_cost = 0;}
 
 try{
+  //called from the event of cost price, then calculate total price
+  if (action == 'C'){
+    this.dataForm.controls.total_bill_amount.setValue(
+      ((items_count * items_cost)
+       ));
+  }
+   //called from the event of totla price, then calculate cost price
+  else if (action == 'T'){
     this.dataForm.controls.items_cost.setValue(
-        ((total_bill_amount
-          + shipping_charges
-          + delivery_charges
-          + vat)
-          / 
-          items_count));
+      ((total_bill_amount
+        + shipping_charges
+        + delivery_charges
+        )
+        / 
+        items_count));
+  }
+   
   //suggest sales price by adding 100%
           this.dataForm.controls.sales_price.setValue(
             Math.round(this.dataForm.value.items_cost * 2));
@@ -185,6 +228,33 @@ try{
           this.dataForm.controls.items_cost.setValue(0);
   }
   }
+
+  
+
+  setStockCode(){
+    //alert(this.dataForm.value.stock_received_on);
+    var data: any = {};
+    data = this.utilService.setStockCode(
+      this.itemsDataList,
+      this.vendersDataList,
+      this.dataForm.value.stock_received_on,
+      this.dataForm.value.stock_uid,
+      this.dataForm.value.item_uid,
+      this.dataForm.value.vender_uid,
+      this.dataForm.value.stuff,
+      this.dataForm.value.brand,
+      this.dataForm.value.color,
+      this.dataForm.value.design_code
+    );
+
+
+    this.dataForm.controls.stock_code.setValue(data.stockCode); 
+    // set bar code also 
+    this.dataForm.controls.stock_bar_code.setValue(data.barCode);
+  }
+
+
+ 
  
   onSubmit() {
     this.messagetext = '';
@@ -195,6 +265,7 @@ try{
     console.log('On submit');
     //console.log('Data: ' +  this.angForm.value  );
     //alert('user  -  ' + this.UserId);
+    this.setStockCode();
     if (this.dataForm.valid) {
       // operation = 1 - new record
       if (this.queryParams[0].operation == 1) {
@@ -226,7 +297,7 @@ try{
   addData() {
     //console.log('data: ' + this.dataForm.value.name);
     this.dataForm.controls.created_on.setValue(Date.now());
-    this.dataForm.controls.stock_uid.setValue(this.utilService.getUID('stock_uid'));
+    //this.dataForm.controls.stock_uid.setValue(this.utilService.getUID('stock_uid'));
     
     //this.userForm.controls.user_name.setValue(upper(this.user_name));
     this.webService.addStock(this.dataForm.value).subscribe(

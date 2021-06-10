@@ -73,8 +73,8 @@ export class StockComponent implements OnInit {
     this.stockDataList = response;
     this.stockDataListDisplay = [];
     this.stockDataList.forEach(element => {
-      this.stockDataListDisplay.push({"item_uid":element.item_uid , 
-                                      "item_name":element.item_name,
+      this.stockDataListDisplay.push({"item_uid":element._id.item_uid , 
+                                      "item_name":element._id.item_name,
                                       "stock_bar_code" : "",
                                       "items_count" : element.total_items,
                                       "stock_sold" : element.total_sold,
@@ -110,19 +110,19 @@ export class StockComponent implements OnInit {
         checkboxSelection: true
       
       },
-      { headerName: 'Stock#', field: 'stock_uid', width: 150, sortable: true, filter: true },
+      
       //{ headerName: 'Item#', field: 'item_uid', width: 150, sortable: true, filter: true },
-      { headerName: 'Code', field: 'stock_code', width: 150, sortable: true, filter: true },
+      { headerName: 'Code', field: 'stock_code', width: 200, sortable: true, filter: true },
       {
-        headerName: 'Received On', field: 'stock_received_on', width: 200, sortable: true, filter: true
+        headerName: 'Received On', field: 'stock_received_on', width: 150, sortable: true, filter: true
         ,valueFormatter: function (params) {
           return moment(params.value).format('DD-MMM-YYYY');}
       },
       { headerName: 'Vender', field: 'vender_name', width: 150, sortable: true, filter: true },
       // { headerName: 'Item Name', field: 'item_name', width: 300, sortable: true, filter: true },
-      { headerName: 'Item Count', field: 'items_count', width: 150, sortable: true, filter: true },
-      { headerName: 'Sold', field: 'stock_sold', width: 150, sortable: true, filter: true },
-      { headerName: 'Remaining', field: 'remaining', width: 150, sortable: true, filter: true },
+      { headerName: 'Total', field: 'items_count', width: 120, sortable: true, filter: true },
+      { headerName: 'Sold', field: 'stock_sold', width: 120, sortable: true, filter: true },
+      { headerName: 'Rem.', field: 'remaining', width: 120, sortable: true, filter: true },
       
       { headerName: 'Bill Amount', field: 'total_bill_amount', width: 150, sortable: true, filter: true },
       { headerName: 'Shp Charges', field: 'shipping_charges', width: 150, sortable: true, filter: true },
@@ -139,7 +139,7 @@ export class StockComponent implements OnInit {
       {
         headerName: 'Bar Code', field: 'stock_bar_code', width: 250, sortable: true, filter: true,
       },
-  
+      { headerName: 'Stock#', field: 'stock_uid', width: 150, sortable: true, filter: true },
     ];
     this.rowData = response;
     this.isDetailBusy = false;

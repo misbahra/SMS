@@ -84,6 +84,24 @@
             </div>
          </div>
          <!--close col -->
+
+         <div class="col text-start mt-3 mb-3">
+            <div class="form-check form-switch">
+   
+               <input type="checkbox" id="show_price" name="show_price" class="form-check-input" placeholder=""
+                  formControlName="show_price" [ngClass]="{ 'is-invalid':   submitted && fc.show_price.errors }">
+                  <label class="form-check-label" for="show_price">Show Price</label>
+   
+               <div *ngIf=" fc.show_price.invalid " class="invalid-feedback">
+                  <div *ngIf="fc.show_price.errors.required">
+                     Show Price is required
+                  </div>
+   
+               </div>
+            </div>
+         </div>
+         <!--close col -->
+
       </div>
 
       <!-- // next row -->
@@ -135,6 +153,23 @@
                      Is New is required
                   </div>
 
+               </div>
+            </div>
+         </div>
+         <!--close col -->
+
+         <div class="col text-start mt-3 mb-3">
+            <div class="form-check form-switch">
+   
+               <input type="checkbox" id="is_main_image" name="is_main_image" class="form-check-input" placeholder=""
+                  formControlName="is_main_image" [ngClass]="{ 'is-invalid':   submitted && fc.is_main_image.errors }">
+                  <label class="form-check-label" for="is_main_image">Is Main</label>
+   
+               <div *ngIf=" fc.is_main_image.invalid " class="invalid-feedback">
+                  <div *ngIf="fc.is_main_image.errors.required">
+                     Is main image is required
+                  </div>
+   
                </div>
             </div>
          </div>

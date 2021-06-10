@@ -24,9 +24,10 @@
                 <!-- Employee ID -->
                 <div class="md-form ">
                     <label class="font-weight row " for="vender_uid">Vender</label>
-                    <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" 
+                    <select class="form-select  form-select mr-sm-2 js-example-basic-single" 
                     id="vender_uid" name="vender_uid"
-              formControlName="vender_uid" [ngClass]="{ 'is-invalid': submitted && fc.vender_uid.errors }">
+              formControlName="vender_uid" [ngClass]="{ 'is-invalid': submitted && fc.vender_uid.errors }"
+              (change)="setStockCode()">
               <!-- <option Selected value="">Select User Role</option> -->
               <option *ngFor="let data of vendersDataList; index as i;" [value]=data.vender_uid> 
                   {{data.vender_name}}
@@ -47,10 +48,11 @@
             <div class="col">
                 <!-- item_uid -->
                 <div class="md-form ">
-                    <label class="font-weight row " for="item_uid">Items</label>
-                    <select class="form-select  form-select-sm mr-sm-2 js-example-basic-single" 
+                    <label class="font-weight row " for="item_uid">Item</label>
+                    <select class="form-select  mr-sm-2 js-example-basic-single" 
                     id="item_uid" name="item_uid"
-              formControlName="item_uid" [ngClass]="{ 'is-invalid': submitted && fc.item_uid.errors }">
+              formControlName="item_uid" [ngClass]="{ 'is-invalid': submitted && fc.item_uid.errors }"
+              (change)="setStockCode()">
               <!-- <option Selected value="">Select User Role</option> -->
               <option *ngFor="let data of itemsDataList; index as i;" [value]=data.item_uid> 
                   {{data.item_name}}
@@ -68,22 +70,7 @@
             </div>
             <!--close col -->
 
-            <div class="col">
-                <!-- Employee ID -->
-                <div class="md-form ">
-                    <label class="font-weight row " for="stock_code">Code</label>
-                    <input type="text" id="stock_code" name="stock_code" class="form-control" 
-                    placeholder="Code"
-                        formControlName="stock_code" [ngClass]="{ 'is-invalid':   submitted && fc.stock_code.errors }">
-                    <div *ngIf=" fc.stock_code.invalid " class="invalid-feedback">
-                        <div *ngIf="fc.stock_code.errors.required">
-                            Code is required
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <!--close col -->
+           
 
             <!-- // next row -->
 
@@ -131,10 +118,139 @@
                     <label class="font-weight row " for="stock_received_on">Received Date</label>
                     <input type="date" id="stock_received_on" name="stock_received_on" class="form-control"
                         placeholder="Received Date" formControlName="stock_received_on"
-                        [ngClass]="{ 'is-invalid':   submitted && fc.stock_received_on.errors }">
+                        [ngClass]="{ 'is-invalid':   submitted && fc.stock_received_on.errors }"
+                        (change)="setStockCode()">
                     <div *ngIf=" fc.stock_received_on.invalid " class="invalid-feedback">
                         <div *ngIf="fc.stock_received_on.errors.required">
                             Received date is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+        </div>
+
+        <div class="row mt-3">
+
+            <div class="col">
+                <!-- stuff -->
+                <div class="md-form ">
+                    <label class="font-weight row " for="stuff">Stuff</label>
+                    <select class="form-select  form-select mr-sm-2 js-example-basic-single" 
+                    id="stuff" name="stuff"
+              formControlName="stuff" [ngClass]="{ 'is-invalid': submitted && fc.stuff.errors }"
+              (change)="setStockCode()">
+              <!-- <option Selected value="">Select User Role</option> -->
+              <option *ngFor="let data of stuffDataList; index as i;" [value]=data.lud_code> 
+                  {{data.lud_desc}}
+              </option>
+              <!-- <option value=data.lud_code>data.lud_desc</option> -->
+            </select>
+                    
+                        <div *ngIf=" fc.stuff.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.stuff.errors.required">
+                            Stuff is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+
+            <div class="col">
+                <!-- brand -->
+                <div class="md-form ">
+                    <label class="font-weight row " for="brand">Brand</label>
+                    <select class="form-select  form-select mr-sm-2 js-example-basic-single" 
+                    id="brand" name="brand"
+              formControlName="brand" [ngClass]="{ 'is-invalid': submitted && fc.brand.errors }"
+              (change)="setStockCode()">
+              <!-- <option Selected value="">Select User Role</option> -->
+              <option *ngFor="let data of brandDataList; index as i;" [value]=data.lud_code> 
+                  {{data.lud_desc}}
+              </option>
+              <!-- <option value=data.lud_code>data.lud_desc</option> -->
+            </select>
+                    
+                        <div *ngIf=" fc.brand.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.brand.errors.required">
+                            Brand is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+
+            <div class="col">
+                <!-- color -->
+                <div class="md-form ">
+                    <label class="font-weight row " for="color">Color</label>
+                    <select class="form-select  form-select mr-sm-2 js-example-basic-single" 
+                    id="color" name="color"
+              formControlName="color" [ngClass]="{ 'is-invalid': submitted && fc.color.errors }"
+              (change)="setStockCode()">
+              <!-- <option Selected value="">Select User Role</option> -->
+              <option *ngFor="let data of colorDataList; index as i;" [value]=data.lud_code> 
+                  {{data.lud_desc}}
+              </option>
+              <!-- <option value=data.lud_code>data.lud_desc</option> -->
+            </select>
+                    
+                        <div *ngIf=" fc.color.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.color.errors.required">
+                            Color is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+        </div>
+
+        <div class="row mt-3">
+
+<!--close col -->
+
+<div class="col-4">
+    <!-- design_code -->
+    <div class="md-form ">
+        <label class="font-weight row " for="design_code">Design</label>
+        <select class="form-select  form-select mr-sm-2 js-example-basic-single" 
+        id="design_code" name="design_code"
+  formControlName="design_code" [ngClass]="{ 'is-invalid': submitted && fc.design_code.errors }"
+  (change)="setStockCode()">
+  <!-- <option Selected value="">Select User Role</option> -->
+  <option *ngFor="let data of designDataList; index as i;" [value]=data.lud_code> 
+      {{data.lud_desc}}
+  </option>
+  <!-- <option value=data.lud_code>data.lud_desc</option> -->
+</select>
+        
+            <div *ngIf=" fc.design_code.invalid " class="invalid-feedback">
+            <div *ngIf="fc.design_code.errors.required">
+                Design is required
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--close col -->
+
+
+
+
+            <div class="col-8">
+                <!-- Employee ID -->
+                <div class="md-form ">
+                    <label class="font-weight row " for="stock_code">Code</label>
+                    <input readonly type="text" id="stock_code" name="stock_code" class="form-control" 
+                    placeholder="Code"
+                        formControlName="stock_code" [ngClass]="{ 'is-invalid':   submitted && fc.stock_code.errors }">
+                    <div *ngIf=" fc.stock_code.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.stock_code.errors.required">
+                            Code is required
                         </div>
 
                     </div>
@@ -154,10 +270,28 @@
                     <input type="number" id="items_count" name="items_count" class="form-control"
                         placeholder="Total Items" formControlName="items_count"
                         [ngClass]="{ 'is-invalid':   submitted && fc.items_count.errors }"
-                        (keyup)= "calculateCostPrice()">
+                        (keyup)= "calculateCostPrice('C')">
                     <div *ngIf=" fc.items_count.invalid " class="invalid-feedback">
                         <div *ngIf="fc.items_count.errors.required">
                             Item count is required
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--close col -->
+
+            <div class="col-2">
+                <!-- Employee ID   readonly -->
+                <div class="md-form ">
+                    <label class="font-weight row " for="items_cost">Cost Price</label>
+                    <input  type="number" id="items_cost" name="items_cost" class="form-control" 
+                    placeholder="Cost Price"
+                        formControlName="items_cost" [ngClass]="{ 'is-invalid':   submitted && fc.items_cost.errors }"
+                        (keyup)= "calculateCostPrice('C')">
+                    <div *ngIf=" fc.items_cost.invalid " class="invalid-feedback">
+                        <div *ngIf="fc.items_cost.errors.required">
+                            Cost Price is required
                         </div>
 
                     </div>
@@ -172,7 +306,7 @@
                     <input type="number" id="total_bill_amount" name="total_bill_amount" class="form-control"
                         placeholder="Total Amount" formControlName="total_bill_amount"
                         [ngClass]="{ 'is-invalid':   submitted && fc.total_bill_amount.errors }"
-                        (keyup)= "calculateCostPrice()">
+                        (keyup)= "calculateCostPrice('T')">
                     <div *ngIf=" fc.total_bill_amount.invalid " class="invalid-feedback">
                         <div *ngIf="fc.total_bill_amount.errors.required">
                             Total amount is required
@@ -186,11 +320,11 @@
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight row " for="shipping_charges">Shipping Charges</label>
+                    <label class="font-weight row " for="shipping_charges">Shipping</label>
                     <input type="number" id="shipping_charges" name="shipping_charges" class="form-control"
                         placeholder="Shipping Charges" formControlName="shipping_charges"
                         [ngClass]="{ 'is-invalid':   submitted && fc.shipping_charges.errors }"
-                        (keyup)= "calculateCostPrice()">
+                        (keyup)= "calculateCostPrice('C')">
                     <div *ngIf=" fc.shipping_charges.invalid " class="invalid-feedback">
                         <div *ngIf="fc.shipping_charges.errors.required">
                             Shipping Charges is required
@@ -204,11 +338,11 @@
             <div class="col">
                 <!-- Employee ID -->
                 <div class="md-form ">
-                    <label class="font-weight row " for="delivery_charges">Delivery Charges</label>
+                    <label class="font-weight row " for="delivery_charges">Delivery</label>
                     <input type="number" id="delivery_charges" name="delivery_charges" class="form-control"
                         placeholder="Delivery Charges" formControlName="delivery_charges"
                         [ngClass]="{ 'is-invalid':   submitted && fc.delivery_charges.errors }"
-                        (keyup)= "calculateCostPrice()">
+                        (keyup)= "calculateCostPrice('C')">
                     <div *ngIf=" fc.delivery_charges.invalid " class="invalid-feedback">
                         <div *ngIf="fc.delivery_charges.errors.required">
                             Delivery Charges is required
@@ -228,7 +362,7 @@
                 <label class="font-weight row " for="vat">Vat </label>
                 <input type="number" id="vat" name="vat" class="form-control" placeholder="VAT"
                     formControlName="vat" [ngClass]="{ 'is-invalid':   submitted && fc.vat.errors }"
-                    (keyup)= "calculateCostPrice()">
+                    (keyup)= "calculateCostPrice('C')">
                 <div *ngIf=" fc.vat.invalid " class="invalid-feedback">
                     <div *ngIf="fc.vat.errors.required">
                         VAT is required
@@ -244,22 +378,7 @@
         <div class="row mt-3">
            
 
-            <div class="col-2">
-                <!-- Employee ID -->
-                <div class="md-form ">
-                    <label class="font-weight row " for="items_cost">Cost Price</label>
-                    <input readonly type="number" id="items_cost" name="items_cost" class="form-control" 
-                    placeholder="Cost Price"
-                        formControlName="items_cost" [ngClass]="{ 'is-invalid':   submitted && fc.items_cost.errors }">
-                    <div *ngIf=" fc.items_cost.invalid " class="invalid-feedback">
-                        <div *ngIf="fc.items_cost.errors.required">
-                            Cost Price is required
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <!--close col -->
+           
 
             <div class="col-2">
                 <!-- Employee ID -->
@@ -282,7 +401,7 @@
                 <!-- stock_sold -->
                 <div class="md-form ">
                     <label class="font-weight row " for="stock_sold">Stock Sold</label>
-                    <input type="number" id="stock_sold" name="stock_sold" class="form-control"
+                    <input readonly type="number" id="stock_sold" name="stock_sold" class="form-control"
                         placeholder="Stock Sold" formControlName="stock_sold"
                         [ngClass]="{ 'is-invalid':   submitted && fc.stock_sold.errors }">
                     <div *ngIf=" fc.stock_sold.invalid " class="invalid-feedback">
@@ -299,7 +418,7 @@
                 <!-- Employee ID -->
                 <div class="md-form ">
                     <label class="font-weight row " for="stock_bar_code">Bar Code</label>
-                    <input type="text" id="stock_bar_code" name="stock_bar_code" class="form-control"
+                    <input readonly type="text" id="stock_bar_code" name="stock_bar_code" class="form-control"
                         placeholder="Bar Code" formControlName="stock_bar_code"
                         [ngClass]="{ 'is-invalid':   submitted && fc.stock_bar_code.errors }">
                     <div *ngIf=" fc.stock_bar_code.invalid " class="invalid-feedback">
@@ -310,8 +429,12 @@
                     </div>
                 </div>
             </div>
-            <!--close col -->
+            <!--close col *ngIf= "(barCode.length == 29)"-->
 
+            <ngx-barcode [bc-value]="barCode" [bc-display-value]="true"
+            
+            >
+            </ngx-barcode>
 
         </div>
 

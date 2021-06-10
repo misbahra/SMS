@@ -107,7 +107,8 @@ export class NewOrderComponent implements OnInit{
      
      if (element.items_count - element.stock_sold > 0 ) {
       this.stockDataListDisplay.push({"stock_uid":element.stock_uid , 
-                                      "item_name":element.item_name + 
+                                    
+                                      "item_name":element.stock_code + " - " + element.item_name + 
                                       " (" + (element.items_count - element.stock_sold) + ")",
                                       "stock_bar_code" : element.stock_bar_code});
                                     };

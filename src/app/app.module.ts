@@ -68,7 +68,9 @@ import {appdataWS} from './ws/appdataWS';
 import { AppdataNewComponent } from './appdata/appdata-new/appdata-new.component';
 import { RolesComponent } from './roles/roles.component';
 import { rolePermissionsWS } from './ws/rolePermissionsWS';
-
+import { DatePipe } from '@angular/common';
+import { NgxBarcodeModule } from 'ngx-barcode';
+import { BatchProcessesComponent } from './batch-processes/batch-processes.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +106,7 @@ import { rolePermissionsWS } from './ws/rolePermissionsWS';
     AppdataComponent,
     AppdataNewComponent,
     RolesComponent,
+    BatchProcessesComponent,
    
   ],
   imports: [
@@ -125,7 +128,8 @@ import { rolePermissionsWS } from './ws/rolePermissionsWS';
     MatMenuModule,
     MatDividerModule,
     MatCardModule,
-    MatToolbarModule
+    MatToolbarModule,
+    NgxBarcodeModule
   ],
   providers: [
     mainWS,
@@ -146,7 +150,8 @@ import { rolePermissionsWS } from './ws/rolePermissionsWS';
     ItemCategoriesWS,
     imguploadWS,
     appdataWS,
-    rolePermissionsWS
+    rolePermissionsWS,
+    DatePipe
   ],
   bootstrap: [AppComponent],
   entryComponents: [LuhNewComponent]

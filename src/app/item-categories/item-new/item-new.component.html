@@ -79,7 +79,7 @@
                     <!-- item_code -->
                     <div class="md-form ">
                         <label class="font-weight row " for="item_code">Code</label>
-                        <input type="text" id="item_code" name="item_code" class="form-control" placeholder="Name"
+                        <input type="text" id="item_code" name="item_code" class="form-control" placeholder="Code"
                             formControlName="item_code" [ngClass]="{ 'is-invalid':   submitted && fc.item_code.errors }">
                         <div *ngIf=" fc.item_code.invalid " class="invalid-feedback">
                             <div *ngIf="fc.item_code.errors.required">

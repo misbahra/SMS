@@ -60,6 +60,7 @@ export class VenderNewComponent implements OnInit {
       id: ['', []],
       vender_uid: [this.utilService.getUID('vender_uid'), []],
       vender_name: ['', []],
+      vender_code: ['', []],
       vender_desc: ['', []],
       country_uid: ['', []],
       state_uid: ['', []],

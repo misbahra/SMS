@@ -7,6 +7,7 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 import * as XLSX from 'xlsx'; 
 import * as FileSaver from 'file-saver';
+import { DatePipe } from '@angular/common'
 
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
@@ -17,7 +18,8 @@ const EXCEL_EXTENSION = '.xlsx';
 export class utilWS {
   constructor(
     public dialog: MatDialog,
-    private sessionService : sessionService
+    private sessionService : sessionService,
+    public datepipe: DatePipe
   ) { 
    
   }
@@ -161,6 +163,80 @@ public exportTableAsExcelFile(tableNmae : string, excelFileName: string): void {
 private saveAsExcelFile(buffer: any, fileName: string): void {
    const data: Blob = new Blob([buffer], {type: EXCEL_TYPE});
    FileSaver.saveAs(data, fileName + '_export_' + new  Date().getTime() + EXCEL_EXTENSION);
+}
+
+public setStockCode(
+  itemsDataList : any,
+  vendersDataList : any,
+  stock_received_on : Date,
+  stock_uid: string,
+  p_item_uid: string,
+  p_vender_uid: string,
+  stuff: string,
+  brand: string,
+  color: string,
+  design_code: string
+){
+  //alert(this.dataForm.value.stock_received_on);
+
+  var item;
+  var vender;
+  var stock_received_date;
+  var stockCode = '';
+  var separator ='';
+  var barCode = stock_uid;
+  var finalData : any = {};
+
+   item = itemsDataList.find(({ item_uid }) => item_uid === p_item_uid);
+   vender = vendersDataList.find(({ vender_uid }) => vender_uid === p_vender_uid);
+   stock_received_date = this.datepipe.transform(stock_received_on, 'yyyyMMdd');
+  
+  if (stockCode == '' ){} else {separator = '-'}
+  if (!stock_received_date) {stockCode = stockCode + separator +  '********'} else { stockCode = stockCode + separator + ('********' + stock_received_date).slice(-8)}
+  
+  if (stockCode == '' ){} else {separator = '-'}
+  if (!item) {
+    stockCode = stockCode + separator +  '******';
+  } 
+  else { 
+    stockCode = stockCode + separator +  ('********' + item.item_code).slice(-8);
+    barCode = barCode + ('00000000' + item.item_code).slice(-8);
+  }
+// no separator or padding in the item code and stuff for better seaching on the order form 
+  if (stockCode == '' ){} else {separator = ''}
+  if (stuff == '') {stockCode = stockCode + separator +  ''} else { stockCode = stockCode + separator + (stuff)}
+
+  if (stockCode == '' ){} else {separator = ''}
+  if (brand == '') {stockCode = stockCode + separator +  '****'} 
+  else { 
+    stockCode = stockCode + separator + (brand + '****').slice(0,4)
+    barCode = barCode + ('0000' + brand).slice(-4);
+  }
+
+  if (stockCode == '' ){} else {separator = '-'}
+  if (!vender) {stockCode = stockCode + separator +  '******'} else { stockCode = stockCode + separator + ('********' + vender.vender_code).slice(-8)}
+
+ 
+  
+  
+  if (stockCode == '' ){} else {separator = '-'}
+  if (color == '') {stockCode = stockCode + separator +  '****'} else { stockCode = stockCode + separator + ('****' + color).slice(-4)}
+
+  if (stockCode == '' ){} else {separator = '-'}
+  if (design_code == '') {stockCode = stockCode + separator +  '****'} else { stockCode = stockCode + separator + ('****' + design_code).slice(-4)}
+
+ 
+  // var stockCode = 
+  //                 stock_received_date?   stock_received_date : '' +
+  //                 item.item_code !=''?   '-' + item.item_code : '' +
+  //                 vender.vender_code !=''?   '-' + vender.vender_code : '' +
+  //                 this.dataForm.value.brand !=''?   '-' + this.dataForm.value.brand : '' +
+  //                 this.dataForm.value.color !=''?    '-' + this.dataForm.value.color : '' +
+  //                 this.dataForm.value.design_code !=''?   '-' + this.dataForm.value.design_code : '' 
+  //                 ;
+
+  finalData = {stockCode : stockCode , barCode : barCode};
+  return finalData;
 }
 
 

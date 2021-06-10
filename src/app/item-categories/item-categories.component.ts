@@ -116,10 +116,20 @@ rowData2:any = [];
        filter: false,
       checkboxSelection: true
       },
-    {headerName: 'Code', field: 'item_uid', width: 150 },
-    {headerName: 'Name', field: 'item_name', width: 300 },
-    {headerName: 'Reorder Quantity', field: 'reorder_quantity' , width: 150 },
-    {headerName: 'Bar Code', field: 'item_bar_code', width: 150 }, 
+    {headerName: 'Id', field: 'item_uid', width: 140 },
+    {headerName: 'Code', field: 'item_code', width: 140 },
+    {headerName: 'Name', field: 'item_name', width: 275 },
+    {headerName: 'Reorder', field: 'reorder_quantity' , width: 140 },
+    {headerName: 'Active', field: 'active' , width: 140 ,
+    cellClass: params => {
+      return params.value === true ? 'ag-allow' : 'ag-denay';
+  }, 
+  cellRenderer: function(params) {
+    if (params.value){return '<span><i class="fa fa-check-square"></i></span>'}
+    else {return '<span><i class="fa fa-times"></i></span>'}
+}
+},
+    // {headerName: 'Bar Code', field: 'item_bar_code', width: 150 }, 
   ];
   
    this.rowData2 = resp;

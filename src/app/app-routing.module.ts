@@ -23,6 +23,7 @@ import { Routes, RouterModule } from '@angular/router';
  import{ImgUploadComponent} from './img-upload/img-upload.component';
  import{AppdataComponent} from './appdata/appdata.component';
  import{RolesComponent} from './roles/roles.component';
+ import { BatchProcessesComponent } from './batch-processes/batch-processes.component';
  
 // import{WsrMainNewComponent} from './wsr-main/wsr-main-new/wsr-main-new.component';
 // import { FeedbackComponent } from './feedback/feedback.component';
@@ -72,6 +73,7 @@ const routes: Routes = [
   { path: 'imgUpload',   component: ImgUploadComponent   , canActivate: [AuthGuard]},
   { path: 'appData',   component: AppdataComponent   , canActivate: [AuthGuard]},
   { path: 'role',   component: RolesComponent   , canActivate: [AuthGuard]},
+  { path: 'batch',   component: BatchProcessesComponent   , canActivate: [AuthGuard]},
   
  ];
 

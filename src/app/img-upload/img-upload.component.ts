@@ -62,6 +62,8 @@ export class ImgUploadComponent implements OnInit {
       is_offer: [false, []],
       offer_type: ['', []],
       discount_rate: [, []],
+      show_price: [false, []],
+      is_main_image: [false, []],
       name: ['', []],
       url: ['', []],
       uploaded_by: ['', []],

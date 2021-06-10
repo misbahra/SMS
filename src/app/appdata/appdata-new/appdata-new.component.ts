@@ -165,7 +165,7 @@ export class AppdataNewComponent implements OnInit {
           //this.userForm.reset();
           //this.router.navigate(['user']);
          // window.location.href = './lu';
-         this.dialogRef.close('save');
+         //this.dialogRef.close('save');
         }
         else {
           
@@ -184,8 +184,10 @@ export class AppdataNewComponent implements OnInit {
         this.webService.addAD(this.dataForm.value).subscribe(
           (response) => {
             //this.resp = response;
-            console.log('Data added' + response);
-    
+          //  console.log('Data added' + response);
+          if (response[0].code == '0') {alert('Data cannot be saved for the moment, please try again later')}
+          else if (response[0].code == '1') {alert('Duplicate data, please selec a different combination ')}
+          else{this.dialogRef.close('save'); }
             // this.loadAllUsers();
     
           },
@@ -212,9 +214,11 @@ export class AppdataNewComponent implements OnInit {
         this.webService.updateAD(this.dataForm.value).subscribe(
           (response) => {
             //this.resp = response;
-            console.log('Data updated' + response);
+           // console.log('Data updated' + response);
     
-            // this.loadAllUsers();
+          if (response[0].code == '0') {alert('Data cannot be saved for the moment, please try again later')}
+          else if (response[0].code == '1') {alert('Duplicate data, please selec a different combination ')}
+          else{this.dialogRef.close('save'); }
     
           },
           (error) => {
