@@ -86,6 +86,14 @@ export class stockWS {
      getSummaryStock() {
         return this.http.get(this.BASE_URL + '/summaryStock').toPromise();
     }
+
+     // get summary  stock for order
+
+     getSummaryStockForOrder() {
+        return this.http.get(this.BASE_URL + '/summaryStockForOrder').toPromise();
+    }
+
+    
      
    // get stock related to an item   
     getItemStock(id: any) {

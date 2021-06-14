@@ -89,8 +89,9 @@ export class NewOrderComponent implements OnInit{
 
   async loadStock() {
     this.isBusy = true;
-    let response = await this.stockService.getStock();
+    let response = await this.stockService.getSummaryStockForOrder();
     this.stockDataList = response;
+    //alert('data retrieved' + this.stockDataList.length )
     
     // available stocks should be loaded
     this.loadAvailableStock(this.stockDataList);
@@ -105,13 +106,12 @@ export class NewOrderComponent implements OnInit{
     await stockData.forEach(element => {
       // check if stock is available
      
-     if (element.items_count - element.stock_sold > 0 ) {
+     //if (element.items_count - element.stock_sold > 0 ) {
       this.stockDataListDisplay.push({"stock_uid":element.stock_uid , 
-                                    
-                                      "item_name":element.stock_code + " - " + element.item_name + 
-                                      " (" + (element.items_count - element.stock_sold) + ")",
+                                      "item_uid" : element.item_uid,
+                                      "item_name":element.item_desc + "(" + (element.items_count - element.stock_sold) + ") -" + element.stock_uid,
                                       "stock_bar_code" : element.stock_bar_code});
-                                    };
+                                   // };
                                     });
     
   };
@@ -369,16 +369,7 @@ export class NewOrderComponent implements OnInit{
       }
 
     
-      this.submitted = false;
-      this.isBusy = false;
       
-      //this.userForm.reset();
-      // set back the received date thriugh session service
-      this.sessionService.deleteParameters();
-      this.sessionService.setParameters([{ order_date : this.receivedDate }]);
-      // navigate to order form
-      this.router.navigate(['order']);
-      //window.location.href = './order';
 
     }
     else {
@@ -406,9 +397,19 @@ export class NewOrderComponent implements OnInit{
         this.orderService.addOrderItem(this.selectedDataList).subscribe(
           (response) => {
             //this.resp = response;
-            console.log('Order items added' + response);
+            //console.log('Order items added' + response);
     
             // this.loadAllUsers();
+            this.submitted = false;
+            this.isBusy = false;
+            
+            //this.userForm.reset();
+            // set back the received date thriugh session service
+            this.sessionService.deleteParameters();
+            this.sessionService.setParameters([{ order_date : this.receivedDate }]);
+            // navigate to order form
+            this.router.navigate(['order']);
+            //window.location.href = './order';
     
     
           },
@@ -453,8 +454,18 @@ export class NewOrderComponent implements OnInit{
             //this.resp = response;
             console.log('Order items added' + response);
             //decrease the stock for item being deleted
-            this.decreaseSoldStock(this.orderItemsToUodate);
+            //this.decreaseSoldStock(this.orderItemsToUodate);
             // this.loadAllUsers();
+            this.submitted = false;
+            this.isBusy = false;
+            
+            //this.userForm.reset();
+            // set back the received date thriugh session service
+            this.sessionService.deleteParameters();
+            this.sessionService.setParameters([{ order_date : this.receivedDate }]);
+            // navigate to order form
+            this.router.navigate(['order']);
+            //window.location.href = './order';
     
     
         // add all orderitems and in this procedure automaticall stock sold will be increased in the back end

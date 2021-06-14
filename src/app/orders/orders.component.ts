@@ -34,6 +34,80 @@ export class OrdersComponent implements OnInit {
     private luService: luWS,
   ) {
 
+    this.columnDefs = [
+      {
+        headerName: '',
+         width: 35,
+         sortable: false,
+         filter: false,
+        checkboxSelection: true
+        },
+      {headerName: '#', field: '_id.order_uid' , width: 200, sortable: true, filter:true  },
+      {headerName: 'Date', field: '_id.order_date', width: 200, sortable: true, filter:true 
+      ,valueFormatter: function (params) {
+        return moment(params.value.substr(0,16)).format('DD-MMM-YYYY HH:mm');
+        //return params.value.substr(0,16);
+      }
+    },
+      {headerName: 'Invoice#', field: '_id.invoice_number', width: 150, sortable: true, filter:true },
+      {headerName: 'Customer', field: '_id.customer_name', width: 300, sortable: true, filter:true },
+      {headerName: 'Amount', field: 'order_amount', width: 130, sortable: true, filter:true , cellStyle: {textAlign: "right",color:"green"},
+       valueFormatter: function(params) {
+       return params.value.toFixed(2)
+      },
+    },
+      {headerName: 'Status', field: '_id.status', width: 100, sortable: true, filter:true },
+      {headerName: 'HD', field: '_id.home_delivery', width: 100, sortable: true, filter:true },
+      {headerName: 'PM', field: '_id.payment_mode', width: 100, sortable: true, filter:true },
+          
+    ];
+
+    this.columnDefs2 = [
+      {
+        headerName: '',
+         width: 35,
+         sortable: false,
+         filter: false,
+        checkboxSelection: true
+        },
+      //{headerName: 'order#', field: 'order_uid' , width: 200, sortable: true, filter:true },
+      {headerName: 'Item', field: 'item_name', width: 300, sortable: true, filter:true },
+      {headerName: 'Quantity', field: 'quantity', width: 130, sortable: true, filter:true ,
+      cellStyle: {textAlign: "right"},
+      valueFormatter: function(params) {
+        return params.value.toFixed(2)
+       },
+     },
+      {headerName: 'Rate', field: 'unit_sale_price', width: 130, sortable: true, filter:true ,
+      cellStyle: {textAlign: "right"},
+      valueFormatter: function(params) {
+        return params.value.toFixed(2)
+       },
+     },
+      {headerName: 'Total price', field: 'total_price', width: 130, sortable: true, filter:true ,
+      cellStyle: {textAlign: "right",color:"green"}
+          ,  valueFormatter: function(params) {
+            return params.value.toFixed(2)
+           },
+         },
+      {headerName: 'Net price', field: 'total_price_with_taxes', width: 130, sortable: true, filter:true ,
+      cellStyle: {textAlign: "right",color:"blue"}
+          ,  valueFormatter: function(params) {
+            return params.value.toFixed(2)
+           },
+         },
+      {headerName: 'Stock uid', field: 'stock_uid', width: 200, sortable: true, filter:true },
+      {headerName: 'Posted', field: 'posted_to_stock', width: 130, sortable: true, filter:true },
+      {headerName: 'cp', field: 'unit_cost_price', width: 130, sortable: true, filter:true ,
+      cellStyle: {textAlign: "right",color:"blue"}
+          ,   valueFormatter: function(params) {
+           
+            return params.value.toFixed(2)
+           },
+         },
+      
+    ];
+
   }
   model: any = [];
   ordersdataList: any = [];
@@ -194,33 +268,7 @@ ngOnInit() {
     let response = await this.webService.getSummaryByOrder(parameters);
     this.ordersdataList = response;
 
-    this.columnDefs = [
-      {
-        headerName: '',
-         width: 35,
-         sortable: false,
-         filter: false,
-        checkboxSelection: true
-        },
-      {headerName: '#', field: '_id.order_uid' , width: 200, sortable: true, filter:true  },
-      {headerName: 'Date', field: '_id.order_date', width: 200, sortable: true, filter:true 
-      ,valueFormatter: function (params) {
-        return moment(params.value.substr(0,16)).format('DD-MMM-YYYY HH:mm');
-        //return params.value.substr(0,16);
-      }
-    },
-      {headerName: 'Invoice#', field: '_id.invoice_number', width: 150, sortable: true, filter:true },
-      {headerName: 'Customer', field: '_id.customer_name', width: 300, sortable: true, filter:true },
-      {headerName: 'Amount', field: 'order_amount', width: 130, sortable: true, filter:true , cellStyle: {textAlign: "right",color:"green"},
-       valueFormatter: function(params) {
-       return params.value.toFixed(2)
-      },
-    },
-      {headerName: 'Status', field: '_id.status', width: 100, sortable: true, filter:true },
-      {headerName: 'HD', field: '_id.home_delivery', width: 100, sortable: true, filter:true },
-      {headerName: 'PM', field: '_id.payment_mode', width: 100, sortable: true, filter:true },
-          
-    ];
+    
     this.rowData = response;
     this.ordersdataList.forEach(element => {
       this.sumAmount +=element.order_amount;
@@ -238,51 +286,7 @@ ngOnInit() {
     //alert("luh value is " + id[0].value);
    let response = await this.webService.getAllItemsForOrder(id);
    this.orderItemsdataList = response;
-   this.columnDefs2 = [
-    {
-      headerName: '',
-       width: 35,
-       sortable: false,
-       filter: false,
-      checkboxSelection: true
-      },
-    //{headerName: 'order#', field: 'order_uid' , width: 200, sortable: true, filter:true },
-    {headerName: 'Item', field: 'item_name', width: 300, sortable: true, filter:true },
-    {headerName: 'Quantity', field: 'quantity', width: 130, sortable: true, filter:true ,
-    cellStyle: {textAlign: "right"},
-    valueFormatter: function(params) {
-      return params.value.toFixed(2)
-     },
-   },
-    {headerName: 'Rate', field: 'unit_sale_price', width: 130, sortable: true, filter:true ,
-    cellStyle: {textAlign: "right"},
-    valueFormatter: function(params) {
-      return params.value.toFixed(2)
-     },
-   },
-    {headerName: 'Total price', field: 'total_price', width: 130, sortable: true, filter:true ,
-    cellStyle: {textAlign: "right",color:"green"}
-        ,  valueFormatter: function(params) {
-          return params.value.toFixed(2)
-         },
-       },
-    {headerName: 'Net price', field: 'total_price_with_taxes', width: 130, sortable: true, filter:true ,
-    cellStyle: {textAlign: "right",color:"blue"}
-        ,  valueFormatter: function(params) {
-          return params.value.toFixed(2)
-         },
-       },
-    {headerName: 'Stock uid', field: 'stock_uid', width: 200, sortable: true, filter:true },
-    {headerName: 'Posted', field: 'posted_to_stock', width: 130, sortable: true, filter:true },
-    {headerName: 'cp', field: 'unit_cost_price', width: 130, sortable: true, filter:true ,
-    cellStyle: {textAlign: "right",color:"blue"}
-        ,   valueFormatter: function(params) {
-         
-          return params.value.toFixed(2)
-         },
-       },
-    
-  ];
+   
   this.rowData2 = response;
 
     //alert("Data is :" + this.LUDdataList[0].lud_desc);
@@ -294,11 +298,24 @@ ngOnInit() {
   };
 
   LoadOrderItems(code: any) {
+    if (this.rowDataClicked._id)
+    {
     this.selectedID = this.rowDataClicked._id.order_uid;
+    //alert('selected uid is - ' + this.selectedID);
     this.isluhCodeSelected = true;
     this.selectedCode = [];
     this.selectedCode.push({ "name": "order_uid", "value": this.rowDataClicked._id.order_uid });
     this.loadAllOrderItems(this.selectedCode);
+    }
+    else
+    {
+     
+      this.isluhCodeSelected = true;
+      this.selectedCode = [];
+      this.selectedCode.push({ "name": "order_uid", "value": "" });
+      this.loadAllOrderItems(this.selectedCode);
+    }
+    
   }
 
   deleteOrder() {
