@@ -54,7 +54,8 @@ export class utilWS {
     else if(type == "sal_header_uid") {prefix = "SAL"}
     else if(type == "sal_detail_uid") {prefix = "SALD"}
     else if(type == "image_upload") {prefix = "IMGN"} // to get image name
-    else {prefix = ""} ;
+    else if(type == "order_refund_uid") {prefix = "OR"}
+    else {prefix = "GEN"} ; // General 
 
     var d = new Date();
     return( prefix + d.getFullYear()+""+(d.getMonth()+1)+""+d.getDate()+""+ 

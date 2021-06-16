@@ -69,7 +69,11 @@ export class NewOrderComponent implements OnInit{
   dataId = "";
   isItemAddedRemoved = false;
   receivedDate: any;
-  
+  refundQuantity = 0;
+  refundDataList: any = [];
+  connUser : any = this.sessionService.getConnectedUsers();
+  customerRefundDataList: any = [];
+
   @ViewChild("txtSearch") searchField: ElementRef;
   
 
@@ -161,7 +165,7 @@ export class NewOrderComponent implements OnInit{
       "order_refund_uid" :  "",
       "stock_uid" : found.stock_uid,
       "posted_to_stock" : "Y",
-      "created_by" :  "",
+      "created_by" :  this.connUser.user_name,
       "created_on" :  Date.now(),
       "modified_by" :  "",
       "modified_on" :  ""
@@ -198,7 +202,7 @@ export class NewOrderComponent implements OnInit{
       this.searchField.nativeElement.focus();
   };
   
-  ngOnInit() {
+  async ngOnInit() {
 
     
     this.loadStock();
@@ -221,8 +225,8 @@ export class NewOrderComponent implements OnInit{
       status: ['1',[]],
       invoice_number: ['',[Validators.required]],
       salesman_uid: ['',[]],
-      created_by: ['', []],
-      created_on: ['', []],
+      created_by: [this.connUser.user_name, []],
+      created_on: [Date.now(), []],
       modified_by: ['', []],
       modified_on: ['', []]
     }
@@ -247,7 +251,7 @@ export class NewOrderComponent implements OnInit{
       this.operation = 2;
       this.dataId = this.queryParams[0].order_id;
      
-      this.loadOrders(this.dataId);
+      await this.loadOrders(this.dataId);
       
     }
     else {this.isDisabled = true;};
@@ -257,7 +261,7 @@ export class NewOrderComponent implements OnInit{
     this.loadAllLUD('5');
     this.loadAllLUD('20');
     this.loadAllCustomers();
-    
+    this.loadCustomerRefunds();
   };
 
   async loadOrders(orderid: any) {
@@ -284,32 +288,37 @@ export class NewOrderComponent implements OnInit{
     this.totalAmount = 0;
     this.orderItems.forEach(found => {
     
-    this.totalAmount += found.total_price; 
+    this.totalAmount += found._id.total_price; 
     
     this.selectedDataList.push(
       {
-      "order_item_uid" : found.order_item_uid,
-      "order_uid" : found.order_uid,
-      "item_uid" :  found.item_uid,
-      "item_name" : found.item_name,
-      "unit_cost_price" : found.items_cost ,
-      "unit_tag_price" :  found.unit_tag_price,
-      "quantity" :  found.quantity,
-      "unit_sale_price" :found.unit_sale_price ,
-      "vat" :  found.vat,
-      "sales_tax" :  found.sales_tax,
-      "withholding_tax" :  found.withholding_tax,
-      "total_price" :  found.total_price ,
-      "total_price_with_taxes" :  found.total_price_with_taxes,
-      "discount_rate" : found.discount_rate,
-      "discount" :  found.discount ,
-      "order_refund_uid" :  found.order_refund_uid,
-      "stock_uid" : found.stock_uid,
-      "posted_to_stock" : found.posted_to_stock,
-      "created_by" :  found.created_by,
-      "created_on" : found.created_on,
-      "modified_by" :  found.modified_by,
-      "modified_on" :  found.modified_on
+      "order_item_uid" : found._id.order_item_uid,
+      "order_uid" : found._id.order_uid,
+      "item_uid" :  found._id.item_uid,
+      "item_name" : found._id.item_name,
+      "unit_cost_price" : found._id.unit_cost_price ,
+      "unit_tag_price" :  found._id.unit_tag_price,
+      "quantity" :  found._id.quantity,
+      "unit_sale_price" :found._id.unit_sale_price ,
+      "vat" :  found._id.vat,
+      "sales_tax" :  found._id.sales_tax,
+      "withholding_tax" :  found._id.withholding_tax,
+      "total_price" :  found._id.total_price ,
+      "total_price_with_taxes" :  found._id.total_price_with_taxes,
+      "discount_rate" : found._id.discount_rate,
+      "discount" :  found._id.discount ,
+      "order_refund_uid" :  found._id.order_refund_uid,
+      "stock_uid" : found._id.stock_uid,
+      "posted_to_stock" : found._id.posted_to_stock,
+      "refunded_quantity" : found.total_refunded_quantity,
+      "refunded_amount" : found.total_refunded_amount,
+      "created_by" :  found._id.created_by,
+      "created_on" : found._id.created_on,
+      "modified_by" :  found._id.modified_by,
+      "modified_on" :  found._id.modified_on,
+      "total_refunded_quantity" : found.total_refunded_quantity,
+      "total_refunded_amount" : found.total_refunded_amount
+
     });
   });
 
@@ -390,7 +399,7 @@ export class NewOrderComponent implements OnInit{
     this.orderService.addOrder(this.orderForm.value).subscribe(
       (response) => {
         //this.resp = response;
-        console.log('Order added' + response);
+        //console.log('Order added' + response);
 
         // this.loadAllUsers();
         // add orderitems
@@ -623,8 +632,113 @@ openCustomersDialog(operation: any) {
       clearCustomer()
       {
         this.orderForm.controls.customer_uid.setValue(null);
+        
       }
-    
 
+  processRefund(p_order_item_uid: any, p_quantity: any, p_refundedQuantity: any) {
+
+    var remainingQuantity = p_quantity - p_refundedQuantity;
+
+    // here will be the code to refund
+    if (!this.orderForm.value.customer_uid) {
+      alert("Please select a customer to refund.");
+    }
+    else {
+      //alert("Step1 - Customer validated");
+      if (remainingQuantity <= 0) {
+        alert('All items have already been refunded.')
+      }
+      else {
+
+        var prmpt = prompt("Please provide the quantity to refund.");
+
+        var refQty = parseInt(prmpt);
+        //alert("Step2 - after prompt");
+        if (refQty > p_quantity) {
+          alert('You cannot refund more than available quantitiy (' + remainingQuantity + ')');
+        }
+        else {
+          //alert("Step3 - after quantity check");
+          this.isBusy = true;
+
+          // update order if customer is added
+          if (this.orderForm.dirty) {
+            // if update operation (2)
+            if (this.operation == 2) {
+              //alert("Step3-2 - after quantity check");
+              this.updateOrder();
+            }
+          }
+
+         // alert("Step4 - after cutomer update");
+
+          var foundOrderItem = this.selectedDataList.find(({ order_item_uid }) => (order_item_uid = p_order_item_uid));
+
+          //alert("Step5 - after found");
+          //this data is needed to refund
+          this.refundDataList.push({
+
+            order_refund_uid: this.utilService.getUID("order_refund_uid"),
+            //below information is related to order where refund will be or has been used / adjusted
+            order_uid: "",
+            order_item_uid: "",
+            // below information is related to refunded order
+            item_uid: foundOrderItem.item_uid,
+            unit_cost_price: foundOrderItem.unit_cost_price,
+            unit_tag_price: foundOrderItem.unit_tag_price,
+            quantity: refQty,
+            unit_sale_price: foundOrderItem.unit_sale_price,
+            total_price: (foundOrderItem.total_price / foundOrderItem.quantity) * refQty,
+            vat: (foundOrderItem.vat / foundOrderItem.quantity) * refQty,
+            sales_tax: (foundOrderItem.sales_tax / foundOrderItem.quantity) * refQty,
+            withholding_tax: foundOrderItem.withholding_tax,
+            discount_rate: foundOrderItem.discount_rate,
+            discount: (foundOrderItem.discount / foundOrderItem.quantity) * refQty,
+            total_price_with_taxes: (foundOrderItem.total_price_with_taxes / foundOrderItem.quantity) * refQty,
+            stock_uid: foundOrderItem.stock_uid,
+            posted_to_stock: foundOrderItem.posted_to_stock,
+            refunded_order_uid: foundOrderItem.order_uid,
+            refunded_order_item_uid: foundOrderItem.order_item_uid,
+            customer_uid: this.orderForm.value.customer_uid,
+            refund_type_uid: "",
+            refund_remarks: "",
+            created_by: this.connUser.user_name,
+            created_on: Date.now(),
+            modified_by: "",
+            modified_on: ""
+
+          });
+
+          alert("Step5 - after push");
+
+          this.orderService.addOrderRefund(this.refundDataList).subscribe(
+            (response) => {
+              this.isBusy = false;
+              alert('Refund Successfull.');
+            },
+            (error) => {
+              //Handle the error here
+              //If not handled, then throw it
+              console.error(error);
+              alert('Your refund cannot be processed for the moment.');
+            }
+          );
+
+        }
+
+
+      }
+    }
+  }
+
+async loadCustomerRefunds(){
+  //alert('Refund for customer - ' + this.orderForm.value.customer_uid)
+  if (this.orderForm.value.customer_uid){
+    var resp = await this.orderService.getOrderRefundsForCustomer([{value : this.orderForm.value.customer_uid}]);
+    this.customerRefundDataList = resp;
+    //alert('Refund Loaded - ' + this.customerRefundDataList.length);
+  }
+  
+}
 
 }

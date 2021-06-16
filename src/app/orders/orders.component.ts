@@ -14,6 +14,7 @@ import { stockWS } from '../ws/stockWS';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { customersWS } from '../ws/customersWS';
 import { ItemsWS } from '../ws/itemsWS';
+import { AngularFrameworkComponentWrapper } from '@ag-grid-community/angular/lib/angularFrameworkComponentWrapper';
 
 @Component({
   selector: 'app-orders',
@@ -71,36 +72,56 @@ export class OrdersComponent implements OnInit {
         checkboxSelection: true
         },
       //{headerName: 'order#', field: 'order_uid' , width: 200, sortable: true, filter:true },
-      {headerName: 'Item', field: 'item_name', width: 300, sortable: true, filter:true },
-      {headerName: 'Quantity', field: 'quantity', width: 130, sortable: true, filter:true ,
+      {headerName: 'Item', field: '_id.item_name', width: 300, sortable: true, filter:true },
+      {headerName: 'Quantity', field: '_id.quantity', width: 130, sortable: true, filter:true ,
       cellStyle: {textAlign: "right"},
       valueFormatter: function(params) {
         return params.value.toFixed(2)
        },
      },
-      {headerName: 'Rate', field: 'unit_sale_price', width: 130, sortable: true, filter:true ,
+      {headerName: 'Rate', field: '_id.unit_sale_price', width: 130, sortable: true, filter:true ,
       cellStyle: {textAlign: "right"},
       valueFormatter: function(params) {
+        if (!params.value){return ""}
         return params.value.toFixed(2)
        },
      },
-      {headerName: 'Total price', field: 'total_price', width: 130, sortable: true, filter:true ,
+      {headerName: 'Total price', field: '_id.total_price', width: 130, sortable: true, filter:true ,
       cellStyle: {textAlign: "right",color:"green"}
           ,  valueFormatter: function(params) {
+            if (!params.value){return ""}
             return params.value.toFixed(2)
            },
          },
-      {headerName: 'Net price', field: 'total_price_with_taxes', width: 130, sortable: true, filter:true ,
+      {headerName: 'Net price', field: '_id.total_price_with_taxes', width: 130, sortable: true, filter:true ,
       cellStyle: {textAlign: "right",color:"blue"}
           ,  valueFormatter: function(params) {
+            if (!params.value){return ""}
             return params.value.toFixed(2)
            },
          },
-      {headerName: 'Stock uid', field: 'stock_uid', width: 200, sortable: true, filter:true },
-      {headerName: 'Posted', field: 'posted_to_stock', width: 130, sortable: true, filter:true },
-      {headerName: 'cp', field: 'unit_cost_price', width: 130, sortable: true, filter:true ,
+      {headerName: 'Stock uid', field: '_id.stock_uid', width: 200, sortable: true, filter:true },
+      {headerName: 'Posted', field: '_id.posted_to_stock', width: 130, sortable: true, filter:true },
+      {headerName: 'cp', field: '_id.unit_cost_price', width: 130, sortable: true, filter:true ,
       cellStyle: {textAlign: "right",color:"blue"}
           ,   valueFormatter: function(params) {
+            if (!params.value){return ""}
+           
+            return params.value.toFixed(2)
+           },
+         },
+         {headerName: 'Ref Qty', field: 'total_refunded_quantity', width: 130, sortable: true, filter:true ,
+      cellStyle: {textAlign: "right",color:"blue"}
+          ,   valueFormatter: function(params) {
+            if (!params.value){return ""}
+           
+            return params.value.toFixed(2)
+           },
+         },
+         {headerName: 'Ref Amnt', field: 'total_refunded_amount', width: 130, sortable: true, filter:true ,
+      cellStyle: {textAlign: "right",color:"blue"}
+          ,   valueFormatter: function(params) {
+            if (!params.value){return ""}
            
             return params.value.toFixed(2)
            },
@@ -166,7 +187,7 @@ ngOnInit() {
   this.loadAllLUD('1');
     //this.loadAllOrders();
     this.userPrivs = this.sessionService.getUsersPrivs('USR');
-    if (this.selectedCode.length > 0){this.loadAllOrderItems(this.selectedCode);}
+    //if (this.selectedCode.length > 0){this.loadAllOrderItems(this.selectedCode);}
     //this.orderForm = new this.fb.group();
      this.orderForm = this.fb.group({
       order_uid: ['', []],
@@ -285,11 +306,23 @@ ngOnInit() {
     //setTimeout(null,4000);
     //alert("luh value is " + id[0].value);
    let response = await this.webService.getAllItemsForOrder(id);
-   this.orderItemsdataList = response;
+   //this.orderItemsdataList = response;
    
+   //var data : any = []; 
   this.rowData2 = response;
 
-    //alert("Data is :" + this.LUDdataList[0].lud_desc);
+  this.rowData2.forEach(element => {
+  this.orderItemsdataList.push ({  stock_uid : element._id.stock_uid,
+                        quantity : element._id.quantity,
+                        order_item_uid:element._id.order_item_uid
+  });
+});
+
+
+
+
+
+    //alert("Retrieved rows are " + this.rowData2.length);
     //if (this.userList.active == "true") {this.userList.active = "Y";} else {this.userList.active="N;"}
     //if (this.userList.locked == "true") {this.userList.locked = "Y";} else {this.userList.locked="N;"}
     //this.ScrolToTop();

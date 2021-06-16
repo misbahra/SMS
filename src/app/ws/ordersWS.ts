@@ -213,6 +213,28 @@ getSummarySalesByItem(params: any) {
             )
     }
 
+    // addOrderRefund
+ addOrderRefund(data: any): Observable<any> {
+    //alert("in add user");
+    return this.http.post(this.BASE_URL + '/addOrderRefund', data)
+        .pipe(
+            retry(1),
+            catchError(this.errorHandl)
+        )
+} 
+
+getOrderRefundsForCustomer(id: any) {
+    //alert('loading data in service - ' + userid[0].value);
+    const searchParams = {
+        params: {
+            param1: id[0].value
+        }
+    }
+    return this.http.get(this.BASE_URL + '/orderRefundsForCustomer', searchParams).toPromise();
+}
+
+thisOrderRefundsForCustomer
+
    
     // Error handling
     errorHandl(error: any) {
