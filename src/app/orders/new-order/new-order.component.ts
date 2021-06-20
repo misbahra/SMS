@@ -73,8 +73,15 @@ export class NewOrderComponent implements OnInit{
   refundDataList: any = [];
   connUser : any = this.sessionService.getConnectedUsers();
   customerRefundDataList: any = [];
+  isRefundUsed = false;
+  totalRefundAmount = 0;
+  totalRefundUsed = 0;
+  netOrderAmount = 0;
+  
+  
 
-  @ViewChild("txtSearch") searchField: ElementRef;
+  @ViewChild("txtSearch") txtSearchField: ElementRef;
+  //@ViewChild("phoneNo") txtPhone: ElementRef;
   
 
    rowDataClicked:any = {};
@@ -151,17 +158,17 @@ export class NewOrderComponent implements OnInit{
       "order_uid" : this.orderNumber,
       "item_uid" :  found.item_uid,
       "item_name" : found.item_name,
-      "unit_cost_price" : found.items_cost ,
-      "unit_tag_price" :  found.sales_price,
+      "unit_cost_price" : found.items_cost.toFixed(2) ,
+      "unit_tag_price" :  found.sales_price.toFixed(2),
       "quantity" :  this.quantity,
-      "unit_sale_price" : this.price ,
+      "unit_sale_price" : this.price.toFixed(2) ,
       "vat" :  0,
       "sales_tax" :  0,
       "withholding_tax" :  0,
-      "total_price" :  this.quantity * this.price ,
-      "total_price_with_taxes" :  this.quantity * this.price,
-      "discount_rate" : Math.floor(((found.sales_price - this.price) * 100 ) / found.sales_price),
-      "discount" :  (found.sales_price - this.price) * this.quantity ,
+      "total_price" :  (this.quantity * this.price).toFixed(2) ,
+      "total_price_with_taxes" :  (this.quantity * this.price).toFixed(2),
+      "discount_rate" : (Math.floor(((found.sales_price - this.price) * 100 ) / found.sales_price)).toFixed(2),
+      "discount" :  ((found.sales_price - this.price) * this.quantity).toFixed(2) ,
       "order_refund_uid" :  "",
       "stock_uid" : found.stock_uid,
       "posted_to_stock" : "Y",
@@ -172,18 +179,20 @@ export class NewOrderComponent implements OnInit{
     });
 
 
-      this.totalAmount += (this.quantity * this.price); 
+      this.totalAmount += (this.quantity * this.price);
+      this.netOrderAmount = this.totalAmount - this.totalRefundUsed - this.vat ;
       this.quantity = 1;
       this.price = null;
       this.loadAvailableStock(this.stockDataList); 
-      this.searchField.nativeElement.focus();
+      this.txtSearchField.nativeElement.focus();
   }
 
     };
  
   deleteStock(index : any ) {
       
-      this.totalAmount -= this.selectedDataList[index].total_price; 
+       
+      
 
       var selectedIndex : any;
       var deletedOrderItem = this.selectedDataList[index];
@@ -195,11 +204,25 @@ export class NewOrderComponent implements OnInit{
           return true;
         }
       });
-      this.stockDataList[selectedIndex].stock_sold -= deletedOrderItem.quantity; 
+
+      
+
+      if(deletedOrderItem.order_refund_uid)
+      {
+      this.totalRefundUsed -= deletedOrderItem.total_price;
+      alert('has refurnd id ' + deletedOrderItem.order_refund_uid)
+      }
+      else{
+        alert('No refurnd id ' + deletedOrderItem.order_refund_uid)
+        this.totalAmount -= deletedOrderItem.total_price;
+        this.stockDataList[selectedIndex].stock_sold -= deletedOrderItem.quantity; 
+      }
+
+      this.netOrderAmount = this.totalAmount - this.totalRefundUsed - this.vat ;
       this.loadAvailableStock(this.stockDataList); 
       this.selectedDataList.splice(index , 1);
       this.isItemAddedRemoved = true;
-      this.searchField.nativeElement.focus();
+      this.txtSearchField.nativeElement.focus();
   };
   
   async ngOnInit() {
@@ -262,6 +285,7 @@ export class NewOrderComponent implements OnInit{
     this.loadAllLUD('20');
     this.loadAllCustomers();
     this.loadCustomerRefunds();
+    //this.txtPhone.nativeElement.focus();
   };
 
   async loadOrders(orderid: any) {
@@ -286,38 +310,49 @@ export class NewOrderComponent implements OnInit{
     this.orderItemsToUodate = resp;
     this.selectedDataList = [];
     this.totalAmount = 0;
+    this.totalRefundAmount = 0;
     this.orderItems.forEach(found => {
     
-    this.totalAmount += found._id.total_price; 
     
+     
+    if(found.order_refund_uid != null || found.order_refund_uid != '')
+    {
+    this.totalRefundUsed += found._id.total_price;
+    }
+    else
+    {
+      this.totalAmount += found._id.total_price;
+    }
+    this.netOrderAmount = this.totalAmount - this.totalRefundUsed - this.vat ;
+
     this.selectedDataList.push(
       {
       "order_item_uid" : found._id.order_item_uid,
       "order_uid" : found._id.order_uid,
       "item_uid" :  found._id.item_uid,
       "item_name" : found._id.item_name,
-      "unit_cost_price" : found._id.unit_cost_price ,
-      "unit_tag_price" :  found._id.unit_tag_price,
+      "unit_cost_price" : found._id.unit_cost_price.toFixed(2),
+      "unit_tag_price" :  found._id.unit_tag_price.toFixed(2),
       "quantity" :  found._id.quantity,
-      "unit_sale_price" :found._id.unit_sale_price ,
-      "vat" :  found._id.vat,
-      "sales_tax" :  found._id.sales_tax,
-      "withholding_tax" :  found._id.withholding_tax,
-      "total_price" :  found._id.total_price ,
-      "total_price_with_taxes" :  found._id.total_price_with_taxes,
+      "unit_sale_price" :found._id.unit_sale_price.toFixed(2),
+      "vat" :  found._id.vat.toFixed(2),
+      "sales_tax" :  found._id.sales_tax.toFixed(2),
+      "withholding_tax" :  found._id.withholding_tax.toFixed(2),
+      "total_price" :  found._id.total_price.toFixed(2) ,
+      "total_price_with_taxes" :  found._id.total_price_with_taxes.toFixed(2),
       "discount_rate" : found._id.discount_rate,
-      "discount" :  found._id.discount ,
+      "discount" :  found._id.discount.toFixed(2) ,
       "order_refund_uid" :  found._id.order_refund_uid,
       "stock_uid" : found._id.stock_uid,
       "posted_to_stock" : found._id.posted_to_stock,
       "refunded_quantity" : found.total_refunded_quantity,
-      "refunded_amount" : found.total_refunded_amount,
+      "refunded_amount" : found.total_refunded_amount.toFixed(2),
       "created_by" :  found._id.created_by,
       "created_on" : found._id.created_on,
       "modified_by" :  found._id.modified_by,
       "modified_on" :  found._id.modified_on,
       "total_refunded_quantity" : found.total_refunded_quantity,
-      "total_refunded_amount" : found.total_refunded_amount
+      "total_refunded_amount" : found.total_refunded_amount.toFixed(2)
 
     });
   });
@@ -632,13 +667,14 @@ openCustomersDialog(operation: any) {
       clearCustomer()
       {
         this.orderForm.controls.customer_uid.setValue(null);
-        
+        this.customerRefundDataList = [];
       }
 
   processRefund(p_order_item_uid: any, p_quantity: any, p_refundedQuantity: any) {
 
+   // alert(p_order_item_uid + "-" + p_quantity + "-" + p_refundedQuantity);
     var remainingQuantity = p_quantity - p_refundedQuantity;
-
+    this.refundDataList = [];
     // here will be the code to refund
     if (!this.orderForm.value.customer_uid) {
       alert("Please select a customer to refund.");
@@ -650,11 +686,20 @@ openCustomersDialog(operation: any) {
       }
       else {
 
-        var prmpt = prompt("Please provide the quantity to refund.");
+        var p = prompt("Please provide the quantity to refund.");
+        var prmpt = parseInt(p);
+        
+        //alert("prompt - " + prmpt);
 
-        var refQty = parseInt(prmpt);
+        if (prmpt == null || isNaN(prmpt) || prmpt==0)
+        {
+          alert("Please enter a valid number.")
+        }
+        else
+        { // user has given some input
+        var refQty = prmpt;
         //alert("Step2 - after prompt");
-        if (refQty > p_quantity) {
+        if (refQty > remainingQuantity) {
           alert('You cannot refund more than available quantitiy (' + remainingQuantity + ')');
         }
         else {
@@ -672,10 +717,13 @@ openCustomersDialog(operation: any) {
 
          // alert("Step4 - after cutomer update");
 
-          var foundOrderItem = this.selectedDataList.find(({ order_item_uid }) => (order_item_uid = p_order_item_uid));
+          var foundOrderItem = this.selectedDataList.find(({ order_item_uid }) => (order_item_uid == p_order_item_uid));
 
           //alert("Step5 - after found");
           //this data is needed to refund
+
+          //alert("cost price: " + foundOrderItem.unit_cost_price);
+
           this.refundDataList.push({
 
             order_refund_uid: this.utilService.getUID("order_refund_uid"),
@@ -709,11 +757,12 @@ openCustomersDialog(operation: any) {
 
           });
 
-          alert("Step5 - after push");
+          //alert("Step5 - after push");
 
           this.orderService.addOrderRefund(this.refundDataList).subscribe(
             (response) => {
               this.isBusy = false;
+              this.loadOrderItems(foundOrderItem.order_uid);
               alert('Refund Successfull.');
             },
             (error) => {
@@ -726,17 +775,83 @@ openCustomersDialog(operation: any) {
 
         }
 
-
       }
+      
+    }
     }
   }
 
 async loadCustomerRefunds(){
   //alert('Refund for customer - ' + this.orderForm.value.customer_uid)
-  if (this.orderForm.value.customer_uid){
+  // if customer is selected and operation is insert record
+  this.totalRefundAmount = 0;
+  if (this.orderForm.value.customer_uid && this.operation == 1){
     var resp = await this.orderService.getOrderRefundsForCustomer([{value : this.orderForm.value.customer_uid}]);
     this.customerRefundDataList = resp;
+
+    this.customerRefundDataList.forEach(element => {
+      this.totalRefundAmount += element.total_price;
+      this.totalRefundAmount.toFixed(2);
+    });
+    
     //alert('Refund Loaded - ' + this.customerRefundDataList.length);
+  }
+  else{this.customerRefundDataList = []}
+  
+}
+
+useRefund(orderRefundUID:any){
+
+  
+  var refundedItem = this.customerRefundDataList.find(({order_refund_uid}) => (order_refund_uid == orderRefundUID));
+  var foundOrderItem = this.selectedDataList.find(({order_refund_uid}) => (order_refund_uid == orderRefundUID));
+
+  //  alert('refunds found - ' + refundedItem.item_name + ' - '+ refundedItem.order_refund_uid)
+
+  //  alert('items found - ' + foundOrderItem.item_name + ' - '+ foundOrderItem.order_refund_uid)
+
+  if (foundOrderItem){
+    alert('Refund has already been used.');
+  }
+  else{
+    if (refundedItem){
+    //alert('going to use refund')
+    this.isItemAddedRemoved = true;
+    this.selectedDataList.push(
+    {
+    "order_item_uid" : this.utilService.getUID("order_item_uid"),
+    "order_uid" : this.orderNumber,
+    "item_uid" :  refundedItem.item_uid,
+    "item_name" : '(Refund) - ' + refundedItem.item_name ,
+    "unit_cost_price" : refundedItem.unit_cost_price.toFixed(2) ,
+    "unit_tag_price" :  refundedItem.unit_tag_price.toFixed(2),
+    "quantity" :  refundedItem.quantity,
+    "unit_sale_price" : refundedItem.unit_sale_price.toFixed(2) ,
+    "vat" :  refundedItem.vat.toFixed(2),
+    "sales_tax" :  refundedItem.sales_tax.toFixed(2),
+    "withholding_tax" :  refundedItem.withholding_tax.toFixed(2),
+    "total_price" :  refundedItem.total_price.toFixed(2),
+    "total_price_with_taxes" :  refundedItem.total_price_with_taxes.toFixed(2),
+    "discount_rate" : refundedItem.discount_rate,
+    "discount" :  refundedItem.discount.toFixed(2) ,
+    "order_refund_uid" :  refundedItem.order_refund_uid,
+    "stock_uid" : refundedItem.stock_uid,
+    "posted_to_stock" : "Y",
+    "created_by" :  this.connUser.user_name,
+    "created_on" :  Date.now(),
+    "modified_by" :  "",
+    "modified_on" :  ""
+  });
+
+  if(refundedItem.order_refund_uid)
+    {
+    this.totalRefundUsed += refundedItem.total_price;
+    }
+   
+    this.netOrderAmount = this.totalAmount - this.totalRefundUsed - this.vat ;
+}
+else{ alert('Refund not found')}
+    
   }
   
 }

@@ -6,10 +6,10 @@
       <span class=" float-left">Cutomer Information & Order Details</span>
     </div>
     <div class=" col text-start">
-      <input type="text" id="phoneNo" name="phoneNo" class="form-control form-control-sm " [(ngModel)]="phoneNo"
-        (change)="setCustomer()" placeholder="Phone Number">
+      <input type="text" id="phoneNo"  name="phoneNo" class="form-control form-control-sm " [(ngModel)]="phoneNo"
+      (change)="setCustomer()" placeholder="Phone Number" autofocus>
     </div>
-
+    <!-- (change)="setCustomer()" -->
 
     <div class=" col text-end section-detail">
 
@@ -360,8 +360,10 @@
           </div>
 
           <div class="col text-end ms-2 section-detail"> Total Amount: {{totalAmount}}</div>
+          <div class="col text-end ms-2 section-detail"> Total Refund: {{totalRefundUsed}}</div>
+          
           <div class="col text-end ms-2 section-detail"> Vat: {{vat}}</div>
-          <div class="col text-end ms-2 section-detail"> Order Amount: {{totalAmount}}</div>
+          <div class="col text-end ms-2 section-detail"> Order Amount: {{netOrderAmount}}</div>
         </div>
         <div class="row p-2 mb-1">
           <div class="col text-start pl-3 section-detail"><b>Order#:</b>{{orderNumber}}</div>
@@ -377,6 +379,7 @@
                 <th class="col">Item</th>
                 <th class="col text-end">Quantity</th>
                 <th class="col text-end">Unit Price</th>
+                <th class="col text-end">Unit CP</th>
                 <th class="col text-end">Total Price</th>
                 <th class="col">Delete</th>
                 <th *ngIf="operation==2" class="col">Refunded Qty</th>
@@ -387,7 +390,8 @@
             </thead>
             <tbody>
               <ng-container *ngFor="let selectedstock of selectedDataList; let i = index">
-                <tr>
+                <tr [ngClass]="{ 'rec-green': selectedstock.order_refund_uid != null || selectedstock.order_refund_uid != '' ,
+                                 'rec-normal' : selectedstock.order_refund_uid == null || selectedstock.order_refund_uid == ''}">
 
                   <td class="col ">{{i+1}}</td>
 
@@ -396,6 +400,7 @@
                   <td class="col text-end">{{selectedstock.quantity}}</td>
 
                   <td class="col text-end">{{selectedstock.unit_sale_price}}</td>
+                  <td class="col text-end">{{selectedstock.unit_cost_price}}</td>
 
                   <td class="col text-end">{{selectedstock.total_price}}</td>
 
@@ -432,15 +437,15 @@
         </div>
 
         <!-- refurnd section -->
-
-        <div class="row mt-3 p-2 mb-1 section-header hd-purple">
+      <div *ngIf="operation==1">
+        <div class="row mt-3 p-2 mb-1 section-header hd-green">
           <!-- <span class="spinner-border text-warning" *ngIf="(isBusy == true)"></span> -->
 
           <div class="col text-left">
             Available Refunds ({{customerRefundDataList.length}})
           </div>
 
-          <div class="col text-end ms-2 section-detail"> Total Refund Amount: </div>
+          <div class="col text-end ms-2 section-detail"> Total Refund Amount:{{totalRefundAmount}} </div>
           
         </div>
  
@@ -452,7 +457,8 @@
                 <th class="col">#</th>
                 <th class="col">Item</th>
                 <th class="col text-end">Quantity</th>
-                <th class="col text-end">Total Price</th>
+                <th class="col text-end">Total Amount</th>
+                <th class="col text-end">Use Refund</th>
                 
               </tr>
             </thead>
@@ -462,17 +468,18 @@
         
                   <td class="col ">{{i+1}}</td>
         
-                  <td class="col ">{{refundDataList.item_uid}}</td>
+                  <td class="col ">{{refundDataList.item_name}} ( {{refundDataList.stock_uid}})</td>
         
                   <td class="col text-end">{{refundDataList.quantity}}</td>
         
                   <td class="col text-end">{{refundDataList.total_price}}</td>
-        
+                  
                  
-                  <td *ngIf="operation==2" class="col text-center">
-                    <button type="button" class="btn p-0 m-0"
-                    >  
-                    <i class="fa fa-undo"></i></button>
+                  <td class="col text-center">
+                    <button class="btn hd-green" id="useRefund" 
+                       (click)="useRefund(refundDataList.order_refund_uid)">
+                       Use Refund
+                    </button>
                   </td>
                 </tr>
               </ng-container>
@@ -480,7 +487,7 @@
             </tbody>
           </table>
         </div>
-          
+      </div>   
 
        <!-- refund end  -->
       </div>

@@ -188,6 +188,16 @@ text-align: center;
  
 }
 
+.rec-green
+{
+  color:rgb(17, 153, 29);
+}
+
+.rec-normal
+{
+  color:black ;
+}
+
 .table-fixed tbody, 
 .table-fixed thead,
 .trh,
