@@ -79,6 +79,27 @@ export class glWS {
     return this.http.get(this.BASE_URL + '/thisVenderGL', searchParams).toPromise();
 }
 
+   // get GL related to an item   
+   getThisVenderGLYearly(id: any) {
+    //alert('loading data in service - ' + userid[0].value);
+    const searchParams = {
+        params: {
+            param1: id[0].value
+        }
+    }
+    return this.http.get(this.BASE_URL + '/thisVenderGLYearly', searchParams).toPromise();
+}
+
+ // get GL related to an item   
+ getThisVenderGLFullSum(id: any) {
+    //alert('loading data in service - ' + userid[0].value);
+    const searchParams = {
+        params: {
+            param1: id[0].value
+        }
+    }
+    return this.http.get(this.BASE_URL + '/thisVenderGLFullSum', searchParams).toPromise();
+}
     
 
     // Error handling

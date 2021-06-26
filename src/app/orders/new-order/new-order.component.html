@@ -15,13 +15,27 @@
 
       <!-- parameter 1 to openStockDialog 
             means its and new record and 2 mean its an update operation -->
-      <a type="button" (click)="onSubmit()">
-        <span class="fa fa-save fa-2x  ps-4"></span>
+      <!-- <a type="button" class= 'btn' (click)="onSubmit()">
+        <span class="fa fa-save p-2"> </span>
+        Save
       </a>
       <a type="button" (click)="onCancel()">
         <span class="fa fa-close fa-2x  ms-4"></span>
-      </a>
+      </a> -->
 
+
+     
+        <button [disabled]="isBusy" (click)= "onSubmit()" class="btn  btn-info m-0" data-toggle="tooltip"
+            data-placement="top" title="Save">
+            <i class="fa fa-save pe-1"> </i> Save
+          </button>
+
+          <button [disabled]="isBusy" (click)= "onCancel()" class="btn  btn-warning m-0" data-toggle="tooltip"
+            data-placement="top" title="Cancel">
+            <i class="fa fa-close pe-1"> </i> Cancel
+          </button>
+
+    
 
     </div>
 
@@ -395,7 +409,7 @@
 
                   <td class="col ">{{i+1}}</td>
 
-                  <td class="col ">{{selectedstock.item_name}}</td>
+                  <td class="col ">{{selectedstock.item_name}} - {{selectedstock.stock_uid}}</td>
 
                   <td class="col text-end">{{selectedstock.quantity}}</td>
 

@@ -259,8 +259,22 @@ createData(data: any) {
   return result;
 }
 
-generatePDF()
+async generatePDF()
 {
+//alert('Loading data');
+//load data 
+var glDataForPdf : any = [];
+var glSummaryForPdf : any = [];
+
+this.response = await this.glService.getThisVenderGLYearly([{"value":this.venderUID}]);
+glDataForPdf = this.response;
+
+this.response = await this.glService.getThisVenderGLFullSum([{"value":this.venderUID}]);
+glSummaryForPdf = this.response;
+ 
+
+//alert('Loaded data - ' + glDataForPdf.length);
+
   const documentDefinition = 
   {
     watermark: { text: this.venderName, color: 'blue', opacity: 0.1, bold: true, italics: false },
@@ -283,6 +297,12 @@ generatePDF()
             [{ qr: `${this.venderName}`, fit: '50' , style: 'qrStyle' ,  alignment: 'right'} ],
           ]
           },
+          {
+              
+              text: `Date: ${new Date().toLocaleString()}`,  
+              alignment: 'left'  , style:'sectionBar'
+          }, 
+          
           
               
             //   {  
@@ -327,12 +347,13 @@ generatePDF()
                                     style: {'font-size': '5px'}  
                                 },  
                                
-                            ],  
+                            ], 
+                            
                             [  
                                 {  
-                                    text: `Date: ${new Date().toLocaleString()}`,  
-                                    alignment: 'right'  
-                                },  
+                                    text: `Balance (Received - Sent): ${(glSummaryForPdf[0].total_sent_amount - glSummaryForPdf[0].total_received_amount).toFixed(2)}`,  
+                                    alignment: 'right'  , style: 'balance'
+                                }   
                                 // {  
                                 //     text: `Bill No : ${((Math.random() * 1000).toFixed(0))}`,  
                                 //     alignment: 'right'  
@@ -340,6 +361,38 @@ generatePDF()
                             ]  
                           ] , style:'sectionBar'
                },
+               {canvas: [{  type: 'line', 
+                            x1: 0, 
+                            y1: 5, 
+                            x2: 595-2*40, 
+                            y2: 5, 
+                            lineWidth: 1 
+                          }]
+                          ,
+                          style: 'separator'
+                },
+               {
+
+                columns: [
+
+                  [  
+                    {  
+                        text: `Total: `,  
+                        alignment: 'left'  
+                    },   
+                    
+                ],
+                [  
+                  {  
+                      text: `${glSummaryForPdf[0].total_sent_amount.toFixed(2)}  ${glSummaryForPdf[0].total_received_amount.toFixed(2)}`,  
+                      alignment: 'right'  
+                  },   
+                  
+              ]
+
+              
+            ] , 
+               }, 
               //  {  
               //   text: 'Order Details',  
               //   style: 'sectionHeader'  
@@ -354,30 +407,39 @@ generatePDF()
                           {text:'Account Head' ,style: 'tableHeader'}, 
                           {text:'Sent',style: 'tableHeader', alignment: 'right'}, 
                           {text:'Received' ,style: 'tableHeader', alignment: 'right'} ],  
-                        ...this.rowData.map(p => ([new Date(p.gl_date).toLocaleString().slice(0,10), 
-                          p.account_head_name, 
-                          [{text:p.fund_amount , alignment: 'right' , style: 'sent'}], 
-                          [{text:p.cargo_amount , alignment: 'right' , style: 'received'}], 
+                        ...glDataForPdf.map(p => ([p._id.date, 
+                          p._id.account_head, 
+                          [{text:p.total_sent_amount , alignment: 'right' , style: 'sent'}], 
+                          [{text:p.total_received_amount , alignment: 'right' , style: 'received'}], 
                          ])),  
-                        [ { text: 'Total Amount', colSpan: 2 }, 
-                          {}, 
-                          {text: (this.rowData.reduce((sum, p) => sum + (p.fund_amount), 0).toFixed(2))
-                            , alignment: 'right'  }, 
-                          {text: (this.rowData.reduce((sum, p) => sum + (p.cargo_amount), 0).toFixed(2))
-                          , alignment: 'right'  }, 
-                        ],
-                        [ { text: 'Balance', colSpan: 2 , style: 'tableHeader' },
-                          {},  
-                          {text:(this.rowData.reduce((sum, p) => sum + (p.fund_amount), 0)- 
-                          this.rowData.reduce((sum, p) => sum + (p.cargo_amount), 0)).toFixed(2) , colSpan: 2
-                          ,style: 'tableHeader' , alignment: 'right'  }
+                        // [ { text: 'Total Amount', colSpan: 2 }, 
+                        //   {}, 
+                        //   {text: (this.rowData.reduce((sum, p) => sum + (p.total_sent_amount), 0).toFixed(2))
+                        //     , alignment: 'right'  }, 
+                        //   {text: (this.rowData.reduce((sum, p) => sum + (p.total_received_amount), 0).toFixed(2))
+                        //   , alignment: 'right'  }, 
+                        // ],
+                        // [ { text: 'Balance', colSpan: 2 , style: 'tableHeader' },
+                        //   {},  
+                        //   {text:(this.rowData.reduce((sum, p) => sum + (p.total_sent_amount), 0)- 
+                        //   this.rowData.reduce((sum, p) => sum + (p.total_received_amount), 0)).toFixed(2) , colSpan: 2
+                        //   ,style: 'tableHeader' , alignment: 'right'  }
                           
-                        ]  
+                        // ]  
                     ]  
                 }  
-            }  
+            },  
              
-             
+            {canvas: [{  type: 'line', 
+            x1: 0, 
+            y1: 5, 
+            x2: 595-2*40, 
+            y2: 5, 
+            lineWidth: 3 
+          }]
+          ,
+          style: 'separator'
+}, 
              
               ],
   styles: { 
@@ -435,6 +497,16 @@ generatePDF()
                                 color:'navy',    
                                 border: [false, false, false, false],             
                          },
+            totalbar:    {
+                          color:'white',                
+                          background:'darkgrey',
+                          bold: true,
+                            },
+            balance:    {
+                              color:'white',                
+                              background:'black',
+                              bold: true,
+                                },
           },
   }; 
 
